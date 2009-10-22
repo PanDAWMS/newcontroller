@@ -150,7 +150,7 @@ def reducer(l):
 def bdiiIntegrator(d):
 	''' Adds BDII values to the configurations, overriding what was there.'''
 	bdict=loadBDII()
-	print bdict
+	return bdict
 
 def allMaker(d):
     ''' Extracts commonalities from sites and clouds for the All files.'''
