@@ -340,7 +340,7 @@ def jdlListAdder(d):
 	pass
 
 
-if __name__ = "__main__":
+if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	cloudd = sqlDictUnpacker(loadSchedConfig())
 
