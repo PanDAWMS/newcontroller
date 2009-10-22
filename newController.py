@@ -36,22 +36,22 @@ import pickle, os, sys
 from SchedulerUtils import utils
 
 try:
-  import dq2.info.TiersOfATLAS as ToA
+    import dq2.info.TiersOfATLAS as ToA
 except:
-  print "Cannot import dq2.info.TiersOfATLAS, will exit"
-  sys.exit(-1)
+    print "Cannot import dq2.info.TiersOfATLAS, will exit"
+    sys.exit(-1)
 
 try:
-  import lcgInfositeTool
+    import lcgInfositeTool
 except:
-  print "Cannot import lcgInfositeTool, will exit"
-  sys.exit(-1)
+    print "Cannot import lcgInfositeTool, will exit"
+    sys.exit(-1)
 
 try:
-  import fillDDMpaths
+    import fillDDMpaths
 except:
-  print "Cannot import fillDDMpaths, will exit"
-  sys.exit(-1)
+    print "Cannot import fillDDMpaths, will exit"
+    sys.exit(-1)
 
 safety = "on"
 All = 'All'
@@ -67,64 +67,64 @@ dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # S
 shared, unshared = 'shared','unshared'
 
 def loadSchedConfig():
-  '''Returns the values in the schedconfig db as a dictionary'''
-  utils.initDB()
-  print "Init DB"
-  query = "select * from schedconfig"
-  nrows = utils.dictcursor().execute(query)
-  if nrows > 0:
-    rows = utils.dictcursor().fetchall()
-  utils.endDB()
-  d={}
-  for i in rows:
-    d[i[dbkey]]=i
-  return d
+    '''Returns the values in the schedconfig db as a dictionary'''
+    utils.initDB()
+    print "Init DB"
+    query = "select * from schedconfig"
+    nrows = utils.dictcursor().execute(query)
+    if nrows > 0:
+        rows = utils.dictcursor().fetchall()
+    utils.endDB()
+    d={}
+    for i in rows:
+        d[i[dbkey]]=i
+    return d
 
 # To be completed!! Needs to warn on lcgLoad missing
 def loadBDII():
-  '''Loads LCG site definitions from the BDII, and dumps them in a file called lcgQueueUpdate.py in the local directory.
-  This file is executed (even in generating it failed this time) and populated a dictionary of queue definitions, which is
-  returned.'''
-  osgsites={}
-  if os.path.exists('lcgLoad.py'):
-    print "Updating LCG sites from BDII"
-    try:
-      print commands.getoutput('./lcgLoad.py')
-    except Exception, e:
-      print "Running lcgLoad.py failed:", e
-      print "Reusing existing lcgQueueUpdate.py"
-      execfile('lcgQueueUpdate.py')
-    else:
-      loadlcg = 0
-    return osgsites
+    '''Loads LCG site definitions from the BDII, and dumps them in a file called lcgQueueUpdate.py in the local directory.
+    This file is executed (even in generating it failed this time) and populated a dictionary of queue definitions, which is
+    returned.'''
+    osgsites={}
+    if os.path.exists('lcgLoad.py'):
+        print "Updating LCG sites from BDII"
+        try:
+            print commands.getoutput('./lcgLoad.py')
+        except Exception, e:
+            print "Running lcgLoad.py failed:", e
+            print "Reusing existing lcgQueueUpdate.py"
+            execfile('lcgQueueUpdate.py')
+        else:
+            loadlcg = 0
+        return osgsites
 
 # To be completed!!
 def loadTOA(queuedefs):
-  '''Acquires queue config information from ToA and updates the values we have. Should be run last. Overrides EVERYTHING else.'''
-  fillDDMpaths.fillDDMpaths(queuedefs)
-  return 0
+    '''Acquires queue config information from ToA and updates the values we have. Should be run last. Overrides EVERYTHING else.'''
+    fillDDMpaths.fillDDMpaths(queuedefs)
+    return 0
 
 def unPickler(fname):
-  os.chdir(base_path)
-  f=file(fname)
-  t=pickle.load(f)
-  f.close()
-  d={}
-  for i in t:
-    d[i[dbkey]]=i
-    return d
-  
+    os.chdir(base_path)
+    f=file(fname)
+    t=pickle.load(f)
+    f.close()
+    d={}
+    for i in t:
+        d[i[dbkey]]=i
+        return d
+    
 def pickleBackup(d):
-  '''Pickle the schedconfigdb as a backup'''
-  try:
-    os.makedirs(backupPath)
-  except OSError:
-    pass
-  os.chdir(backupPath)
-  f=file(backupName, 'w')
-  pickle.dump(d,f)
-  f.close()
-  
+    '''Pickle the schedconfigdb as a backup'''
+    try:
+        os.makedirs(backupPath)
+    except OSError:
+        pass
+    os.chdir(backupPath)
+    f=file(backupName, 'w')
+    pickle.dump(d,f)
+    f.close()
+    
 def sqlDictUnpacker(d):
     '''Unpack the dictionary returned by Oracle or MySQL''' 
     # Organize by cloud, then site, then queue. Reading necessary data by key.
@@ -342,6 +342,8 @@ if cloudd.has_key(''):
 	cloudd[ndef]=cloudd.pop('')
 if cloudd.has_key(None):
     cloudd[ndef]=cloudd.pop(None)
+if cloudd.has_key(None):
+	cloudd[ndef]=cloudd.pop(None)
 for cloud in cloudd:
     try:
         cloudd[cloud][All] = {param:all_d[cloud][All], over:{}}
