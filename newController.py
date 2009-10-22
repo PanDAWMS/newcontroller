@@ -147,6 +147,11 @@ def reducer(l):
     ''' Reduce the entries in a list by removing dupes'''
     return dict([(i,1) for i in l]).keys()
 
+def bdiiIntegrator(d):
+	''' Adds BDII values to the configurations, overriding what was there.'''
+	bdict=loadBDII()
+	print bdict
+
 def allMaker(d):
     ''' Extracts commonalities from sites and clouds for the All files.'''
     out = {}
@@ -279,7 +284,8 @@ def buildUpdateList(updDict, tableName):
     values2 = ' WITH VALUES '
     sql = []
     for i in updDict:
-        merge = "MERGE INTO ATLAS_PANDAMETA.%s USING DUAL ON ( ATLAS_PANDAMETA.%s.nickname='%s' ) " % (tableName, tableName, i)
+        #merge = "MERGE INTO atlas_pandameta.%s USING DUAL ON ( atlas_pandameta.%s.nickname='%s' ) " % (tableName, tableName, i)
+        merge = "MERGE INTO %s USING DUAL ON ( %s.nickname='%s' ) " % (tableName, tableName, i)
         mergetxt1 = ' (%s) ' % ','.join(['%s=:%s' % (i,i) for i in sorted(updDict[i].keys())])
         mergetxt2 = ' (%s) ' % ',:'.join(sorted(updDict[i].keys()))
         valuestxt = '{%s} ' % ', '.join(["'%s': '%s'" % (i,updDict[i]) for i in sorted(updDict[i].keys())])
@@ -289,7 +295,8 @@ def buildUpdateList(updDict, tableName):
 
 def buildDeleteList(delDict, tableName):
 	'''Build a list of SQL commands that deletes queues no longer in the definition files'''
-	delstr='DELETE FROM ATLAS_PANDAMETA.%s WHERE NICKNAME = '
+	#delstr='DELETE FROM atlas_pandameta.%s WHERE NICKNAME = '
+	delstr='DELETE FROM %s WHERE NICKNAME = '
 	sql=[]
 	for i in delDict:
 		sql.append(delstr+i['nickname']+';')
