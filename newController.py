@@ -149,8 +149,9 @@ def reducer(l):
 
 def bdiiIntegrator(d):
 	''' Adds BDII values to the configurations, overriding what was there.'''
-	bdict=loadBDII()
-	return bdict
+	out = {}
+	d['addedfortest'] = 'here it is'
+	return out
 
 def allMaker(d):
     ''' Extracts commonalities from sites and clouds for the All files.'''
@@ -338,51 +339,53 @@ def jdlListAdder(d):
 	'''Merge the contents of the jdllist table (name, host, system, jdltext) into the schedconfig dictionary'''
 	pass
 
-#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
-cloudd = sqlDictUnpacker(loadSchedConfig())
+
+if __name__ = "__main__":
+	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
+	cloudd = sqlDictUnpacker(loadSchedConfig())
 
 
-all_d = allMaker(cloudd)
-# Since many fields for both clouds and queues are lacking designations, allow them to be removed
-if cloudd.has_key(''):
-	cloudd[ndef]=cloudd.pop('')
-if cloudd.has_key(None):
-    cloudd[ndef]=cloudd.pop(None)
-if cloudd.has_key(None):
-	cloudd[ndef]=cloudd.pop(None)
-for cloud in cloudd:
-    try:
-        cloudd[cloud][All] = {param:all_d[cloud][All], over:{}}
-        for site in cloudd[cloud]:
-            cloudd[cloud][site][All] = {param:all_d[cloud][site][All], over:{}}
-    except KeyError:
-        pass
+	all_d = allMaker(cloudd)
+	# Since many fields for both clouds and queues are lacking designations, allow them to be removed
+	if cloudd.has_key(''):
+		cloudd[ndef]=cloudd.pop('')
+	if cloudd.has_key(None):
+		cloudd[ndef]=cloudd.pop(None)
+	if cloudd.has_key(None):
+		cloudd[ndef]=cloudd.pop(None)
+	for cloud in cloudd:
+		try:
+			cloudd[cloud][All] = {param:all_d[cloud][All], over:{}}
+			for site in cloudd[cloud]:
+				cloudd[cloud][site][All] = {param:all_d[cloud][site][All], over:{}}
+		except KeyError:
+			pass
 
-for cloud in cloudd:
-    cpath = configs + os.sep + cloud
-    try:
-      os.makedirs(cpath)
-    except OSError:
-        pass
-    for site in cloudd[cloud]:
-        if site is All:
-            path = cpath
-        else:
-            path = cpath + os.sep + site
-            try:
-                os.makedirs(path)
-            except OSError:
-                pass
-        os.chdir(path)
+	for cloud in cloudd:
+		cpath = configs + os.sep + cloud
+		try:
+		  os.makedirs(cpath)
+		except OSError:
+			pass
+		for site in cloudd[cloud]:
+			if site is All:
+				path = cpath
+			else:
+				path = cpath + os.sep + site
+				try:
+					os.makedirs(path)
+				except OSError:
+					pass
+			os.chdir(path)
 
-        if site is All:
-            buildFile(All,cloudd[cloud][All])
+			if site is All:
+				buildFile(All,cloudd[cloud][All])
 
-        else:
-            for queue in cloudd[cloud][site]:
-                if queue is All: buildFile(queue, cloudd[cloud][site][queue])
-                else: buildFile(queue, cloudd[cloud][site][queue])
+			else:
+				for queue in cloudd[cloud][site]:
+					if queue is All: buildFile(queue, cloudd[cloud][site][queue])
+					else: buildFile(queue, cloudd[cloud][site][queue])
 
 
-os.chdir(base_path)
+	os.chdir(base_path)
 
