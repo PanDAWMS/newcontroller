@@ -336,8 +336,7 @@ cloudd = sqlDictUnpacker(loadSchedConfig())
 
 
 all_d = allMaker(cloudd)
-# Since many fields for both clouds and queues are lacking designations,
-# allow them to be removed
+# Since many fields for both clouds and queues are lacking designations, allow them to be removed
 if cloudd.has_key(''):
 	cloudd[ndef]=cloudd.pop('')
 if cloudd.has_key(None):
