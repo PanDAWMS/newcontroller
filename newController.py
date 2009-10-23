@@ -256,7 +256,7 @@ def composeFile(d,s,dname):
 	# Complete the dictionary
 	s.append(spacing + '}' + os.linesep)
 	s.append(os.linesep)
-	return l
+	return s
 
 def buildFile(name, d):
 	'''Consolidate the composition and writing of the files'''
