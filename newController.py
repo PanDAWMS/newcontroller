@@ -31,7 +31,7 @@
 
 # This code has been organized for easy transition into a class structure.
 
-import pickle, os, sys
+import pickle, os, sys, commands
 
 from SchedulerUtils import utils
 
@@ -57,6 +57,7 @@ safety = "on"
 All = 'All'
 ndef = 'Not_Defined'
 over = 'Override'
+source = 'Source'
 param = 'Parameters'
 base_path = os.getcwd()
 backupPath = base_path + 'Backup'
@@ -137,10 +138,12 @@ def sqlDictUnpacker(d):
             out_d[d[queue][cloud]] = {}
         if d[queue][site] not in  out_d[d[queue][cloud]]:
             out_d[d[queue][cloud]][d[queue][site]] = {}
-        # Once sure that we have all the cloud and site dictionaries created, we popupate them with a parameter dictionary
+        # Once sure that we have all the cloud and site dictionaries created, we populate them with a parameter dictionary
         # and an empty (for now) override dictionary. The override dictionary will become useful when we are reading back from
-        # the config files we are creating.
-        out_d[d[queue][cloud]][d[queue][site]][d[queue][dbkey]] = {param:d[queue],over:{}}
+        # the config files we are creating. Each key is associated with a source tag -- DB, BDII, ToA, Override, Site, or Cloud
+		out_d[d[queue][cloud]][d[queue][site]][d[queue][dbkey]] = {param:d[queue],over:{},source:dict([(i,'DB') for i in d[queue].keys()])}
+		# That list comprehension at the end of the previous line just creates an empty dictionary and fills it with the keys from the queue
+		# definition. The values are set to DB, and will be changed if another source modifies the value.
     return out_d
 
 def reducer(l):
@@ -150,7 +153,14 @@ def reducer(l):
 def bdiiIntegrator(d):
 	''' Adds BDII values to the configurations, overriding what was there.'''
 	out = {}
-	d['addedfortest'] = 'here it is'
+	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
+	bdict=loadBDII()
+	# Load the site information directly from BDII and hold it. In the previous software, this was the osgsites dict.
+	# This designation is obsolete -- this is strictly BDII information, and no separation is made.
+	linfotool = lcgInfositeTool.lcgInfositeTool()
+	for i in bdict:
+		# Running through to match these specs with 
+
 	return out
 
 def allMaker(d):
@@ -190,27 +200,40 @@ def allMaker(d):
             if len(reducer(ccomp[key])) == 1:
                 # So write it to the output for this cloud.
                 out[cloud][All][key] = reducer(ccomp[key])[0]
-
+	
     return out
 
-# Be sure to add commenting of BDII, ToA and removal of other fields
 def composeFile(d,l,dname):
     ''' Populate a list for file writing that prints parameter dictionaries cleanly,
     allowing them to be written to human-modifiable config files for queues and sites.'''
+
+	# "dname" is one of two things -- "Parameters" or "Override", depending on what part of the  
+	# file we're writing. They're defined generally as param and over 
     keylist = d[dname].keys()
     try:
+		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
         keylist.remove(dbkey)
         keylist.sort()
         if dname == param: keylist.insert(0,dbkey)
+		
+	# Unless it's not present -- then we'll just throw a warning. 	
     except ValueError:
+		print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, d[dname])
         keylist.sort()
-        
+
+    # So we're writing a  "Parameters" or "Override" dictionary (dname)...
     l.append('%s = {' % dname + os.linesep )
     for key in keylist:
+		comment = ''
         value = str(d[dname][key])
+		# For each key and value, check for multiline values, and add triple quotes when necessary 
         if value.count(os.linesep): valsep = "'''"
         else: valsep = keysep
-        l.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + os.linesep)
+		if dname = param and d[dname][key][source] is not 'DB':
+			comment = '# Defined in %s' % d[] 
+		# Build the text, with linefeeds, and add it to the out string.
+        l.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
+	# Complete the dictionary
     l.append(spacing + '}' + os.linesep)
     l.append(os.linesep)
     return l
@@ -240,8 +263,10 @@ def buildFile(name, d):
 '''
 
     switchstr = 'Enabled = True\n\n'
-    
+
+    # Load up the file intro
     l=[startstr]
+	# Put the queue on/off switch in place if not an All file
     if name is not All: l.append(switchstr)
     # I'm taking advantage of the universality of lists.
     # composeFile is modifying the list itself rather than a copy.
