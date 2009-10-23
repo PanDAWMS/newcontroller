@@ -237,7 +237,7 @@ def composeFile(d,s,dname):
 		
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
-		print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, d)
+		print 'DB key %s not present in this dictionary. Going to be hard to insert.' % (dbkey)
 		keylist.sort()
 
 	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
