@@ -249,7 +249,7 @@ def composeFile(d,s,dname):
 		if value.count(os.linesep): valsep = "'''"
 		else: valsep = keysep
 		# Add a comment hash to the line, and add the provenance info 
-		if dname == param and d[source][key] and d[source][key] is not 'DB':
+		if dname == param and d.has_key(source) and d[source][key] is not 'DB':
 			comment = ['#','# Defined in %s' % d[source][key]]
 		# Build the text, with linefeeds, and add it to the out string.
 		s.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
@@ -388,7 +388,10 @@ def jdlListAdder(d):
 if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	cloudd = sqlDictUnpacker(loadSchedConfig())
-
+## 	for cloud in cloudd:
+## 		for site in cloudd[cloud]:
+## 			for queue in cloudd[cloud][site]:
+## 				print cloud, site, queue, cloudd[cloud][site][queue].keys()
 
 	all_d = allMaker(cloudd)
 	# Since many fields for both clouds and queues are lacking designations, allow them to be removed
