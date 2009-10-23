@@ -200,7 +200,7 @@ def allMaker(d):
 					# So write it to the output for this cloud and site.
 					out[cloud][site][key] = reducer(comp[key])[0]
 		# Doing the same as above per cloud:   
-		for key in ccomp:g
+		for key in ccomp:
 			# If only one value is left, it is common to all queues in the cloud
 			if len(reducer(ccomp[key])) == 1:
 				# So write it to the output for this cloud.
