@@ -249,7 +249,7 @@ def composeFile(d,l,dname):
 		if value.count(os.linesep): valsep = "'''"
 		else: valsep = keysep
 		# Add a comment hash to the line, and add the provenance info 
-		if dname = param and d[source][key] is not 'DB':
+		if dname == param and d[source][key] is not 'DB':
 			comment = ['#','# Defined in %s' % d[source][key]]
 		# Build the text, with linefeeds, and add it to the out string.
 		l.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
