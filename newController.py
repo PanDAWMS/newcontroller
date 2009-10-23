@@ -164,7 +164,10 @@ def bdiiIntegrator(d):
 	return out
 
 def allMaker(d):
-    ''' Extracts commonalities from sites and clouds for the All files.'''
+    ''' Extracts commonalities from sites and clouds for the All files.
+	Returns its own dictionary for constructing these files. Updates the
+	provenance info in the input dictionary. '''
+	
     out = {}
     # This is where we'll put all verified keys that are common across sites/clouds
     for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
@@ -200,7 +203,21 @@ def allMaker(d):
             if len(reducer(ccomp[key])) == 1:
                 # So write it to the output for this cloud.
                 out[cloud][All][key] = reducer(ccomp[key])[0]
-	
+
+    # Running across clouds and sites to update source information in the main dictionary
+    for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
+		# Extract all affected keys for the cloud
+		ckeys = out[cloud][All].keys()
+        for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
+			# Extract all affected keys for the site
+			skeys = out[cloud][site].keys()
+			# Going queue by queue, update the provenance for both cloud and site general parameters.
+            for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
+				for key in ckeys:
+					d[cloud][site][queue][source][key] = 'the cloud All.py file for the %s cloud' % cloud
+				for key in skeys:
+					d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
+		
     return out
 
 def composeFile(d,l,dname):
@@ -224,15 +241,16 @@ def composeFile(d,l,dname):
     # So we're writing a  "Parameters" or "Override" dictionary (dname)...
     l.append('%s = {' % dname + os.linesep )
     for key in keylist:
-		comment = ''
+		comment = ['','']
         value = str(d[dname][key])
 		# For each key and value, check for multiline values, and add triple quotes when necessary 
         if value.count(os.linesep): valsep = "'''"
         else: valsep = keysep
-		if dname = param and d[dname][key][source] is not 'DB':
-			comment = '# Defined in %s' % d[] 
+		# Add a comment hash to the line, and add the provenance info 
+		if dname = param and d[source][key] is not 'DB':
+			comment = ['#','# Defined in %s' % d[source][key]]
 		# Build the text, with linefeeds, and add it to the out string.
-        l.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
+        l.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 	# Complete the dictionary
     l.append(spacing + '}' + os.linesep)
     l.append(os.linesep)
