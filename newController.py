@@ -222,7 +222,7 @@ def allMaker(d):
 		
 	return out
 
-def composeFile(d,l,dname):
+def composeFile(d,s,dname):
 	''' Populate a list for file writing that prints parameter dictionaries cleanly,
 	allowing them to be written to human-modifiable config files for queues and sites.'''
 
@@ -237,11 +237,11 @@ def composeFile(d,l,dname):
 		
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
-		print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, d[dname])
+		print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, d)
 		keylist.sort()
 
 	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
-	l.append('%s = {' % dname + os.linesep )
+	s.append('%s = {' % dname + os.linesep )
 	for key in keylist:
 		comment = ['','']
 		value = str(d[dname][key])
@@ -249,13 +249,13 @@ def composeFile(d,l,dname):
 		if value.count(os.linesep): valsep = "'''"
 		else: valsep = keysep
 		# Add a comment hash to the line, and add the provenance info 
-		if dname == param and d[source][key] is not 'DB':
+		if dname == param and d[source][key] and d[source][key] is not 'DB':
 			comment = ['#','# Defined in %s' % d[source][key]]
 		# Build the text, with linefeeds, and add it to the out string.
-		l.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
+		s.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 	# Complete the dictionary
-	l.append(spacing + '}' + os.linesep)
-	l.append(os.linesep)
+	s.append(spacing + '}' + os.linesep)
+	s.append(os.linesep)
 	return l
 
 def buildFile(name, d):
@@ -285,17 +285,17 @@ def buildFile(name, d):
 	switchstr = 'Enabled = True\n\n'
 
 	# Load up the file intro
-	l=[startstr]
+	s=[startstr]
 	# Put the queue on/off switch in place if not an All file
-	if name is not All: l.append(switchstr)
+	if name is not All: s.append(switchstr)
 	# I'm taking advantage of the universality of lists.
 	# composeFile is modifying the list itself rather than a copy.
-	composeFile(d, l, param)
-	l.append(overridestr)
-	composeFile(d, l, over)
+	composeFile(d, s, param)
+	s.append(overridestr)
+	composeFile(d, s, over)
 	
 	f=file(name + postfix,'w')
-	f.writelines(l)
+	f.writelines(s)
 	f.close()
 
 def compareQueues(dbDict,cfgDict,dbOverride=False):
