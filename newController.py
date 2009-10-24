@@ -366,18 +366,9 @@ def execUpdate(updateList):
 	utils.initDB()
 	for query in updateList:
 		utils.dictcursor().execute(query)
-	utils.closeDB()
-	return loadSchedConfig()
-
-def commitUpdate():
-	''' Commits updates to the db '''
-	if safety is "on":
-		print "Not touching the database! The safety's on ol' Bessie."
-		return 1
-	utils.initDB()
 	utils.commit()
 	utils.closeDB()
-	return 0
+	return loadSchedConfig()
 
 # To be completed!!
 def jdlListAdder(d):
@@ -397,8 +388,6 @@ if __name__ == "__main__":
 	# Since many fields for both clouds and queues are lacking designations, allow them to be removed
 	if cloudd.has_key(''):
 		cloudd[ndef]=cloudd.pop('')
-	if cloudd.has_key(None):
-		cloudd[ndef]=cloudd.pop(None)
 	if cloudd.has_key(None):
 		cloudd[ndef]=cloudd.pop(None)
 	for cloud in cloudd:
