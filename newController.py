@@ -10,24 +10,18 @@
 # TODO:
 
 # Add a consistency checker
-# Set fields not to touch: DATE AND TIME STAMPS, modification user, status
-# Add DB acquisition code
 # Add pickling of db status for SVN
 # Add manual pickle restoration code
 # Add code for comparison between DB versions
 # Add subversion update, file add and checkin. Comment changes.
 # Add change detection to avoid DB change collisions
-# --- Priorities: Manual changes in SVN. DB backwash provosions can be added later
-# Add row-specific updates via change detection between old and new versions
 # Add logging output for changes and status
 # Add queue insertion scripts
-# Add code for manual cleanup of sites without cloud IDs
-# Add code for manual cleanup of queues with siteid "?" or ""
-# Add code for merging sites by hand
 # Add BDII override. 
-# Add function for parsing and uploading the dictionary
 # Add code for handling the jdllist (jdltext) table (field)
 # Change to flexible mount point
+# Make sure manual queues remain unmodified by BDII!
+# Add checking of queue "on" and "off"
 
 # This code has been organized for easy transition into a class structure.
 
@@ -66,6 +60,7 @@ configs = base_path + os.sep + 'Configs'
 postfix = '.py'
 dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
 shared, unshared = 'shared','unshared'
+excl = ['status','lastmod','dn','tspace']
 
 def loadSchedConfig():
 	'''Returns the values in the schedconfig db as a dictionary'''
@@ -140,12 +135,12 @@ def sqlDictUnpacker(d):
 			out_d[d[queue][cloud]] = {}
 		if d[queue][site] not in  out_d[d[queue][cloud]]:
 			out_d[d[queue][cloud]][d[queue][site]] = {}
-		out_d[d[queue][cloud]][d[queue][site]][d[queue][dbkey]] = {param:d[queue],over:{},source:dict([(i,'DB') for i in d[queue].keys()])}
+		out_d[d[queue][cloud]][d[queue][site]][d[queue][dbkey]] = {param:d[queue],over:{},source:dict([(i,'DB') for i in d[queue].keys() if key not in excl])}
 		# Once sure that we have all the cloud and site dictionaries created, we populate them with a parameter dictionary
 		# and an empty (for now) override dictionary. The override dictionary will become useful when we are reading back from
 		# the config files we are creating. Each key is associated with a source tag -- DB, BDII, ToA, Override, Site, or Cloud
 		# That list comprehension at the end of the previous line just creates an empty dictionary and fills it with the keys from the queue
-# definition. The values are set to DB, and will be changed if another source modifies the value.
+		# definition. The values are set to DB, and will be changed if another source modifies the value.
 	return out_d
 
 def reducer(l):
@@ -191,8 +186,9 @@ def allMaker(d):
 				else: 
 					# Fill the lists with the values for the keys from this queue
 					for key in d[cloud][site][queue][param]:
-						comp[key].append(d[cloud][site][queue][param][key])
-						ccomp[key].append(d[cloud][site][queue][param][key])
+						if key not in excl:
+							comp[key].append(d[cloud][site][queue][param][key])
+							ccomp[key].append(d[cloud][site][queue][param][key])
 			# Now, for the site, remove all duplicates in the lists. 
 			for key in comp:
 				# If only one value is left, it is common to all queues in the site
