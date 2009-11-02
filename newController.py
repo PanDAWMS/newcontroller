@@ -17,11 +17,13 @@
 # Add change detection to avoid DB change collisions
 # Add logging output for changes and status
 # Add queue insertion scripts
-# Add BDII override. 
+# Add BDII override.
+# Add empty site and cloud cleanup
 # Add code for handling the jdllist (jdltext) table (field)
 # Change to flexible mount point
 # Make sure manual queues remain unmodified by BDII!
 # Add checking of queue "on" and "off"
+# BDII adding queues to clouds and sites -- note and copy parameters that apply to all. Then set offline and wait for mods.
 
 # This code has been organized for easy transition into a class structure.
 
@@ -50,9 +52,9 @@ except:
 safety = "on"
 All = 'All'
 ndef = 'Not_Defined'
+param = 'Parameters'
 over = 'Override'
 source = 'Source'
-param = 'Parameters'
 base_path = os.getcwd()
 backupPath = base_path + 'Backup'
 backupName = 'schedConfigBackup.pickle'
@@ -61,6 +63,7 @@ postfix = '.py'
 dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
 shared, unshared = 'shared','unshared'
 excl = ['status','lastmod','dn','tspace']
+standardkeys=[]
 
 def loadSchedConfig():
 	'''Returns the values in the schedconfig db as a dictionary'''
@@ -92,12 +95,13 @@ def loadBDII():
 			print "Running lcgLoad.py failed:", e
 			print "Reusing existing lcgQueueUpdate.py"
 			execfile('lcgQueueUpdate.py')
+			lcgsites = osgsites
 		else:
 			loadlcg = 0
-		return osgsites
+		return lcgsites
 	  
 # To be completed!!
-def loadTOA(queuedefs):
+def loadToA(queuedefs):
 	'''Acquires queue config information from ToA and updates the values we have. Should be run last. Overrides EVERYTHING else.'''
 	fillDDMpaths.fillDDMpaths(queuedefs)
 	return 0
@@ -122,6 +126,13 @@ def pickleBackup(d):
 	f=file(backupName, 'w')
 	pickle.dump(d,f)
 	f.close()
+
+def protoDict(queue,d,sourcestr='DB',keys=[]):
+	'''Create a dictionary with params, overrides and sources for either an existing definition from the DB, or to add the dictionaries
+	for a new queue. Used in sqlDictUnpacker for extraction of DB values (default) and in bdiiIntegrator for new queue addition from the BDII.'''
+	if not len(d):
+		d={queue:dict([(key,'') for key in keys])}
+	return {param:d[queue],over:{},source:dict([(i,sourcestr) for i in d[queue].keys() if key not in excl])}
 	
 def sqlDictUnpacker(d):
 	'''Unpack the dictionary returned by Oracle or MySQL''' 
@@ -130,38 +141,75 @@ def sqlDictUnpacker(d):
 	cloud = 'cloud'
 	site = 'site'
 	out_d={}
+	# Run over the DB queues
 	for queue in d:
+		# If the present queue's cloud isn't in the out_d, create the cloud.
 		if d[queue][cloud] not in out_d:
 			out_d[d[queue][cloud]] = {}
+		# If the present queue's site isn't in the out_d cloud, create the site in the cloud.
 		if d[queue][site] not in  out_d[d[queue][cloud]]:
 			out_d[d[queue][cloud]][d[queue][site]] = {}
-		out_d[d[queue][cloud]][d[queue][site]][d[queue][dbkey]] = {param:d[queue],over:{},source:dict([(i,'DB') for i in d[queue].keys() if key not in excl])}
+
 		# Once sure that we have all the cloud and site dictionaries created, we populate them with a parameter dictionary
-		# and an empty (for now) override dictionary. The override dictionary will become useful when we are reading back from
-		# the config files we are creating. Each key is associated with a source tag -- DB, BDII, ToA, Override, Site, or Cloud
+		# an empty (for now) override dictionary, and a source dict. The override dictionary will become useful when we are reading back from
+		# the config files we are creating. Each key is associated with a source tag -- Config, DB, BDII, ToA, Override, Site, or Cloud
 		# That list comprehension at the end of the previous line just creates an empty dictionary and fills it with the keys from the queue
 		# definition. The values are set to DB, and will be changed if another source modifies the value.
+		out_d[d[queue][cloud]][d[queue][site]][d[queue][dbkey]] = protoDict(queue,d)
+
+	# Model keyset for creation of queues from scratch
+	standardkeys=[key for key in d[queue].keys() if key not in excl]
 	return out_d
 
 def reducer(l):
 	''' Reduce the entries in a list by removing dupes'''
 	return dict([(i,1) for i in l]).keys()
 
-def bdiiIntegrator(d):
-	''' Adds BDII values to the configurations, overriding what was there.'''
+
+def findQueue(q,d):
+	'''Find a queue in the config dictionary and return the cloud and site. If not found, return empty values'''
+	for cloud in d:
+		for site in d[cloud]:
+			for queue in d[cloud][site]:
+				if queue == q:
+					return cloud, site
+	return '',''
+
+def bdiiIntegrator(d,confd):
+	'''Adds BDII values to the configurations, overriding what was there. Must be run after downloading the DB
+	and parsing the config files.'''
 	out = {}
 	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
 	bdict=loadBDII()
 	# Load the site information directly from BDII and hold it. In the previous software, this was the osgsites dict.
 	# This designation is obsolete -- this is strictly BDII information, and no separation is made.
 	linfotool = lcgInfositeTool.lcgInfositeTool()
-	for i in bdict:
-		pass
-	# Running through to match these specs with 
+	for qn in bdict:
+		# Create the nickname of the queue using the queue designation from the dict, plus the jobmanager.
+		nickname = qn + '-' + bdict[qn]['jobmanager']
+		# Try to find the queue in the DB dictionary
+		c,s = findQueue(nickname,d)
+		# If it's not there, try the dictionary from the previous config files
+		if not c and not s:
+			c,s = findQueue(nickname,confd)
+			# If the queue is not in the DB, and is not inactive in the config files, then:
+			if not c and not s:
+			c,s=ndef,bdict[qn]['site']
+			# If site doesn't yet exist, create it:
+			if s not in d[c]:
+				d[c][s] = {}
+				# Create it in the main dictionary, using the standard keys from the DB
+				d[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
+			# Either way, we need to put the queue in without a cloud defined. 
+		# For all the simple translations, copy them in directly.
+		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
+			d[c][s][nickname][key] = bdict[qn][key]
+		d[c][s][nickname]['queue'] = bdict[qn]['localqueue']
+	# Running through to match these specs with the existing config definitions 
 	return out
 
 def allMaker(d):
-	''' Extracts commonalities from sites and clouds for the All files.
+	'''Extracts commonalities from sites and clouds for the All files.
 	Returns its own dictionary for constructing these files. Updates the
 	provenance info in the input dictionary. '''
 	
@@ -347,11 +395,38 @@ def buildDeleteList(delDict, tableName):
 # To be completed!!
 def buildDict():
 	'''Build a copy of the queue dictionary from the configuration files '''
-	for cloud in os.listdir(configs):
-		for site in os.listdir(configs + os.sep + cloud):
-			for queue in os.listdir(configs + os.sep + cloud + os.sep + site):
-				pass
-	return 0
+	confd={}
+	# Loop throught the clouds in the base folder
+	clouds = os.listdir(configs):
+	for cloud in clouds
+		# Add each cloud to the dictionary
+		confd[cloud] = {}
+		# Loop throught the sites in the present cloud folder
+		sites = os.listdir(configs + os.sep + cloud)
+		for site in clouds:
+			# Add each site to the cloud
+			confd[cloud][site] = {}
+			# Loop throught the queues in the present site folders
+			queues = os.listdir(configs + os.sep + cloud + os.sep + site)
+			for q in queues:
+				# Remove the '.py' 
+				queue=q.rstrip(postfix)
+				# Add each queue to the site
+				confd[cloud][site][queue] = {}
+				# Run the file to extract the appropriate dictionaries
+				execfile(configs + os.sep + cloud + os.sep + site + os.sep + q)
+				# Feed in the configuration
+				confd[cloud][site][queue][param] = Parameters
+				confd[cloud][site][queue][override] = Override 
+				confd[cloud][site][queue]['Enabled'] = Enabled 				
+				confd[cloud][site][queue][source] = dict([(key,'Config') for key in Parameters if key not in excl]) 				
+				# Clear the values, for safety
+				del(Parameters)
+				del(Override)
+				del(Enabled)
+	# Leaving the All parameters unincorporated until the end.
+	
+	return confd
 
 # To be completed!!
 def execUpdate(updateList):
