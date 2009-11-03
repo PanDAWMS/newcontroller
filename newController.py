@@ -131,7 +131,7 @@ def protoDict(queue,d,sourcestr='DB',keys=[]):
 	for a new queue. Used in sqlDictUnpacker for extraction of DB values (default) and in bdiiIntegrator for new queue addition from the BDII.'''
 	if not len(d):
 		d={queue:dict([(key,'') for key in keys])}
-	return {param:d[queue],over:{},source:dict([(i,sourcestr) for i in d[queue].keys() if key not in excl])}
+	return {param:d[queue],over:{},source:dict([(key,sourcestr) for key in d[queue].keys() if key not in excl])}
 	
 def sqlDictUnpacker(d):
 	'''Unpack the dictionary returned by Oracle or MySQL''' 
