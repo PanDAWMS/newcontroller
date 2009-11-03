@@ -18,7 +18,6 @@
 # Add change detection to avoid DB change collisions
 # Add logging output for changes and status
 # Add queue insertion scripts
-# Add BDII override.
 # Add empty site and cloud cleanup
 # Add code for handling the jdllist (jdltext) table (field)
 # Change to flexible mount point
@@ -85,7 +84,7 @@ def loadSchedConfig():
 # To be completed!! Needs to warn on lcgLoad missing
 def loadBDII():
 	'''Loads LCG site definitions from the BDII, and dumps them in a file called lcgQueueUpdate.py in the local directory.
-	This file is executed (even in generating it failed this time) and populated a dictionary of queue definitions, which is
+	This file is executed (even if generating it failed this time) and populated a dictionary of queue definitions, which is
 	returned.'''
 	osgsites={}
 	if os.path.exists('lcgLoad.py'):
@@ -115,7 +114,7 @@ def unPickler(fname):
 	d={}
 	for i in t:
 		d[i[dbkey]]=i
-		return d
+	return d
 	
 def pickleBackup(d):
 	'''Pickle the schedconfigdb as a backup'''
@@ -184,7 +183,7 @@ def bdiiIntegrator(d,confd):
 	and parsing the config files.'''
 	out = {}
 	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
-	bdict=loadBDII()
+	bdict = loadBDII()
 	# Load the site information directly from BDII and hold it. In the previous software, this was the osgsites dict.
 	# This designation is obsolete -- this is strictly BDII information, and no separation is made.
 	linfotool = lcgInfositeTool.lcgInfositeTool()
@@ -198,7 +197,7 @@ def bdiiIntegrator(d,confd):
 			c,s = findQueue(nickname,confd)
 			# If the queue is not in the DB, and is not inactive in the config files, then:
 			if not c and not s:
-			c,s=ndef,bdict[qn]['site']
+			c,s = ndef,bdict[qn]['site']
 			# If site doesn't yet exist, create it:
 			if s not in d[c]:
 				d[c][s] = {}
@@ -207,10 +206,18 @@ def bdiiIntegrator(d,confd):
 			# Either way, we need to put the queue in without a cloud defined. 
 		# For all the simple translations, copy them in directly.
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
-			d[c][s][nickname][key] = bdict[qn][key]
-		d[c][s][nickname]['queue'] = bdict[qn]['localqueue']
-	# Running through to match these specs with the existing config definitions 
-	return out
+			d[c][s][nickname][param][key] = bdict[qn][key]
+			# Complete the sourcing info
+			d[c][s][nickname][source][key] = 'BDII'
+		# For the more complicated BDII derivatives, do some more complex work
+		d[c][s][nickname][param]['queue'] = bdict[qn][key] + '/jobmanager-' + bdict[qn]['jobmanager']
+		d[c][s][nickname][param]['jdl'] = bdict[qn][key] + '/jobmanager-' + bdict[qn]['jobmanager']
+		d[c][s][nickname][param]['nickname'] = nickname
+		# Fill in sourcing here as well for the last few fields
+		for key in ['queue','jdl','nickname']:
+			d[c][s][nickname][source][key] = 'BDII'
+	# All changes to the dictionary happened live -- no need to return it.
+	return 0
 
 def allMaker(d):
 	'''Extracts commonalities from sites and clouds for the All files.
