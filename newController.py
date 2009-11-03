@@ -9,9 +9,8 @@
 
 # TODO:
 
-# Make sure there's not a cloud-general All file
+# Add installedSW table support
 # Add a consistency checker
-# Add pickling of db status for SVN
 # Add manual pickle restoration code
 # Add code for comparison between DB versions
 # Add subversion update, file add and checkin. Comment changes.
@@ -186,7 +185,6 @@ def bdiiIntegrator(d,confd):
 	bdict = loadBDII()
 	# Load the site information directly from BDII and hold it. In the previous software, this was the osgsites dict.
 	# This designation is obsolete -- this is strictly BDII information, and no separation is made.
-	linfotool = lcgInfositeTool.lcgInfositeTool()
 	for qn in bdict:
 		# Create the nickname of the queue using the queue designation from the dict, plus the jobmanager.
 		nickname = qn + '-' + bdict[qn]['jobmanager']
@@ -216,6 +214,11 @@ def bdiiIntegrator(d,confd):
 		# Fill in sourcing here as well for the last few fields
 		for key in ['queue','jdl','nickname']:
 			d[c][s][nickname][source][key] = 'BDII'
+
+	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and 
+	linfotool = lcgInfositeTool.lcgInfositeTool()
+
+	
 	# All changes to the dictionary happened live -- no need to return it.
 	return 0
 
@@ -227,10 +230,8 @@ def allMaker(d):
 	out = {}
 	# This is where we'll put all verified keys that are common across sites/clouds
 	for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
-		# Create a dictionary for each cloud (and its sites), and a dict for values common to sites.
-		out[cloud]={All:{}}
-		# This buffers the key comparison lists for all queues in a cloud, not just per site
-		ccomp = {}
+		# Create a dictionary for each cloud 
+		out[cloud]={}
 		# For all regular sites:
 		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
 			# Set up a site output dictionary
@@ -254,24 +255,14 @@ def allMaker(d):
 				if len(reducer(comp[key])) == 1:
 					# So write it to the output for this cloud and site.
 					out[cloud][site][key] = reducer(comp[key])[0]
-		# Doing the same as above per cloud:   
-		for key in ccomp:
-			# If only one value is left, it is common to all queues in the cloud
-			if len(reducer(ccomp[key])) == 1:
-				# So write it to the output for this cloud.
-				out[cloud][All][key] = reducer(ccomp[key])[0]
 
-	# Running across clouds and sites to update source information in the main dictionary
-	for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
-		# Extract all affected keys for the cloud
-		ckeys = out[cloud][All].keys()
+	# Running across sites to update source information in the main dictionary
+	for cloud in d.keys():
 		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
 			# Extract all affected keys for the site
 			skeys = out[cloud][site].keys()
 			# Going queue by queue, update the provenance for both cloud and site general parameters.
 			for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
-				for key in ckeys:
-					d[cloud][site][queue][source][key] = 'the cloud All.py file for the %s cloud' % cloud
 				for key in skeys:
 					d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
 		
@@ -323,7 +314,7 @@ def buildFile(name, d):
 # dictionary. Any value in Override will supersede any value in the
 # Parameters dictionary.
 
-# Global values for entire sites and clouds can also be set
+# Global values for entire sites can also be set
 # (and overriden) in the "All" files within these directories.
 
 '''
@@ -462,7 +453,7 @@ def execUpdate(updateList):
 	utils.closeDB()
 	return loadSchedConfig()
 
-# To be completed!!
+# To be completed!! Needs to be part of a separate code file.
 def jdlListAdder(d):
 	'''Merge the contents of the jdllist table (name, host, system, jdltext) into the schedconfig dictionary'''
 	pass
@@ -484,7 +475,6 @@ if __name__ == "__main__":
 		cloudd[ndef]=cloudd.pop(None)
 	for cloud in cloudd:
 		try:
-			cloudd[cloud][All] = {param:all_d[cloud][All], over:{}}
 			for site in cloudd[cloud]:
 				cloudd[cloud][site][All] = {param:all_d[cloud][site][All], over:{}}
 		except KeyError:
@@ -497,14 +487,11 @@ if __name__ == "__main__":
 		except OSError:
 			pass
 		for site in cloudd[cloud]:
-			if site is All:
-				path = cpath
-			else:
-				path = cpath + os.sep + site
-				try:
-					os.makedirs(path)
-				except OSError:
-					pass
+			path = cpath + os.sep + site
+			try:
+				os.makedirs(path)
+			except OSError:
+				pass
 			os.chdir(path)
 
 			if site is All:
