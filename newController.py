@@ -23,6 +23,9 @@
 # Make sure manual queues remain unmodified by BDII!
 # Add checking of queue "on" and "off"
 # BDII adding queues to clouds and sites -- note and copy parameters that apply to all. Then set offline and wait for mods.
+# Make sure that the All source is subordinate to the BDII source
+# Make sure that the jdladd field is fully commented when it's being removed from the source
+# All of those ccomps I removed seem to have killed my site-level All files! Fix it!
 
 # This code has been organized for easy transition into a class structure.
 
