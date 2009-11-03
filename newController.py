@@ -400,7 +400,7 @@ def buildDict():
 	confd={}
 	# Loop throught the clouds in the base folder
 	clouds = os.listdir(configs)
-	for cloud in clouds
+	for cloud in clouds:
 		# Add each cloud to the dictionary
 		confd[cloud] = {}
 		# Loop throught the sites in the present cloud folder
