@@ -170,7 +170,7 @@ def findQueue(q,d):
 	for cloud in d:
 		for site in d[cloud]:
 			# Not going to find sites in the All file
-			if site = All:
+			if site == All:
 				continue
 			for queue in d[cloud][site]:
 				if queue == q:
