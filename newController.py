@@ -399,7 +399,7 @@ def buildDict():
 	'''Build a copy of the queue dictionary from the configuration files '''
 	confd={}
 	# Loop throught the clouds in the base folder
-	clouds = os.listdir(configs):
+	clouds = os.listdir(configs)
 	for cloud in clouds
 		# Add each cloud to the dictionary
 		confd[cloud] = {}
