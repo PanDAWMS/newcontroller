@@ -9,6 +9,7 @@
 
 # TODO:
 
+# Make sure there's not a cloud-general All file
 # Add a consistency checker
 # Add pickling of db status for SVN
 # Add manual pickle restoration code
@@ -170,6 +171,9 @@ def findQueue(q,d):
 	'''Find a queue in the config dictionary and return the cloud and site. If not found, return empty values'''
 	for cloud in d:
 		for site in d[cloud]:
+			# Not going to find sites in the All file
+			if site = All:
+				continue
 			for queue in d[cloud][site]:
 				if queue == q:
 					return cloud, site
@@ -404,10 +408,21 @@ def buildDict():
 		# Loop throught the sites in the present cloud folder
 		sites = os.listdir(configs + os.sep + cloud)
 		for site in clouds:
+			# If this is the All file, create another entry.
+			if site.endswith(postfix):
+				# Get rid of the .py
+				s=site.rstrip(postfix)
+				# Run the file for the dictionaries
+				execfile(configs + os.sep + cloud + os.sep + site)
+				confd[cloud][s][param] = Parameters
+				confd[cloud][s][override] = Override 
+				# Delete the dictionaries for safety
+				del(Parameters)
+				del(Override)
 			# Add each site to the cloud
 			confd[cloud][site] = {}
 			# Loop throught the queues in the present site folders
-			queues = os.listdir(configs + os.sep + cloud + os.sep + site)
+			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix)]
 			for q in queues:
 				# Remove the '.py' 
 				queue=q.rstrip(postfix)
@@ -425,7 +440,6 @@ def buildDict():
 				del(Override)
 				del(Enabled)
 	# Leaving the All parameters unincorporated until the end.
-	
 	return confd
 
 # To be completed!!
