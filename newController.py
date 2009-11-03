@@ -195,12 +195,12 @@ def bdiiIntegrator(d,confd):
 			c,s = findQueue(nickname,confd)
 			# If the queue is not in the DB, and is not inactive in the config files, then:
 			if not c and not s:
-			c,s = ndef,bdict[qn]['site']
-			# If site doesn't yet exist, create it:
-			if s not in d[c]:
-				d[c][s] = {}
-				# Create it in the main dictionary, using the standard keys from the DB
-				d[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
+				c,s = ndef,bdict[qn]['site']
+				# If site doesn't yet exist, create it:
+				if s not in d[c]:
+					d[c][s] = {}
+					# Create it in the main dictionary, using the standard keys from the DB
+					d[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
 			# Either way, we need to put the queue in without a cloud defined. 
 		# For all the simple translations, copy them in directly.
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
