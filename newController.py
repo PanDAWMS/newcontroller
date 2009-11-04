@@ -527,41 +527,44 @@ if __name__ == "__main__":
 ## 			for queue in cloudd[cloud][site]:
 ## 				print cloud, site, queue, cloudd[cloud][site][queue].keys()
 
-	all_d = allMaker(cloudd)
-	# Since many fields for both clouds and queues are lacking designations, allow them to be removed
-	if cloudd.has_key(''):
-		cloudd[ndef]=cloudd.pop('')
-	if cloudd.has_key(None):
-		cloudd[ndef]=cloudd.pop(None)
-	for cloud in cloudd:
-		try:
-			for site in cloudd[cloud]:
-				cloudd[cloud][site][All] = {param:all_d[cloud][site][All], over:{}}
-		except KeyError:
-			pass
+        all_d = allMaker(cloudd)
+        # Since many fields for both clouds and queues are lacking designations, allow them to be removed
+        if cloudd.has_key(''):
+                cloudd[ndef]=cloudd.pop('')
+        if cloudd.has_key(None):
+                cloudd[ndef]=cloudd.pop(None)
+        for cloud in cloudd:
+                try:
+                        cloudd[cloud][All] = {param:all_d[cloud][All], over:{}}
+                        for site in cloudd[cloud]:
+                                cloudd[cloud][site][All] = {param:all_d[cloud][site][All], over:{}}
+                except KeyError:
+                        pass
 
-	for cloud in cloudd:
-		cpath = configs + os.sep + cloud
-		try:
-		  os.makedirs(cpath)
-		except OSError:
-			pass
-		for site in cloudd[cloud]:
-			path = cpath + os.sep + site
-			try:
-				os.makedirs(path)
-			except OSError:
-				pass
-			os.chdir(path)
+        for cloud in cloudd:
+                cpath = configs + os.sep + cloud
+                try:
+                  os.makedirs(cpath)
+                except OSError:
+                        pass
+                for site in cloudd[cloud]:
+                        if site is All:
+                                path = cpath
+                        else:
+                                path = cpath + os.sep + site
+                                try:
+                                        os.makedirs(path)
+                                except OSError:
+                                        pass
+                        os.chdir(path)
 
-			if site is All:
-				buildFile(All,cloudd[cloud][All])
+                        if site is All:
+                                buildFile(All,cloudd[cloud][All])
 
-			else:
-				for queue in cloudd[cloud][site]:
-					if queue is All: buildFile(queue, cloudd[cloud][site][queue])
-					else: buildFile(queue, cloudd[cloud][site][queue])
+                        else:
+                                for queue in cloudd[cloud][site]:
+                                        if queue is All: buildFile(queue, cloudd[cloud][site][queue])
+                                        else: buildFile(queue, cloudd[cloud][site][queue])
 
 
-	os.chdir(base_path)
-
+        os.chdir(base_path)
