@@ -539,8 +539,8 @@ if __name__ == "__main__":
 			cloudd[cloud][All] = {param:all_d[cloud][All], over:{}}
 			for site in cloudd[cloud]:
 				cloudd[cloud][site][All] = {param:all_d[cloud][site][All], over:{}}
-			except KeyError:
-				pass
+		except KeyError:
+			pass
 
 	for cloud in cloudd:
 		cpath = configs + os.sep + cloud
