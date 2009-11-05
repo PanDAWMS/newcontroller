@@ -422,7 +422,7 @@ def buildDict():
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is imported
 				os.chdir(configs + os.sep + cloud)
 				print os.getcwd()
-				from queue import Parameters, Override
+				exec('from %s import Parameters, Override' % queue)
 				confd[cloud][s][param] = Parameters
 				confd[cloud][s][over] = Override 
 				# Delete the dictionaries for safety
@@ -441,7 +441,7 @@ def buildDict():
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is imported
 				os.chdir(configs + os.sep + cloud + os.sep + site)
 				print os.getcwd()
-				from queue import Parameters, Override, Enabled
+				exec('from %s import Parameters, Override, Enabled' % queue)
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = Parameters
 				confd[cloud][site][queue][over] = Override 
