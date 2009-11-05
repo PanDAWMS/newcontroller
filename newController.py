@@ -268,6 +268,7 @@ def allMaker(d):
 				for key in skeys:
 					d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
 			# Adding the "All" queue to the site
+			print cloud, site
 			d[cloud][site][All] = {param:skeys[cloud][site]}
 
 	
