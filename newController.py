@@ -270,7 +270,7 @@ def allMaker(d):
 			# Adding the "All" queue to the site
 			print cloud, site
 			d[cloud][site][All] = {param:all_d[cloud][site]}
-			d[cloud][site][All] = {override:{}}
+			d[cloud][site][All] = {over:{}}
 
 	
 	return 0
@@ -401,9 +401,9 @@ def buildDeleteList(delDict, tableName):
 		sql.append(delstr+i['nickname']+';')
 	return '\n'.join(sql)
 
-# To be completed!!
 def buildDict():
 	'''Build a copy of the queue dictionary from the configuration files '''
+
 	confd={}
 	# Loop throught the clouds in the base folder
 	clouds = os.listdir(configs)
@@ -418,9 +418,10 @@ def buildDict():
 				# Get rid of the .py
 				s=site.rstrip(postfix)
 				# Run the file for the dictionaries
+				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
 				execfile(configs + os.sep + cloud + os.sep + site)
 				confd[cloud][s][param] = Parameters
-				confd[cloud][s][override] = Override 
+				confd[cloud][s][over] = Override 
 				# Delete the dictionaries for safety
 				del(Parameters)
 				del(Override)
@@ -434,10 +435,11 @@ def buildDict():
 				# Add each queue to the site
 				confd[cloud][site][queue] = {}
 				# Run the file to extract the appropriate dictionaries
+				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
 				execfile(configs + os.sep + cloud + os.sep + site + os.sep + q)
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = Parameters
-				confd[cloud][site][queue][override] = Override 
+				confd[cloud][site][queue][over] = Override 
 				confd[cloud][site][queue]['Enabled'] = Enabled 				
 				confd[cloud][site][queue][source] = dict([(key,'Config') for key in Parameters if key not in excl]) 				
 				# Clear the values, for safety
@@ -469,6 +471,8 @@ def jdlListAdder(d):
 if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB
+	configd = buildDict()
+
 	cloudd = sqlDictUnpacker(loadSchedConfig())
 
 	# Compose the "All" queues for each site
@@ -496,4 +500,5 @@ if __name__ == "__main__":
 
 
 			os.chdir(base_path)
+		
 		
