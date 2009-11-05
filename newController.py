@@ -405,6 +405,7 @@ def buildDict():
 	'''Build a copy of the queue dictionary from the configuration files '''
 
 	confd={}
+	base = os.getcwd()
 	# Loop throught the clouds in the base folder
 	clouds = os.listdir(configs)
 	for cloud in clouds:
@@ -418,9 +419,10 @@ def buildDict():
 				# Get rid of the .py
 				s=site.rstrip(postfix)
 				# Run the file for the dictionaries
-				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
-				execfile(configs + os.sep + cloud + os.sep + site)
-				print configs + os.sep + cloud + os.sep + site
+				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is imported
+				os.chdir(configs + os.sep + cloud)
+				print os.getcwd()
+				from queue import Parameters, Override
 				confd[cloud][s][param] = Parameters
 				confd[cloud][s][over] = Override 
 				# Delete the dictionaries for safety
@@ -436,9 +438,10 @@ def buildDict():
 				# Add each queue to the site
 				confd[cloud][site][queue] = {}
 				# Run the file to extract the appropriate dictionaries
-				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
-				execfile(configs + os.sep + cloud + os.sep + site + os.sep + q)
-				print configs + os.sep + cloud + os.sep + site + os.sep + q
+				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is imported
+				os.chdir(configs + os.sep + cloud + os.sep + site)
+				print os.getcwd()
+				from queue import Parameters, Override, Enabled
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = Parameters
 				confd[cloud][site][queue][over] = Override 
@@ -449,6 +452,7 @@ def buildDict():
 				del(Override)
 				del(Enabled)
 	# Leaving the All parameters unincorporated until the end.
+	os.chdir(base)
 	return confd
 
 # To be completed!!
