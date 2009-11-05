@@ -57,6 +57,7 @@ ndef = 'Not_Defined'
 param = 'Parameters'
 over = 'Override'
 source = 'Source'
+enab = 'Enabled'
 base_path = os.getcwd()
 backupPath = base_path + 'Backup'
 backupName = 'schedConfigBackup.pickle'
@@ -405,6 +406,8 @@ def buildDict():
 	'''Build a copy of the queue dictionary from the configuration files '''
 
 	confd={}
+	# In executing files for variables, one has to put the variables in a contained, local context.
+	locvars={}
 	base = os.getcwd()
 	# Loop throught the clouds in the base folder
 	clouds = os.listdir(configs)
@@ -419,15 +422,11 @@ def buildDict():
 				# Get rid of the .py
 				s=site.rstrip(postfix)
 				# Run the file for the dictionaries
-				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
 				fname = configs + os.sep + cloud + os.sep + site
-				print fname
-				execfile(fname)
-				confd[cloud][s][param] = Parameters
-				confd[cloud][s][over] = Override 
-				# Delete the dictionaries for safety
-				del(Parameters)
-				del(Override)
+				# The appropriate dictionaries are placed in locvars
+				execfile(fname,{},locvars)
+				confd[cloud][s][param] = locvars[param]
+				confd[cloud][s][over] = locvars[over]
 			# Add each site to the cloud
 			confd[cloud][site] = {}
 			# Loop throught the queues in the present site folders
@@ -440,18 +439,14 @@ def buildDict():
 				# Run the file to extract the appropriate dictionaries
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
 				fname = configs + os.sep + cloud + os.sep + site + os.sep + q
-				print fname
-				execfile(fname)
+				# The appropriate dictionaries are placed in locvars
+				execfile(fname,{},locvars)
 				# Feed in the configuration
-				confd[cloud][site][queue][param] = Parameters
-				confd[cloud][site][queue][over] = Override 
-				confd[cloud][site][queue]['Enabled'] = Enabled 				
-				confd[cloud][site][queue][source] = dict([(key,'Config') for key in Parameters if key not in excl]) 				
-				# Clear the values, for safety
-				del(Parameters)
-				del(Override)
-				del(Enabled)
-	# Leaving the All parameters unincorporated until the end.
+				confd[cloud][site][queue][param] = locvars[param]
+				confd[cloud][site][queue][over] = locvars[over] 
+				confd[cloud][site][queue][enab] = locvars[enab] 				
+				confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvar[params] if key not in excl]) 				
+	# Leaving the All parameters unincorporated
 	os.chdir(base)
 	return confd
 
