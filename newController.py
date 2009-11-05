@@ -270,6 +270,7 @@ def allMaker(d):
 			# Adding the "All" queue to the site
 			print cloud, site
 			d[cloud][site][All] = {param:all_d[cloud][site]}
+			d[cloud][site][All] = {override:{}}
 
 	
 	return 0
@@ -467,32 +468,31 @@ def jdlListAdder(d):
 
 if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
+	# Load the present status of the DB
 	cloudd = sqlDictUnpacker(loadSchedConfig())
 
+	# Compose the "All" queues for each site
 	status = allMaker(cloudd)
-## 	# Since many fields for both clouds and queues are lacking designations, allow them to be removed
-## 	if cloudd.has_key(''):
-## 		cloudd[ndef]=cloudd.pop('')
-## 	if cloudd.has_key(None):
-## 		cloudd[ndef]=cloudd.pop(None)
 
+	# Create the config path for each cloud
 	for cloud in cloudd:
 		cpath = configs + os.sep + cloud
 		try:
 			os.makedirs(cpath)
 		except OSError:
 			pass
+		# Create the config path for each site 
 		for site in cloudd[cloud]:
 			path = cpath + os.sep + site
 			try:
 				os.makedirs(path)
 			except OSError:
 				pass
+			# Go on in...
 			os.chdir(path)
-
+			# And for each queue, create a config file. 
 			for queue in cloudd[cloud][site]:
-				if queue is All: buildFile(queue, cloudd[cloud][site][queue])
-				else: buildFile(queue, cloudd[cloud][site][queue])
+				buildFile(queue, cloudd[cloud][site][queue])
 
 
 			os.chdir(base_path)
