@@ -412,7 +412,7 @@ def buildDict():
 		confd[cloud] = {}
 		# Loop throught the sites in the present cloud folder
 		sites = os.listdir(configs + os.sep + cloud)
-		for site in clouds:
+		for site in sites:
 			# If this is the All file, create another entry.
 			if site.endswith(postfix):
 				# Get rid of the .py
