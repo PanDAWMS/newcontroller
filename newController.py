@@ -227,107 +227,49 @@ def bdiiIntegrator(d,confd):
 	return 0
 
 def allMaker(d):
-        '''Extracts commonalities from sites and clouds for the All files.
-        Returns its own dictionary for constructing these files. Updates the
-        provenance info in the input dictionary. '''
-        
-        out = {}
-        # This is where we'll put all verified keys that are common across sites/clouds
-        for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
-                # Create a dictionary for each cloud (and its sites), and a dict for values common to sites.
-                out[cloud]={All:{}}
-                # This buffers the key comparison lists for all queues in a cloud, not just per site
-                ccomp = {}
-                # For all regular sites:
-                for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
-                        # Set up a site output dictionary
-                        out[cloud][site]={}
-                        # Recreate the site comparison queue
-                        comp = {}
-                        # Loop over all the queues in the site, where the queue is not empty or "All"
-                        for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
-                                # Create the key in the comparison dictionary for each parameter, if necessary, and assign a list that will hold the values from each queue 
-                                if not len(comp): comp = dict([(i,[d[cloud][site][queue][param][i]]) for i in d[cloud][site][queue][param].keys()])
-                                if not len(ccomp): ccomp = dict([(i,[d[cloud][site][queue][param][i]]) for i in d[cloud][site][queue][param].keys()])
-                                else: 
-                                        # Fill the lists with the values for the keys from this queue
-                                        for key in d[cloud][site][queue][param]:
-                                                if key not in excl:
-                                                        comp[key].append(d[cloud][site][queue][param][key])
-                                                        ccomp[key].append(d[cloud][site][queue][param][key])
-                        # Now, for the site, remove all duplicates in the lists. 
-                        for key in comp:
-                                # If only one value is left, it is common to all queues in the site
-                                if len(reducer(comp[key])) == 1:
-                                        # So write it to the output for this cloud and site.
-                                        out[cloud][site][key] = reducer(comp[key])[0]
-                # Doing the same as above per cloud:   
-                for key in ccomp:
-                        # If only one value is left, it is common to all queues in the cloud
-                        if len(reducer(ccomp[key])) == 1:
-                                # So write it to the output for this cloud.
-                                out[cloud][All][key] = reducer(ccomp[key])[0]
-
-        # Running across clouds and sites to update source information in the main dictionary
-        for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
-                # Extract all affected keys for the cloud
-                ckeys = out[cloud][All].keys()
-                for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
-                        # Extract all affected keys for the site
-                        skeys = out[cloud][site].keys()
-                        # Going queue by queue, update the provenance for both cloud and site general parameters.
-                        for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
-                                for key in ckeys:
-                                        d[cloud][site][queue][source][key] = 'the cloud All.py file for the %s cloud' % cloud
-                                for key in skeys:
-                                        d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
-                
-        return out
-
-
-## def allMaker(d):
-## 	'''Extracts commonalities from sites and clouds for the All files.
-## 	Returns its own dictionary for constructing these files. Updates the
-## 	provenance info in the input dictionary. '''
+	'''Extracts commonalities from sites for the All files.
+	Returns 0 for success. Adds "All" queues to sites. Updates the
+	provenance info in the input dictionary. '''
 	
-## 	out = {}
-## 	# This is where we'll put all verified keys that are common across sites/clouds
-## 	for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
-## 		# Create a dictionary for each cloud 
-## 		out[cloud]={}
-## 		# For all regular sites:
-## 		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
-## 			# Set up a site output dictionary
-## 			out[cloud][site]={}
-## 			# Recreate the site comparison queue
-## 			comp = {}
-## 			# Loop over all the queues in the site, where the queue is not empty or "All"
-## 			for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
-## 				# Create the key in the comparison dictionary for each parameter, if necessary, and assign a list that will hold the values from each queue 
-## 				if not len(comp): comp = dict([(i,[d[cloud][site][queue][param][i]]) for i in d[cloud][site][queue][param].keys()])
-## 				else: 
-## 					# Fill the lists with the values for the keys from this queue
-## 					for key in d[cloud][site][queue][param]:
-## 						if key not in excl:
-## 							comp[key].append(d[cloud][site][queue][param][key])
-## 			# Now, for the site, remove all duplicates in the lists. 
-## 			for key in comp:
-## 				# If only one value is left, it is common to all queues in the site
-## 				if len(reducer(comp[key])) == 1:
-## 					# So write it to the output for this cloud and site.
-## 					out[cloud][site][key] = reducer(comp[key])[0]
+	out = {}
+	# This is where we'll put all verified keys that are common across sites/clouds
+	for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
+		# Create a dictionary for each cloud 
+		out[cloud]={}
+		# For all regular sites:
+		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
+			# Set up a site output dictionary
+			out[cloud][site]={}
+			# Recreate the site comparison queue
+			comp = {}
+			# Loop over all the queues in the site, where the queue is not empty or "All"
+			for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
+				# Create the key in the comparison dictionary for each parameter, if necessary, and assign a list that will hold the values from each queue 
+				if not len(comp): comp = dict([(i,[d[cloud][site][queue][param][i]]) for i in d[cloud][site][queue][param].keys()])
+				else: 
+					# Fill the lists with the values for the keys from this queue
+					for key in d[cloud][site][queue][param]:
+						if key not in excl:
+							comp[key].append(d[cloud][site][queue][param][key])
+			# Now, for the site, remove all duplicates in the lists. 
+			for key in comp:
+				# If only one value is left, it is common to all queues in the site
+				if len(reducer(comp[key])) == 1:
+					# So write it to the output for this cloud and site.
+					out[cloud][site][key] = reducer(comp[key])[0]
 
-## 	# Running across sites to update source information in the main dictionary
-## 	for cloud in d.keys():
-## 		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
-## 			# Extract all affected keys for the site
-## 			skeys = out[cloud][site].keys()
-## 			# Going queue by queue, update the provenance for both cloud and site general parameters.
-## 			for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
-## 				for key in skeys:
-## 					d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
-		
-## 	return out
+	# Running across sites to update source information in the main dictionary
+	for cloud in d.keys():
+		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
+			# Extract all affected keys for the site
+			skeys = out[cloud][site].keys()
+			# Going queue by queue, update the provenance for both cloud and site general parameters.
+			for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
+				for key in skeys:
+					d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
+			d[cloud][site][All][param] = skeys[cloud][site]
+	
+	return 0
 
 def composeFile(d,s,dname):
 	''' Populate a list for file writing that prints parameter dictionaries cleanly,
@@ -523,24 +465,13 @@ def jdlListAdder(d):
 if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	cloudd = sqlDictUnpacker(loadSchedConfig())
-## 	for cloud in cloudd:
-## 		for site in cloudd[cloud]:
-## 			for queue in cloudd[cloud][site]:
-## 				print cloud, site, queue, cloudd[cloud][site][queue].keys()
 
-	all_d = allMaker(cloudd)
-	# Since many fields for both clouds and queues are lacking designations, allow them to be removed
-	if cloudd.has_key(''):
-		cloudd[ndef]=cloudd.pop('')
-	if cloudd.has_key(None):
-		cloudd[ndef]=cloudd.pop(None)
-	for cloud in cloudd:
-		try:
-			cloudd[cloud][All] = {param:all_d[cloud][All], over:{}}
-			for site in cloudd[cloud]:
-				cloudd[cloud][site][All] = {param:all_d[cloud][site][All], over:{}}
-		except KeyError:
-			pass
+	status = allMaker(cloudd)
+## 	# Since many fields for both clouds and queues are lacking designations, allow them to be removed
+## 	if cloudd.has_key(''):
+## 		cloudd[ndef]=cloudd.pop('')
+## 	if cloudd.has_key(None):
+## 		cloudd[ndef]=cloudd.pop(None)
 
 	for cloud in cloudd:
 		cpath = configs + os.sep + cloud
