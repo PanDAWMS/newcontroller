@@ -231,15 +231,15 @@ def allMaker(d):
 	Returns 0 for success. Adds "All" queues to sites. Updates the
 	provenance info in the input dictionary. '''
 	
-	out = {}
+	all_d = {}
 	# This is where we'll put all verified keys that are common across sites/clouds
 	for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
 		# Create a dictionary for each cloud 
-		out[cloud]={}
+		all_d[cloud]={}
 		# For all regular sites:
 		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
 			# Set up a site output dictionary
-			out[cloud][site]={}
+			all_d[cloud][site]={}
 			# Recreate the site comparison queue
 			comp = {}
 			# Loop over all the queues in the site, where the queue is not empty or "All"
@@ -256,20 +256,20 @@ def allMaker(d):
 				# If only one value is left, it is common to all queues in the site
 				if len(reducer(comp[key])) == 1:
 					# So write it to the output for this cloud and site.
-					out[cloud][site][key] = reducer(comp[key])[0]
+					all_d[cloud][site][key] = reducer(comp[key])[0]
 
 	# Running across sites to update source information in the main dictionary
 	for cloud in d.keys():
 		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
 			# Extract all affected keys for the site
-			skeys = out[cloud][site].keys()
+			skeys = all_d[cloud][site].keys()
 			# Going queue by queue, update the provenance for both cloud and site general parameters.
 			for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
 				for key in skeys:
 					d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
 			# Adding the "All" queue to the site
 			print cloud, site
-			d[cloud][site][All] = {param:skeys[cloud][site]}
+			d[cloud][site][All] = {param:all_d[cloud][site]}
 
 	
 	return 0
