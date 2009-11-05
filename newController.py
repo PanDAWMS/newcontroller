@@ -267,7 +267,9 @@ def allMaker(d):
 			for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
 				for key in skeys:
 					d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
-			d[cloud][site][All][param] = skeys[cloud][site]
+			# Adding the "All" queue to the site
+			d[cloud][site][All] = {param:skeys[cloud][site]}
+
 	
 	return 0
 
