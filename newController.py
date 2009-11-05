@@ -420,6 +420,7 @@ def buildDict():
 				# Run the file for the dictionaries
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
 				execfile(configs + os.sep + cloud + os.sep + site)
+				print configs + os.sep + cloud + os.sep + site
 				confd[cloud][s][param] = Parameters
 				confd[cloud][s][over] = Override 
 				# Delete the dictionaries for safety
@@ -437,6 +438,7 @@ def buildDict():
 				# Run the file to extract the appropriate dictionaries
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
 				execfile(configs + os.sep + cloud + os.sep + site + os.sep + q)
+				print configs + os.sep + cloud + os.sep + site + os.sep + q
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = Parameters
 				confd[cloud][site][queue][over] = Override 
