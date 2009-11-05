@@ -480,24 +480,17 @@ if __name__ == "__main__":
 		except OSError:
 			pass
 		for site in cloudd[cloud]:
-			if site is All:
-				path = cpath
-			else:
-				path = cpath + os.sep + site
-				try:
-					os.makedirs(path)
-				except OSError:
-					pass
-				os.chdir(path)
+			path = cpath + os.sep + site
+			try:
+				os.makedirs(path)
+			except OSError:
+				pass
+			os.chdir(path)
 
-				if site is All:
-					buildFile(All,cloudd[cloud][All])
-					
-				else:
-					for queue in cloudd[cloud][site]:
-						if queue is All: buildFile(queue, cloudd[cloud][site][queue])
-						else: buildFile(queue, cloudd[cloud][site][queue])
+			for queue in cloudd[cloud][site]:
+				if queue is All: buildFile(queue, cloudd[cloud][site][queue])
+				else: buildFile(queue, cloudd[cloud][site][queue])
 
 
-	os.chdir(base_path)
+			os.chdir(base_path)
 		
