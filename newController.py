@@ -419,10 +419,10 @@ def buildDict():
 				# Get rid of the .py
 				s=site.rstrip(postfix)
 				# Run the file for the dictionaries
-				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is imported
-				os.chdir(configs + os.sep + cloud)
-				print os.getcwd()
-				exec('from %s import Parameters, Override' % queue)
+				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
+				fname = configs + os.sep + cloud + os.sep + site
+				print fname
+				execfile(fname)
 				confd[cloud][s][param] = Parameters
 				confd[cloud][s][over] = Override 
 				# Delete the dictionaries for safety
@@ -438,10 +438,10 @@ def buildDict():
 				# Add each queue to the site
 				confd[cloud][site][queue] = {}
 				# Run the file to extract the appropriate dictionaries
-				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is imported
-				os.chdir(configs + os.sep + cloud + os.sep + site)
-				print os.getcwd()
-				exec('from %s import Parameters, Override, Enabled' % queue)
+				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
+				fname = configs + os.sep + cloud + os.sep + site + os.sep + q
+				print fname
+				execfile(fname)
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = Parameters
 				confd[cloud][site][queue][over] = Override 
