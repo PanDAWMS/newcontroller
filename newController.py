@@ -316,7 +316,9 @@ def composeFile(d,s,dname):
 			s_aside.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 		else: s.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 	# Add in all the commented fields
-#	s.append(s_aside)
+	print s_aside
+	print type(s_aside)
+	s.append(s_aside)
 	# Complete the dictionary
 	s.append(spacing + '}' + os.linesep)
 	s.append(os.linesep)
