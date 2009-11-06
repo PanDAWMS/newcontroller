@@ -477,13 +477,13 @@ if __name__ == "__main__":
 	# Load the present status of the DB
 
 	cloudd = sqlDictUnpacker(loadSchedConfig())
+
+	# Compose the "All" queues for each site
+	status = allMaker(cloudd)
 	if cloudd.has_key(''):
 		cloudd[ndef]=cloudd.pop('')
 	if cloudd.has_key(None):
 		cloudd[ndef]=cloudd.pop(None)
-
-	# Compose the "All" queues for each site
-	status = allMaker(cloudd)
 
 
 	# Create the config path for each cloud
