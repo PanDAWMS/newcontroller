@@ -297,7 +297,7 @@ def composeFile(d,s,dname):
 
 	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
 	s.append('%s = {' % dname + os.linesep )
-	s_aside = ''
+	s_aside = []
 	for key in keylist:
 		comment = ['','']
 		value = str(d[dname][key])
@@ -316,7 +316,7 @@ def composeFile(d,s,dname):
 		# Add a comment hash to the line, and add the provenance info 
 		else: s.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 	# Add in all the commented fields
-	s += s_aside
+	s.append(s_aside)
 	# Complete the dictionary
 	s.append(spacing + '}' + os.linesep)
 	s.append(os.linesep)
