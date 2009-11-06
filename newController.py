@@ -316,7 +316,7 @@ def composeFile(d,s,dname):
 		# Add a comment hash to the line, and add the provenance info 
 		else: s.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 	# Add in all the commented fields
-	s.append(s_aside)
+	s += s_aside
 	# Complete the dictionary
 	s.append(spacing + '}' + os.linesep)
 	s.append(os.linesep)
