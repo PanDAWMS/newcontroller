@@ -475,7 +475,6 @@ def jdlListAdder(d):
 if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB
-	configd = buildDict()
 
 	cloudd = sqlDictUnpacker(loadSchedConfig())
 
@@ -504,5 +503,6 @@ if __name__ == "__main__":
 
 
 			os.chdir(base_path)
+	configd = buildDict()
 		
 		
