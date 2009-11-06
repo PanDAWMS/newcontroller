@@ -272,7 +272,7 @@ def allMaker(d):
 			# Adding the "All" queue to the site
 			print cloud, site
 			d[cloud][site][All] = {param:all_d[cloud][site]}
-			d[cloud][site][All] = {over:{}}
+			d[cloud][site][All].update({over:{}})
 
 	
 	return 0
