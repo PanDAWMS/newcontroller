@@ -308,15 +308,15 @@ def composeFile(d,s,dname):
 			valsep = keysep
 		# If the value is being set somewhere other than the DB, comment it and send it to the bottom of the list
 		if dname == param and d.has_key(source) and d[source][key] is not 'DB':
+			# Add a comment hash to the line, and add the provenance info 
 			comment = ['##  ',' # Defined in %s' % d[source][key]]
 			# If the value is multiline and needs to be commented, comment every line.
 			if value.count(os.linesep):
 				value = value.replace('\n','\n##  ')
 			s_aside.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
-		# Add a comment hash to the line, and add the provenance info 
 		else: s.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 	# Add in all the commented fields
-	s.append(s_aside)
+#	s.append(s_aside)
 	# Complete the dictionary
 	s.append(spacing + '}' + os.linesep)
 	s.append(os.linesep)
