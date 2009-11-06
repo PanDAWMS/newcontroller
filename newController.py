@@ -297,20 +297,26 @@ def composeFile(d,s,dname):
 
 	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
 	s.append('%s = {' % dname + os.linesep )
+	s_aside = ''
 	for key in keylist:
 		comment = ['','']
 		value = str(d[dname][key])
 		# For each key and value, check for multiline values, and add triple quotes when necessary 
-		if dname == param and d.has_key(source) and d[source][key] is not 'DB':
-			comment = ['##  ',' # Defined in %s' % d[source][key]]
-			if value.count(os.linesep):
-				value.replace('\n','\n##  ')
 		if value.count(os.linesep):
 			valsep = "'''"
 		else:
 			valsep = keysep
+		# If the value is being set somewhere other than the DB, comment it and send it to the bottom of the list
+		if dname == param and d.has_key(source) and d[source][key] is not 'DB':
+			comment = ['##  ',' # Defined in %s' % d[source][key]]
+			# If the value is multiline and needs to be commented, comment every line.
+			if value.count(os.linesep):
+				value = value.replace('\n','\n##  ')
+			s_aside.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 		# Add a comment hash to the line, and add the provenance info 
-		s.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
+		else: s.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
+	# Add in all the commented fields
+	s.append(s_aside)
 	# Complete the dictionary
 	s.append(spacing + '}' + os.linesep)
 	s.append(os.linesep)
