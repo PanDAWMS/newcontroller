@@ -463,9 +463,10 @@ def buildDict():
 				execfile(fname,{},locvars)
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
-				confd[cloud][site][queue][over] = locvars[over] 
-				confd[cloud][site][queue][enab] = locvars[enab] 				
 				confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
+				if queue is not All:
+					confd[cloud][site][queue][over] = locvars[over] 
+					confd[cloud][site][queue][enab] = locvars[enab] 				
 	# Leaving the All parameters unincorporated
 	os.chdir(base)
 	return confd
