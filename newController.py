@@ -313,7 +313,7 @@ def composeFile(d,s,dname):
 			valsep = keysep
 			if value.count(os.linesep):
 				value = value.replace('\n','\n%s##  ' % spacing)
-			s_aside.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
+			#s_aside.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 		else: s.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 	# Add in all the commented fields
 	s.extend(s_aside)
