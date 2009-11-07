@@ -289,7 +289,9 @@ def composeFile(d,s,dname):
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
 		keylist.remove(dbkey)
 		keylist.sort()
-		if dname == param: keylist.insert(0,dbkey)
+		if dname == param:
+			keylist.insert(0,dbkey)
+			print 'Reinserted'
 		
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
