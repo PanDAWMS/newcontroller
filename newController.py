@@ -333,6 +333,7 @@ def composeFields(d,s,dname,allFlag=0):
 	s.append(os.linesep)
 	return 0
 
+
 def buildFile(name, d):
 	'''Consolidate the composition and writing of the files'''
 	startstr = '''
