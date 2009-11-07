@@ -283,15 +283,17 @@ def composeFields(d,s,dname):
 	# "dname" is one of two things -- "Parameters" or "Override", depending on what part of the  
 	# file we're writing. They're defined generally as param and over 
 	keylist = d[dname].keys()
-	print len(keylist)
+	if 'nickname' not in keylist:
+		print keylist, d
 	try:
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
 		if dname == param:
 			keylist.remove(dbkey)
 			keylist.sort()
 			keylist.insert(0,dbkey)
-		else:
+ 		else:
 			keylist.sort()
+		print keylist, d
 			
 		
 	# Unless it's not present -- then we'll just throw a warning.	 
