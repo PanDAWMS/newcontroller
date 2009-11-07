@@ -82,6 +82,7 @@ def loadSchedConfig():
 	for i in rows:
 		d[i[dbkey]]=i
 
+	print len(d)
 	return d
 
 
@@ -148,7 +149,6 @@ def sqlDictUnpacker(d):
 	out_d={}
 	# Run over the DB queues
 	for queue in d:
-		print len(d[queue])
 		# If the present queue's cloud isn't in the out_d, create the cloud.
 		if d[queue][cloud] not in out_d:
 			out_d[d[queue][cloud]] = {}
