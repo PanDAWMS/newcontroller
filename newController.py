@@ -225,9 +225,10 @@ def bdiiIntegrator(confd,d):
 		# Fill in sourcing here as well for the last few fields
 		for key in ['queue','jdl','nickname']:
 			confd[c][s][nickname][source][key] = 'BDII'
+		print c,s
 
 	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and 
-	linfotool = lcgInfositeTool.lcgInfositeTool()
+	#linfotool = lcgInfositeTool.lcgInfositeTool()
 
 	
 	# All changes to the dictionary happened live -- no need to return it.
