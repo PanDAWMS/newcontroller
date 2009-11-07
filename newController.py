@@ -251,7 +251,7 @@ def allMaker(d):
 			# Loop over all the queues in the site, where the queue is not empty or "All"
 			for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
 				# Create the key in the comparison dictionary for each parameter, if necessary, and assign a list that will hold the values from each queue 
-				if not len(comp): comp = dict([(i,[d[cloud][site][queue][param][i]]) for i in d[cloud][site][queue][param].keys()])
+				if not len(comp): comp = dict([(i,[d[cloud][site][queue][param][i]]) for i in d[cloud][site][queue][param].keys() if i not in excl])
 				else: 
 					# Fill the lists with the values for the keys from this queue
 					for key in d[cloud][site][queue][param]:
@@ -259,10 +259,8 @@ def allMaker(d):
 							try:
 								comp[key].append(d[cloud][site][queue][param][key])
 							except KeyError:
-								print key, cloud, site, queue, param
-								print comp
-								print d[cloud][site][queue][param]
-								raw_input()
+								comp[key] = d[cloud][site][queue][param][key]
+
 			# Now, for the site, remove all duplicates in the lists. 
 			for key in comp:
 				# If only one value is left, it is common to all queues in the site
