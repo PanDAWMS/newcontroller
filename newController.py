@@ -270,7 +270,6 @@ def allMaker(d):
 				for key in skeys:
 					d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
 			# Adding the "All" queue to the site
-			print cloud, site
 			d[cloud][site][All] = {param:all_d[cloud][site]}
 			d[cloud][site][All].update({over:{}})
 
@@ -316,10 +315,8 @@ def composeFile(d,s,dname):
 			s_aside.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 		else: s.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
 	# Add in all the commented fields
-	s.append(s_aside)
+	s.extend(s_aside)
 	# Complete the dictionary
-	print type(s)
-	print s
 	s.append(spacing + '}' + os.linesep)
 	s.append(os.linesep)
 	return s
