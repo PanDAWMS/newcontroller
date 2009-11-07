@@ -455,7 +455,7 @@ def buildDict():
 	try:
 		clouds = os.listdir(configs)
 	except OSError:
-		remakeConfigs()
+		makeConfigs(sqlDictUnpacker(loadSchedConfig()))
 		
 	for cloud in clouds:
 		# Add each cloud to the dictionary
