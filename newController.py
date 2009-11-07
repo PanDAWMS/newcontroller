@@ -190,7 +190,7 @@ def bdiiIntegrator(confd,d):
 	# This designation is obsolete -- this is strictly BDII information, and no separation is made.
 	for qn in bdict:
 		# Create the nickname of the queue using the queue designation from the dict, plus the jobmanager.
-		nickname = '-'.join([qn,bdict[qn]['jobmanager']])
+		nickname = '-'.join([qn,bdict[qn]['jobmanager']]).rstrip('-')
 		# Try to find the queue in the configs dictionary
 		c,s = findQueue(nickname,confd)
 		# If it's not there, try the dictionary from the DB dictionary
@@ -214,21 +214,17 @@ def bdiiIntegrator(confd,d):
 		# For all the simple translations, copy them in directly.
 		
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
-			try:
-				confd[c][s][nickname][param][key] = bdict[qn][key]
-			except KeyError:
-				print nickname, confd[c][s]				
+			confd[c][s][nickname][param][key] = bdict[qn][key]
 			# Complete the sourcing info
 			confd[c][s][nickname][source][key] = 'BDII'
 		# For the more complicated BDII derivatives, do some more complex work
-		confd[c][s][nickname][param]['queue'] = bdict[qn][key] + '/jobmanager-' + bdict[qn]['jobmanager']
+		confd[c][s][nickname][param]['queue'] = bdict[qn][key] + '/jobmanager' + bdict[qn]['jobmanager']
 		confd[c][s][nickname][param]['jdl'] = bdict[qn][key] + '/jobmanager-' + bdict[qn]['jobmanager']
 		confd[c][s][nickname][param]['nickname'] = nickname
 		# Fill in sourcing here as well for the last few fields
 		for key in ['queue','jdl','nickname']:
 			confd[c][s][nickname][source][key] = 'BDII'
 		print c,s
-
 	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and 
 	#linfotool = lcgInfositeTool.lcgInfositeTool()
 
