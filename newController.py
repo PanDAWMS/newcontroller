@@ -186,7 +186,6 @@ def bdiiIntegrator(confd,d):
 	out = {}
 	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
 	bdict = loadBDII()
-	print bdict
 	# Load the site information directly from BDII and hold it. In the previous software, this was the osgsites dict.
 	# This designation is obsolete -- this is strictly BDII information, and no separation is made.
 	for qn in bdict:
@@ -210,8 +209,8 @@ def bdiiIntegrator(confd,d):
 					confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
 			# Either way, we need to put the queue in without a cloud defined. 
 		# Check for manual setting. If it's manual, DON'T TOUCH
-		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
-			continue
+## 		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
+## 			continue
 		# For all the simple translations, copy them in directly.
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
 			confd[c][s][nickname][param][key] = bdict[qn][key]
