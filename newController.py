@@ -190,7 +190,7 @@ def bdiiIntegrator(confd,d):
 	# This designation is obsolete -- this is strictly BDII information, and no separation is made.
 	for qn in bdict:
 		# Create the nickname of the queue using the queue designation from the dict, plus the jobmanager.
-		nickname = qn + '-' + bdict[qn]['jobmanager']
+		nickname = '-'.join([qn,bdict[qn]['jobmanager']])
 		# Try to find the queue in the configs dictionary
 		c,s = findQueue(nickname,confd)
 		# If it's not there, try the dictionary from the DB dictionary
