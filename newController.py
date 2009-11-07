@@ -148,6 +148,7 @@ def sqlDictUnpacker(d):
 	out_d={}
 	# Run over the DB queues
 	for queue in d:
+		print len(d[queue])
 		# If the present queue's cloud isn't in the out_d, create the cloud.
 		if d[queue][cloud] not in out_d:
 			out_d[d[queue][cloud]] = {}
@@ -161,7 +162,7 @@ def sqlDictUnpacker(d):
 		# That list comprehension at the end of the previous line just creates an empty dictionary and fills it with the keys from the queue
 		# definition. The values are set to DB, and will be changed if another source modifies the value.
 		out_d[d[queue][cloud]][d[queue][site]][d[queue][dbkey]] = protoDict(queue,d)
-
+	
 	# Model keyset for creation of queues from scratch
 	standardkeys=[key for key in d[queue].keys() if key not in excl]
 	return out_d
