@@ -310,6 +310,7 @@ def composeFile(d,s,dname):
 			# Add a comment hash to the line, and add the provenance info 
 			comment = ['##  ',' # Defined in %s' % d[source][key]]
 			# If the value is multiline and needs to be commented, comment every line.
+			valsep = keysep
 			if value.count(os.linesep):
 				value = value.replace('\n','\n%s##  ' % spacing)
 			s_aside.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
