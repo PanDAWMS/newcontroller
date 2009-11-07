@@ -302,6 +302,7 @@ def composeFile(d,s,dname):
 		value = str(d[dname][key])
 		# Sanitize the inputs:
 		value = value.strip("'")
+		if value = None: value = ''
 		# For each key and value, check for multiline values, and add triple quotes when necessary 
 		if value.count(os.linesep):
 			valsep = "'''"
@@ -322,7 +323,7 @@ def composeFile(d,s,dname):
 
 def buildFile(name, d):
 	'''Consolidate the composition and writing of the files'''
-	startstr = '''
+	startstr = '''import datetime
 # This dictionary contains the parameters for one queue.
 # Changing any parameter will update it in the schedconfig database.
 # If you want to change a value temporarily, preserving the previous
