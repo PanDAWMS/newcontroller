@@ -293,8 +293,8 @@ def composeFields(d,s,dname,allFlag=0):
 	except ValueError:
 		keylist.sort()
 		# No point in warning for override or All dictionaries
-		if dname == param and not allFlag: print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, str(d))
-		return 1
+		if dname == param and not allFlag:
+			print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, str(d))
 
 	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
 	s.append('%s = {' % dname + os.linesep )
@@ -462,7 +462,6 @@ def buildDict():
 				# The appropriate dictionaries are placed in locvars
 				execfile(fname,{},locvars)
 				# Feed in the configuration
-				print fname
 				confd[cloud][site][queue][param] = locvars[param]
 				confd[cloud][site][queue][over] = locvars[over] 
 				confd[cloud][site][queue][enab] = locvars[enab]
