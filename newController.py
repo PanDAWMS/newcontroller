@@ -366,7 +366,7 @@ def buildFile(name, d):
 	# the composeFields code.
 	composeFields(d, s, param, allFlag)
 	s.append(overridestr)
-	composeFields(d, s, over, allFlag)
+	composeFields(d, s, over)
 	
 	f=file(name + postfix,'w')
 	f.writelines(s)
@@ -463,10 +463,9 @@ def buildDict():
 				execfile(fname,{},locvars)
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
-				confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
-				print fname
 				confd[cloud][site][queue][over] = locvars[over] 
 				confd[cloud][site][queue][enab] = locvars[enab]
+				confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
 				
 
 	# Leaving the All parameters unincorporated
