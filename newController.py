@@ -97,11 +97,11 @@ def loadBDII():
 		except Exception, e:
 			print "Running lcgLoad.py failed:", e
 			print "Reusing existing lcgQueueUpdate.py"
-			execfile('lcgQueueUpdate.py',{},l)
-			lcgsites = l['osgsites']
-		else:
-			loadlcg = 0
-		return osgsites
+		execfile('lcgQueueUpdate.py',{},l)
+		lcgsites = l['osgsites']
+	else:
+		loadlcg = 0
+	return osgsites
 	  
 # To be completed!!
 def loadToA(queuedefs):
