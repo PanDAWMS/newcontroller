@@ -358,7 +358,7 @@ def buildFile(name, d):
 	s=[startstr]
 	# Put the queue on/off switch in place if not an All file
 	if name is not All: s.append(switchstr)
-	if name = All: allFlag = 1
+	if name == All: allFlag = 1
 	else: allFlag = 0
 	# I'm taking advantage of the universality of lists.
 	# composeFields is modifying the list itself rather than a copy.
