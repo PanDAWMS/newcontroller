@@ -207,12 +207,13 @@ def bdiiIntegrator(confd,d):
 					confd[c][s] = {}
 					# Create it in the main config dictionary, using the standard keys from the DB (set in the initial import)
 					confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
+					print 'Created %s %s' % (c,s)
 			# Either way, we need to put the queue in without a cloud defined. 
 		# Check for manual setting. If it's manual, DON'T TOUCH
 ## 		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
 ## 			continue
+
 		# For all the simple translations, copy them in directly.
-		
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
 			confd[c][s][nickname][param][key] = bdict[qn][key]
 			# Complete the sourcing info
@@ -345,8 +346,8 @@ def buildFile(name, d):
 # Parameters dictionary.
 
 # Parameters that have a comment appended ARE BEING SET ELSEWHERE!
-# You can try to change them, but it will FAIL!
-# If you want to override one of these, use the Override dictionary.
+# You can try to change them here, but it will FAIL!
+# If you want to override one of these values, use the Override dictionary.
 
 # Global values for entire sites can also be set
 # (and overriden) in the "All" files within these directories.
