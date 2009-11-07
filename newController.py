@@ -298,6 +298,7 @@ def composeFile(d,s,dname):
 	s.append('%s = {' % dname + os.linesep )
 	s_aside = []
 	for key in keylist:
+		comment = ''
 		value = str(d[dname][key])
 		# Sanitize the inputs:
 		value = value.strip("'")
