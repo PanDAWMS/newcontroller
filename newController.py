@@ -467,6 +467,7 @@ def buildDict():
 				print cloud, site, queue
 				print confd[cloud][site][queue]
 				print locvars
+				print locvars[over]
 				confd[cloud][site][queue][over] = locvars[over] 
 				confd[cloud][site][queue][enab] = locvars[enab]
 				
