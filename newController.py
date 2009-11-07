@@ -161,14 +161,15 @@ def sqlDictUnpacker(d):
 	
 	# Model keyset for creation of queues from scratch
 	standardkeys=[key for key in d[queue].keys() if key not in excl]
+	# Parse the dictionary to create an All queue for each site
+	status = allMaker(out_d)
 	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
+	# allMaker has to run before this to avoid causing KeyErrors with the new "empty cloud" values 
 	if out_d.has_key(''):
 		out_d[ndef]=out_d.pop('')
 	if out_d.has_key(None):
 		out_d[ndef]=out_d.pop(None)
-	# Parse the dictionary to create an All queue for each site
-	status = allMaker(out_d)
-
+		
 	return out_d
 
 def reducer(l):
