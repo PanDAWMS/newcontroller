@@ -276,7 +276,7 @@ def allMaker(d):
 	
 	return 0
 
-def composeFile(d,s,dname):
+def composeFields(d,s,dname):
 	''' Populate a list for file writing that prints parameter dictionaries cleanly,
 	allowing them to be written to human-modifiable config files for queues and sites.'''
 
@@ -316,6 +316,7 @@ def composeFile(d,s,dname):
 			s_aside.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
 		else: s.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
 	# Add in all the commented fields
+	s.insert(0,'\n')
 	s.extend(s_aside)
 	# Complete the dictionary
 	s.append(spacing + '}' + os.linesep)
@@ -357,10 +358,11 @@ def buildFile(name, d):
 	# Put the queue on/off switch in place if not an All file
 	if name is not All: s.append(switchstr)
 	# I'm taking advantage of the universality of lists.
-	# composeFile is modifying the list itself rather than a copy.
-	composeFile(d, s, param)
+	# composeFields is modifying the list itself rather than a copy.
+	print d
+	composeFields(d, s, param)
 	s.append(overridestr)
-	composeFile(d, s, over)
+	composeFields(d, s, over)
 	
 	f=file(name + postfix,'w')
 	f.writelines(s)
