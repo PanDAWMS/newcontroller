@@ -89,6 +89,7 @@ def loadBDII():
 	This file is executed (even if generating it failed this time) and populated a dictionary of queue definitions, which is
 	returned.'''
 	osgsites={}
+	l={}
 	if os.path.exists('lcgLoad.py'):
 		print "Updating LCG sites from BDII"
 		try:
@@ -96,11 +97,11 @@ def loadBDII():
 		except Exception, e:
 			print "Running lcgLoad.py failed:", e
 			print "Reusing existing lcgQueueUpdate.py"
-			execfile('lcgQueueUpdate.py')
-			lcgsites = osgsites
+			execfile('lcgQueueUpdate.py',{},l)
+			lcgsites = l['osgsites']
 		else:
 			loadlcg = 0
-		return lcgsites
+		return osgsites
 	  
 # To be completed!!
 def loadToA(queuedefs):
