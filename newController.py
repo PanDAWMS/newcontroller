@@ -286,35 +286,39 @@ def composeFields(d,s,dname):
 	print len(keylist)
 	try:
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
-		keylist.remove(dbkey)
-		keylist.sort()
 		if dname == param:
+			keylist.remove(dbkey)
+			keylist.sort()
 			keylist.insert(0,dbkey)
+		else:
+			keylist.sort()
+			
 		
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
-		#if dname == param: print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, str(d))
+		if dname == param: print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, str(d))
 		pass
 	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
 	s.append('%s = {' % dname + os.linesep )
 	s_aside = []
 	for key in keylist:
-		comment = ''
-		value = str(d[dname][key])
-		# Sanitize the inputs:
-		value = value.strip("'")
-		if value == None: value = ''
-		# For each key and value, check for multiline values, and add triple quotes when necessary 
-		if value.count(os.linesep):
-			valsep = "'''"
-		else:
-			valsep = keysep
-		# If the value is being set somewhere other than the DB, comment it and send it to the bottom of the list
-		if dname == param and d.has_key(source) and d[source][key] is not 'DB':
-			# Add a comment to the line with the provenance info 
-			comment = ' # Defined in %s' % d[source][key]
-			s_aside.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
-		else: s.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
+		if key not in excl:
+			comment = ''
+			value = str(d[dname][key])
+			# Sanitize the inputs:
+			value = value.strip("'")
+			if value == None: value = ''
+			# For each key and value, check for multiline values, and add triple quotes when necessary 
+			if value.count(os.linesep):
+				valsep = "'''"
+			else:
+				valsep = keysep
+			# If the value is being set somewhere other than the DB, comment it and send it to the bottom of the list
+			if dname == param and d.has_key(source) and d[source][key] is not 'DB':
+				# Add a comment to the line with the provenance info 
+				comment = ' # Defined in %s' % d[source][key]
+				s_aside.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
+			else: s.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
 	# Add in all the commented fields
 	s.insert(0,'\n')
 	s.extend(s_aside)
@@ -359,7 +363,6 @@ def buildFile(name, d):
 	if name is not All: s.append(switchstr)
 	# I'm taking advantage of the universality of lists.
 	# composeFields is modifying the list itself rather than a copy.
-	print d
 	composeFields(d, s, param)
 	s.append(overridestr)
 	composeFields(d, s, over)
