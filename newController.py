@@ -9,7 +9,6 @@
 
 # TODO:
 
-# Fix multiline handling in commented variables
 # Add installedSW table support
 # Add a consistency checker
 # Add manual pickle restoration code
@@ -18,7 +17,6 @@
 # Add change detection to avoid DB change collisions
 # Add logging output for changes and status
 # Add queue insertion scripts
-# Add empty site and cloud cleanup
 # Add code for handling the jdllist (jdltext) table (field)
 # Change to flexible mount point
 # Make sure manual queues remain unmodified by BDII!
@@ -183,7 +181,7 @@ def findQueue(q,d):
 					return cloud, site
 	return '',''
 
-def bdiiIntegrator(d,confd):
+def bdiiIntegrator(confd,d):
 	'''Adds BDII values to the configurations, overriding what was there. Must be run after downloading the DB
 	and parsing the config files.'''
 	out = {}
@@ -194,32 +192,38 @@ def bdiiIntegrator(d,confd):
 	for qn in bdict:
 		# Create the nickname of the queue using the queue designation from the dict, plus the jobmanager.
 		nickname = qn + '-' + bdict[qn]['jobmanager']
-		# Try to find the queue in the DB dictionary
-		c,s = findQueue(nickname,d)
-		# If it's not there, try the dictionary from the previous config files
+		# Try to find the queue in the configs dictionary
+		c,s = findQueue(nickname,confd)
+		# If it's not there, try the dictionary from the DB dictionary
 		if not c and not s:
-			c,s = findQueue(nickname,confd)
+			c,s = findQueue(nickname,d)
 			# If the queue is not in the DB, and is not inactive in the config files, then:
 			if not c and not s:
-				c,s = ndef,bdict[qn]['site']
+				# If a site is specified, go ahead
+				if bdict[qn]['site']: c,s = ndef,bdict[qn]['site']
+				# If not, time to give up. BDII is hopelessly misconfigured -- best not to contaminate
+				else: continue
 				# If site doesn't yet exist, create it:
-				if s not in d[c]:
-					d[c][s] = {}
-					# Create it in the main dictionary, using the standard keys from the DB
-					d[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
+				if s not in confd[c]:
+					confd[c][s] = {}
+					# Create it in the main config dictionary, using the standard keys from the DB (set in the initial import)
+					confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
 			# Either way, we need to put the queue in without a cloud defined. 
+		# Check for manual setting. If it's manual, DON'T TOUCH
+		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
+			continue
 		# For all the simple translations, copy them in directly.
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
-			d[c][s][nickname][param][key] = bdict[qn][key]
+			confd[c][s][nickname][param][key] = bdict[qn][key]
 			# Complete the sourcing info
-			d[c][s][nickname][source][key] = 'BDII'
+			confd[c][s][nickname][source][key] = 'BDII'
 		# For the more complicated BDII derivatives, do some more complex work
-		d[c][s][nickname][param]['queue'] = bdict[qn][key] + '/jobmanager-' + bdict[qn]['jobmanager']
-		d[c][s][nickname][param]['jdl'] = bdict[qn][key] + '/jobmanager-' + bdict[qn]['jobmanager']
-		d[c][s][nickname][param]['nickname'] = nickname
+		confd[c][s][nickname][param]['queue'] = bdict[qn][key] + '/jobmanager-' + bdict[qn]['jobmanager']
+		confd[c][s][nickname][param]['jdl'] = bdict[qn][key] + '/jobmanager-' + bdict[qn]['jobmanager']
+		confd[c][s][nickname][param]['nickname'] = nickname
 		# Fill in sourcing here as well for the last few fields
 		for key in ['queue','jdl','nickname']:
-			d[c][s][nickname][source][key] = 'BDII'
+			confd[c][s][nickname][source][key] = 'BDII'
 
 	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and 
 	linfotool = lcgInfositeTool.lcgInfositeTool()
@@ -303,7 +307,7 @@ def composeFields(d,s,dname,allFlag=0):
 		if key not in excl:
 			comment = ''
 			value = str(d[dname][key])
-			# Sanitize the inputs:
+			# Sanitize the inputs (having some trouble with quotes being the contents of a field):
 			value = value.strip("'")
 			if value == None: value = ''
 			# For each key and value, check for multiline values, and add triple quotes when necessary 
@@ -311,8 +315,8 @@ def composeFields(d,s,dname,allFlag=0):
 				valsep = "'''"
 			else:
 				valsep = keysep
-			# If the value is being set somewhere other than the DB, comment it and send it to the bottom of the list
-			if dname == param and d.has_key(source) and d[source][key] is not 'DB':
+			# If the value is being set somewhere other than the config files, comment it and send it to the bottom of the list
+			if dname == param and d.has_key(source) and d[source][key] is not 'Config':
 				# Add a comment to the line with the provenance info 
 				comment = ' # Defined in %s' % d[source][key]
 				s_aside.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
@@ -495,6 +499,8 @@ if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB
 
+	configd = buildDict()
+	status = allMaker(configd)
 	cloudd = sqlDictUnpacker(loadSchedConfig())
 
 	# Compose the "All" queues for each site
@@ -527,6 +533,5 @@ if __name__ == "__main__":
 
 
 			os.chdir(base_path)
-	configd = buildDict()
 		
 		
