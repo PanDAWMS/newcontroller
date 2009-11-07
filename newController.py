@@ -213,6 +213,7 @@ def bdiiIntegrator(confd,d):
 ## 			continue
 		# For all the simple translations, copy them in directly.
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
+			print nickname, confd[c][s]
 			confd[c][s][nickname][param][key] = bdict[qn][key]
 			# Complete the sourcing info
 			confd[c][s][nickname][source][key] = 'BDII'
