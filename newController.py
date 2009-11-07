@@ -282,7 +282,7 @@ def composeFile(d,s,dname):
 
 	# "dname" is one of two things -- "Parameters" or "Override", depending on what part of the  
 	# file we're writing. They're defined generally as param and over 
-	keylist = d[dname].keys()
+	keylist = d[dname].keys().sorted()
 	print keylist
 	try:
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
