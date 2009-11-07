@@ -96,7 +96,7 @@ def loadBDII():
 		except Exception, e:
 			print 'Running lcgLoad.py failed:', e
 			print 'Reusing existing lcgQueueUpdate.py'
-		execfile('lcgQueueUpdate.py > lcgqueueupdate.log')
+		execfile('lcgQueueUpdate.py')
 	else:
 		loadlcg = 0
 	return osgsites
