@@ -515,7 +515,7 @@ if __name__ == "__main__":
 	if cloudd.has_key(None):
 		cloudd[ndef]=cloudd.pop(None)
 
-	bdiiIntegrator(confd, cloudd)
+	bdiiIntegrator(configd, cloudd)
 
 
 	# Create the config path for each cloud
