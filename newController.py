@@ -298,7 +298,6 @@ def composeFile(d,s,dname):
 	s.append('%s = {' % dname + os.linesep )
 	s_aside = []
 	for key in keylist:
-		comment = ['','']
 		value = str(d[dname][key])
 		# Sanitize the inputs:
 		value = value.strip("'")
@@ -309,13 +308,10 @@ def composeFile(d,s,dname):
 			valsep = keysep
 		# If the value is being set somewhere other than the DB, comment it and send it to the bottom of the list
 		if dname == param and d.has_key(source) and d[source][key] is not 'DB':
-			# Add a comment hash to the line, and add the provenance info 
-			comment = ['##  ',' # Defined in %s' % d[source][key]]
-			# If the value is multiline and needs to be commented, comment every line.
-			if value.count(os.linesep):
-				value = value.replace('\n','\n%s##  ' % spacing)
-			s_aside.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
-		else: s.append(spacing + comment[0] + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment[1] + os.linesep)
+			# Add a comment to the line with the provenance info 
+			comment = ' # Defined in %s' % d[source][key]
+			s_aside.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
+		else: s.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
 	# Add in all the commented fields
 	s.extend(s_aside)
 	# Complete the dictionary
@@ -332,6 +328,10 @@ def buildFile(name, d):
 # value, please put that parameter (key and new value) in the Override
 # dictionary. Any value in Override will supersede any value in the
 # Parameters dictionary.
+
+# Parameters that have a comment appended ARE BEING SET ELSEWHERE!
+# You can try to change them, but it will FAIL!
+# If you want to override one of these, use the Override dictionary.
 
 # Global values for entire sites can also be set
 # (and overriden) in the "All" files within these directories.
