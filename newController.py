@@ -212,8 +212,8 @@ def bdiiIntegrator(confd,d):
 ## 		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
 ## 			continue
 		# For all the simple translations, copy them in directly.
+		print nickname, confd[c][s]
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
-			print nickname, confd[c][s]
 			confd[c][s][nickname][param][key] = bdict[qn][key]
 			# Complete the sourcing info
 			confd[c][s][nickname][source][key] = 'BDII'
