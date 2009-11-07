@@ -259,7 +259,7 @@ def allMaker(d):
 							try:
 								comp[key].append(d[cloud][site][queue][param][key])
 							except KeyError:
-								comp[key] = d[cloud][site][queue][param][key]
+								comp[key] = [d[cloud][site][queue][param][key]]
 
 			# Now, for the site, remove all duplicates in the lists. 
 			for key in comp:
