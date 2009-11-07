@@ -294,7 +294,7 @@ def composeFields(d,s,dname,allFlag=0):
 		keylist.sort()
 		# No point in warning for override or All dictionaries
 		if dname == param and not allFlag: print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, str(d))
-		break
+		return 1
 
 	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
 	s.append('%s = {' % dname + os.linesep )
@@ -323,7 +323,7 @@ def composeFields(d,s,dname,allFlag=0):
 	# Complete the dictionary
 	s.append(spacing + '}' + os.linesep)
 	s.append(os.linesep)
-	return s
+	return 0
 
 def buildFile(name, d):
 	'''Consolidate the composition and writing of the files'''
