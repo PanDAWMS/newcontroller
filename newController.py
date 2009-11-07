@@ -82,7 +82,6 @@ def loadSchedConfig():
 	for i in rows:
 		d[i[dbkey]]=i
 
-	print len(d)
 	return d
 
 
@@ -277,31 +276,26 @@ def allMaker(d):
 	
 	return 0
 
-def composeFields(d,s,dname):
+def composeFields(d,s,dname,allFlag=0):
 	''' Populate a list for file writing that prints parameter dictionaries cleanly,
 	allowing them to be written to human-modifiable config files for queues and sites.'''
 
 	# "dname" is one of two things -- "Parameters" or "Override", depending on what part of the  
 	# file we're writing. They're defined generally as param and over 
 	keylist = d[dname].keys()
-	if 'nickname' not in keylist and dname == param:
-		print keylist, d
 	try:
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
-		if dname == param:
-			keylist.remove(dbkey)
-			keylist.sort()
-			keylist.insert(0,dbkey)
- 		else:
-			keylist.sort()
-		if 'nickname' not in keylist and dname == param:
-			print keylist, d
-			
-		
+		keylist.remove(dbkey)
+		keylist.sort()
+		keylist.insert(0,dbkey)
+
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
-		if dname == param: print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, str(d))
-		pass
+		keylist.sort()
+		# No point in warning for override or All dictionaries
+		if dname == param and not allFlag: print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, str(d))
+		break
+
 	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
 	s.append('%s = {' % dname + os.linesep )
 	s_aside = []
@@ -360,16 +354,19 @@ def buildFile(name, d):
 '''
 
 	switchstr = 'Enabled = True\n\n'
-
 	# Load up the file intro
 	s=[startstr]
 	# Put the queue on/off switch in place if not an All file
 	if name is not All: s.append(switchstr)
+	if name = All: allFlag = 1
+	else: allFlag = 0
 	# I'm taking advantage of the universality of lists.
 	# composeFields is modifying the list itself rather than a copy.
-	composeFields(d, s, param)
+	# Since the params in the All files have no keys to find, we warn
+	# the composeFields code.
+	composeFields(d, s, param, allFlag)
 	s.append(overridestr)
-	composeFields(d, s, over)
+	composeFields(d, s, over, allFlag)
 	
 	f=file(name + postfix,'w')
 	f.writelines(s)
