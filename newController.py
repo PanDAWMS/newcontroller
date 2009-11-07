@@ -188,6 +188,7 @@ def bdiiIntegrator(confd,d):
 	out = {}
 	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
 	bdict = loadBDII()
+	print bdict
 	# Load the site information directly from BDII and hold it. In the previous software, this was the osgsites dict.
 	# This designation is obsolete -- this is strictly BDII information, and no separation is made.
 	for qn in bdict:
