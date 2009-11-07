@@ -262,6 +262,7 @@ def allMaker(d):
 								print key, cloud, site, queue, param
 								print comp
 								print d[cloud][site][queue][param]
+								raw_input()
 			# Now, for the site, remove all duplicates in the lists. 
 			for key in comp:
 				# If only one value is left, it is common to all queues in the site
