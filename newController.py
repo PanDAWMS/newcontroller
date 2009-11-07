@@ -52,7 +52,7 @@ except:
 
 safety = "on"
 All = 'All'
-ndef = 'Not_Defined'
+ndef = 'Deactivated'
 param = 'Parameters'
 over = 'Override'
 source = 'Source'
@@ -90,13 +90,13 @@ def loadBDII():
 	returned.'''
 	osgsites={}
 	if os.path.exists('lcgLoad.py'):
-		print "Updating LCG sites from BDII"
+		print 'Updating LCG sites from BDII'
 		try:
-			print commands.getoutput('./lcgLoad.py')
+			print commands.getoutput('./lcgLoad.py > lcgload.log')
 		except Exception, e:
-			print "Running lcgLoad.py failed:", e
-			print "Reusing existing lcgQueueUpdate.py"
-		execfile('lcgQueueUpdate.py')
+			print 'Running lcgLoad.py failed:', e
+			print 'Reusing existing lcgQueueUpdate.py'
+		execfile('lcgQueueUpdate.py > lcgqueueupdate.log')
 	else:
 		loadlcg = 0
 	return osgsites
