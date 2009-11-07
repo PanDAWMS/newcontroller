@@ -464,10 +464,7 @@ def buildDict():
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
 				confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
-				print cloud, site, queue
-				print confd[cloud][site][queue]
-				print locvars
-				print locvars[over]
+				print fname
 				confd[cloud][site][queue][over] = locvars[over] 
 				confd[cloud][site][queue][enab] = locvars[enab]
 				
