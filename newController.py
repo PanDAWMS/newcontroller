@@ -492,7 +492,6 @@ def buildDict():
 				confd[cloud][site][queue][enab] = locvars[enab]
 				confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
 				
-
 	# Leaving the All parameters unincorporated
 	os.chdir(base)
 	return confd
