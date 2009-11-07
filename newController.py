@@ -302,7 +302,7 @@ def composeFile(d,s,dname):
 		value = str(d[dname][key])
 		# Sanitize the inputs:
 		value = value.strip("'")
-		if value = None: value = ''
+		if value == None: value = ''
 		# For each key and value, check for multiline values, and add triple quotes when necessary 
 		if value.count(os.linesep):
 			valsep = "'''"
