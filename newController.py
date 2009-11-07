@@ -323,7 +323,7 @@ def composeFile(d,s,dname):
 
 def buildFile(name, d):
 	'''Consolidate the composition and writing of the files'''
-	startstr = '''import datetime
+	startstr = '''
 # This dictionary contains the parameters for one queue.
 # Changing any parameter will update it in the schedconfig database.
 # If you want to change a value temporarily, preserving the previous
