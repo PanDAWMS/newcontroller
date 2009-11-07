@@ -300,6 +300,8 @@ def composeFile(d,s,dname):
 	for key in keylist:
 		comment = ['','']
 		value = str(d[dname][key])
+		# Sanitize the inputs:
+		value = value.strip("'")
 		# For each key and value, check for multiline values, and add triple quotes when necessary 
 		if value.count(os.linesep):
 			valsep = "'''"
