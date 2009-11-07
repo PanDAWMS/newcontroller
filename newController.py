@@ -455,8 +455,12 @@ def buildDict():
 	try:
 		clouds = os.listdir(configs)
 	except OSError:
+		# If the configs folder is missing and this is the first thing run,
+		# Reload this from the DB.
+		# When SVN is in place, this should be replaced by a svn checkout.
 		makeConfigs(sqlDictUnpacker(loadSchedConfig()))
-		
+		clouds = os.listdir(configs)
+
 	for cloud in clouds:
 		# Add each cloud to the dictionary
 		confd[cloud] = {}
