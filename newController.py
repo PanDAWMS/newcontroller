@@ -256,7 +256,12 @@ def allMaker(d):
 					# Fill the lists with the values for the keys from this queue
 					for key in d[cloud][site][queue][param]:
 						if key not in excl:
-							comp[key].append(d[cloud][site][queue][param][key])
+							try:
+								comp[key].append(d[cloud][site][queue][param][key])
+							except KeyError:
+								print key, cloud, site, queue, param
+								print comp
+								print d[cloud][site][queue][param]
 			# Now, for the site, remove all duplicates in the lists. 
 			for key in comp:
 				# If only one value is left, it is common to all queues in the site
