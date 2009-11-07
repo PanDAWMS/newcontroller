@@ -161,6 +161,14 @@ def sqlDictUnpacker(d):
 	
 	# Model keyset for creation of queues from scratch
 	standardkeys=[key for key in d[queue].keys() if key not in excl]
+	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
+	if out_d.has_key(''):
+		out_d[ndef]=out_d.pop('')
+	if out_d.has_key(None):
+		out_d[ndef]=out_d.pop(None)
+	# Parse the dictionary to create an All queue for each site
+	status = allMaker(out_d)
+
 	return out_d
 
 def reducer(l):
@@ -443,7 +451,11 @@ def buildDict():
 	locvars={}
 	base = os.getcwd()
 	# Loop throught the clouds in the base folder
-	clouds = os.listdir(configs)
+	try:
+		clouds = os.listdir(configs)
+	except OSError:
+		remakeConfigs()
+		
 	for cloud in clouds:
 		# Add each cloud to the dictionary
 		confd[cloud] = {}
@@ -504,34 +516,16 @@ def jdlListAdder(d):
 	pass
 
 
-if __name__ == "__main__":
-	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
-	# Load the present status of the DB
-
-	configd = buildDict()
-	status = allMaker(configd)
-	cloudd = sqlDictUnpacker(loadSchedConfig())
-
-	# Compose the "All" queues for each site
-	status = allMaker(cloudd)
-	if cloudd.has_key(''):
-		cloudd[ndef]=cloudd.pop('')
-	if cloudd.has_key(None):
-		cloudd[ndef]=cloudd.pop(None)
-
-	bdiiIntegrator(configd, cloudd)
-
-
-	# Create the config path for each cloud
-	for cloud in cloudd:
-		cpath = configs + os.sep + cloud
-		try:
-			os.makedirs(cpath)
-		except OSError:
-			pass
+def makeConfigs(d):
+	''' Reconstitutes the configuration files from the passed dictionary'''
+	for cloud in d:
+		# The working cloud path is made from the config base
+		cloudpath = configs + os.sep + cloud
 		# Create the config path for each site 
-		for site in cloudd[cloud]:
-			path = cpath + os.sep + site
+		for site in d[cloud]:
+			# The working site path is made from the config base and cloud path
+			path = cloudpath + os.sep + site
+			# Try to make the path. If this fails, the path already exists.
 			try:
 				os.makedirs(path)
 			except OSError:
@@ -539,10 +533,25 @@ if __name__ == "__main__":
 			# Go on in...
 			os.chdir(path)
 			# And for each queue, create a config file. 
-			for queue in cloudd[cloud][site]:
-				buildFile(queue, cloudd[cloud][site][queue])
+			for queue in d[cloud][site]:
+				buildFile(queue, d[cloud][site][queue])
+	return d
+
+if __name__ == "__main__":
+	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
+	# Load the present status of the DB
+	cloudd = sqlDictUnpacker(loadSchedConfig())
+	configd = buildDict()
+	status = allMaker(configd)
+	
+	# Compose the "All" queues for each site
+
+	bdiiIntegrator(configd, cloudd)
 
 
-			os.chdir(base_path)
+	# Create the config path for each cloud
+
+
+	os.chdir(base_path)
 		
 		
