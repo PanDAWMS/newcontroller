@@ -462,6 +462,7 @@ def buildDict():
 				# The appropriate dictionaries are placed in locvars
 				execfile(fname,{},locvars)
 				# Feed in the configuration
+				print fname
 				confd[cloud][site][queue][param] = locvars[param]
 				confd[cloud][site][queue][over] = locvars[over] 
 				confd[cloud][site][queue][enab] = locvars[enab]
