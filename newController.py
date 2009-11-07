@@ -283,21 +283,18 @@ def composeFile(d,s,dname):
 	# "dname" is one of two things -- "Parameters" or "Override", depending on what part of the  
 	# file we're writing. They're defined generally as param and over 
 	keylist = d[dname].keys()
-	keylist.sort()
-	print keylist
 	try:
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
 		keylist.remove(dbkey)
 		keylist.sort()
 		if dname == param:
 			keylist.insert(0,dbkey)
-			print 'Reinserted'
 		
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
 		#if dname == param: print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, str(d))
-		keylist.sort()
-
+		print dbkey, keylist
+		
 	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
 	s.append('%s = {' % dname + os.linesep )
 	s_aside = []
