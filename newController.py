@@ -284,7 +284,7 @@ def allMaker(d):
 	for cloud in d.keys():
 		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
 			# No point in making an All file for one queue definition:
-			if len(d[cloud][site] > 1:
+			if len(d[cloud][site]) > 1:
 				# Extract all affected keys for the site
 				skeys = all_d[cloud][site].keys()
 				# Going queue by queue, update the provenance for both cloud and site general parameters.
