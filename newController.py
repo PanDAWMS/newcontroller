@@ -216,6 +216,7 @@ def bdiiIntegrator(confd,d):
 					confd[c][s] = {}
 					# Create it in the main config dictionary, using the standard keys from the DB (set in the initial import)
 					confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
+					confd[c][s][nickname][enabled] = 'False'
 			# Either way, we need to put the queue in without a cloud defined. 
 		# Check for manual setting. If it's manual, DON'T TOUCH
 ## 		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
@@ -224,6 +225,7 @@ def bdiiIntegrator(confd,d):
 		# If the queue is not present even after all that, add it. 
 		if dbkey not in confd[c][s]:
 			confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
+			confd[c][s][nickname][enabled] = 'False'
 		# For all the simple translations, copy them in directly.
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
 			confd[c][s][nickname][param][key] = bdict[qn][key]
@@ -375,11 +377,11 @@ def buildFile(name, d):
 
 '''
 
-	switchstr = 'Enabled = True\n\n'
+	switchstr = 'Enabled = '
 	# Load up the file intro
 	s=[startstr]
 	# Put the queue on/off switch in place if not an All file
-	if name is not All: s.append(switchstr)
+	if name is not All: s.append(switchstr + d[enabled] + '\n\n')
 	if name == All: allFlag = 1
 	else: allFlag = 0
 	# I'm taking advantage of the universality of lists.
