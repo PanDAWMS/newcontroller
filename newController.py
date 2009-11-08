@@ -202,8 +202,8 @@ def bdiiIntegrator(confd,d):
 		nickname = '-'.join([qn,bdict[qn]['jobmanager']]).rstrip('-')
 		# Try to find the queue in the configs dictionary
 		c,s = findQueue(nickname,confd)
-		# If it's not there, try the dictionary from the DB dictionary
 		if not c and not s:
+			# If it's not there, try the dictionary from the DB dictionary
 			c,s = findQueue(nickname,d)
 			# If the queue is not in the DB, and is not inactive in the config files, then:
 			if not c and not s:
@@ -222,6 +222,11 @@ def bdiiIntegrator(confd,d):
 ## 		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
 ## 			continue
 
+		# Make sure the cloud and site are even defined.
+		if c not in confd:
+			confd[c] = {}
+		if s not in confd[c]:
+			confd[c][s] = {}
 		# If the queue is not present even after all that, add it. 
 		if dbkey not in confd[c][s]:
 			confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
