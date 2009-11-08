@@ -200,9 +200,6 @@ def bdiiIntegrator(confd,d):
 	for qn in bdict:
 		# Create the nickname of the queue using the queue designation from the dict, plus the jobmanager.
 		nickname = '-'.join([qn,bdict[qn]['jobmanager']]).rstrip('-')
-		if nickname.startswith('GLOW-cmsgrid01'):
-			print nickname, bdict[qn]
-			raw_input()
 		# Try to find the queue in the configs dictionary
 		c,s = findQueue(nickname,confd)
 		# If it's not there, try the dictionary from the DB dictionary
