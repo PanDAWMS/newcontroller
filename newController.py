@@ -386,7 +386,7 @@ def buildFile(name, d):
 	# Load up the file intro
 	s=[startstr]
 	# Put the queue on/off switch in place if not an All file
-	if name is not All: s.append(switchstr + d[enable] + '\n\n')
+	if name is not All: s.append(switchstr + d[enab] + '\n\n')
 	if name == All: allFlag = 1
 	else: allFlag = 0
 	# I'm taking advantage of the universality of lists.
