@@ -92,7 +92,7 @@ def loadBDII():
 	if os.path.exists('lcgLoad.py'):
 		print 'Updating LCG sites from BDII'
 		try:
-			print commands.getoutput('./lcgLoad.py > lcgload.log')
+			commands.getoutput('./lcgLoad.py > lcgload.log')
 		except Exception, e:
 			print 'Running lcgLoad.py failed:', e
 			print 'Reusing existing lcgQueueUpdate.py'
@@ -216,7 +216,6 @@ def bdiiIntegrator(confd,d):
 					confd[c][s] = {}
 					# Create it in the main config dictionary, using the standard keys from the DB (set in the initial import)
 					confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
-					print 'Created %s %s' % (c,s)
 			# Either way, we need to put the queue in without a cloud defined. 
 		# Check for manual setting. If it's manual, DON'T TOUCH
 ## 		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
@@ -237,7 +236,7 @@ def bdiiIntegrator(confd,d):
 		# Fill in sourcing here as well for the last few fields
 		for key in ['queue','jdl','nickname']:
 			confd[c][s][nickname][source][key] = 'BDII'
-		print c,s
+
 	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and 
 	#linfotool = lcgInfositeTool.lcgInfositeTool()
 
@@ -284,17 +283,18 @@ def allMaker(d):
 	# Running across sites to update source information in the main dictionary
 	for cloud in d.keys():
 		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
-			# Extract all affected keys for the site
-			skeys = all_d[cloud][site].keys()
-			# Going queue by queue, update the provenance for both cloud and site general parameters.
-			for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
-				for key in skeys:
-					d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
-			# Adding the "All" queue to the site
-			d[cloud][site][All] = {param:all_d[cloud][site]}
-			d[cloud][site][All].update({over:{}})
+			# No point in making an All file for one queue definition:
+			if len(d[cloud][site] > 1:
+				# Extract all affected keys for the site
+				skeys = all_d[cloud][site].keys()
+				# Going queue by queue, update the provenance for both cloud and site general parameters.
+				for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
+					for key in skeys:
+						d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
+				# Adding the "All" queue to the site
+				d[cloud][site][All] = {param:all_d[cloud][site]}
+				d[cloud][site][All].update({over:{}})
 
-	
 	return 0
 
 def composeFields(d,s,dname,allFlag=0):
