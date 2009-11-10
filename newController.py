@@ -296,9 +296,6 @@ def bdiiIntegrator(confd,d):
 			print "Release tags: %s for %s"%(releases,confd[c][s][nickname][param]['nickname'])
 			confd[c][s][nickname][param]['releases']=releases
 			# Ruse to find sl4 sites 
-			if '14.5.0' in tags:
-				print "Set cmtconfig for %s"%confd[c][s][nickname][param]['nickname']
-				confd[c][s][nickname][param]['cmtconfig']='i686-slc4-gcc34-opt'
 
 
 		else:
