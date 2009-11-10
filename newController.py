@@ -274,6 +274,7 @@ def bdiiIntegrator(confd,d):
 ## 		else:
 ## 			print("No eTags!")
 
+		# Needs work!!!
 		if len(tags) > 0:
 			for tag in tags:
 				try:
@@ -302,13 +303,13 @@ def bdiiIntegrator(confd,d):
 			print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
 
 
-		# validatedreleaeses for reprocessing
-		# not here but set manually in sqlplus
-		# Fill the RAM
-		memory = linfotool.getRAM(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
-		maxcpu = linfotool.getMaxcpu(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
-		if confd[c][s][nickname][param]['site'] in ['IN2P3-LAPP']:
-			confd[c][s][nickname][param]['maxtime'] = maxcpu  
+## 		# validatedreleaeses for reprocessing
+## 		# not here but set manually in sqlplus
+## 		# Fill the RAM
+## 		confd[c][s][nickname][param]['memory'] = linfotool.getRAM(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
+## 		confd[c][s][nickname][param]['maxcpu'] = linfotool.getMaxcpu(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
+## 		if confd[c][s][nickname][param]['site'] in ['IN2P3-LAPP']:
+## 			confd[c][s][nickname][param]['maxtime'] = maxcpu  
 
 	
 	# All changes to the dictionary happened live -- no need to return it.
