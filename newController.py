@@ -97,7 +97,7 @@ def loadBDII():
 			print 'Running lcgLoad.py failed:', e
 			print 'Reusing existing lcgQueueUpdate.py'
 		execfile('lcgQueueUpdate.py')
-		print 'LCG Initial Load Completed'
+		print 'LCG Initial Load Complete'
 	else:
 		loadlcg = 0
 	return osgsites
@@ -133,8 +133,9 @@ def protoDict(queue,d,sourcestr='DB',keys=[]):
 	'''Create a dictionary with params, overrides and sources for either an existing definition from the DB, or to add the dictionaries
 	for a new queue. Used in sqlDictUnpacker for extraction of DB values (default) and in bdiiIntegrator for new queue addition from the BDII.'''
 	if not len(d):
-		d={queue:dict([(key,'') for key in keys])}
-	return {param:d[queue],over:{},source:dict([(key,sourcestr) for key in d[queue].keys() if key not in excl])}
+		e = 'False'
+		d = {queue:dict([(key,'') for key in keys])}
+	return {param:d[queue],over:{},source:dict([(key,sourcestr) for key in d[queue].keys() if key not in excl]),enab:e}
 	
 def sqlDictUnpacker(d):
 	'''Unpack the dictionary returned by Oracle or MySQL''' 
