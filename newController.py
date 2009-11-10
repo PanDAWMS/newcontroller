@@ -97,6 +97,7 @@ def loadBDII():
 			print 'Running lcgLoad.py failed:', e
 			print 'Reusing existing lcgQueueUpdate.py'
 		execfile('lcgQueueUpdate.py')
+		print 'LCG Initial Load Completed'
 	else:
 		loadlcg = 0
 	return osgsites
