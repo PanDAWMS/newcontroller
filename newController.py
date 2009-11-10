@@ -216,7 +216,7 @@ def bdiiIntegrator(confd,d):
 					confd[c][s] = {}
 					# Create it in the main config dictionary, using the standard keys from the DB (set in the initial import)
 					confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
-					confd[c][s][nickname][enabled] = 'False'
+					confd[c][s][nickname][enab] = 'False'
 			# Either way, we need to put the queue in without a cloud defined. 
 		# Check for manual setting. If it's manual, DON'T TOUCH
 ## 		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
