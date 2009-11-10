@@ -132,6 +132,7 @@ def pickleBackup(d):
 def protoDict(queue,d,sourcestr='DB',keys=[]):
 	'''Create a dictionary with params, overrides and sources for either an existing definition from the DB, or to add the dictionaries
 	for a new queue. Used in sqlDictUnpacker for extraction of DB values (default) and in bdiiIntegrator for new queue addition from the BDII.'''
+	e = 'True'
 	if not len(d):
 		e = 'False'
 		d = {queue:dict([(key,'') for key in keys])}
