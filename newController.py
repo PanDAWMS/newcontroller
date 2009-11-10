@@ -9,6 +9,7 @@
 
 # TODO:
 
+# Add ToA handling
 # Add installedSW table support
 # Add a consistency checker
 # Add manual pickle restoration code
@@ -24,7 +25,6 @@
 # BDII adding queues to clouds and sites -- note and copy parameters that apply to all. Then set offline and wait for mods.
 # Make sure that the All source is subordinate to the BDII source
 # Make sure that the jdladd field is fully commented when it's being removed from the source
-# All of those ccomps I removed seem to have killed my site-level All files! Fix it!
 
 # This code has been organized for easy transition into a class structure.
 
@@ -198,6 +198,14 @@ def bdiiIntegrator(confd,d):
 	out = {}
 	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
 	bdict = loadBDII()
+	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and releases available on the sites 
+	print 'Running the LGC SiteInfo tool'
+	linfotool = lcgInfositeTool.lcgInfositeTool()
+	print 'Completed the LGC SiteInfo tool run'
+
+	# Defining a release dictionary
+	rellist={}
+	
 	# Load the site information directly from BDII and hold it. In the previous software, this was the osgsites dict.
 	# This designation is obsolete -- this is strictly BDII information, and no separation is made.
 	for qn in bdict:
@@ -246,9 +254,71 @@ def bdiiIntegrator(confd,d):
 		# Fill in sourcing here as well for the last few fields
 		for key in ['queue','jdl','nickname']:
 			confd[c][s][nickname][source][key] = 'BDII'
+		
+		tags=linfotool.getSWtags(confd[c][s][nickname][param]['gatekeeper'])
+		etags=linfotool.getSWctags(confd[c][s][nickname][param]['gatekeeper'])
+		if len(etags) > 0:
+			for tag in etags:
+				try:
+					cache=tag.replace('production','AtlasProduction').replace('tier0','AtlasTier0') 
+					release='.'.join(tag.split('-')[1].split('.')[:-1])
+					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],cache)
+					rellist[idx]=dict([('site',confd[c][s][nickname][param]['site']),('cloud',confd[c][s][nickname][param]['cloud'])])
+					rellist[idx]['release'] = release
+					rellist[idx]['cache'] = cache
+					rellist[idx]['siteid'] = '' # to fill later, when this is available
+					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
+					rellist[idx]['gatekeeper'] = gk
+				except KeyError:
+					print confd[c][s][nickname][param]
+		else:
+			print("No eTags!")
 
-	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and 
-	#linfotool = lcgInfositeTool.lcgInfositeTool()
+		if len(tags) > 0:
+			for tag in tags:
+				try:
+					release=tag
+					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],release)
+					rellist[idx]=dict([('site',confd[c][s][nickname][param]['site']),('cloud',confd[c][s][nickname][param]['cloud'])])
+					rellist[idx]['release'] = release
+					rellist[idx]['cache'] = ''
+					rellist[idx]['siteid'] = '' # to fill later, when this is available
+					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
+					rellist[idx]['gatekeeper'] = gk
+				except KeyError:
+					print confd[c][s][nickname][param]
+		else:
+			print("No Tags!")
+
+
+		if len(tags) > 0:
+			releases = '|'.join(tags)
+			print "Release tags: %s for %s"%(releases,confd[c][s][nickname][param]['nickname'])
+			confd[c][s][nickname][param]['releases']=releases
+			# Ruse to find sl4 sites 
+			if '14.5.0' in tags:
+				print "Set cmtconfig for %s"%confd[c][s][nickname][param]['nickname']
+				confd[c][s][nickname][param]['cmtconfig']='i686-slc4-gcc34-opt'
+
+
+		else:
+			print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
+
+
+		# validatedreleaeses for reprocessing
+		# not here but set manually in sqlplus
+		# Fill the RAM
+		if confd[c][s][nickname][param].has_key('gatekeeper') and confd[c][s][nickname][param].has_key('localqueue'):
+			memory = linfotool.getRAM(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
+			print 'Would set memory: %d for %s-%s'%(memory,confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])    
+			if confd[c][s][nickname][param]['cloud'] in ['UK']:
+				print "Setting memory: %d : %s-%s"%(memory,confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
+				#   confd[c][s][nickname][param]['memory'] = memory
+				# Fill the max cpu time in seconds 
+				maxcpu = linfotool.getMaxcpu(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
+				print 'Would set Maxcpu time: %d for %s-%s'%(maxcpu,confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
+				if confd[c][s][nickname][param]['site'] in ['IN2P3-LAPP']:
+					confd[c][s][nickname][param]['maxtime'] = maxcpu  
 
 	
 	# All changes to the dictionary happened live -- no need to return it.
