@@ -257,22 +257,22 @@ def bdiiIntegrator(confd,d):
 		
 		tags=linfotool.getSWtags(confd[c][s][nickname][param]['gatekeeper'])
 		etags=linfotool.getSWctags(confd[c][s][nickname][param]['gatekeeper'])
-		if len(etags) > 0:
-			for tag in etags:
-				try:
-					cache=tag.replace('production','AtlasProduction').replace('tier0','AtlasTier0') 
-					release='.'.join(tag.split('-')[1].split('.')[:-1])
-					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],cache)
-					rellist[idx]=dict([('site',confd[c][s][nickname][param]['site']),('cloud',confd[c][s][nickname][param]['cloud'])])
-					rellist[idx]['release'] = release
-					rellist[idx]['cache'] = cache
-					rellist[idx]['siteid'] = '' # to fill later, when this is available
-					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
-					rellist[idx]['gatekeeper'] = gk
-				except KeyError:
-					print confd[c][s][nickname][param]
-		else:
-			print("No eTags!")
+## 		if len(etags) > 0:
+## 			for tag in etags:
+## 				try:
+## 					cache=tag.replace('production','AtlasProduction').replace('tier0','AtlasTier0') 
+## 					release='.'.join(tag.split('-')[1].split('.')[:-1])
+## 					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],cache)
+## 					rellist[idx]=dict([('site',confd[c][s][nickname][param]['site']),('cloud',confd[c][s][nickname][param]['cloud'])])
+## 					rellist[idx]['release'] = release
+## 					rellist[idx]['cache'] = cache
+## 					rellist[idx]['siteid'] = '' # to fill later, when this is available
+## 					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
+## 					rellist[idx]['gatekeeper'] = gk
+## 				except KeyError:
+## 					print confd[c][s][nickname][param]
+## 		else:
+## 			print("No eTags!")
 
 		if len(tags) > 0:
 			for tag in tags:
@@ -305,17 +305,10 @@ def bdiiIntegrator(confd,d):
 		# validatedreleaeses for reprocessing
 		# not here but set manually in sqlplus
 		# Fill the RAM
-		if confd[c][s][nickname][param].has_key('gatekeeper') and confd[c][s][nickname][param].has_key('localqueue'):
-			memory = linfotool.getRAM(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
-			print 'Would set memory: %d for %s-%s'%(memory,confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])    
-			if confd[c][s][nickname][param]['cloud'] in ['UK']:
-				print "Setting memory: %d : %s-%s"%(memory,confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
-				#   confd[c][s][nickname][param]['memory'] = memory
-				# Fill the max cpu time in seconds 
-				maxcpu = linfotool.getMaxcpu(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
-				print 'Would set Maxcpu time: %d for %s-%s'%(maxcpu,confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
-				if confd[c][s][nickname][param]['site'] in ['IN2P3-LAPP']:
-					confd[c][s][nickname][param]['maxtime'] = maxcpu  
+		memory = linfotool.getRAM(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
+		maxcpu = linfotool.getMaxcpu(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
+		if confd[c][s][nickname][param]['site'] in ['IN2P3-LAPP']:
+			confd[c][s][nickname][param]['maxtime'] = maxcpu  
 
 	
 	# All changes to the dictionary happened live -- no need to return it.
