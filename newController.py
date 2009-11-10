@@ -230,7 +230,7 @@ def bdiiIntegrator(confd,d):
 		# If the queue is not present even after all that, add it. 
 		if dbkey not in confd[c][s]:
 			confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
-			confd[c][s][nickname][enabled] = 'False'
+			confd[c][s][nickname][enab] = 'False'
 		# For all the simple translations, copy them in directly.
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
 			confd[c][s][nickname][param][key] = bdict[qn][key]
