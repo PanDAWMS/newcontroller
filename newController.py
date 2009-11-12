@@ -279,7 +279,7 @@ def bdiiIntegrator(confd,d):
 			for release in tags:
 				try:
 					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],release)
-					rellist[idx]={'site',confd[c][s][nickname][param]['site']}
+					rellist[idx]={'site':confd[c][s][nickname][param]['site']}
 					rellist[idx]['release'] = release
 					rellist[idx]['cache'] = ''
 					rellist[idx]['siteid'] = '' # to fill later, when this is available
