@@ -278,19 +278,12 @@ def bdiiIntegrator(confd,d):
 		if len(tags) > 0:
 			for release in tags:
 				try:
- 					print '1'
 					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],release)
- 					print '2'
-					rellist[idx]=dict([('site',confd[c][s][nickname][param]['site']),('cloud',confd[c][s][nickname][param]['cloud'])])
- 					print '3'
+					rellist[idx]={'site',confd[c][s][nickname][param]['site']}
 					rellist[idx]['release'] = release
- 					print '4'
 					rellist[idx]['cache'] = ''
- 					print '5'
 					rellist[idx]['siteid'] = '' # to fill later, when this is available
- 					print '6'
 					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
- 					print '7'
 					rellist[idx]['gatekeeper'] = gk
 				except KeyError:
 					print release, idx, confd[c][s][nickname][param]
