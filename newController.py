@@ -288,7 +288,7 @@ def bdiiIntegrator(confd,d):
 				except KeyError:
 					print release, idx, confd[c][s][nickname][param]
 		else:
-			print("No Tags!")
+			print("No Tags for %s!" % nickname)
 		
 			
 		if len(tags) > 0:
