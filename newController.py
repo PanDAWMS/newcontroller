@@ -276,9 +276,8 @@ def bdiiIntegrator(confd,d):
 
 		# Needs work!!!
 		if len(tags) > 0:
-			for tag in tags:
+			for release in tags:
 				try:
-					release=tag
 					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],release)
 					rellist[idx]=dict([('site',confd[c][s][nickname][param]['site']),('cloud',confd[c][s][nickname][param]['cloud'])])
 					rellist[idx]['release'] = release
@@ -287,17 +286,15 @@ def bdiiIntegrator(confd,d):
 					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
 					rellist[idx]['gatekeeper'] = gk
 				except KeyError:
-					print confd[c][s][nickname][param]
+					print release, idx, confd[c][s][nickname][param]
 		else:
 			print("No Tags!")
-
-
+		
+			
 		if len(tags) > 0:
 			releases = '|'.join(tags)
-			print "Release tags: %s for %s"%(releases,confd[c][s][nickname][param]['nickname'])
+		    #print 'Release tags: %s for %s' % (releases,confd[c][s][nickname][param]['nickname'])
 			confd[c][s][nickname][param]['releases']=releases
-			# Ruse to find sl4 sites 
-
 
 		else:
 			print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
