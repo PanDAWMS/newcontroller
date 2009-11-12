@@ -284,7 +284,7 @@ def bdiiIntegrator(confd,d):
 					rellist[idx]['cache'] = ''
 					rellist[idx]['siteid'] = '' # to fill later, when this is available
 					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
-					rellist[idx]['gatekeeper'] = gk
+					rellist[idx]['gatekeeper'] = confd[c][s][nickname][param]['gatekeeper']
 				except KeyError:
 					print release, idx, confd[c][s][nickname][param]
 		else:
