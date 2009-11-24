@@ -239,7 +239,7 @@ def bdiiIntegrator(confd,d):
 		if s not in confd[c]:
 			confd[c][s] = {}
 		# If the queue is not present even after all that, add it. 
-		if dbkey not in confd[c][s]:pf
+		if dbkey not in confd[c][s]:
 			confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
 			confd[c][s][nickname][enab] = 'False'
 		# For all the simple translations, copy them in directly.
