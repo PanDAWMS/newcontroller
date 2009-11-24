@@ -239,7 +239,7 @@ def bdiiIntegrator(confd,d):
 		if s not in confd[c]:
 			confd[c][s] = {}
 		# If the queue is not present even after all that, add it. 
-		if dbkey not in confd[c][s]:
+		if dbkey not in confd[c][s]:pf
 			confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
 			confd[c][s][nickname][enab] = 'False'
 		# For all the simple translations, copy them in directly.
@@ -295,7 +295,7 @@ def bdiiIntegrator(confd,d):
 			releases = '|'.join(tags)
 		    #print 'Release tags: %s for %s' % (releases,confd[c][s][nickname][param]['nickname'])
 			confd[c][s][nickname][param]['releases']=releases
-
+			confd[c][s][nickname][source]['releases'] = 'BDII'
 		else:
 			print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
 
