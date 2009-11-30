@@ -293,9 +293,11 @@ def bdiiIntegrator(confd,d):
 			
 		if len(tags) > 0:
 			releases = '|'.join(tags)
+			print releases, c, s, nickname
 		    #print 'Release tags: %s for %s' % (releases,confd[c][s][nickname][param]['nickname'])
 			confd[c][s][nickname][param]['releases']=releases
 			confd[c][s][nickname][source]['releases'] = 'BDII'
+			print confd[c][s][nickname][source]['releases'], confd[c][s][nickname][param]['releases']
 		else:
 			print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
 
