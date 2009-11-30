@@ -286,20 +286,19 @@ def bdiiIntegrator(confd,d):
 					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
 					rellist[idx]['gatekeeper'] = confd[c][s][nickname][param]['gatekeeper']
 				except KeyError:
-					print release, idx, confd[c][s][nickname][param]
+					pass
+					#print release, idx, confd[c][s][nickname][param]
 		else:
-			print("No Tags for %s!" % nickname)
-		
+			#print("No Tags for %s!" % nickname)
+			pass
 			
 		if len(tags) > 0:
 			releases = '|'.join(tags)
-			print releases, c, s, nickname
-		    #print 'Release tags: %s for %s' % (releases,confd[c][s][nickname][param]['nickname'])
 			confd[c][s][nickname][param]['releases']=releases
 			confd[c][s][nickname][source]['releases'] = 'BDII'
-			print confd[c][s][nickname][source]['releases'], confd[c][s][nickname][param]['releases']
 		else:
-			print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
+			#print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
+			pass
 
 
 ## 		# validatedreleaeses for reprocessing
@@ -619,7 +618,7 @@ if __name__ == "__main__":
 	status = allMaker(configd)
 	
 	# Compose the "All" queues for each site
-
+	
 	bdiiIntegrator(configd, cloudd)
 
 
