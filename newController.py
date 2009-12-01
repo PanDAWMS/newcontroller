@@ -204,8 +204,9 @@ def toaIntegrator(confd):
 	''' Adds ToA information to the confd (legacy from Rod) '''
 	for cloud in confd:
 		for site in confd[cloud]:
+			if site is All: continue
 			for queue in confd[cloud][site]:
-
+				if queue is All: continue
 				if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm'])) ):
 					ddmsites = ToA.getAllDestinationSites()
 					for ds in ddmsites:
