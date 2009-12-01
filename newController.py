@@ -207,117 +207,122 @@ def toaIntegrator(confd):
 			if site is All: continue
 			for queue in confd[cloud][site]:
 				if queue is All: continue
-				if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm'])) ):
-					ddmsites = ToA.getAllDestinationSites()
-					for ds in ddmsites:
-						gocnames = ToA.getSiteProperty(ds,'alternateName')
-						if not gocnames: gocnames=[]
-						 # upper case for matching
-						gocnames_up=[]
-						for gn in gocnames:
-							gocnames_up+=[gn.upper()]  
-						# If PRODDISK found use that
-						if confd[cloud][site][queue][param]['site'].upper() in gocnames_up and ds.endswith('PRODDISK'):
-							if toaDebug: print "Assign site %s to DDM %s" % ( confd[cloud][site][queue][param]['site'], ds )
-							confd[cloud][site][queue][param]['ddm'] = ds
-							confd[cloud][site][queue][source]['ddm'] = 'ToA'
-							confd[cloud][site][queue][param]['setokens'] = 'ATLASPRODDISK'
-							confd[cloud][site][queue][source]['setokens'] = 'ToA'
+				try:
+					if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm'])) ):
+						ddmsites = ToA.getAllDestinationSites()
+						for ds in ddmsites:
+							gocnames = ToA.getSiteProperty(ds,'alternateName')
+							if not gocnames: gocnames=[]
+							 # upper case for matching
+							gocnames_up=[]
+							for gn in gocnames:
+								gocnames_up+=[gn.upper()]  
+							# If PRODDISK found use that
+							if confd[cloud][site][queue][param]['site'].upper() in gocnames_up and ds.endswith('PRODDISK'):
+								if toaDebug: print "Assign site %s to DDM %s" % ( confd[cloud][site][queue][param]['site'], ds )
+								confd[cloud][site][queue][param]['ddm'] = ds
+								confd[cloud][site][queue][source]['ddm'] = 'ToA'
+								confd[cloud][site][queue][param]['setokens'] = 'ATLASPRODDISK'
+								confd[cloud][site][queue][source]['setokens'] = 'ToA'
+								# Set the lfc host 
+								re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
+								if toaDebug: print "ds:",ds
+								try:
+									relfc=re_lfc.search(ToA.getLocalCatalog(ds))
+									if relfc:
+										lfchost=relfc.group(1)
+										if toaDebug: print "Set lfchost to %s"%lfchost 
+										confd[cloud][site][queue][param]['lfchost'] = lfchost
+										confd[cloud][site][queue][source]['lfchost'] = 'ToA'
+									else:
+										if toaDebug: print " Cannot get lfc host for %s"%ds
+								except:
+									if toaDebug: print " Cannot get local catalog for %s"%ds
+								# And work out the cloud
+								if not confd[cloud][site][queue][param].has_key('cloud'): confd[cloud][site][queue][param]['cloud'] = ''
+								if not confd[cloud][site][queue][param]['cloud']:
+									if toaDebug: print "Cloud not set for %s"%ds
+									for cl in ToA.ToACache.dbcloud.keys():
+										if ds in ToA.getSitesInCloud(cl):
+											confd[cloud][site][queue][param]['cloud']=cl
+											confd[cloud][site][queue][source]['cloud'] = 'ToA'
+
+				 # EGEE defaults
+					if confd[cloud][site][queue][param]['region'] != 'US':
+						# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
+						confd[cloud][site][queue][param]['proxy']  = 'noimport'
+						confd[cloud][site][queue][source]['proxy'] = 'ToA'
+						confd[cloud][site][queue][param]['lfcpath'] = '/grid/atlas/users/pathena'
+						confd[cloud][site][queue][source]['lfcpath'] = 'ToA'
+						confd[cloud][site][queue][param]['lfcprodpath'] = '/grid/atlas/dq2'
+						confd[cloud][site][queue][source]['lfcprodpath'] = 'ToA'
+						if not confd[cloud][site][queue][param].has_key('copytool'):
+							confd[cloud][site][queue][param]['copytool'] = 'lcgcp'
+							confd[cloud][site][queue][source]['copytool'] = 'ToA'
+						if confd[cloud][site][queue][param].has_key('ddm') and confd[cloud][site][queue][param]['ddm']:
+							ddm1 = confd[cloud][site][queue][param]['ddm'].split(',')[0]
+							if toaDebug: print 'ddm: using %s from %s'%(ddm1,confd[cloud][site][queue][param]['ddm'])
 							# Set the lfc host 
 							re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
-							if toaDebug: print "ds:",ds
-							try:
-								relfc=re_lfc.search(ToA.getLocalCatalog(ds))
-								if relfc:
-									lfchost=relfc.group(1)
-									if toaDebug: print "Set lfchost to %s"%lfchost 
-									confd[cloud][site][queue][param]['lfchost'] = lfchost
-									confd[cloud][site][queue][source]['lfchost'] = 'ToA'
-								else:
-									if toaDebug: print " Cannot get lfc host for %s"%ds
-							except:
-								if toaDebug: print " Cannot get local catalog for %s"%ds
-							# And work out the cloud
-							if not confd[cloud][site][queue][param].has_key('cloud'): confd[cloud][site][queue][param]['cloud'] = ''
-							if not confd[cloud][site][queue][param]['cloud']:
-								if toaDebug: print "Cloud not set for %s"%ds
-								for cl in ToA.ToACache.dbcloud.keys():
-									if ds in ToA.getSitesInCloud(cl):
-										confd[cloud][site][queue][param]['cloud']=cl
-										confd[cloud][site][queue][source]['cloud'] = 'ToA'
 
-			 # EGEE defaults
-				if confd[cloud][site][queue][param]['region'] != 'US':
-					# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
-					confd[cloud][site][queue][param]['proxy']  = 'noimport'
-					confd[cloud][site][queue][source]['proxy'] = 'ToA'
-					confd[cloud][site][queue][param]['lfcpath'] = '/grid/atlas/users/pathena'
-					confd[cloud][site][queue][source]['lfcpath'] = 'ToA'
-					confd[cloud][site][queue][param]['lfcprodpath'] = '/grid/atlas/dq2'
-					confd[cloud][site][queue][source]['lfcprodpath'] = 'ToA'
-					if not confd[cloud][site][queue][param].has_key('copytool'):
-						confd[cloud][site][queue][param]['copytool'] = 'lcgcp'
-						confd[cloud][site][queue][source]['copytool'] = 'ToA'
-					if confd[cloud][site][queue][param].has_key('ddm') and confd[cloud][site][queue][param]['ddm']:
-						ddm1 = confd[cloud][site][queue][param]['ddm'].split(',')[0]
-						if toaDebug: print 'ddm: using %s from %s'%(ddm1,confd[cloud][site][queue][param]['ddm'])
-						# Set the lfc host 
-						re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
+							if ToA:
+								loccat = ToA.getLocalCatalog(ddm1)
+								if loccat:
+									relfc=re_lfc.search(loccat)
+									if relfc :
+										lfchost=relfc.group(1)
+										if toaDebug: print "ROD sets lfchost for %s %s"%(confd[cloud][site][queue][param]['ddm'],lfchost) 
+										confd[cloud][site][queue][param]['lfchost'] = lfchost
+										confd[cloud][site][queue][source]['lfchost'] = 'ToA'
+									else:
+										if toaDebug: print " Cannot get lfc host for %s"%ddm1
 
-						if ToA:
-							loccat = ToA.getLocalCatalog(ddm1)
-							if loccat:
-								relfc=re_lfc.search(loccat)
-								if relfc :
-									lfchost=relfc.group(1)
-									if toaDebug: print "ROD sets lfchost for %s %s"%(confd[cloud][site][queue][param]['ddm'],lfchost) 
-									confd[cloud][site][queue][param]['lfchost'] = lfchost
-									confd[cloud][site][queue][source]['lfchost'] = 'ToA'
-								else:
-									if toaDebug: print " Cannot get lfc host for %s"%ddm1
+								srm_ep = ToA.getSiteProperty(ddm1,'srm')
+								if toaDebug: print 'srm_ep: ',srm_ep
+								if not srm_ep:
+									continue
 
-							srm_ep = ToA.getSiteProperty(ddm1,'srm')
-							if toaDebug: print 'srm_ep: ',srm_ep
-							if not srm_ep:
-								continue
+								re_srm_ep=re.compile('(srm://[\w.\-]+)(/[\w.\-/]+)?/$')
+								# Allow srmv2 form 'token:ATLASDATADISK:srm://srm.triumf.ca:8443/srm/managerv2?SFN=/atlas/atlasdatadisk/'
+								re_srm2_ep=re.compile('(token:\w+:(srm://[\w.\-]+):\d+/srm/managerv\d\?SFN=)(/[\w.\-/]+)/?$')
 
-							re_srm_ep=re.compile('(srm://[\w.\-]+)(/[\w.\-/]+)?/$')
-							# Allow srmv2 form 'token:ATLASDATADISK:srm://srm.triumf.ca:8443/srm/managerv2?SFN=/atlas/atlasdatadisk/'
-							re_srm2_ep=re.compile('(token:\w+:(srm://[\w.\-]+):\d+/srm/managerv\d\?SFN=)(/[\w.\-/]+)/?$')
-
-							resrm_ep=re_srm_ep.search(srm_ep)
-							resrm2_ep=re_srm2_ep.search(srm_ep)
-							if resrm_ep:
-								if toaDebug: print "ROD: srmv1"
-								se=resrm_ep.group(1)
-								sepath=resrm_ep.group(2)
-								copyprefix=se+'/^dummy'
-							elif resrm2_ep:
-								se=resrm2_ep.group(1)
-								copyprefix=resrm2_ep.group(2)+'/^dummy'
-								sepath=resrm2_ep.group(3)
+								resrm_ep=re_srm_ep.search(srm_ep)
+								resrm2_ep=re_srm2_ep.search(srm_ep)
+								if resrm_ep:
+									if toaDebug: print "ROD: srmv1"
+									se=resrm_ep.group(1)
+									sepath=resrm_ep.group(2)
+									copyprefix=se+'/^dummy'
+								elif resrm2_ep:
+									se=resrm2_ep.group(1)
+									copyprefix=resrm2_ep.group(2)+'/^dummy'
+									sepath=resrm2_ep.group(3)
 
 
-							if resrm_ep or resrm2_ep:
-								if toaDebug: print  'SRM: ',se,sepath,copyprefix               
-								if not confd[cloud][site][queue][param].has_key('se'):
-									confd[cloud][site][queue][param]['se'] = se
-									confd[cloud][site][queue][source]['se'] = 'ToA'
-								if not confd[cloud][site][queue][param].has_key('sepath'):
-									confd[cloud][site][queue][param]['sepath'] = sepath+'/users/pathena'
-									confd[cloud][site][queue][source]['sepath'] = 'ToA'
-								if not confd[cloud][site][queue][param].has_key('seprodpath'):
-									confd[cloud][site][queue][param]['seprodpath'] = sepath
-									confd[cloud][site][queue][source]['seprodpath'] = 'ToA'
-								if not confd[cloud][site][queue][param].has_key('copyprefix'):
-									confd[cloud][site][queue][param]['copyprefix'] =  copyprefix
-									confd[cloud][site][queue][source]['copyprefix'] = 'ToA'
-						else:
-							if toaDebug: print 'DDM not set for %s'% confd[cloud][site][queue][param]['nickname']
+								if resrm_ep or resrm2_ep:
+									if toaDebug: print  'SRM: ',se,sepath,copyprefix               
+									if not confd[cloud][site][queue][param].has_key('se'):
+										confd[cloud][site][queue][param]['se'] = se
+										confd[cloud][site][queue][source]['se'] = 'ToA'
+									if not confd[cloud][site][queue][param].has_key('sepath'):
+										confd[cloud][site][queue][param]['sepath'] = sepath+'/users/pathena'
+										confd[cloud][site][queue][source]['sepath'] = 'ToA'
+									if not confd[cloud][site][queue][param].has_key('seprodpath'):
+										confd[cloud][site][queue][param]['seprodpath'] = sepath
+										confd[cloud][site][queue][source]['seprodpath'] = 'ToA'
+									if not confd[cloud][site][queue][param].has_key('copyprefix'):
+										confd[cloud][site][queue][param]['copyprefix'] =  copyprefix
+										confd[cloud][site][queue][source]['copyprefix'] = 'ToA'
+							else:
+								if toaDebug: print 'DDM not set for %s'% confd[cloud][site][queue][param]['nickname']
 
-						if not confd[cloud][site][queue][param].has_key('copysetup') or confd[cloud][site][queue][param]['copysetup']=='':
-							confd[cloud][site][queue][param]['copysetup'] = '$VO_ATLAS_SW_DIR/local/setup.sh'
-							confd[cloud][site][queue][source]['copysetup'] = 'ToA'
+							if not confd[cloud][site][queue][param].has_key('copysetup') or confd[cloud][site][queue][param]['copysetup']=='':
+								confd[cloud][site][queue][param]['copysetup'] = '$VO_ATLAS_SW_DIR/local/setup.sh'
+								confd[cloud][site][queue][source]['copysetup'] = 'ToA'
+				except:
+					print "Missing something"
+					print cloud, site, queue
+					print confd[cloud][site][queue]
 	return
            
 
