@@ -791,7 +791,7 @@ def collapseDict(d):
 			# And for each queue
 			for queue in d[cloud][site]:
 				# Don't bother for an "All" queue
-				if queue = All: continue
+				if queue == All or site == All: continue
 				# Get the parameter dictionary (vs the source or the overrides).
 				# This is a symbolic link, not a duplication:
 				p = d[cloud][site][queue][param]
@@ -802,6 +802,8 @@ def collapseDict(d):
 					if key not in p.keys(): out_d[p[dbkey]][key] = ''
 				# Add the overrides
 				for key in d[cloud][site][queue][over]: out_d[p[dbkey]][key] = d[cloud][site][queue][over][key]
+	# Return the flattened dictionary
+	return out_d
 				
 
 # To be completed!!
