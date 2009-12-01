@@ -28,7 +28,7 @@
 
 # This code has been organized for easy transition into a class structure.
 
-import pickle, os, sys, commands
+import pickle, os, sys, commands, re
 
 from SchedulerUtils import utils
 
@@ -788,7 +788,7 @@ if __name__ == "__main__":
 	# Compose the "All" queues for each site
 	
 	bdiiIntegrator(configd, cloudd)
-
+	toaIntegrator(configd)
 
 	# Create the config path for each cloud
 
