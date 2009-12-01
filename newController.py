@@ -192,6 +192,174 @@ def findQueue(q,d):
 					return cloud, site
 	return '',''
 
+def toaIntegrator(confd):
+	''' Adds ToA information to the confd '''
+	for cloud in confd:
+		for site in confd[cloud]:
+			for queue in confd[cloud][site]:
+
+				if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm'])) ):
+					ddmsites = ToA.getAllDestinationSites()
+					for ds in ddmsites:
+						gocnames = ToA.getSiteProperty(ds,'alternateName')
+						if not gocnames: gocnames=[]
+						 # upper case for matching
+						gocnames_up=[]
+						for gn in gocnames:
+							gocnames_up+=[gn.upper()]  
+						# If PRODDISK found use that
+						if confd[cloud][site][queue][param]['site'].upper() in gocnames_up and ds.endswith('PRODDISK'):
+							print "Assign site %s to DDM %s" % ( confd[cloud][site][queue][param]['site'], ds )
+							confd[cloud][site][queue][param]['ddm'] = ds
+							confd[cloud][site][queue][param]['setokens'] = 'ATLASPRODDISK'
+							# Set the lfc host 
+							re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
+							print "ds:",ds
+							try:
+								relfc=re_lfc.search(ToA.getLocalCatalog(ds))
+								if relfc:
+									lfchost=relfc.group(1)
+								#print "Set lfchost to %s"%lfchost 
+									confd[cloud][site][queue][param]['lfchost'] = lfchost
+								else:
+									print " Cannot get lfc host for %s"%ds
+							except:
+								print " Cannot get local catalog for %s"%ds
+							# And work out the cloud
+							if not confd[cloud][site][queue][param]['cloud']:
+								#print "Cloud not set for %s"%ds
+								for cl in ToA.ToACache.dbcloud.keys():
+									if ds in ToA.getSitesInCloud(cl):
+										confd[cloud][site][queue][param]['cloud']=cl
+
+			 # EGEE defaults
+				if confd[cloud][site][queue][param]['region'] != 'US':
+					# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
+					confd[cloud][site][queue][param]['proxy']  = 'noimport'
+					confd[cloud][site][queue][param]['lfcpath'] = '/grid/atlas/users/pathena'
+					confd[cloud][site][queue][param]['lfcprodpath'] = '/grid/atlas/dq2'
+					if not confd[cloud][site][queue][param].has_key('copytool'): confd[cloud][site][queue][param]['copytool'] = 'lcgcp'
+					if confd[cloud][site][queue][param].has_key('ddm') and confd[cloud][site][queue][param]['ddm']:
+						ddm1 = confd[cloud][site][queue][param]['ddm'].split(',')[0]
+						print 'ddm: using %s from %s'%(ddm1,confd[cloud][site][queue][param]['ddm'])
+						# Set the lfc host 
+						re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
+
+						if ToA:
+							loccat = ToA.getLocalCatalog(ddm1)
+							if loccat:
+								relfc=re_lfc.search(loccat)
+								if relfc :
+									lfchost=relfc.group(1)
+									print "ROD sets lfchost for %s %s"%(confd[cloud][site][queue][param]['ddm'],lfchost) 
+									confd[cloud][site][queue][param]['lfchost'] = lfchost
+								else:
+									print " Cannot get lfc host for %s"%ddm1
+
+							srm_ep = ToA.getSiteProperty(ddm1,'srm')
+							print 'srm_ep: ',srm_ep
+							if not srm_ep:
+								continue
+
+							re_srm_ep=re.compile('(srm://[\w.\-]+)(/[\w.\-/]+)?/$')
+							# Allow srmv2 form 'token:ATLASDATADISK:srm://srm.triumf.ca:8443/srm/managerv2?SFN=/atlas/atlasdatadisk/'
+							re_srm2_ep=re.compile('(token:\w+:(srm://[\w.\-]+):\d+/srm/managerv\d\?SFN=)(/[\w.\-/]+)/?$')
+
+							resrm_ep=re_srm_ep.search(srm_ep)
+							resrm2_ep=re_srm2_ep.search(srm_ep)
+							if resrm_ep:
+								print "ROD: srmv1"
+								se=resrm_ep.group(1)
+								sepath=resrm_ep.group(2)
+								copyprefix=se+'/^dummy'
+							elif resrm2_ep:
+								se=resrm2_ep.group(1)
+								copyprefix=resrm2_ep.group(2)+'/^dummy'
+								sepath=resrm2_ep.group(3)
+
+
+							if resrm_ep or resrm2_ep:
+								print  'SRM: ',se,sepath,copyprefix               
+								if not confd[cloud][site][queue][param].has_key('se'):
+									confd[cloud][site][queue][param]['se'] = se
+								if not confd[cloud][site][queue][param].has_key('sepath'):
+									confd[cloud][site][queue][param]['sepath'] = sepath+'/users/pathena'
+								if not confd[cloud][site][queue][param].has_key('seprodpath'):
+									confd[cloud][site][queue][param]['seprodpath'] = sepath
+								if not confd[cloud][site][queue][param].has_key('copyprefix'):
+									confd[cloud][site][queue][param]['copyprefix'] =  copyprefix
+						else:
+							print 'DDM not set for %s'% confd[cloud][site][queue][param]['nickname']
+
+						if not confd[cloud][site][queue][param].has_key('copysetup') or confd[cloud][site][queue][param]['copysetup']=='':
+							confd[cloud][site][queue][param]['copysetup'] = '$VO_ATLAS_SW_DIR/local/setup.sh'
+	return
+           
+
+def fillStorageInfo(spec,force=False):
+	''' Filling storage information for individual queues '''
+	print "In fillStorageInfo"
+    # Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
+	spec['proxy']  = 'noimport'
+	spec['lfcpath'] = '/grid/atlas/users/pathena'
+	spec['lfcprodpath'] = '/grid/atlas/dq2'
+	if not spec.has_key('copytool'): spec['copytool'] = 'lcgcp'
+	if spec.has_key('ddm') and spec['ddm']:
+		ddm1 = spec['ddm'].split(',')[0]
+		print 'ddm: using %s from %s'%(ddm1,spec['ddm'])
+		# Set the lfc host 
+		re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
+
+		if ToA:
+			loccat = ToA.getLocalCatalog(ddm1)
+		if loccat:
+			relfc=re_lfc.search(loccat)
+			if relfc :
+				lfchost=relfc.group(1)
+				print "ROD would Set lfchost for %s %s"%(ddm1,lfchost) 
+				spec['lfchost'] = lfchost
+			else:
+				print " Cannot get lfc host for %s"%spec['ddm']
+
+		srm_ep = ToA.getSiteProperty(ddm1,'srm')
+		print 'srm_ep: ',srm_ep
+		if not srm_ep:
+			#print 'srm_ep in None'
+			return
+
+		# Regexp to extract srm host and path(without trailing /) 
+		re_srm_ep=re.compile('(srm://[\w.\-]+)(/[\w.\-/]+)?/$')
+		# Allow srmv2 form 'token:ATLASDATADISK:srm://srm.triumf.ca:8443/srm/managerv2?SFN=/atlas/atlasdatadisk/'
+		re_srm2_ep=re.compile('(token:\w+:(srm://[\w.\-]+):\d+/srm/managerv\d\?SFN=)(/[\w.\-/]+)/?$')
+		
+		resrm_ep=re_srm_ep.search(srm_ep)
+		resrm2_ep=re_srm2_ep.search(srm_ep)
+		if resrm_ep:
+			print "ROD: srmv1"
+			se=resrm_ep.group(1)
+			sepath=resrm_ep.group(2)
+			copyprefix=se+'/^dummy'
+		elif resrm2_ep:
+			se=resrm2_ep.group(1)
+			copyprefix=resrm2_ep.group(2)+'/^dummy'
+			sepath=resrm2_ep.group(3)
+			
+		if resrm_ep or resrm2_ep:
+			print  'SRM: ',se,sepath,copyprefix               
+			if not spec.has_key('se') or force:
+				spec['se'] = se
+			if not spec.has_key('sepath') or force:
+				spec['sepath'] = sepath+'/users/pathena'
+			if not spec.has_key('seprodpath') or force:
+				spec['seprodpath'] = sepath
+			if not spec.has_key('copyprefix') or force:
+				spec['copyprefix'] =  copyprefix
+	else:
+		print 'DDM not set for %s'% spec['nickname']
+		
+	return  
+
+
 def bdiiIntegrator(confd,d):
 	'''Adds BDII values to the configurations, overriding what was there. Must be run after downloading the DB
 	and parsing the config files.'''
