@@ -229,7 +229,7 @@ def toaIntegrator(confd):
 								relfc=re_lfc.search(ToA.getLocalCatalog(ds))
 								if relfc:
 									lfchost=relfc.group(1)
-								if toaDebug: print "Set lfchost to %s"%lfchost 
+									if toaDebug: print "Set lfchost to %s"%lfchost 
 									confd[cloud][site][queue][param]['lfchost'] = lfchost
 									confd[cloud][site][queue][source]['lfchost'] = 'ToA'
 								else:
