@@ -226,6 +226,7 @@ def toaIntegrator(confd):
 							except:
 								print " Cannot get local catalog for %s"%ds
 							# And work out the cloud
+							if not confd[cloud][site][queue][param].has_key('cloud'): confd[cloud][site][queue][param]['cloud'] = ''
 							if not confd[cloud][site][queue][param]['cloud']:
 								#print "Cloud not set for %s"%ds
 								for cl in ToA.ToACache.dbcloud.keys():
