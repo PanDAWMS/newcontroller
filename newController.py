@@ -50,6 +50,14 @@ except:
 	print "Cannot import fillDDMpaths, will exit"
 	sys.exit(-1)
 
+
+toaDebug = False
+bdiiDebug = False
+dbReadDebug = False
+dbWriteDebug = False
+configReadDebug = False
+configWriteDebug = False
+
 safety = "on"
 All = 'All'
 ndef = 'Deactivated'
@@ -193,7 +201,7 @@ def findQueue(q,d):
 	return '',''
 
 def toaIntegrator(confd):
-	''' Adds ToA information to the confd '''
+	''' Adds ToA information to the confd (legacy from Rod) '''
 	for cloud in confd:
 		for site in confd[cloud]:
 			for queue in confd[cloud][site]:
@@ -209,40 +217,49 @@ def toaIntegrator(confd):
 							gocnames_up+=[gn.upper()]  
 						# If PRODDISK found use that
 						if confd[cloud][site][queue][param]['site'].upper() in gocnames_up and ds.endswith('PRODDISK'):
-							print "Assign site %s to DDM %s" % ( confd[cloud][site][queue][param]['site'], ds )
+							if toaDebug: print "Assign site %s to DDM %s" % ( confd[cloud][site][queue][param]['site'], ds )
 							confd[cloud][site][queue][param]['ddm'] = ds
+							confd[cloud][site][queue][source]['ddm'] = 'ToA'
 							confd[cloud][site][queue][param]['setokens'] = 'ATLASPRODDISK'
+							confd[cloud][site][queue][source]['setokens'] = 'ToA'
 							# Set the lfc host 
 							re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
-							print "ds:",ds
+							if toaDebug: print "ds:",ds
 							try:
 								relfc=re_lfc.search(ToA.getLocalCatalog(ds))
 								if relfc:
 									lfchost=relfc.group(1)
-								#print "Set lfchost to %s"%lfchost 
+								if toaDebug: print "Set lfchost to %s"%lfchost 
 									confd[cloud][site][queue][param]['lfchost'] = lfchost
+									confd[cloud][site][queue][source]['lfchost'] = 'ToA'
 								else:
-									print " Cannot get lfc host for %s"%ds
+									if toaDebug: print " Cannot get lfc host for %s"%ds
 							except:
-								print " Cannot get local catalog for %s"%ds
+								if toaDebug: print " Cannot get local catalog for %s"%ds
 							# And work out the cloud
 							if not confd[cloud][site][queue][param].has_key('cloud'): confd[cloud][site][queue][param]['cloud'] = ''
 							if not confd[cloud][site][queue][param]['cloud']:
-								#print "Cloud not set for %s"%ds
+								if toaDebug: print "Cloud not set for %s"%ds
 								for cl in ToA.ToACache.dbcloud.keys():
 									if ds in ToA.getSitesInCloud(cl):
 										confd[cloud][site][queue][param]['cloud']=cl
+										confd[cloud][site][queue][source]['cloud'] = 'ToA'
 
 			 # EGEE defaults
 				if confd[cloud][site][queue][param]['region'] != 'US':
 					# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
 					confd[cloud][site][queue][param]['proxy']  = 'noimport'
+					confd[cloud][site][queue][source]['proxy'] = 'ToA'
 					confd[cloud][site][queue][param]['lfcpath'] = '/grid/atlas/users/pathena'
+					confd[cloud][site][queue][source]['lfcpath'] = 'ToA'
 					confd[cloud][site][queue][param]['lfcprodpath'] = '/grid/atlas/dq2'
-					if not confd[cloud][site][queue][param].has_key('copytool'): confd[cloud][site][queue][param]['copytool'] = 'lcgcp'
+					confd[cloud][site][queue][source]['lfcprodpath'] = 'ToA'
+					if not confd[cloud][site][queue][param].has_key('copytool'):
+						confd[cloud][site][queue][param]['copytool'] = 'lcgcp'
+						confd[cloud][site][queue][source]['copytool'] = 'ToA'
 					if confd[cloud][site][queue][param].has_key('ddm') and confd[cloud][site][queue][param]['ddm']:
 						ddm1 = confd[cloud][site][queue][param]['ddm'].split(',')[0]
-						print 'ddm: using %s from %s'%(ddm1,confd[cloud][site][queue][param]['ddm'])
+						if toaDebug: print 'ddm: using %s from %s'%(ddm1,confd[cloud][site][queue][param]['ddm'])
 						# Set the lfc host 
 						re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
 
@@ -252,13 +269,14 @@ def toaIntegrator(confd):
 								relfc=re_lfc.search(loccat)
 								if relfc :
 									lfchost=relfc.group(1)
-									print "ROD sets lfchost for %s %s"%(confd[cloud][site][queue][param]['ddm'],lfchost) 
+									if toaDebug: print "ROD sets lfchost for %s %s"%(confd[cloud][site][queue][param]['ddm'],lfchost) 
 									confd[cloud][site][queue][param]['lfchost'] = lfchost
+									confd[cloud][site][queue][source]['lfchost'] = 'ToA'
 								else:
-									print " Cannot get lfc host for %s"%ddm1
+									if toaDebug: print " Cannot get lfc host for %s"%ddm1
 
 							srm_ep = ToA.getSiteProperty(ddm1,'srm')
-							print 'srm_ep: ',srm_ep
+							if toaDebug: print 'srm_ep: ',srm_ep
 							if not srm_ep:
 								continue
 
@@ -269,7 +287,7 @@ def toaIntegrator(confd):
 							resrm_ep=re_srm_ep.search(srm_ep)
 							resrm2_ep=re_srm2_ep.search(srm_ep)
 							if resrm_ep:
-								print "ROD: srmv1"
+								if toaDebug: print "ROD: srmv1"
 								se=resrm_ep.group(1)
 								sepath=resrm_ep.group(2)
 								copyprefix=se+'/^dummy'
@@ -280,26 +298,31 @@ def toaIntegrator(confd):
 
 
 							if resrm_ep or resrm2_ep:
-								print  'SRM: ',se,sepath,copyprefix               
+								if toaDebug: print  'SRM: ',se,sepath,copyprefix               
 								if not confd[cloud][site][queue][param].has_key('se'):
 									confd[cloud][site][queue][param]['se'] = se
+									confd[cloud][site][queue][source]['se'] = 'ToA'
 								if not confd[cloud][site][queue][param].has_key('sepath'):
 									confd[cloud][site][queue][param]['sepath'] = sepath+'/users/pathena'
+									confd[cloud][site][queue][source]['sepath'] = 'ToA'
 								if not confd[cloud][site][queue][param].has_key('seprodpath'):
 									confd[cloud][site][queue][param]['seprodpath'] = sepath
+									confd[cloud][site][queue][source]['seprodpath'] = 'ToA'
 								if not confd[cloud][site][queue][param].has_key('copyprefix'):
 									confd[cloud][site][queue][param]['copyprefix'] =  copyprefix
+									confd[cloud][site][queue][source]['copyprefix'] = 'ToA'
 						else:
-							print 'DDM not set for %s'% confd[cloud][site][queue][param]['nickname']
+							if toaDebug: print 'DDM not set for %s'% confd[cloud][site][queue][param]['nickname']
 
 						if not confd[cloud][site][queue][param].has_key('copysetup') or confd[cloud][site][queue][param]['copysetup']=='':
 							confd[cloud][site][queue][param]['copysetup'] = '$VO_ATLAS_SW_DIR/local/setup.sh'
+							confd[cloud][site][queue][source]['copysetup'] = 'ToA'
 	return
            
 
 def fillStorageInfo(spec,force=False):
-	''' Filling storage information for individual queues '''
-	print "In fillStorageInfo"
+	''' SO FAR UNUSED. Filling storage information for individual queues. No source notations added. '''
+	if toaDebug: print "In fillStorageInfo"
     # Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
 	spec['proxy']  = 'noimport'
 	spec['lfcpath'] = '/grid/atlas/users/pathena'
@@ -307,7 +330,7 @@ def fillStorageInfo(spec,force=False):
 	if not spec.has_key('copytool'): spec['copytool'] = 'lcgcp'
 	if spec.has_key('ddm') and spec['ddm']:
 		ddm1 = spec['ddm'].split(',')[0]
-		print 'ddm: using %s from %s'%(ddm1,spec['ddm'])
+		if toaDebug: print 'ddm: using %s from %s'%(ddm1,spec['ddm'])
 		# Set the lfc host 
 		re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
 
@@ -317,15 +340,15 @@ def fillStorageInfo(spec,force=False):
 			relfc=re_lfc.search(loccat)
 			if relfc :
 				lfchost=relfc.group(1)
-				print "ROD would Set lfchost for %s %s"%(ddm1,lfchost) 
+				if toaDebug: print "ROD would Set lfchost for %s %s"%(ddm1,lfchost) 
 				spec['lfchost'] = lfchost
 			else:
-				print " Cannot get lfc host for %s"%spec['ddm']
+				if toaDebug: print " Cannot get lfc host for %s"%spec['ddm']
 
 		srm_ep = ToA.getSiteProperty(ddm1,'srm')
-		print 'srm_ep: ',srm_ep
+		if toaDebug: print 'srm_ep: ',srm_ep
 		if not srm_ep:
-			#print 'srm_ep in None'
+			if toaDebug: print 'srm_ep in None'
 			return
 
 		# Regexp to extract srm host and path(without trailing /) 
@@ -336,7 +359,7 @@ def fillStorageInfo(spec,force=False):
 		resrm_ep=re_srm_ep.search(srm_ep)
 		resrm2_ep=re_srm2_ep.search(srm_ep)
 		if resrm_ep:
-			print "ROD: srmv1"
+			if toaDebug: print "ROD: srmv1"
 			se=resrm_ep.group(1)
 			sepath=resrm_ep.group(2)
 			copyprefix=se+'/^dummy'
@@ -346,7 +369,7 @@ def fillStorageInfo(spec,force=False):
 			sepath=resrm2_ep.group(3)
 			
 		if resrm_ep or resrm2_ep:
-			print  'SRM: ',se,sepath,copyprefix               
+			if toaDebug: print  'SRM: ',se,sepath,copyprefix               
 			if not spec.has_key('se') or force:
 				spec['se'] = se
 			if not spec.has_key('sepath') or force:
@@ -356,7 +379,7 @@ def fillStorageInfo(spec,force=False):
 			if not spec.has_key('copyprefix') or force:
 				spec['copyprefix'] =  copyprefix
 	else:
-		print 'DDM not set for %s'% spec['nickname']
+		if toaDebug: print 'DDM not set for %s'% spec['nickname']
 		
 	return  
 
@@ -368,9 +391,9 @@ def bdiiIntegrator(confd,d):
 	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
 	bdict = loadBDII()
 	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and releases available on the sites 
-	print 'Running the LGC SiteInfo tool'
+	if bdiiDebug: print 'Running the LGC SiteInfo tool'
 	linfotool = lcgInfositeTool.lcgInfositeTool()
-	print 'Completed the LGC SiteInfo tool run'
+	if bdiiDebug: print 'Completed the LGC SiteInfo tool run'
 
 	# Defining a release dictionary
 	rellist={}
@@ -439,9 +462,9 @@ def bdiiIntegrator(confd,d):
 ## 					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
 ## 					rellist[idx]['gatekeeper'] = gk
 ## 				except KeyError:
-## 					print confd[c][s][nickname][param]
+## 					if bdiiDebug: print confd[c][s][nickname][param]
 ## 		else:
-## 			print("No eTags!")
+## 			if bdiiDebug: print("No eTags!")
 
 		# Needs work!!!
 		if len(tags) > 0:
@@ -455,10 +478,9 @@ def bdiiIntegrator(confd,d):
 					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
 					rellist[idx]['gatekeeper'] = confd[c][s][nickname][param]['gatekeeper']
 				except KeyError:
-					pass
-					#print release, idx, confd[c][s][nickname][param]
+					if bdiiDebug: print release, idx, confd[c][s][nickname][param]
 		else:
-			#print("No Tags for %s!" % nickname)
+			if bdiiDebug: print("No Tags for %s!" % nickname)
 			pass
 			
 		if len(tags) > 0:
@@ -466,8 +488,7 @@ def bdiiIntegrator(confd,d):
 			confd[c][s][nickname][param]['releases']=releases
 			confd[c][s][nickname][source]['releases'] = 'BDII'
 		else:
-			#print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
-			pass
+			if bdiiDebug: print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
 
 
 ## 		# validatedreleaeses for reprocessing
@@ -653,7 +674,7 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 			updDict[i]=cfgDict[i]
 
 	# Return the appro
-	return updDict, cfgDict
+	return updDict, delDict
   
 def buildUpdateList(updDict, tableName):
 	'''Build a list of SQL commands to add or supersede queue definitions''' 
@@ -681,6 +702,27 @@ def buildDeleteList(delDict, tableName):
 	for i in delDict:
 		sql.append(delstr+i['nickname']+';')
 	return '\n'.join(sql)
+
+def makeConfigs(d):
+	''' Reconstitutes the configuration files from the passed dictionary'''
+	for cloud in d:
+		# The working cloud path is made from the config base
+		cloudpath = configs + os.sep + cloud
+		# Create the config path for each site 
+		for site in d[cloud]:
+			# The working site path is made from the config base and cloud path
+			path = cloudpath + os.sep + site
+			# Try to make the path. If this fails, the path already exists.
+			try:
+				os.makedirs(path)
+			except OSError:
+				pass
+			# Go on in...
+			os.chdir(path)
+			# And for each queue, create a config file. 
+			for queue in d[cloud][site]:
+				buildFile(queue, d[cloud][site][queue])
+	return d
 
 def buildDict():
 	'''Build a copy of the queue dictionary from the configuration files '''
@@ -739,6 +781,29 @@ def buildDict():
 	os.chdir(base)
 	return confd
 
+def collapseDict(d):
+	''' Collapses a nested dictionary into a flat set of queues '''
+	out_d={}
+	# Rip through the clouds
+	for cloud in d:
+		# And for each site
+		for site in d[cloud]:
+			# And for each queue
+			for queue in d[cloud][site]:
+				# Don't bother for an "All" queue
+				if queue = All: continue
+				# Get the parameter dictionary (vs the source or the overrides).
+				# This is a symbolic link, not a duplication:
+				p = d[cloud][site][queue][param]
+				# So copy out the values into a new dictionary
+				out_d[p[dbkey]] = dict([(key,d[key]) for key in p])
+				# Make sure all the standard keys are present, even if not filled
+				for key in standardkeys:
+					if key not in p.keys(): out_d[p[dbkey]][key] = ''
+				# Add the overrides
+				for key in d[cloud][site][queue][over]: out_d[p[dbkey]][key] = d[cloud][site][queue][over][key]
+				
+
 # To be completed!!
 def execUpdate(updateList):
 	''' Run the updates into the schedconfig database '''
@@ -758,38 +823,22 @@ def jdlListAdder(d):
 	pass
 
 
-def makeConfigs(d):
-	''' Reconstitutes the configuration files from the passed dictionary'''
-	for cloud in d:
-		# The working cloud path is made from the config base
-		cloudpath = configs + os.sep + cloud
-		# Create the config path for each site 
-		for site in d[cloud]:
-			# The working site path is made from the config base and cloud path
-			path = cloudpath + os.sep + site
-			# Try to make the path. If this fails, the path already exists.
-			try:
-				os.makedirs(path)
-			except OSError:
-				pass
-			# Go on in...
-			os.chdir(path)
-			# And for each queue, create a config file. 
-			for queue in d[cloud][site]:
-				buildFile(queue, d[cloud][site][queue])
-	return d
-
 if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB
 	cloudd = sqlDictUnpacker(loadSchedConfig())
 	configd = buildDict()
-	status = allMaker(configd)
 	
 	# Compose the "All" queues for each site
-	
+	status = allMaker(configd)
+
+	# Add the BDII information
 	bdiiIntegrator(configd, cloudd)
+	# Now add ToA information to the whole shebang. No site-by-site as of yet.
 	toaIntegrator(configd)
+
+	# Compare the DB to the present built configuration
+	compareQueues(cloudd, configd)
 
 	# Create the config path for each cloud
 
