@@ -704,7 +704,7 @@ def buildUpdateList(updDict, tableName):
 def buildDeleteList(delDict, tableName):
 	'''Build a list of SQL commands that deletes queues no longer in the definition files'''
 	#delstr='DELETE FROM atlas_pandameta.%s WHERE NICKNAME = '
-	delstr='DELETE FROM %s WHERE NICKNAME = '
+	delstr='DELETE FROM %s WHERE NICKNAME = ' % tableName
 	sql=[]
 	for i in delDict:
 		sql.append(delstr+delDict[i]['nickname']+';')
