@@ -691,12 +691,12 @@ def buildUpdateList(updDict, tableName):
 	values1 = ' VALUES '
 	values2 = ' WITH VALUES '
 	sql = []
-	for i in updDict:
+	for key in updDict:
 		#merge = "MERGE INTO atlas_pandameta.%s USING DUAL ON ( atlas_pandameta.%s.nickname='%s' ) " % (tableName, tableName, i)
-		merge = "MERGE INTO %s USING DUAL ON ( %s.nickname='%s' ) " % (tableName, tableName, i)
-		mergetxt1 = ' (%s) ' % ','.join(['%s=:%s' % (i,i) for i in sorted(updDict[i].keys())])
-		mergetxt2 = ' (%s) ' % ',:'.join(sorted(updDict[i].keys()))
-		valuestxt = '{%s} ' % ', '.join(["'%s': '%s'" % (i,updDict[i]) for i in sorted(updDict[i].keys())])
+		merge = "MERGE INTO %s USING DUAL ON ( %s.nickname='%s' ) " % (tableName, tableName, key)
+		mergetxt1 = ' (%s) ' % ','.join(['%s=:%s' % (i,i) for i in sorted(updDict[key].keys())])
+		mergetxt2 = ' (%s) ' % ',:'.join(sorted(updDict[key].keys()))
+		valuestxt = '{%s} ' % ', '.join(["'%s': '%s'" % (i,updDict[key]) for i in sorted(updDict[key].keys())])
 		sql.append(merge+matched+insert+mergetxt1+values+mergetxt2+values2+valuestxt+';')
 		
 	return '/n'.join(sql)
