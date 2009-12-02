@@ -320,7 +320,7 @@ def toaIntegrator(confd):
 								confd[cloud][site][queue][param]['copysetup'] = '$VO_ATLAS_SW_DIR/local/setup.sh'
 								confd[cloud][site][queue][source]['copysetup'] = 'ToA'
 				except:
-					if site is not All and queue is not All:
+					if site is All or queue is All:
 						print "Missing something"
 						print cloud, site, queue
 						print confd[cloud][site][queue]
