@@ -849,6 +849,14 @@ if __name__ == "__main__":
 
 	# Compare the DB to the present built configuration
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
+	n=configd.popitem()
+	m,n=collapseDict(dbd),collapseDict(configd)
+	u,d=compareQueues(collapseDict(dbd),collapseDict(configd))
+	a=buildDeleteList(d,'atlas_pandameta.schedconfig')
+	a=a.split('\n')
+	print a[0]
+	
+	b=buildUpdateList(u,'atlas_pandameta.schedconfig')
 
 	# Create the config path for each cloud
 
