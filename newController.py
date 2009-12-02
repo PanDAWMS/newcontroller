@@ -320,9 +320,10 @@ def toaIntegrator(confd):
 								confd[cloud][site][queue][param]['copysetup'] = '$VO_ATLAS_SW_DIR/local/setup.sh'
 								confd[cloud][site][queue][source]['copysetup'] = 'ToA'
 				except:
-					print "Missing something"
-					print cloud, site, queue
-					print confd[cloud][site][queue]
+					if site is not All and queue is not All:
+						print "Missing something"
+						print cloud, site, queue
+						print confd[cloud][site][queue]
 	return
            
 
@@ -802,7 +803,7 @@ def collapseDict(d):
 				# This is a symbolic link, not a duplication:
 				p = d[cloud][site][queue][param]
 				# So copy out the values into a new dictionary
-				out_d[p[dbkey]] = dict([(key,d[key]) for key in p])
+				out_d[p[dbkey]] = dict([(key,p[key]) for key in p])
 				# Make sure all the standard keys are present, even if not filled
 				for key in standardkeys:
 					if key not in p.keys(): out_d[p[dbkey]][key] = ''
