@@ -707,7 +707,7 @@ def buildDeleteList(delDict, tableName):
 	delstr='DELETE FROM %s WHERE NICKNAME = '
 	sql=[]
 	for i in delDict:
-		sql.append(delstr+i['nickname']+';')
+		sql.append(delstr+delDict[i]['nickname']+';')
 	return '\n'.join(sql)
 
 def makeConfigs(d):
@@ -835,19 +835,20 @@ def jdlListAdder(d):
 if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB
-	cloudd = sqlDictUnpacker(loadSchedConfig())
+	dbd = sqlDictUnpacker(loadSchedConfig())
+	# Load the present config files
 	configd = buildDict()
 	
 	# Compose the "All" queues for each site
 	status = allMaker(configd)
 
 	# Add the BDII information
-	bdiiIntegrator(configd, cloudd)
+	bdiiIntegrator(configd, dbd)
 	# Now add ToA information to the whole shebang. No site-by-site as of yet.
 	toaIntegrator(configd)
 
 	# Compare the DB to the present built configuration
-	updDict, delDict = compareQueues(collapseDict(cloudd), collapseDict(configd))
+	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
 
 	# Create the config path for each cloud
 
