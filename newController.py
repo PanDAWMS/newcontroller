@@ -846,7 +846,7 @@ if __name__ == "__main__":
 	toaIntegrator(configd)
 
 	# Compare the DB to the present built configuration
-	compareQueues(cloudd, configd)
+	compareQueues(collapseDict(cloudd), collapseDict(configd))
 
 	# Create the config path for each cloud
 
