@@ -202,6 +202,7 @@ def findQueue(q,d):
 
 def toaIntegrator(confd):
 	''' Adds ToA information to the confd (legacy from Rod) '''
+	print 'Running ToA Integrator'
 	for cloud in confd:
 		for site in confd[cloud]:
 			if site is All: continue
@@ -324,6 +325,7 @@ def toaIntegrator(confd):
 						print "Missing something"
 						print cloud, site, queue
 						print confd[cloud][site][queue]
+	print 'Finished ToA integrator'
 	return
            
 
@@ -394,6 +396,7 @@ def fillStorageInfo(spec,force=False):
 def bdiiIntegrator(confd,d):
 	'''Adds BDII values to the configurations, overriding what was there. Must be run after downloading the DB
 	and parsing the config files.'''
+	print 'Running BDII Integrator'
 	out = {}
 	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
 	bdict = loadBDII()
@@ -508,6 +511,7 @@ def bdiiIntegrator(confd,d):
 
 	
 	# All changes to the dictionary happened live -- no need to return it.
+	print 'Finished BDII Integrator'
 	return 0
 
 def allMaker(d):
