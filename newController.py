@@ -174,7 +174,7 @@ def sqlDictUnpacker(d):
 		# Append these new keys to standardkeys
 		stdkeys.extend([key for key in d[queue].keys() if key not in excl])
 	# Then remove all duplicates
-	stdkeys=reducer(standardkeys)
+	stdkeys=reducer(stdkeys)
 	# Parse the dictionary to create an All queue for each site
 	status = allMaker(out_d)
 	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
@@ -183,7 +183,7 @@ def sqlDictUnpacker(d):
 		out_d[ndef]=out_d.pop('')
 	if out_d.has_key(None):
 		out_d[ndef]=out_d.pop(None)
-		
+
 	return out_d, stdkeys
 
 def reducer(l):
@@ -752,7 +752,8 @@ def buildDict():
 		# If the configs folder is missing and this is the first thing run,
 		# Reload this from the DB.
 		# When SVN is in place, this should be replaced by a svn checkout.
-		makeConfigs(sqlDictUnpacker(loadSchedConfig()))
+		# We choose element 0 to get the first result. This hack will go away.c
+		makeConfigs(sqlDictUnpacker(loadSchedConfig())[0])
 		clouds = os.listdir(configs)
 
 	for cloud in clouds:
