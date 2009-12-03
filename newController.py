@@ -73,8 +73,6 @@ postfix = '.py'
 dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
 shared, unshared = 'shared','unshared'
 excl = ['status','lastmod','dn','tspace']
-global standardkeys
-
 standardkeys=[]
 
 def loadSchedConfig():
@@ -154,7 +152,7 @@ def sqlDictUnpacker(d):
 	# Remember that these vars are limited in scope.
 	cloud = 'cloud'
 	site = 'site'
-	
+	standardkeys=[]
 	out_d={}
 	# Run over the DB queues
 	for queue in d:
@@ -187,7 +185,7 @@ def sqlDictUnpacker(d):
 	if out_d.has_key(None):
 		out_d[ndef]=out_d.pop(None)
 		
-	return out_d
+	return out_d, standardkeys
 
 def reducer(l):
 	''' Reduce the entries in a list by removing dupes'''
@@ -845,7 +843,7 @@ def jdlListAdder(d):
 if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB
-	dbd = sqlDictUnpacker(loadSchedConfig())
+	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 	# Load the present config files
 	configd = buildDict()
 	
