@@ -171,11 +171,11 @@ def sqlDictUnpacker(d):
 		out_d[d[queue][cloud]][d[queue][site]][d[queue][dbkey]] = protoDict(queue,d)
 	
 		# Model keyset for creation of queues from scratch
-		sk=[key for key in d[queue].keys() if key not in excl]
-	# Append these new keys to standardkeys
-	standardkeys.append(sk)
-	# Then remove all duplicates
-	standardkeys=reducer(standardkeys)
+## 		sk=[key for key in d[queue].keys() if key not in excl]
+## 	# Append these new keys to standardkeys
+## 	standardkeys.append(sk)
+## 	# Then remove all duplicates
+## 	standardkeys=reducer(standardkeys)
 	# Parse the dictionary to create an All queue for each site
 	status = allMaker(out_d)
 	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
@@ -185,7 +185,7 @@ def sqlDictUnpacker(d):
 	if out_d.has_key(None):
 		out_d[ndef]=out_d.pop(None)
 		
-	return out_d, standardkeys
+	return out_d
 
 def reducer(l):
 	''' Reduce the entries in a list by removing dupes'''
@@ -843,7 +843,7 @@ def jdlListAdder(d):
 if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB
-	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+	dbd = sqlDictUnpacker(loadSchedConfig())
 	# Load the present config files
 	configd = buildDict()
 	
@@ -858,6 +858,12 @@ if __name__ == "__main__":
 	# Compare the DB to the present built configuration
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
 	n=configd.popitem()
+
+	for cloud in dbd:
+		for site in dbd[cloud]:
+			for queue in dbd[cloud][site]:
+				sk = dbd[cloud][site][queue][param].keys()
+				standardkeys=reducer(standardkeys.append(sk))
 	m,n=collapseDict(dbd),collapseDict(configd)
 	u,d=compareQueues(collapseDict(dbd),collapseDict(configd))
 	a=buildDeleteList(d,'atlas_pandameta.schedconfig')
