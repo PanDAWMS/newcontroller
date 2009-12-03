@@ -705,7 +705,7 @@ def buildUpdateList(updDict, tableName):
 		valuestxt = '{%s} ' % ', '.join(["'%s': '%s'" % (i,updDict[key][i]) for i in sorted(updDict[key].keys())])
 		sql.append(merge+matched+mergetxt1+insert+values1+mergetxt2+values2+valuestxt+';')
 		
-	return '/n'.join(sql)
+	return '\n'.join(sql)
 
 def buildDeleteList(delDict, tableName):
 	'''Build a list of SQL commands that deletes queues no longer in the definition files'''
