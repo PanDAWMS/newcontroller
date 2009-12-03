@@ -72,7 +72,7 @@ configs = base_path + os.sep + 'Configs'
 postfix = '.py'
 dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
 shared, unshared = 'shared','unshared'
-excl = ['status','lastmod','dn','tspace']
+excl = ['status','lastmod','dn','tspace','_comment']
 standardkeys = []
 
 def loadSchedConfig():
