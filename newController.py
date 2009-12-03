@@ -73,7 +73,7 @@ postfix = '.py'
 dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
 shared, unshared = 'shared','unshared'
 excl = ['status','lastmod','dn','tspace']
-standardkeys=[]
+standardkeys
 
 def loadSchedConfig():
 	'''Returns the values in the schedconfig db as a dictionary'''
@@ -152,7 +152,6 @@ def sqlDictUnpacker(d):
 	# Remember that these vars are limited in scope.
 	cloud = 'cloud'
 	site = 'site'
-	standardkeys=[]
 	out_d={}
 	# Run over the DB queues
 	for queue in d:
@@ -171,11 +170,10 @@ def sqlDictUnpacker(d):
 		out_d[d[queue][cloud]][d[queue][site]][d[queue][dbkey]] = protoDict(queue,d)
 	
 		# Model keyset for creation of queues from scratch
-## 		sk=[key for key in d[queue].keys() if key not in excl]
-## 	# Append these new keys to standardkeys
-## 	standardkeys.append(sk)
-## 	# Then remove all duplicates
-## 	standardkeys=reducer(standardkeys)
+		# Append these new keys to standardkeys
+		standardkeys.extend([key for key in d[queue].keys() if key not in excl])
+	# Then remove all duplicates
+	standardkeys=reducer(standardkeys)
 	# Parse the dictionary to create an All queue for each site
 	status = allMaker(out_d)
 	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
@@ -185,7 +183,7 @@ def sqlDictUnpacker(d):
 	if out_d.has_key(None):
 		out_d[ndef]=out_d.pop(None)
 		
-	return out_d
+	return out_d, standardkeys
 
 def reducer(l):
 	''' Reduce the entries in a list by removing dupes'''
@@ -842,8 +840,8 @@ def jdlListAdder(d):
 
 if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
-	# Load the present status of the DB
-	dbd = sqlDictUnpacker(loadSchedConfig())
+	# Load the present status of the DB, and describe a standard list of keys
+	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 	# Load the present config files
 	configd = buildDict()
 	
@@ -859,11 +857,6 @@ if __name__ == "__main__":
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
 	n=configd.popitem()
 
-	for cloud in dbd:
-		for site in dbd[cloud]:
-			for queue in dbd[cloud][site]:
-				standardkeys.extend(dbd[cloud][site][queue][param].keys())
-				standardkeys=reducer(standardkeys)
 	m,n=collapseDict(dbd),collapseDict(configd)
 	u,d=compareQueues(collapseDict(dbd),collapseDict(configd))
 	a=buildDeleteList(d,'atlas_pandameta.schedconfig')
