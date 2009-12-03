@@ -752,7 +752,7 @@ def buildDict():
 		# If the configs folder is missing and this is the first thing run,
 		# Reload this from the DB.
 		# When SVN is in place, this should be replaced by a svn checkout.
-		# We choose element 0 to get the first result. This hack will go away.c
+		# We choose element 0 to get the first result. This hack will go away.
 		makeConfigs(sqlDictUnpacker(loadSchedConfig())[0])
 		clouds = os.listdir(configs)
 
@@ -810,13 +810,13 @@ def collapseDict(d):
 				# Get the parameter dictionary (vs the source or the overrides).
 				# This is a symbolic link, not a duplication:
 				p = d[cloud][site][queue][param]
-				# So copy out the values into a new dictionary
-				out_d[p[dbkey]] = dict([(key,p[key]) for key in p])
+				# So copy out the values into a new dictionary (except excluded ones)
+				out_d[p[dbkey]] = dict([(key,p[key]) for key in p if key not in excl])
 				# Make sure all the standard keys are present, even if not filled
 				for key in standardkeys:
 					if key not in p.keys(): out_d[p[dbkey]][key] = ''
-				# Add the overrides
-				for key in d[cloud][site][queue][over]: out_d[p[dbkey]][key] = d[cloud][site][queue][over][key]
+				# Add the overrides (except the excluded ones)
+				for key in [i for i in d[cloud][site][queue][over] if i not in excl]: out_d[p[dbkey]][key] = d[cloud][site][queue][over][key]
 	# Return the flattened dictionary
 	return out_d
 				
