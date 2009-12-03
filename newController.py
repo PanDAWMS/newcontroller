@@ -153,6 +153,7 @@ def sqlDictUnpacker(d):
 	cloud = 'cloud'
 	site = 'site'
 	out_d={}
+	stdkeys
 	# Run over the DB queues
 	for queue in d:
 		# If the present queue's cloud isn't in the out_d, create the cloud.
@@ -171,9 +172,9 @@ def sqlDictUnpacker(d):
 	
 		# Model keyset for creation of queues from scratch
 		# Append these new keys to standardkeys
-		standardkeys.extend([key for key in d[queue].keys() if key not in excl])
+		stdkeys.extend([key for key in d[queue].keys() if key not in excl])
 	# Then remove all duplicates
-	standardkeys=reducer(standardkeys)
+	stdkeys=reducer(standardkeys)
 	# Parse the dictionary to create an All queue for each site
 	status = allMaker(out_d)
 	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
@@ -183,7 +184,7 @@ def sqlDictUnpacker(d):
 	if out_d.has_key(None):
 		out_d[ndef]=out_d.pop(None)
 		
-	return out_d, standardkeys
+	return out_d, stdkeys
 
 def reducer(l):
 	''' Reduce the entries in a list by removing dupes'''
