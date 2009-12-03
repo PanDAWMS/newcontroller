@@ -703,7 +703,7 @@ def buildUpdateList(updDict, tableName):
 		merge = "MERGE INTO %s USING DUAL ON ( %s.nickname='%s' ) " % (tableName, tableName, key)
 		mergetxt1 = ' %s ' % ','.join(['%s=:%s' % (i,i) for i in sorted(updDict[key].keys())])
 		mergetxt2 = ' (%s) ' % ',:'.join(sorted(updDict[key].keys()))
-		valuestxt = '{%s} ' % ', '.join(["'%s': '%s'" % (i,updDict[key]) for i in sorted(updDict[key].keys())])
+		valuestxt = '{%s} ' % ', '.join(["'%s': '%s'" % (i,updDict[key][i]) for i in sorted(updDict[key].keys())])
 		sql.append(merge+matched+mergetxt1+insert+values1+mergetxt2+values2+valuestxt+';')
 		print sql[-1]
 		raw_input()
