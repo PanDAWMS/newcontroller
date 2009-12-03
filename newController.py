@@ -170,8 +170,12 @@ def sqlDictUnpacker(d):
 		# definition. The values are set to DB, and will be changed if another source modifies the value.
 		out_d[d[queue][cloud]][d[queue][site]][d[queue][dbkey]] = protoDict(queue,d)
 	
-	# Model keyset for creation of queues from scratch
-	standardkeys=[key for key in d[queue].keys() if key not in excl]
+		# Model keyset for creation of queues from scratch
+		sk=[key for key in d[queue].keys() if key not in excl]
+	# Append these new keys to standardkeys
+	standardkeys.append(sk)
+	# Then remove all duplicates
+	standardkeys=reducer(standardkeys)
 	# Parse the dictionary to create an All queue for each site
 	status = allMaker(out_d)
 	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
