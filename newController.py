@@ -153,7 +153,7 @@ def sqlDictUnpacker(d):
 	cloud = 'cloud'
 	site = 'site'
 	out_d={}
-	stdkeys
+	stdkeys = []
 	# Run over the DB queues
 	for queue in d:
 		# If the present queue's cloud isn't in the out_d, create the cloud.
