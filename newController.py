@@ -73,7 +73,9 @@ postfix = '.py'
 dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
 shared, unshared = 'shared','unshared'
 excl = ['status','lastmod','dn','tspace']
-global standardkeys = []
+global standardkeys
+
+standardkeys=[]
 
 def loadSchedConfig():
 	'''Returns the values in the schedconfig db as a dictionary'''
