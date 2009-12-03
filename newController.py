@@ -862,8 +862,8 @@ if __name__ == "__main__":
 	for cloud in dbd:
 		for site in dbd[cloud]:
 			for queue in dbd[cloud][site]:
-				sk = dbd[cloud][site][queue][param].keys()
-				standardkeys=reducer(standardkeys.extend(sk))
+				standardkeys.extend(dbd[cloud][site][queue][param].keys())
+				standardkeys=reducer(standardkeys)
 	m,n=collapseDict(dbd),collapseDict(configd)
 	u,d=compareQueues(collapseDict(dbd),collapseDict(configd))
 	a=buildDeleteList(d,'atlas_pandameta.schedconfig')
