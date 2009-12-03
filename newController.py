@@ -812,9 +812,13 @@ def collapseDict(d):
 				p = d[cloud][site][queue][param]
 				# So copy out the values into a new dictionary (except excluded ones)
 				out_d[p[dbkey]] = dict([(key,p[key]) for key in p if key not in excl])
+				# Sanitization. Is this a good idea?
+				for key in out_d[p[dbkey]]:
+					if out_d[p[dbkey]][key] == 'None': out_d[p[dbkey]][key] == None
+					if type(out_d[p[dbkey]][key]) is str and out_d[p[dbkey]][key].isdigit(): out_d[p[dbkey]][key] == int(out_d[p[dbkey]][key])
 				# Make sure all the standard keys are present, even if not filled
 				for key in standardkeys:
-					if key not in p.keys(): out_d[p[dbkey]][key] = ''
+					if key not in p.keys(): out_d[p[dbkey]][key] = None
 				# Add the overrides (except the excluded ones)
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]: out_d[p[dbkey]][key] = d[cloud][site][queue][over][key]
 	# Return the flattened dictionary
