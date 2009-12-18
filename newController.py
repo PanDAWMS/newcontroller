@@ -431,12 +431,12 @@ def bdiiIntegrator(confd,d):
 				if s not in confd[c]:
 					confd[c][s] = {}
 					# Create it in the main config dictionary, using the standard keys from the DB (set in the initial import)
-					confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
+					confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
 					confd[c][s][nickname][enab] = 'False'
 			# Either way, we need to put the queue in without a cloud defined. 
 		# Check for manual setting. If it's manual, DON'T TOUCH
-## 		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
-## 			continue
+		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
+			continue
 
 		# Make sure the cloud and site are even defined.
 		if c not in confd:
