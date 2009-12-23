@@ -69,7 +69,6 @@ dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # S
 shared, unshared = 'shared','unshared'
 excl = ['status','lastmod','dn','tspace','_comment']
 standardkeys = []
-CERN-PROD-ce133-grid_atlas-lcglsf
 def loadSchedConfig():
 	'''Returns the values in the schedconfig db as a dictionary'''
 	utils.initDB()
