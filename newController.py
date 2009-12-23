@@ -822,7 +822,7 @@ def collapseDict(d):
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]: out_d[p[dbkey]][key] = d[cloud][site][queue][over][key]
 				# Sanitization. Is this a good idea?
 				for key in out_d[p[dbkey]]:
-					if out_d[p[dbkey]][key] == 'None': out_d[p[dbkey]][key] = None
+					if out_d[p[dbkey]][key] == 'None' or out_d[p[dbkey]][key] == '': out_d[p[dbkey]][key] = None
 					if type(out_d[p[dbkey]][key]) is str and out_d[p[dbkey]][key].isdigit(): out_d[p[dbkey]][key] = int(out_d[p[dbkey]][key])
 	# Return the flattened dictionary
 	return out_d
