@@ -420,21 +420,26 @@ def bdiiIntegrator(confd,d):
 		c,s = findQueue(nickname,confd)
 		if not c and not s:
 			# If it's not there, try the dictionary from the DB dictionary
+			if bdiiDebug: print "Couldn't find ", nickname
 			c,s = findQueue(nickname,d)
 			# If the queue is not in the DB, and is not inactive in the config files, then:
 			if not c and not s:
+				if bdiiDebug: print "Still couldn't find ", nickname
 				# If a site is specified, go ahead
 				if bdict[qn]['site']: c,s = ndef,bdict[qn]['site']
 				# If not, time to give up. BDII is hopelessly misconfigured -- best not to contaminate
 				else: continue
 				# If site doesn't yet exist, create it:
 				if s not in confd[c]:
+					if bdiiDebug: print 'Creating site %s in cloud %s as requested by BDII'  % (s,c)
 					confd[c][s] = {}
 					# Create it in the main config dictionary, using the standard keys from the DB (set in the initial import)
-					confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
-					confd[c][s][nickname][enab] = 'False'
+				print 'Creating queue %s in site %s and cloud %s as requested by BDII. This queue must be enabled by hand.' % (nickname, s, c)
+				confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
+				confd[c][s][nickname][enab] = 'False'
 			# Either way, we need to put the queue in without a cloud defined. 
 		# Check for manual setting. If it's manual, DON'T TOUCH
+		
 		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
 			continue
 
