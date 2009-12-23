@@ -440,8 +440,9 @@ def bdiiIntegrator(confd,d):
 			# Either way, we need to put the queue in without a cloud defined. 
 		# Check for manual setting. If it's manual, DON'T TOUCH
 		
-		if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
-			continue
+		if confd[c][s][nickname][param]['sysconfig']:
+			if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
+				continue
 
 		# Make sure the cloud and site are even defined.
 		if c not in confd:
