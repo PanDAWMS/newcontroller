@@ -9,20 +9,15 @@
 
 # TODO:
 
-# Add ToA handling
 # Add installedSW table support
 # Add a consistency checker
 # Add manual pickle restoration code
-# Add code for comparison between DB versions
 # Add subversion update, file add and checkin. Comment changes.
 # Add change detection to avoid DB change collisions
 # Add logging output for changes and status
 # Add queue insertion scripts
 # Add code for handling the jdllist (jdltext) table (field)
-# Change to flexible mount point
-# Make sure manual queues remain unmodified by BDII!
 # Add checking of queue "on" and "off"
-# BDII adding queues to clouds and sites -- note and copy parameters that apply to all. Then set offline and wait for mods.
 # Make sure that the All source is subordinate to the BDII source
 # Make sure that the jdladd field is fully commented when it's being removed from the source
 
@@ -58,7 +53,7 @@ dbWriteDebug = False
 configReadDebug = False
 configWriteDebug = False
 
-safety = "on"
+safety = 'on'
 All = 'All'
 ndef = 'Deactivated'
 param = 'Parameters'
@@ -851,12 +846,14 @@ def jdlListAdder(d):
 if __name__ == "__main__":
 	def testDiff():
 		for i in up_d:
+			print i
 			try:
 				for k in m[i].keys():
 					if m[i][k] != n[i][k]:
-						print i, m[i][k], n[i][k], type(m[i][k]), type(n[i][k])
+						print i, k, m[i][k], n[i][k], type(m[i][k]), type(n[i][k])
 			except KeyError:
-				pass
+				print i, 'was not found in '
+
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB, and describe a standard list of keys
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
