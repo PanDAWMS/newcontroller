@@ -47,7 +47,7 @@ except:
 
 
 toaDebug = False
-bdiiDebug = False
+bdiiDebug = True
 dbReadDebug = False
 dbWriteDebug = False
 configReadDebug = False
@@ -69,7 +69,7 @@ dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # S
 shared, unshared = 'shared','unshared'
 excl = ['status','lastmod','dn','tspace','_comment']
 standardkeys = []
-
+CERN-PROD-ce133-grid_atlas-lcglsf
 def loadSchedConfig():
 	'''Returns the values in the schedconfig db as a dictionary'''
 	utils.initDB()
@@ -844,7 +844,9 @@ def jdlListAdder(d):
 
 
 if __name__ == "__main__":
+	keydict={}
 	def testDiff():
+		
 		for i in up_d:
 			print i
 			try:
@@ -852,7 +854,7 @@ if __name__ == "__main__":
 					if m[i][k] != n[i][k]:
 						print i, k, m[i][k], n[i][k], type(m[i][k]), type(n[i][k])
 			except KeyError:
-				print '********************** %s was not found in the db' % i
+				print '\n\n********************** %s was not found in the db\n\n' % i
 
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB, and describe a standard list of keys
