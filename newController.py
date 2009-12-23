@@ -197,6 +197,7 @@ def findQueue(q,d):
 					return cloud, site
 	return '',''
 
+# Rewrite this to be more efficient -- it needs to parse the ddmsites once into a dictionary, then do matchmaking.
 def toaIntegrator(confd):
 	''' Adds ToA information to the confd (legacy from Rod) '''
 	print 'Running ToA Integrator'
@@ -245,7 +246,7 @@ def toaIntegrator(confd):
 											confd[cloud][site][queue][param]['cloud']=cl
 											confd[cloud][site][queue][source]['cloud'] = 'ToA'
 
-				 # EGEE defaults
+					# EGEE defaults
 					if confd[cloud][site][queue][param]['region'] != 'US':
 						# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
 						confd[cloud][site][queue][param]['proxy']  = 'noimport'
@@ -431,22 +432,12 @@ def bdiiIntegrator(confd,d):
 				print 'Creating queue %s in site %s and cloud %s as requested by BDII. This queue must be enabled by hand.' % (nickname, s, c)
 				confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
 				confd[c][s][nickname][enab] = 'False'
-			# Either way, we need to put the queue in without a cloud defined. 
+				# Either way, we need to put the queue in without a cloud defined. 
 		# Check for manual setting. If it's manual, DON'T TOUCH
-		
 		if confd[c][s][nickname][param]['sysconfig']:
 			if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
+				if bdiiDebug: print 'Skipping %s -- sysconfig set to manual' % nickname
 				continue
-
-		# Make sure the cloud and site are even defined.
-		if c not in confd:
-			confd[c] = {}
-		if s not in confd[c]:
-			confd[c][s] = {}
-		# If the queue is not present even after all that, add it. 
-		if dbkey not in confd[c][s]:
-			confd[c][s][nickname] = protoDict(nickname,{},sourcestr='BDII',keys=standardkeys)
-			confd[c][s][nickname][enab] = 'False'
 		# For all the simple translations, copy them in directly.
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
 			confd[c][s][nickname][param][key] = bdict[qn][key]
