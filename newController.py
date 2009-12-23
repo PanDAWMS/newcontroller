@@ -140,11 +140,11 @@ def pickleBackup(d):
 def protoDict(queue,d,sourcestr='DB',keys=[]):
 	'''Create a dictionary with params, overrides and sources for either an existing definition from the DB, or to add the dictionaries
 	for a new queue. Used in sqlDictUnpacker for extraction of DB values (default) and in bdiiIntegrator for new queue addition from the BDII.'''
-	e = 'True'
+	en_val = 'True'
 	if not len(d):
-		e = 'False'
-		d = {queue:dict([(key,'') for key in keys])}
-	return {param:d[queue],over:{},source:dict([(key,sourcestr) for key in d[queue].keys() if key not in excl]),enab:e}
+		en_val = 'False'
+		d = {queue:dict([(key,None) for key in keys])}
+	return {param:d[queue],over:{},source:dict([(key,sourcestr) for key in d[queue].keys() if key not in excl]),enab:en_val}
 	
 def sqlDictUnpacker(d):
 	'''Unpack the dictionary returned by Oracle or MySQL''' 
