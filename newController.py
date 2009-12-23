@@ -849,6 +849,11 @@ def jdlListAdder(d):
 
 
 if __name__ == "__main__":
+	def testDiff():
+		for i in up_d:
+			for k in m[i].keys():
+				if m[i][k] != n[i][k]:
+					print i, m[i][k], n[i][k], type(m[i][k]), type(n[i][k])
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB, and describe a standard list of keys
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
