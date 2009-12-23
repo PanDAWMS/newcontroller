@@ -468,23 +468,22 @@ def bdiiIntegrator(confd,d):
 		tags=linfotool.getSWtags(confd[c][s][nickname][param]['gatekeeper'])
 		etags=linfotool.getSWctags(confd[c][s][nickname][param]['gatekeeper'])
 		if len(etags) > 0:
-			for tag in etags:
+			for erelease in etags:
 				try:
-					cache=tag.replace('production','AtlasProduction').replace('tier0','AtlasTier0') 
-					release='.'.join(tag.split('-')[1].split('.')[:-1])
+					cache=erelease.replace('production','AtlasProduction').replace('tier0','AtlasTier0') 
+					release='.'.join(erelease.split('-')[1].split('.')[:-1])
 					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],cache)
-					rellist[idx]=dict([('site',confd[c][s][nickname][param]['site']),('cloud',confd[c][s][nickname][param]['cloud'])])
+					rellist[idx]={'site':confd[c][s][nickname][param]['site']}
 					rellist[idx]['release'] = release
 					rellist[idx]['cache'] = cache
 					rellist[idx]['siteid'] = '' # to fill later, when this is available
 					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
-					rellist[idx]['gatekeeper'] = gk
+					rellist[idx]['gatekeeper'] = confd[c][s][nickname][param]['gatekeeper']
 				except KeyError:
 					if bdiiDebug: print confd[c][s][nickname][param]
 		else:
 			if bdiiDebug: print("No eTags!")
 
-		# Needs work!!!
 		if len(tags) > 0:
 			for release in tags:
 				try:
