@@ -852,7 +852,7 @@ if __name__ == "__main__":
 					if m[i][k] != n[i][k]:
 						print i, k, m[i][k], n[i][k], type(m[i][k]), type(n[i][k])
 			except KeyError:
-				print i, 'was not found in '
+				print '********************** %s was not found in the db' % i
 
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB, and describe a standard list of keys
