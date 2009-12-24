@@ -438,6 +438,8 @@ def bdiiIntegrator(confd,d):
 			if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
 				if bdiiDebug: print 'Skipping %s -- sysconfig set to manual' % nickname
 				continue
+		if if confd[c][s][nickname][param]['sysconfig'] == 'manual':
+			print 'Real problem! This manual queue is being edited'
 		# For all the simple translations, copy them in directly.
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
 			confd[c][s][nickname][param][key] = bdict[qn][key]
@@ -445,6 +447,9 @@ def bdiiIntegrator(confd,d):
 			confd[c][s][nickname][source][key] = 'BDII'
 		# For the more complicated BDII derivatives, do some more complex work
 		confd[c][s][nickname][param]['queue'] = bdict[qn][key] + '/jobmanager' + bdict[qn]['jobmanager']
+		if bdict[qn][key] + '/jobmanager-' + bdict[qn]['jobmanager'] != confd[c][s][nickname][param]['jdl']:
+			print 'jdl mismatch!'
+			print bdict[qn], key, confd[c][s][nickname][param]['jdl'], 
 		confd[c][s][nickname][param]['jdl'] = bdict[qn][key] + '/jobmanager-' + bdict[qn]['jobmanager']
 		confd[c][s][nickname][param]['nickname'] = nickname
 		# Fill in sourcing here as well for the last few fields
