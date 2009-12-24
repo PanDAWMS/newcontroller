@@ -845,7 +845,7 @@ if __name__ == "__main__":
 		for i in up_d:
 			try:
 				if m[i]['sysconfig'] == 'manual':
-					print '################# This is a Manual queue! Bad to have any changes at all!\n'
+					print '################# This is a Manual queue! Bad to have any changes at all!'
 				for k in m[i].keys():
 					if k not in ['jdladd','releases']:
 						if m[i][k] != n[i][k]:
@@ -869,19 +869,11 @@ if __name__ == "__main__":
 
 	# Compare the DB to the present built configuration
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
-	n=configd.popitem()
 
 	m,n=collapseDict(dbd),collapseDict(configd)
 	u,d=compareQueues(collapseDict(dbd),collapseDict(configd))
 	a=buildDeleteList(d,'atlas_pandameta.schedconfig')
-
-	a=a.split('\n')
-	print a[0]
-	
 	b=buildUpdateList(u,'atlas_pandameta.schedconfig')
-
-	# Create the config path for each cloud
-
 
 	os.chdir(base_path)
 		
