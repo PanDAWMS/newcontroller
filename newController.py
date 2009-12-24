@@ -446,7 +446,7 @@ def bdiiIntegrator(confd,d):
 			# Complete the sourcing info
 			confd[c][s][nickname][source][key] = 'BDII'
 		# For the more complicated BDII derivatives, do some more complex work
-		confd[c][s][nickname][param]['queue'] = bdict[qn]['gatekeeper'] + '/jobmanager' + bdict[qn]['jobmanager']
+		confd[c][s][nickname][param]['queue'] = bdict[qn]['gatekeeper'] + '/jobmanager-' + bdict[qn]['jobmanager']
 		if bdict[qn]['gatekeeper'] + '/jobmanager-' + bdict[qn]['jobmanager'] != confd[c][s][nickname][param]['jdl']:
 			print 'jdl mismatch!'
 			print bdict[qn], key, confd[c][s][nickname][param]['jdl'], 
