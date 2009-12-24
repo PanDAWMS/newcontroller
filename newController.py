@@ -843,13 +843,13 @@ if __name__ == "__main__":
 	def testDiff():
 		
 		for i in up_d:
-			print i
 			try:
 				if m[i]['sysconfig'] == 'manual':
-					print '################# This is a Manual queue! Bad to have any changes at all!'
+					print '################# This is a Manual queue! Bad to have any changes at all!\n'
 				for k in m[i].keys():
-					if m[i][k] != n[i][k]:
-						print i, k, m[i][k], n[i][k], type(m[i][k]), type(n[i][k])
+					if k not in ['jdladd','releases']:
+						if m[i][k] != n[i][k]:
+							print i, k, m[i][k], n[i][k], type(m[i][k]), type(n[i][k])
 			except KeyError:
 				print '\n\n********************** %s was not found in the db\n\n' % i
 
