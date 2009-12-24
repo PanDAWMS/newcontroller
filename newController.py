@@ -438,7 +438,7 @@ def bdiiIntegrator(confd,d):
 			if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
 				if bdiiDebug: print 'Skipping %s -- sysconfig set to manual' % nickname
 				continue
-		if if confd[c][s][nickname][param]['sysconfig'] == 'manual':
+		if confd[c][s][nickname][param]['sysconfig'] == 'manual':
 			print 'Real problem! This manual queue is being edited'
 		# For all the simple translations, copy them in directly.
 		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
