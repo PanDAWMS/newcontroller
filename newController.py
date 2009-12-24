@@ -247,7 +247,7 @@ def toaIntegrator(confd):
 											confd[cloud][site][queue][source]['cloud'] = 'ToA'
 
 					# EGEE defaults
-					if confd[cloud][site][queue][param]['region'] != 'US':
+					if confd[cloud][site][queue][param]['region'] != 'US' and confd[cloud][site][queue][param]['sysconfig'] != 'manual':
 						# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
 						confd[cloud][site][queue][param]['proxy']  = 'noimport'
 						confd[cloud][site][queue][source]['proxy'] = 'ToA'
