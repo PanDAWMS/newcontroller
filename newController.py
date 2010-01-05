@@ -209,7 +209,7 @@ def toaIntegrator(confd):
 				try:
 					if toaDebug and confd[cloud][site][queue][param]['sysconfig'] == 'manual': print 'Skipping %s as a manual queue (%s, %s)' % (queue, cloud, site) 
 					# Make ToA check the 'manual' sysconfig flag
-					if confd[cloud][site][queue][param]['sysconfig'] != 'manual': continue
+					if confd[cloud][site][queue][param]['sysconfig'] == 'manual': continue
 					if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm']))):
 						ddmsites = ToA.getAllDestinationSites()
 						for ds in ddmsites:
@@ -250,6 +250,7 @@ def toaIntegrator(confd):
 											confd[cloud][site][queue][source]['cloud'] = 'ToA'
 
 					# EGEE defaults
+					if confd[cloud][site][queue][param]['sysconfig'] == 'manual': print 'How did we get here?'
 					if confd[cloud][site][queue][param]['region'] != 'US':
 						# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
 						confd[cloud][site][queue][param]['proxy']  = 'noimport'
