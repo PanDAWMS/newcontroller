@@ -337,13 +337,14 @@ def toaIntegrator(confd):
 
 def fillStorageInfo(spec,force=False):
 	''' SO FAR UNUSED. Filling storage information for individual queues. No source notations added. '''
+	if spec['sysconfig'] == 'manual': return
 	if toaDebug: print "In fillStorageInfo"
     # Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
 	spec['proxy']  = 'noimport'
 	spec['lfcpath'] = '/grid/atlas/users/pathena'
 	spec['lfcprodpath'] = '/grid/atlas/dq2'
 	if not spec.has_key('copytool'): spec['copytool'] = 'lcgcp'
-	if spec.has_key('ddm') and spec['ddm'] and spec['sysconfig'] != 'manual':
+	if spec.has_key('ddm') and spec['ddm']:
 		ddm1 = spec['ddm'].split(',')[0]
 		if toaDebug: print 'ddm: using %s from %s'%(ddm1,spec['ddm'])
 		# Set the lfc host 
