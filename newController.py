@@ -333,72 +333,6 @@ def toaIntegrator(confd):
 						
 	print 'Finished ToA integrator'
 	return
-           
-
-def fillStorageInfo(spec,force=False):
-	''' SO FAR UNUSED. Filling storage information for individual queues. No source notations added. '''
-	if spec['sysconfig'] == 'manual': return
-	if toaDebug: print "In fillStorageInfo"
-    # Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
-	spec['proxy']  = 'noimport'
-	spec['lfcpath'] = '/grid/atlas/users/pathena'
-	spec['lfcprodpath'] = '/grid/atlas/dq2'
-	if not spec.has_key('copytool'): spec['copytool'] = 'lcgcp'
-	if spec.has_key('ddm') and spec['ddm']:
-		ddm1 = spec['ddm'].split(',')[0]
-		if toaDebug: print 'ddm: using %s from %s'%(ddm1,spec['ddm'])
-		# Set the lfc host 
-		re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
-
-		if ToA:
-			loccat = ToA.getLocalCatalog(ddm1)
-		if loccat:
-			relfc=re_lfc.search(loccat)
-			if relfc :
-				lfchost=relfc.group(1)
-				if toaDebug: print "ROD would Set lfchost for %s %s"%(ddm1,lfchost) 
-				spec['lfchost'] = lfchost
-			else:
-				if toaDebug: print " Cannot get lfc host for %s"%spec['ddm']
-
-		srm_ep = ToA.getSiteProperty(ddm1,'srm')
-		if toaDebug: print 'srm_ep: ',srm_ep
-		if not srm_ep:
-			if toaDebug: print 'srm_ep in None'
-			return
-
-		# Regexp to extract srm host and path(without trailing /) 
-		re_srm_ep=re.compile('(srm://[\w.\-]+)(/[\w.\-/]+)?/$')
-		# Allow srmv2 form 'token:ATLASDATADISK:srm://srm.triumf.ca:8443/srm/managerv2?SFN=/atlas/atlasdatadisk/'
-		re_srm2_ep=re.compile('(token:\w+:(srm://[\w.\-]+):\d+/srm/managerv\d\?SFN=)(/[\w.\-/]+)/?$')
-		
-		resrm_ep=re_srm_ep.search(srm_ep)
-		resrm2_ep=re_srm2_ep.search(srm_ep)
-		if resrm_ep:
-			if toaDebug: print "ROD: srmv1"
-			se=resrm_ep.group(1)
-			sepath=resrm_ep.group(2)
-			copyprefix=se+'/^dummy'
-		elif resrm2_ep:
-			se=resrm2_ep.group(1)
-			copyprefix=resrm2_ep.group(2)+'/^dummy'
-			sepath=resrm2_ep.group(3)
-			
-		if resrm_ep or resrm2_ep:
-			if toaDebug: print  'SRM: ',se,sepath,copyprefix               
-			if not spec.has_key('se') or force:
-				spec['se'] = se
-			if not spec.has_key('sepath') or force:
-				spec['sepath'] = sepath+'/users/pathena'
-			if not spec.has_key('seprodpath') or force:
-				spec['seprodpath'] = sepath
-			if not spec.has_key('copyprefix') or force:
-				spec['copyprefix'] =  copyprefix
-	else:
-		if toaDebug: print 'DDM not set for %s'% spec['nickname']
-		
-	return  
-
 
 def bdiiIntegrator(confd,d):
 	'''Adds BDII values to the configurations, overriding what was there. Must be run after downloading the DB
@@ -508,15 +442,6 @@ def bdiiIntegrator(confd,d):
 			if bdiiDebug: print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
 
 
-## 		# validatedreleaeses for reprocessing
-## 		# not here but set manually in sqlplus
-## 		# Fill the RAM
-## 		confd[c][s][nickname][param]['memory'] = linfotool.getRAM(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
-## 		confd[c][s][nickname][param]['maxcpu'] = linfotool.getMaxcpu(confd[c][s][nickname][param]['gatekeeper'],confd[c][s][nickname][param]['localqueue'])
-## 		if confd[c][s][nickname][param]['site'] in ['IN2P3-LAPP']:
-## 			confd[c][s][nickname][param]['maxtime'] = maxcpu  
-
-	
 	# All changes to the dictionary happened live -- no need to return it.
 	print 'Finished BDII Integrator'
 	return 0
@@ -853,13 +778,10 @@ if __name__ == "__main__":
 		
 		for i in up_d:
 			try:
-				if m[i]['sysconfig'] == 'manual':
-					print '################# This is a Manual queue! Bad to have any changes at all!'
 				for k in m[i].keys():
 					if k not in ['jdladd','releases']:
 						if m[i][k] != n[i][k]:
 							print i, k, m[i][k], n[i][k], type(m[i][k]), type(n[i][k])
-				print
 			except KeyError:
 				print '\n\n********************** %s was not found in the db\n\n' % i
 
