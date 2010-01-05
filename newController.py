@@ -328,7 +328,7 @@ def toaIntegrator(confd):
 						print cloud, site, queue
 						print confd[cloud][site][queue]
 					else:
-						if toaDebug: print cloud, site, queue, confd[cloud][site][queue][params]
+						if toaDebug: print cloud, site, queue, confd[cloud][site][queue][param]
 						
 	print 'Finished ToA integrator'
 	return
