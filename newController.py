@@ -207,7 +207,8 @@ def toaIntegrator(confd):
 			for queue in confd[cloud][site]:
 				if queue is All: continue
 				try:
-					if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm'])) ):
+					if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm'])))
+					and confd[cloud][site][queue][param][sysconfig] == 'manual':
 						ddmsites = ToA.getAllDestinationSites()
 						for ds in ddmsites:
 							gocnames = ToA.getSiteProperty(ds,'alternateName')
@@ -247,7 +248,7 @@ def toaIntegrator(confd):
 											confd[cloud][site][queue][source]['cloud'] = 'ToA'
 
 					# EGEE defaults
-					if confd[cloud][site][queue][param]['region'] != 'US' and confd[cloud][site][queue][param]['sysconfig'] != 'manual':
+					if confd[cloud][site][queue][param]['region'] != 'US':
 						# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
 						confd[cloud][site][queue][param]['proxy']  = 'noimport'
 						confd[cloud][site][queue][source]['proxy'] = 'ToA'
