@@ -858,6 +858,7 @@ if __name__ == "__main__":
 					if k not in ['jdladd','releases']:
 						if m[i][k] != n[i][k]:
 							print i, k, m[i][k], n[i][k], type(m[i][k]), type(n[i][k])
+				print
 			except KeyError:
 				print '\n\n********************** %s was not found in the db\n\n' % i
 
