@@ -207,8 +207,9 @@ def toaIntegrator(confd):
 			for queue in confd[cloud][site]:
 				if queue is All: continue
 				try:
-					if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm'])))
-					and confd[cloud][site][queue][param][sysconfig] == 'manual':
+					# Make ToA check the 'manual' sysconfig flag
+					if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm']))) \
+						   and confd[cloud][site][queue][param][sysconfig] == 'manual':
 						ddmsites = ToA.getAllDestinationSites()
 						for ds in ddmsites:
 							gocnames = ToA.getSiteProperty(ds,'alternateName')
