@@ -46,7 +46,7 @@ except:
 	sys.exit(-1)
 
 
-toaDebug = True
+toaDebug = False
 bdiiDebug = False
 dbReadDebug = False
 dbWriteDebug = False
@@ -63,12 +63,15 @@ enab = 'Enabled'
 base_path = os.getcwd()
 backupPath = base_path + 'Backup'
 backupName = 'schedConfigBackup.pickle'
-configs = base_path + os.sep + 'Configs'
+configs = base_path + os.sep + 'SchedConfigs'
+jdlconfigs = base_path + os.sep + 'JDLConfigs'
+bdiiconfigs = base_path + os.sep + 'BDIIOverrides'
 postfix = '.py'
 dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
 shared, unshared = 'shared','unshared'
 excl = ['status','lastmod','dn','tspace','_comment']
 standardkeys = []
+
 def loadSchedConfig():
 	'''Returns the values in the schedconfig db as a dictionary'''
 	utils.initDB()
@@ -180,6 +183,18 @@ def sqlDictUnpacker(d):
 
 	return out_d, stdkeys
 
+def jdlDictUnpacker(d):
+	'''Unpack the dictionary returned by Oracle or MySQL for the jdllist table''' 
+	# Reading necessary data by key.
+	# Remember that these vars are limited in scope.
+	out_d={}
+	# Run over the jdl entries
+	for entry in d:
+		# Create the entry
+		out_d[d[entry]['name']] = d[entry].copy()
+
+	return out_d
+
 def reducer(l):
 	''' Reduce the entries in a list by removing dupes'''
 	return dict([(i,1) for i in l]).keys()
@@ -199,7 +214,7 @@ def findQueue(q,d):
 
 # Rewrite this to be more efficient -- it needs to parse the ddmsites once into a dictionary, then do matchmaking.
 def toaIntegrator(confd):
-	''' Adds ToA information to the confd (legacy from Rod) '''
+	''' Adds ToA information to the confd (legacy from Rod, incomplete commenting. Will enhance later.) '''
 	print 'Running ToA Integrator'
 	for cloud in confd:
 		for site in confd[cloud]:
@@ -503,8 +518,8 @@ def composeFields(d,s,dname,allFlag=0):
 	''' Populate a list for file writing that prints parameter dictionaries cleanly,
 	allowing them to be written to human-modifiable config files for queues and sites.'''
 
-	# "dname" is one of two things -- "Parameters" or "Override", depending on what part of the  
-	# file we're writing. They're defined generally as param and over 
+	# "dname" is one of three things -- "Parameters", "Override" or "JDL", depending on what part of the  
+	# file we're writing. They're defined generally as param and over. JDL is a different kind of file. 
 	keylist = d[dname].keys()
 	try:
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
@@ -595,6 +610,33 @@ def buildFile(name, d):
 	f=file(name + postfix,'w')
 	f.writelines(s)
 	f.close()
+
+def buildJdlFiles(d):
+	'''Build a JDL configuration file'''
+	startstr = '''
+# This dictionary contains the parameters for one jdl spec.
+# Changing this will update it in the jdllist table.
+# If you want to change the value temporarily, preserving the previous
+# value, please copy the new version into the Override
+# dictionary. Override will supersede the Parameters dictionary.
+
+'''
+	overridestr = '''
+# PLEASE USE FOR TEMPORARY CHANGES TO A JDL SPEC
+# This dictionary will override any value within its scope.
+
+'''
+	for name in d['jdl']:
+		# Initiate the file string
+		s=[startstr]
+		# Use the same composeFields machinery as in the buildFiles
+		composeFields(d,s,'jdl')
+		s.append(overridestr)
+
+		f=file(name + postfix,'w')
+		f.writelines(s)
+		f.close()
+	
 
 def compareQueues(dbDict,cfgDict,dbOverride=False):
 	'''Compares the queue dictionary that we got from the DB to the one in the config files. Any changed/deleted
@@ -768,9 +810,19 @@ def execUpdate(updateList):
 
 # To be completed!! Needs to be part of a separate code file.
 def jdlListAdder(d):
-	'''Merge the contents of the jdllist table (name, host, system, jdltext) into the schedconfig dictionary'''
-	pass
+	'''Returns the values in the schedconfig db as a dictionary'''
+	utils.initDB()
+	print "Init DB (JDLLIST)"
+	query = "select * from jdllist"
+	nrows = utils.dictcursor().execute(query)
+	if nrows > 0:
+		rows = utils.dictcursor().fetchall()
+	utils.endDB()
+	d={'jdl':{}}
+	for i in rows:
+		d['jdl'][i[dbkey]]=i
 
+	return d
 
 if __name__ == "__main__":
 	keydict={}
