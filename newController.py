@@ -342,7 +342,7 @@ def fillStorageInfo(spec,force=False):
 	spec['lfcpath'] = '/grid/atlas/users/pathena'
 	spec['lfcprodpath'] = '/grid/atlas/dq2'
 	if not spec.has_key('copytool'): spec['copytool'] = 'lcgcp'
-	if spec.has_key('ddm') and spec['ddm']:
+	if spec.has_key('ddm') and spec['ddm'] and spec['sysconfig'] != 'manual':
 		ddm1 = spec['ddm'].split(',')[0]
 		if toaDebug: print 'ddm: using %s from %s'%(ddm1,spec['ddm'])
 		# Set the lfc host 
