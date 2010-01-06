@@ -627,6 +627,12 @@ def buildJdlFiles(d):
 
 '''
 	path = jdlconfigs
+
+	try:
+		os.makedirs(path)
+	except OSError:
+		pass
+
 	os.chdir(path)
 	for name in d[jdl]:
 		# Initiate the file string
