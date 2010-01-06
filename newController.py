@@ -626,7 +626,7 @@ def buildJdlFiles(d):
 # This dictionary will override any value within its scope.
 
 '''
-	path = jdlconfigs.replace('/','_')
+	path = jdlconfigs
 
 	try:
 		os.makedirs(path)
@@ -642,7 +642,7 @@ def buildJdlFiles(d):
 		s.append(overridestr)
 		composeFields(d,s,over)
 
-		f=file(name + postfix,'w')
+		f=file(name.replace('/','_') + postfix,'w')
 		f.writelines(s)
 		f.close()
 	
