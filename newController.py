@@ -830,7 +830,7 @@ def jdlListAdder(d):
 		rows = utils.dictcursor().fetchall()
 	utils.endDB()
 	# Use the same dictionary form
-	d={param:{},over:{}}
+	d.update({param:{},over:{}})
 	# Populate this (much simpler) dictionary with the JDL fields.
 	for i in rows:
 		d[param][i['name']]=i
