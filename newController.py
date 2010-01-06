@@ -827,7 +827,7 @@ def jdlListAdder(d):
 	d={param:{},over:{}}
 	# Populate this (much simpler) dictionary with the JDL fields.
 	for i in rows:
-		d[param][i[dbkey]]=i
+		d[param][i['name']]=i
 	# There's no way to organize even by queue. The JDL will link to the
 	# schedconfig queues by matching the jdl field to the name field
 	return d
@@ -851,6 +851,8 @@ if __name__ == "__main__":
 	jdld = {}
 	jdlListAdder(jdld)
 	buildJdlFiles(jdld)
+
+	raw_input()
 	
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 	# Load the present config files
