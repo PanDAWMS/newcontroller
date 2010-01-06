@@ -848,7 +848,8 @@ if __name__ == "__main__":
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB, and describe a standard list of keys
 
-	jdld = jdlListAdder()
+	jdld = {}
+	jdlListAdder(jdld)
 	buildJdlFiles(jdld)
 	
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
