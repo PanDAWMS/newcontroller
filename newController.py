@@ -634,7 +634,7 @@ def buildJdlFiles(d):
 		pass
 
 	os.chdir(path)
-	for name in d[jdl]:
+	for name in d[param]:
 		# Initiate the file string
 		s=[startstr]
 		# Use the same composeFields machinery as in the buildFiles
