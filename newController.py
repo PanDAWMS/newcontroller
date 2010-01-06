@@ -518,8 +518,8 @@ def composeFields(d,s,dname,allFlag=0):
 	''' Populate a list for file writing that prints parameter dictionaries cleanly,
 	allowing them to be written to human-modifiable config files for queues and sites.'''
 
-	# "dname" is one of three things -- "Parameters", "Override" or "JDL", depending on what part of the  
-	# file we're writing. They're defined generally as param and over. JDL is a different kind of file. 
+	# "dname" is one of three things -- "Parameters" and "Override", depending on what part of the  
+	# file we're writing. They're defined generally as param and over.
 	keylist = d[dname].keys()
 	try:
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
@@ -626,12 +626,15 @@ def buildJdlFiles(d):
 # This dictionary will override any value within its scope.
 
 '''
-	for name in d['jdl']:
+	path = jdlconfigs
+	os.chdir(path)
+	for name in d[jdl]:
 		# Initiate the file string
 		s=[startstr]
 		# Use the same composeFields machinery as in the buildFiles
-		composeFields(d,s,'jdl')
+		composeFields(d,s,param)
 		s.append(overridestr)
+		composeFields(d,s,over)
 
 		f=file(name + postfix,'w')
 		f.writelines(s)
@@ -812,16 +815,21 @@ def execUpdate(updateList):
 def jdlListAdder(d):
 	'''Returns the values in the schedconfig db as a dictionary'''
 	utils.initDB()
+	# Signal the different DB access
 	print "Init DB (JDLLIST)"
+	# Get all the fields
 	query = "select * from jdllist"
 	nrows = utils.dictcursor().execute(query)
 	if nrows > 0:
 		rows = utils.dictcursor().fetchall()
 	utils.endDB()
-	d={'jdl':{}}
+	# Use the same dictionary form
+	d={param:{},over:{}}
+	# Populate this (much simpler) dictionary with the JDL fields.
 	for i in rows:
-		d['jdl'][i[dbkey]]=i
-
+		d[param][i[dbkey]]=i
+	# There's no way to organize even by queue. The JDL will link to the
+	# schedconfig queues by matching the jdl field to the name field
 	return d
 
 if __name__ == "__main__":
@@ -839,6 +847,10 @@ if __name__ == "__main__":
 
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB, and describe a standard list of keys
+
+	jdld = jdlListAdder()
+	buildJdlFiles(jdld)
+	
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 	# Load the present config files
 	configd = buildDict()
