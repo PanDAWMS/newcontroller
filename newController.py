@@ -626,7 +626,7 @@ def buildJdlFiles(d):
 # This dictionary will override any value within its scope.
 
 '''
-	path = jdlconfigs.replace('/')
+	path = jdlconfigs.replace('/','_')
 
 	try:
 		os.makedirs(path)
