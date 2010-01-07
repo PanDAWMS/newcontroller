@@ -619,7 +619,7 @@ def buildFile(name, d):
 	f.close()
 
 def buildJdlFiles(d):
-	'''Build a JDL configuration file'''
+	'''Build th JDL configuration files'''
 	startstr = '''
 # This dictionary contains the parameters for one jdl spec.
 # Changing this will update it in the jdllist table.
@@ -841,11 +841,13 @@ def jdlListAdder(d):
 	if jdlDebug: print 'Dictionary Created'
 	# Populate this (much simpler) dictionary with the JDL fields.
 	for i in rows:
-		print i
 		if jdlDebug: print i['name']
 		d[jdl][i['name']]=i
 	# There's no way to organize even by queue. The JDL will link to the
 	# schedconfig queues by matching the jdl field to the name field
+	for i in d[jdl]:
+		# Sanitization
+		d[jdl][i]['jdl'] = d[jdl][i]['jdl'].replace('\\n','\n')
 	return 0
 
 if __name__ == "__main__":
