@@ -47,6 +47,7 @@ except:
 
 
 toaDebug = False
+jdlDebug = True
 bdiiDebug = False
 dbReadDebug = False
 dbWriteDebug = False
@@ -58,6 +59,7 @@ All = 'All'
 ndef = 'Deactivated'
 param = 'Parameters'
 over = 'Override'
+jdl = 'JDL'
 source = 'Source'
 enab = 'Enabled'
 base_path = os.getcwd()
@@ -183,17 +185,17 @@ def sqlDictUnpacker(d):
 
 	return out_d, stdkeys
 
-def jdlDictUnpacker(d):
-	'''Unpack the dictionary returned by Oracle or MySQL for the jdllist table''' 
-	# Reading necessary data by key.
-	# Remember that these vars are limited in scope.
-	out_d={}
-	# Run over the jdl entries
-	for entry in d:
-		# Create the entry
-		out_d[d[entry]['name']] = d[entry].copy()
+## def jdlDictUnpacker(d):
+## 	'''Unpack the dictionary returned by Oracle or MySQL for the jdllist table''' 
+## 	# Reading necessary data by key.
+## 	# Remember that these vars are limited in scope.
+## 	out_d={}
+## 	# Run over the jdl entries
+## 	for entry in d:
+## 		# Create the entry
+## 		out_d[d[entry]['name']] = d[entry].copy()
 
-	return out_d
+## 	return out_d
 
 def reducer(l):
 	''' Reduce the entries in a list by removing dupes'''
@@ -519,20 +521,23 @@ def composeFields(d,s,dname,allFlag=0):
 	allowing them to be written to human-modifiable config files for queues and sites.'''
 
 	# "dname" is one of three things -- "Parameters" and "Override", depending on what part of the  
-	# file we're writing. They're defined generally as param and over.
+	# file we're writing. They're defined generally as param and over. A third, JDL, applies only to jdllist imports
+	# and replaces param
+	if dname == jdl: primary_key = 'name'
+	else: primary_key = dbkey
 	keylist = d[dname].keys()
 	try:
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
-		keylist.remove(dbkey)
+		keylist.remove(primary_key)
 		keylist.sort()
-		keylist.insert(0,dbkey)
+		keylist.insert(0,primary_key)
 
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
 		keylist.sort()
 		# No point in warning for override or All dictionaries
 		if dname == param and not allFlag:
-			print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (dbkey, str(d))
+			print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (primary_key, str(d))
 
 	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
 	s.append('%s = {' % dname + os.linesep )
@@ -634,11 +639,11 @@ def buildJdlFiles(d):
 		pass
 
 	os.chdir(path)
-	for name in d[param]:
+	for name in d[jdl]:
 		# Initiate the file string
 		s=[startstr]
 		# Use the same composeFields machinery as in the buildFiles
-		composeFields(d,s,param)
+		composeFields(d,s,jdl)
 		s.append(overridestr)
 		composeFields(d,s,over)
 
@@ -830,10 +835,12 @@ def jdlListAdder(d):
 		rows = utils.dictcursor().fetchall()
 	utils.endDB()
 	# Use the same dictionary form
-	d.update({param:{},over:{}})
+	d.update({jdl:{},over:{}})
+	if jdlDebug: print 'Dictionary Created'
 	# Populate this (much simpler) dictionary with the JDL fields.
 	for i in rows:
-		d[param][i['name']]=i
+		if jdlDebug: print d[jdl][i['name']]
+		d[jdl][i['name']]=i
 	# There's no way to organize even by queue. The JDL will link to the
 	# schedconfig queues by matching the jdl field to the name field
 	return 0
