@@ -645,9 +645,9 @@ def buildJdlFiles(d):
 		# Initiate the file string
 		s=[startstr]
 		# Use the same composeFields machinery as in the buildFiles
-		composeFields(d,s,jdl)
+		composeFields(d[jdl][name],s,jdl)
 		s.append(overridestr)
-		composeFields(d,s,over)
+		composeFields(d[jdl][name],s,over)
 
 		f=file(name.replace('/','_') + postfix,'w')
 		f.writelines(s)
