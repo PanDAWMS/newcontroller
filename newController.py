@@ -63,11 +63,13 @@ jdl = 'JDL'
 source = 'Source'
 enab = 'Enabled'
 base_path = os.getcwd()
-backupPath = base_path + 'Backup'
+# Step back a layer in the path for the configs, and put them in the config SVN directory
+cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf' + os.sep
+backupPath = cfg_path + 'Backup'
 backupName = 'schedConfigBackup.pickle'
-configs = base_path + os.sep + 'SchedConfigs'
-jdlconfigs = base_path + os.sep + 'JDLConfigs'
-bdiiconfigs = base_path + os.sep + 'BDIIOverrides'
+configs = cfg_path + os.sep + 'SchedConfigs'
+jdlconfigs = cfg_path + os.sep + 'JDLConfigs'
+bdiiconfigs = cfg_path + os.sep + 'BDIIOverrides'
 postfix = '.py'
 dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
 shared, unshared = 'shared','unshared'
