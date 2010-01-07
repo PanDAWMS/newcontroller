@@ -842,7 +842,7 @@ def jdlListAdder(d):
 	# Populate this (much simpler) dictionary with the JDL fields.
 	for i in rows:
 		if jdlDebug: print d[jdl][i['name']]
-		d[jdl][i['name']]=i
+		d[i][i['name']]=i
 	# There's no way to organize even by queue. The JDL will link to the
 	# schedconfig queues by matching the jdl field to the name field
 	return 0
