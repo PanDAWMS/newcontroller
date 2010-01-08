@@ -656,9 +656,10 @@ def buildJdlFiles(d):
 		# If any overrides have been detected, add them here.
 		composeFields(d[name],s,over)
 
-		# Write each file in its turn as part of the for loop. The slashes are replaced with underscored
-		# to keep the filesystem happy -- many of the JDL names contain slashes.
-		f=file(name.replace('/','_') + postfix,'w')
+		# Write each file in its turn as part of the for loop. The slashes are replaced with underscores
+		# to keep the filesystem happy -- many of the JDL names contain slashes. The double is to make
+		# re-replacement easy.
+		f=file(name.replace('/','__') + postfix,'w')
 		f.writelines(s)
 		f.close()
 	
@@ -791,6 +792,39 @@ def buildDict():
 	os.chdir(base)
 	return confd
 
+def buildJdlDict():
+	'''Build a copy of the jdl dictionary from the configuration files '''
+
+	jdld={}
+	# In executing files for variables, one has to put the variables in a contained, local context.
+	locvars={}
+	base = os.getcwd()
+	# Loop throught the clouds in the base folder
+	try:
+		jdls = [i for i in os.listdir(jdlconfigs) if i.endswith(postfix)]
+	except OSError:
+		# If the configs folder is missing and this is the first thing run,
+		# Reload this from the DB.
+		# When SVN is in place, this should be replaced by a svn checkout.
+		# We choose element 0 to get the first result. This hack will go away.
+		jdlListAdder()
+		jdls = os.listdir(configs)
+
+	for j in jdls:
+		# Add each jdl to the dictionary and remove the .py
+		name = j.replace('__','/').rstrip(postfix)
+		jdld[name] = {}
+		# Run the file to extract the appropriate dictionaries
+		# As a clarification, the JDL and Override variable are created when the config python file is executed
+		# The appropriate dictionaries are placed in locvars
+		execfile(j,{},locvars)
+		# Feed in the configuration
+		jdld[name][param] = locvars[param]
+		jdld[name][over] = locvars[over] 
+				
+	os.chdir(base)
+	return jdld
+
 def collapseDict(d):
 	''' Collapses a nested dictionary into a flat set of queues '''
 	out_d={}
@@ -877,6 +911,7 @@ if __name__ == "__main__":
 	jdld = {}
 	jdlListAdder(jdld)
 	buildJdlFiles(jdld)
+	newjdl=buildJdlDict()
 
 	raw_input()
 	
