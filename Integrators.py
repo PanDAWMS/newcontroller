@@ -2,6 +2,7 @@ import os, commands, re
 
 from miscUtils import *
 from controllerSettings import *
+from dictHandling import *
 
 try:
 	import dq2.info.TiersOfATLAS as ToA
