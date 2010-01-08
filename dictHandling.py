@@ -179,11 +179,12 @@ def collapseDict(d):
 			for queue in d[cloud][site]:
 				# Get the parameter dictionary (vs the source or the overrides).
 				# This is a symbolic link, not a duplication:
-				p = d[cloud][site][All][param]
-				o = d[cloud][site][All][over]
+				allparams = d[cloud][site][All][param]
+				alloverrides = d[cloud][site][All][over]
+				p = d[cloud][site][queue][param]
 				# So copy out the values into the present queue dictionary (except excluded ones)
-				for key in [i for i in d[cloud][site][All][param] if i not in excl]: d[cloud][site][queue][param][key] = p[key]
-				for key in [i for i in d[cloud][site][All][over] if i not in excl]: d[cloud][site][queue][param][key] = o[key]
+				for key in [i for i in p if i not in excl]: out_d[cloud][site][queue][param][key] = allparams[key]
+				for key in [i for i in p if i not in excl]: out_d[cloud][site][queue][param][key] = alloverrides[key]
 				# Sanitization. Is this a good idea?
 				for key in out_d[p[dbkey]]:
 					if out_d[p[dbkey]][key] == 'None' or out_d[p[dbkey]][key] == '': out_d[p[dbkey]][key] = None
