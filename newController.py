@@ -819,7 +819,7 @@ def buildJdlDict():
 		# The appropriate dictionaries are placed in locvars
 		execfile(j,{},locvars)
 		# Feed in the configuration
-		jdld[name][param] = locvars[jdl]
+		jdld[name][jdl] = locvars[jdl]
 		jdld[name][over] = locvars[over] 
 				
 	os.chdir(base)
