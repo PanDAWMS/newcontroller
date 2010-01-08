@@ -109,8 +109,17 @@ def toaIntegrator(confd):
 					# EGEE defaults
 					if confd[cloud][site][queue][param]['sysconfig'] == 'manual': print 'How did we get here?'
 					if confd[cloud][site][queue][param]['region'] != 'US':
+
 						# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
-						confd[cloud][site][queue][param]['proxy']  = 'noimport'
+						# This was an original condition in Rod's version. I have removed it because there were
+						# too many exceptions, and will only apply the noimport default where there is no previous
+						# choice made.
+						## confd[cloud][site][queue][param]['proxy']  = 'noimport'
+						if confd[cloud][site][queue][param].has_key('proxy'):
+							if not confd[cloud][site][queue][param]['proxy']:
+								confd[cloud][site][queue][param]['proxy']  = 'noimport'
+						else: confd[cloud][site][queue][param]['proxy']  = 'noimport'
+						
 						confd[cloud][site][queue][source]['proxy'] = 'ToA'
 						confd[cloud][site][queue][param]['lfcpath'] = '/grid/atlas/users/pathena'
 						confd[cloud][site][queue][source]['lfcpath'] = 'ToA'
