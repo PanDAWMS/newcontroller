@@ -1,6 +1,6 @@
 import os
 
-from dbAccess import util
+from dbAccess import utils
 from configFileHandling import *
 from controllerSettings import *
 
