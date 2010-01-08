@@ -641,13 +641,13 @@ def buildJdlFiles(d):
 		pass
 
 	os.chdir(path)
-	for name in d[jdl]:
+	for name in d:
 		# Initiate the file string
 		s=[startstr]
 		# Use the same composeFields machinery as in the buildFiles
-		composeFields(d[jdl][name],s,jdl)
+		composeFields(d[name][jdl],s,jdl)
 		s.append(overridestr)
-		composeFields(d[jdl][name],s,over)
+		composeFields(d[name][jdl],s,over)
 
 		f=file(name.replace('/','_') + postfix,'w')
 		f.writelines(s)
