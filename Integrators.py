@@ -1,7 +1,30 @@
+import os, commands, re
+
+from miscUtils import *
+from controllerSettings import *
+
+try:
+	import dq2.info.TiersOfATLAS as ToA
+except:
+	print "Cannot import dq2.info.TiersOfATLAS, will exit"
+	sys.exit(-1)
+
+try:
+	import lcgInfositeTool
+except:
+	print "Cannot import lcgInfositeTool, will exit"
+	sys.exit(-1)
+
+# Not used yet -- evaluate!
+try:
+	import fillDDMpaths
+except:
+	print "Cannot import fillDDMpaths, will exit"
+	sys.exit(-1)
+
 #----------------------------------------------------------------------#
 # Integrators
 #----------------------------------------------------------------------#
-# To be completed!! Needs to warn on lcgLoad missing
 	  
 # To be completed!!
 def loadToA(queuedefs):
@@ -9,6 +32,7 @@ def loadToA(queuedefs):
 	fillDDMpaths.fillDDMpaths(queuedefs)
 	return 0
 
+# To be completed!! Needs to warn on lcgLoad missing
 def loadBDII():
 	'''Loads LCG site definitions from the BDII, and dumps them in a file called lcgQueueUpdate.py in the local directory.
 	This file is executed (even if generating it failed this time) and populated a dictionary of queue definitions, which is

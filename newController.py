@@ -21,95 +21,15 @@
 
 # This code has been organized for easy transition into a class structure.
 
-import pickle, os, sys, commands, re
+import os, sys, commands
 
-from jdlController import *
-from dictHandling import *
-from configFileHandling import *
+from controllerSettings import *
+from miscUtils import *
 from dbAccess import *
+from dictHandling import *
 from Integrators import *
-
-from SchedulerUtils import utils
-
-try:
-	import dq2.info.TiersOfATLAS as ToA
-except:
-	print "Cannot import dq2.info.TiersOfATLAS, will exit"
-	sys.exit(-1)
-
-try:
-	import lcgInfositeTool
-except:
-	print "Cannot import lcgInfositeTool, will exit"
-	sys.exit(-1)
-
-# Not used yet -- evaluate!
-try:
-	import fillDDMpaths
-except:
-	print "Cannot import fillDDMpaths, will exit"
-	sys.exit(-1)
-
-
-toaDebug = False
-jdlDebug = False
-bdiiDebug = False
-dbReadDebug = False
-dbWriteDebug = False
-configReadDebug = False
-configWriteDebug = False
-
-safety = 'on'
-All = 'All'
-ndef = 'Deactivated'
-param = 'Parameters'
-over = 'Override'
-jdl = 'JDL'
-source = 'Source'
-enab = 'Enabled'
-base_path = os.getcwd()
-# Step back a layer in the path for the configs, and put them in the config SVN directory
-cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf' + os.sep
-backupPath = cfg_path + 'Backup'
-backupName = 'schedConfigBackup.pickle'
-configs = cfg_path + os.sep + 'SchedConfigs'
-jdlconfigs = cfg_path + os.sep + 'JDLConfigs'
-postfix = '.py'
-dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
-shared, unshared = 'shared','unshared'
-excl = ['status','lastmod','dn','tspace','_comment']
-standardkeys = []
-
-#----------------------------------------------------------------------#
-# Utilities
-#----------------------------------------------------------------------#
-
-def unPickler(fname):
-	os.chdir(base_path)
-	f=file(fname)
-	t=pickle.load(f)
-	f.close()
-	d={}
-	for i in t:
-		d[i[dbkey]]=i
-	return d
-	
-def pickleBackup(d):
-	'''Pickle the schedconfigdb as a backup'''
-	try:
-		os.makedirs(backupPath)
-	except OSError:
-		pass
-	os.chdir(backupPath)
-	f=file(backupName, 'w')
-	pickle.dump(d,f)
-	f.close()
-
-def reducer(l):
-	''' Reduce the entries in a list by removing dupes'''
-	return dict([(i,1) for i in l]).keys()
-
-
+from configFileHandling import *
+from jdlController import *
 
 if __name__ == "__main__":
 	keydict={}
