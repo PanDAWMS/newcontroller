@@ -2,6 +2,7 @@ import os
 
 from miscUtils import *
 from controllerSettings import *
+from configFileHandling import allMaker
 
 #----------------------------------------------------------------------#
 # Dictionary Handling
