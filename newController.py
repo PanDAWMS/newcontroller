@@ -47,7 +47,7 @@ except:
 
 
 toaDebug = False
-jdlDebug = True
+jdlDebug = False
 bdiiDebug = False
 dbReadDebug = False
 dbWriteDebug = False
@@ -633,6 +633,7 @@ def buildJdlFiles(d):
 # This dictionary will override any value within its scope.
 
 '''
+	# Put this in the right path -- back out from the code dir, and place it in pandaconf
 	path = jdlconfigs
 
 	try:
@@ -640,15 +641,23 @@ def buildJdlFiles(d):
 	except OSError:
 		pass
 
+	# Go to the directory
 	os.chdir(path)
+	# In contrast to the primary buildFile() (which does one at a time), this is a simpler
+	# set of configs -- no clouds and sites to concern us. We'll do it all in one place, in
+	# one fell swoop.
 	for name in d:
 		# Initiate the file string
 		s=[startstr]
-		# Use the same composeFields machinery as in the buildFiles
+		# Use the same composeFields machinery as in the buildFiles -- build the main dict
 		composeFields(d[name],s,jdl)
+		# Prep the override fields
 		s.append(overridestr)
+		# If any overrides have been detected, add them here.
 		composeFields(d[name],s,over)
 
+		# Write each file in its turn as part of the for loop. The slashes are replaced with underscored
+		# to keep the filesystem happy -- many of the JDL names contain slashes.
 		f=file(name.replace('/','_') + postfix,'w')
 		f.writelines(s)
 		f.close()
@@ -824,7 +833,6 @@ def execUpdate(updateList):
 	utils.closeDB()
 	return loadSchedConfig()
 
-# To be completed!! Needs to be part of a separate code file.
 def jdlListAdder(d):
 	'''Returns the values in the schedconfig db as a dictionary'''
 	utils.initDB()
