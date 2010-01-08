@@ -159,7 +159,7 @@ def collapseDict(d):
 		for site in d[cloud]:
 			# And for each queue
 			for queue in d[cloud][site]:
-				# Don't bother for an "All" queue
+				# Don't bother for an "All" queue yet -- see below.
 				if queue == All or site == All: continue
 				# Get the parameter dictionary (vs the source or the overrides).
 				# This is a symbolic link, not a duplication:
@@ -171,6 +171,19 @@ def collapseDict(d):
 					if key not in p.keys(): out_d[p[dbkey]][key] = None
 				# Add the overrides (except the excluded ones)
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]: out_d[p[dbkey]][key] = d[cloud][site][queue][over][key]
+				# Sanitization. Is this a good idea?
+				for key in out_d[p[dbkey]]:
+					if out_d[p[dbkey]][key] == 'None' or out_d[p[dbkey]][key] == '': out_d[p[dbkey]][key] = None
+					if type(out_d[p[dbkey]][key]) is str and out_d[p[dbkey]][key].isdigit(): out_d[p[dbkey]][key] = int(out_d[p[dbkey]][key])
+			# Now process the All entry for the site
+			for queue in d[cloud][site]:
+				# Get the parameter dictionary (vs the source or the overrides).
+				# This is a symbolic link, not a duplication:
+				p = d[cloud][site][All][param]
+				o = d[cloud][site][All][over]
+				# So copy out the values into the present queue dictionary (except excluded ones)
+				for key in p: if key not in excl: d[cloud][site][queue][param][key] = p[key]
+				for key in o: if key not in excl: d[cloud][site][queue][param][key] = o[key]
 				# Sanitization. Is this a good idea?
 				for key in out_d[p[dbkey]]:
 					if out_d[p[dbkey]][key] == 'None' or out_d[p[dbkey]][key] == '': out_d[p[dbkey]][key] = None
