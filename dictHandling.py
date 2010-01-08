@@ -2,7 +2,8 @@ import os
 
 from miscUtils import *
 from controllerSettings import *
-from configFileHandling import allMaker, makeConfigs
+from configFileHandling import *
+from dbAccess import *
 
 #----------------------------------------------------------------------#
 # Dictionary Handling
