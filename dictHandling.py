@@ -182,8 +182,8 @@ def collapseDict(d):
 				p = d[cloud][site][All][param]
 				o = d[cloud][site][All][over]
 				# So copy out the values into the present queue dictionary (except excluded ones)
-				for key in p: if key not in excl: d[cloud][site][queue][param][key] = p[key]
-				for key in o: if key not in excl: d[cloud][site][queue][param][key] = o[key]
+				for key in [i for i in d[cloud][site][All][param] if i not in excl]: d[cloud][site][queue][param][key] = p[key]
+				for key in [i for i in d[cloud][site][All][over] if i not in excl]: d[cloud][site][queue][param][key] = o[key]
 				# Sanitization. Is this a good idea?
 				for key in out_d[p[dbkey]]:
 					if out_d[p[dbkey]][key] == 'None' or out_d[p[dbkey]][key] == '': out_d[p[dbkey]][key] = None
