@@ -67,7 +67,6 @@ backupPath = cfg_path + 'Backup'
 backupName = 'schedConfigBackup.pickle'
 configs = cfg_path + os.sep + 'SchedConfigs'
 jdlconfigs = cfg_path + os.sep + 'JDLConfigs'
-bdiiconfigs = cfg_path + os.sep + 'BDIIOverrides'
 postfix = '.py'
 dbkey, dsep, keysep, pairsep, spacing = 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
 shared, unshared = 'shared','unshared'
@@ -730,7 +729,7 @@ def makeConfigs(d):
 			# And for each queue, create a config file. 
 			for queue in d[cloud][site]:
 				buildFile(queue, d[cloud][site][queue])
-	return d
+	return
 
 def buildDict():
 	'''Build a copy of the queue dictionary from the configuration files '''
