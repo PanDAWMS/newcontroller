@@ -55,7 +55,9 @@ def loadBDII():
 def toaIntegrator(confd):
 	''' Adds ToA information to the confd (legacy from Rod, incomplete commenting. Will enhance later.) '''
 	print 'Running ToA Integrator'
+	if toaDebug: print len(confd)
 	for cloud in confd:
+		if toaDebug: print len(confd[cloud])
 		for site in confd[cloud]:
 			if site is All: continue
 			for queue in confd[cloud][site]:
