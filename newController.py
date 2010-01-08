@@ -14,9 +14,7 @@
 # Add manual pickle restoration code
 # Add subversion update, file add and checkin. Comment changes.
 # Add change detection to avoid DB change collisions
-# Add logging output for changes and status
 # Add queue insertion scripts
-# Add code for handling the jdllist (jdltext) table (field)
 # Add checking of queue "on" and "off"
 # Make sure that the All source is subordinate to the BDII source
 # Make sure that the jdladd field is fully commented when it's being removed from the source
@@ -913,8 +911,6 @@ if __name__ == "__main__":
 	buildJdlFiles(jdld)
 	newjdl=buildJdlDict()
 
-	raw_input()
-	
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 	# Load the present config files
 	configd = buildDict()
