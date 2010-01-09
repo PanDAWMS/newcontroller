@@ -144,7 +144,10 @@ def buildDict():
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
 				confd[cloud][site][queue][over] = locvars[over] 
-				confd[cloud][site][queue][enab] = locvars[enab]
+				try:
+					confd[cloud][site][queue][enab] = locvars[enab]
+				except KeyError:
+					print cloud, site, queue, confd[cloud][site][queue][enab], locvars.keys(), q
 				confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
 				
 	# Leaving the All parameters unincorporated
