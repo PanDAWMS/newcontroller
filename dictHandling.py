@@ -119,7 +119,7 @@ def buildDict():
 			# If this is the All file, create another entry.
 			if site.endswith(postfix):
 				# Get rid of the .py
-				s=site.rstrip(postfix)
+				s=site[:-len(postfix)]
 				# Run the file for the dictionaries
 				fname = configs + os.sep + cloud + os.sep + site
 				# The appropriate dictionaries are placed in locvars
