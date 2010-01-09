@@ -146,7 +146,7 @@ def toaIntegrator(confd):
 								loccat = ToA.getLocalCatalog(ddm1)
 								if loccat:
 									relfc = re_lfc.search(loccat)
-									if relfc :
+									if relfc:
 										lfchost = relfc.group(1)
 										if toaDebug: print "ROD sets lfchost for %s %s" % (confd[cloud][site][queue][param]['ddm'],lfchost) 
 										confd[cloud][site][queue][param]['lfchost'] = lfchost
