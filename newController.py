@@ -60,7 +60,7 @@ if __name__ == "__main__":
 	status = allMaker(configd)
 
 	# Add the BDII information
-	bdiiIntegrator(configd, dbd)
+	#bdiiIntegrator(configd, dbd)
 	# Now add ToA information to the whole shebang. No site-by-site as of yet.
 	toaIntegrator(configd)
 
