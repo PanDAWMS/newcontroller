@@ -177,6 +177,8 @@ def collapseDict(d):
 					if type(out_d[p[dbkey]][key]) is str and out_d[p[dbkey]][key].isdigit(): out_d[p[dbkey]][key] = int(out_d[p[dbkey]][key])
 			# Now process the All entry for the site
 			for queue in d[cloud][site]:
+				# No point in trying to apply the All parameters to the All queue.
+				if queue == All: continue
 				# Get the parameter dictionary (vs the source or the overrides).
 				# This is a symbolic link, not a duplication:
 				allparams = d[cloud][site][All][param]
