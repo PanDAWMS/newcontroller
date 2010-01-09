@@ -175,22 +175,23 @@ def collapseDict(d):
 				for key in out_d[p[dbkey]]:
 					if out_d[p[dbkey]][key] == 'None' or out_d[p[dbkey]][key] == '': out_d[p[dbkey]][key] = None
 					if type(out_d[p[dbkey]][key]) is str and out_d[p[dbkey]][key].isdigit(): out_d[p[dbkey]][key] = int(out_d[p[dbkey]][key])
-			# Now process the All entry for the site
-			for queue in d[cloud][site]:
-				# No point in trying to apply the All parameters to the All queue.
-				if queue == All: continue
-				# Get the parameter dictionary (vs the source or the overrides).
-				# This is a symbolic link, not a duplication:
-				allparams = d[cloud][site][All][param]
-				alloverrides = d[cloud][site][All][over]
-				p = d[cloud][site][queue][param]
-				# So copy out the values into the present queue dictionary (except excluded ones)
-				for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
-				for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
-				# Sanitization. Is this a good idea?
-				for key in out_d[queue]:
-					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
-					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
+			# Now process the All entry for the site, if it exists
+			if d[cloud][site].has_key(All):
+				for queue in d[cloud][site]:
+					# No point in trying to apply the All parameters to the All queue.
+					if queue == All: continue
+					# Get the parameter dictionary (vs the source or the overrides).
+					# This is a symbolic link, not a duplication:
+					allparams = d[cloud][site][All][param]
+					alloverrides = d[cloud][site][All][over]
+					p = d[cloud][site][queue][param]
+					# So copy out the values into the present queue dictionary (except excluded ones)
+					for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
+					for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
+					# Sanitization. Is this a good idea?
+					for key in out_d[queue]:
+						if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
+						if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 	# Return the flattened dictionary
 	return out_d
 
