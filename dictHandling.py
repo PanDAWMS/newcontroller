@@ -132,7 +132,7 @@ def buildDict():
 			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix)]
 			for q in queues:
 				# Remove the '.py' 
-				queue=q.rstrip(postfix)
+				queue=q[:-len(postfix)]
 				# Add each queue to the site
 				confd[cloud][site][queue] = {}
 				# Run the file to extract the appropriate dictionaries
