@@ -188,7 +188,7 @@ def collapseDict(d):
 				# Sanitization. Is this a good idea?
 				for key in out_d[queue]:
 					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
-					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue]][key] = int(out_d[queue][key])
+					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 	# Return the flattened dictionary
 	return out_d
 
