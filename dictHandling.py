@@ -183,8 +183,11 @@ def collapseDict(d):
 				alloverrides = d[cloud][site][All][over]
 				p = d[cloud][site][queue][param]
 				# So copy out the values into the present queue dictionary (except excluded ones)
-				for key in [i for i in allparams if i not in excl]: out_d[p[dbkey]][key] = allparams[key]
-				for key in [i for i in alloverrides if i not in excl]: out_d[p[dbkey]][key] = alloverrides[key]
+				try:
+					for key in [i for i in allparams if i not in excl]: out_d[p[dbkey]][key] = allparams[key]
+					for key in [i for i in alloverrides if i not in excl]: out_d[p[dbkey]][key] = alloverrides[key]
+				except KeyError:
+					while 1: exec(raw_input())
 				# Sanitization. Is this a good idea?
 				for key in out_d[p[dbkey]]:
 					if out_d[p[dbkey]][key] == 'None' or out_d[p[dbkey]][key] == '': out_d[p[dbkey]][key] = None
