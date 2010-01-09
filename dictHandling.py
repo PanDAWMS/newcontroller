@@ -109,8 +109,8 @@ def buildDict():
 		# We choose element 0 to get the first result. This hack will go away.
 		makeConfigs(sqlDictUnpacker(loadSchedConfig())[0])
 		clouds = os.listdir(configs)
-		clouds.pop('.svn')
-
+	clouds.pop('.svn')
+		
 	for cloud in clouds:
 		# Add each cloud to the dictionary
 		confd[cloud] = {}
