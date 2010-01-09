@@ -150,7 +150,6 @@ def toaIntegrator(confd):
 										lfchost = relfc.group(1)
 										if toaDebug: print "ROD sets lfchost for %s %s" % (confd[cloud][site][queue][param]['ddm'],lfchost) 
 										confd[cloud][site][queue][param]['lfchost'] = lfchost
-										if lfchost = 
 										confd[cloud][site][queue][source]['lfchost'] = 'ToA'
 									else:
 										if toaDebug: print "Cannot get lfc host for %s" % ddm1
