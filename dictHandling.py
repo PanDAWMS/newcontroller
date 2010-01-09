@@ -187,7 +187,9 @@ def collapseDict(d):
 					for key in [i for i in allparams if i not in excl]: out_d[p[dbkey]][key] = allparams[key]
 					for key in [i for i in alloverrides if i not in excl]: out_d[p[dbkey]][key] = alloverrides[key]
 				except KeyError:
-					while 1: exec(raw_input())
+					while 1:
+						a=raw_input()
+						exec(a)
 				# Sanitization. Is this a good idea?
 				for key in out_d[p[dbkey]]:
 					if out_d[p[dbkey]][key] == 'None' or out_d[p[dbkey]][key] == '': out_d[p[dbkey]][key] = None
