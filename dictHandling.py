@@ -183,11 +183,10 @@ def collapseDict(d):
 				alloverrides = d[cloud][site][All][over]
 				p = d[cloud][site][queue][param]
 				# So copy out the values into the present queue dictionary (except excluded ones)
-				try:
-					for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
-					for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
+				for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
+				for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
 				# Sanitization. Is this a good idea?
-				for key in out_d[p[dbkey]]:
+				for key in out_d[queue]:
 					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue]][key] = int(out_d[queue][key])
 	# Return the flattened dictionary
