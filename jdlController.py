@@ -58,7 +58,7 @@ def buildJdlDict():
 	base = os.getcwd()
 	# Loop throught the clouds in the base folder
 	try:
-		jdls = [i for i in os.listdir(jdlconfigs) if i.endswith(postfix)]
+		jdls = [i for i in os.listdir(jdlconfigs) if i.endswith(postfix) and not i.startswith('.')]
 	except OSError:
 		# If the configs folder is missing and this is the first thing run,
 		# Reload this from the DB.
