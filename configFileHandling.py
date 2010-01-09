@@ -55,7 +55,7 @@ def allMaker(d):
 						d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
 				# Adding the "All" queue to the site
 				d[cloud][site][All] = {param:all_d[cloud][site]}
-				d[cloud][site][All].update({over:{}})
+				d[cloud][site][All].update({over:d[cloud][site][All][over].copy()})
 
 	return 0
 
