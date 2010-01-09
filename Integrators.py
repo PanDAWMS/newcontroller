@@ -52,6 +52,17 @@ def loadBDII():
 		loadlcg = 0
 	return osgsites
 
+def keyCheckReplace(d,key,value):
+	'''If nonfilled or nonexistent, fill a dict key without a KeyError'''
+	if d.has_key(key):
+		if not d[key]:
+			d[key] = value
+			return 1
+		else: return 0
+	else:
+		d[key] = value
+		return 1
+
 # Rewrite this to be more efficient -- it needs to parse the ddmsites once into a dictionary, then do matchmaking.
 def toaIntegrator(confd):
 	''' Adds ToA information to the confd (legacy from Rod, incomplete commenting. Will enhance later.) '''
@@ -115,36 +126,34 @@ def toaIntegrator(confd):
 						# too many exceptions, and will only apply the noimport default where there is no previous
 						# choice made.
 						## confd[cloud][site][queue][param]['proxy']  = 'noimport'
-						if confd[cloud][site][queue][param].has_key('proxy'):
-							if not confd[cloud][site][queue][param]['proxy']:
-								confd[cloud][site][queue][param]['proxy']  = 'noimport'
-						else: confd[cloud][site][queue][param]['proxy']  = 'noimport'
-						
-						confd[cloud][site][queue][source]['proxy'] = 'ToA'
-						confd[cloud][site][queue][param]['lfcpath'] = '/grid/atlas/users/pathena'
-						confd[cloud][site][queue][source]['lfcpath'] = 'ToA'
-						confd[cloud][site][queue][param]['lfcprodpath'] = '/grid/atlas/dq2'
-						confd[cloud][site][queue][source]['lfcprodpath'] = 'ToA'
-						if not confd[cloud][site][queue][param].has_key('copytool'):
-							confd[cloud][site][queue][param]['copytool'] = 'lcgcp'
-							confd[cloud][site][queue][source]['copytool'] = 'ToA'
+						## confd[cloud][site][queue][source]['proxy'] = 'ToA'
+						## confd[cloud][site][queue][param]['lfcpath'] = '/grid/atlas/users/pathena'
+						## confd[cloud][site][queue][source]['lfcpath'] = 'ToA'
+						## confd[cloud][site][queue][param]['lfcprodpath'] = '/grid/atlas/dq2'
+						## confd[cloud][site][queue][source]['lfcprodpath'] = 'ToA'
+						if keyCheckReplace(confd[cloud][site][queue][param],'proxy','noimport'): confd[cloud][site][queue][source]['proxy'] = 'ToA'
+						if keyCheckReplace(confd[cloud][site][queue][param],'lfcpath','/grid/atlas/users/pathena'): confd[cloud][site][queue][source]['lfcpath'] = 'ToA'
+						if keyCheckReplace(confd[cloud][site][queue][param],'lfcprodpath','/grid/atlas/dq2'): confd[cloud][site][queue][source]['lfcprodpath'] = 'ToA'
+						if keyCheckReplace(confd[cloud][site][queue][param],'copytool','lcgcp'): confd[cloud][site][queue][source]['copytool'] = 'ToA'
+
 						if confd[cloud][site][queue][param].has_key('ddm') and confd[cloud][site][queue][param]['ddm']:
 							ddm1 = confd[cloud][site][queue][param]['ddm'].split(',')[0]
-							if toaDebug: print 'ddm: using %s from %s'%(ddm1,confd[cloud][site][queue][param]['ddm'])
+							if toaDebug: print 'ddm: using %s from %s' % (ddm1,confd[cloud][site][queue][param]['ddm'])
 							# Set the lfc host 
 							re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
 
 							if ToA:
 								loccat = ToA.getLocalCatalog(ddm1)
 								if loccat:
-									relfc=re_lfc.search(loccat)
+									relfc = re_lfc.search(loccat)
 									if relfc :
-										lfchost=relfc.group(1)
-										if toaDebug: print "ROD sets lfchost for %s %s"%(confd[cloud][site][queue][param]['ddm'],lfchost) 
+										lfchost = relfc.group(1)
+										if toaDebug: print "ROD sets lfchost for %s %s" % (confd[cloud][site][queue][param]['ddm'],lfchost) 
 										confd[cloud][site][queue][param]['lfchost'] = lfchost
+										if lfchost = 
 										confd[cloud][site][queue][source]['lfchost'] = 'ToA'
 									else:
-										if toaDebug: print " Cannot get lfc host for %s"%ddm1
+										if toaDebug: print "Cannot get lfc host for %s" % ddm1
 
 								srm_ep = ToA.getSiteProperty(ddm1,'srm')
 								if toaDebug: print 'srm_ep: ',srm_ep
