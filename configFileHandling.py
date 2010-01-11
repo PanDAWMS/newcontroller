@@ -59,7 +59,9 @@ def allMaker(d):
 					except KeyError:
 						pass
 				# Adding the "All" queue to the site
+				if not d[cloud][site].has_key(All): d[cloud][site][All]={}
 				d[cloud][site][All].update({param:all_d[cloud][site]})
+				if not d[cloud][site].has_key(over): d[cloud][site][over]={}
 				try:
 					if site == 'Australia-ATLAS' and cloud == 'TW': print 2, All, d['TW']['Australia-ATLAS'][All][over], d[cloud][site].keys(), cloud
 				except KeyError:
