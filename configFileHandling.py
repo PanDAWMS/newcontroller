@@ -59,16 +59,16 @@ def allMaker(d):
 						pass
 				# Adding the "All" queue to the site
 				d[cloud][site][All] = {param:all_d[cloud][site]}
-					try:
-						if site == 'Australia-ATLAS': print 2, queue, d['TW']['Australia-ATLAS'][All][over]
-					except KeyError:
-						pass
+				try:
+					if site == 'Australia-ATLAS': print 2, queue, d['TW']['Australia-ATLAS'][All][over]
+				except KeyError:
+					pass
 				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over] = {}
 
-					try:
-						if site == 'Australia-ATLAS': print 3, queue, d['TW']['Australia-ATLAS'][All][over]
-					except KeyError:
-						pass
+				try:
+					if site == 'Australia-ATLAS': print 3, queue, d['TW']['Australia-ATLAS'][All][over]
+				except KeyError:
+					pass
 			
 
 	return 0
