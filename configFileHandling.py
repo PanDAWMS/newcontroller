@@ -55,19 +55,19 @@ def allMaker(d):
 					for key in skeys:
 						d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
 					try:
-						if site == 'Australia-ATLAS': print 1, queue, d['TW']['Australia-ATLAS'][All][over], d[cloud][site].keys(), cloud
+						if site == 'Australia-ATLAS' and cloud == 'TW': print 1, queue, d['TW']['Australia-ATLAS'][All][over], d[cloud][site].keys(), cloud
 					except KeyError:
 						pass
 				# Adding the "All" queue to the site
 				d[cloud][site][All].update({param:all_d[cloud][site]})
 				try:
-					if site == 'Australia-ATLAS': print 2, queue, d['TW']['Australia-ATLAS'][All][over], d[cloud][site].keys(), cloud
+					if site == 'Australia-ATLAS' and cloud == 'TW': print 2, All, d['TW']['Australia-ATLAS'][All][over], d[cloud][site].keys(), cloud
 				except KeyError:
 					pass
 				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over] = {}
 
 				try:
-					if site == 'Australia-ATLAS': print 3, queue, d['TW']['Australia-ATLAS'][All][over], d[cloud][site].keys(), cloud
+					if site == 'Australia-ATLAS' and cloud == 'TW': print 3, All, d['TW']['Australia-ATLAS'][All][over], d[cloud][site].keys(), cloud
 				except KeyError:
 					pass
 			
