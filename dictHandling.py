@@ -147,8 +147,7 @@ def buildDict():
 				try:
 					if queue != All: confd[cloud][site][queue][enab] = locvars[enab]
 				except KeyError:
-					print cloud, site, queue, q, confd[cloud][site][queue]
-					print '\n',locvars
+					pass
 				confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
 				
 	# Leaving the All parameters unincorporated
