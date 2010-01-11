@@ -51,12 +51,12 @@ def allMaker(d):
 				skeys = all_d[cloud][site].keys()
 				# Going queue by queue, update the provenance for both cloud and site general parameters.
 				for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
-					try:
-						print queue, d['TW']['Australia-ATLAS'][All][over]
-					except KeyError:
-						pass
 					for key in skeys:
 						d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
+					try:
+						if site == 'Australia-ATLAS': print queue, d['TW']['Australia-ATLAS'][All][over]
+					except KeyError:
+						pass
 				# Adding the "All" queue to the site
 				d[cloud][site][All] = {param:all_d[cloud][site]}
 				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over] = {}
