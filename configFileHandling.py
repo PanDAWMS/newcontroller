@@ -11,6 +11,7 @@ def allMaker(d):
 	Returns 0 for success. Adds "All" queues to sites. Updates the
 	provenance info in the input dictionary. '''
 	print 'Starting AllMaker'
+	print d['TW']['Australia-ATLAS'].keys()
 	all_d = {}
 	# This is where we'll put all verified keys that are common across sites/clouds
 	for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
