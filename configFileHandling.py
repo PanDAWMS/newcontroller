@@ -144,7 +144,7 @@ def makeConfigs(d):
 			os.chdir(path)
 			# And for each queue, create a config file. 
 			for queue in d[cloud][site]:
-				buildFile(queue, d[cloud][site][queue])
+				if queue is not All: buildFile(queue, d[cloud][site][queue])
 	return
 
 def buildFile(name, d):
