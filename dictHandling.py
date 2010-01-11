@@ -51,8 +51,7 @@ def sqlDictUnpacker(d):
 
 	print out_d['TW']['Australia-ATLAS'].keys()
 	status = allMaker(out_d)
-	print out_d['TW']['Australia-ATLAS'].keys()
-	
+	print out_d['TW']['Australia-ATLAS'].keys()	
 	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
 	# allMaker has to run before this to avoid causing KeyErrors with the new "empty cloud" values 
 	if out_d.has_key(''):
@@ -115,7 +114,7 @@ def buildDict():
 		# We choose element 0 to get the first result. This hack will go away.
 		makeConfigs(sqlDictUnpacker(loadSchedConfig())[0])
 		clouds = os.listdir(configs)
-	if clouds.has_key('.svn'): clouds.remove('.svn')
+	if clouds.count('.svn') > 0: clouds.remove('.svn')
 		
 	for cloud in clouds:
 		# Add each cloud to the dictionary
