@@ -11,11 +11,6 @@ def allMaker(d):
 	Returns 0 for success. Adds "All" queues to sites. Updates the
 	provenance info in the input dictionary. '''
 
-	try:
-		print d['TW']['Australia-ATLAS'][All]
-		print 1
-	except KeyError:
-		pass
 	all_d = {}
 	# This is where we'll put all verified keys that are common across sites/clouds
 	for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
@@ -46,11 +41,7 @@ def allMaker(d):
 				if len(reducer(comp[key])) == 1:
 					# So write it to the output for this cloud and site.
 					all_d[cloud][site][key] = reducer(comp[key])[0]
-	try:
-		print d['TW']['Australia-ATLAS'][All]
-		print 2
-	except KeyError:
-		pass
+
 	# Running across sites to update source information in the main dictionary
 	for cloud in d.keys():
 		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
@@ -60,16 +51,15 @@ def allMaker(d):
 				skeys = all_d[cloud][site].keys()
 				# Going queue by queue, update the provenance for both cloud and site general parameters.
 				for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
+					try:
+						print queue, d['TW']['Australia-ATLAS'][All][over]
+					except KeyError:
+						pass
 					for key in skeys:
 						d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
 				# Adding the "All" queue to the site
 				d[cloud][site][All] = {param:all_d[cloud][site]}
 				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over] = {}
-	try:
-		print d['TW']['Australia-ATLAS'][All]
-		print 3
-	except KeyError:
-		pass
 
 			
 
