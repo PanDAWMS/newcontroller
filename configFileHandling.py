@@ -34,14 +34,14 @@ def allMaker(d):
 								comp[key].append(d[cloud][site][queue][param][key])
 							except KeyError:
 								comp[key] = [d[cloud][site][queue][param][key]]
-
+								
 			# Now, for the site, remove all duplicates in the lists. 
 			for key in comp:
 				# If only one value is left, it is common to all queues in the site
 				if len(reducer(comp[key])) == 1:
 					# So write it to the output for this cloud and site.
 					all_d[cloud][site][key] = reducer(comp[key])[0]
-
+	
 	# Running across sites to update source information in the main dictionary
 	for cloud in d.keys():
 		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
@@ -53,26 +53,12 @@ def allMaker(d):
 				for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
 					for key in skeys:
 						d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
-					try:
-						if site == 'Australia-ATLAS' and cloud == 'TW': print 1, queue, d['TW']['Australia-ATLAS'][All][over], d[cloud][site].keys(), cloud
-					except KeyError:
-						pass
 				# Adding the "All" queue to the site
 				if not d[cloud][site].has_key(All): d[cloud][site][All]={}
 				if not d[cloud][site].has_key(over): d[cloud][site][All][over]={}
 				d[cloud][site][All][param] = all_d[cloud][site].copy()
-				try:
-					if site == 'Australia-ATLAS' and cloud == 'TW': print 2, All, d['TW']['Australia-ATLAS'][All][over], d[cloud][site].keys(), cloud
-				except KeyError:
-					pass
 				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over] = {}
-
-				try:
-					if site == 'Australia-ATLAS' and cloud == 'TW': print 3, All, d['TW']['Australia-ATLAS'][All][over], d[cloud][site].keys(), cloud
-				except KeyError:
-					pass
-			
-
+				
 	return 0
 
 def composeFields(d,s,dname,allFlag=0):
