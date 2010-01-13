@@ -49,9 +49,7 @@ def sqlDictUnpacker(d):
 	stdkeys=reducer(stdkeys)
 	# Parse the dictionary to create an All queue for each site
 
-	print out_d['TW']['Australia-ATLAS'].keys()
 	status = allMaker(out_d)
-	print out_d['TW']['Australia-ATLAS'].keys()	
 	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
 	# allMaker has to run before this to avoid causing KeyErrors with the new "empty cloud" values 
 	if out_d.has_key(''):
