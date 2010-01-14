@@ -166,12 +166,12 @@ def buildFile(name, d):
 	# Load up the file intro
 	s=[startstr]
 	# Put the queue on/off switch in place if not an All file
+	if name is All: allFlag = 1
+	else: allFlag = 0
 	try:
-		if name is not All: s.append(switchstr + str(d[enab]) + '\n\n')
+		if allFlag: s.append(switchstr + str(d[enab]) + '\n\n')
 	except KeyError:
 		s.append(switchstr + 'True' + '\n\n')
-	if name == All: allFlag = 1
-	else: allFlag = 0
 	# I'm taking advantage of the universality of lists.
 	# composeFields is modifying the list itself rather than a copy.
 	# Since the params in the All files have no keys to find, we warn
