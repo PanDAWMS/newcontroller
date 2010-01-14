@@ -47,21 +47,16 @@ def allMaker(d):
 		for site in [i for i in d[cloud].keys() if i is not ndef]:
 			# No point in making an All file for one queue definition:
 			if len(d[cloud][site]) > 1:
-				if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 1, d['US']['UTArlington'][All][over]
 				# Extract all affected keys for the site
 				skeys = all_d[cloud][site].keys()
 				# Going queue by queue, update the provenance for both cloud and site general parameters.
-				if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 1, d['US']['UTArlington'][All][over]
 				for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
-					if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 2, d['US']['UTArlington'][All][over]
 					for key in skeys:
-						if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 3, d['US']['UTArlington'][All][over]
 						d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
-						if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 4, d['US']['UTArlington'][All][over]
 				# Adding the "All" queue to the site
 				if not d[cloud][site].has_key(All): d[cloud][site][All]={}
 				if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 5, d['US']['UTArlington'][All][over]
-				if not d[cloud][site].has_key(over): d[cloud][site][All][over]={}
+				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over]={}
 				if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 6, d['US']['UTArlington'][All][over]
 				d[cloud][site][All][param] = all_d[cloud][site].copy()
 				if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 7, d['US']['UTArlington'][All][over]
