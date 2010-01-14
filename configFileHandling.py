@@ -59,7 +59,7 @@ def allMaker(d):
 				if not d[cloud][site].has_key(over): d[cloud][site][All][over]={}
 				d[cloud][site][All][param] = all_d[cloud][site].copy()
 				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over] = {}
-	if d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print d['US']['UTArlington'][All][oaver]
+	if d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print d['US']['UTArlington'][All][over]
 				
 	return 0
 
