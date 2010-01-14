@@ -41,7 +41,8 @@ def allMaker(d):
 				if len(reducer(comp[key])) == 1:
 					# So write it to the output for this cloud and site.
 					all_d[cloud][site][key] = reducer(comp[key])[0]
-	
+
+	if d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print d['US']['UTArlington'][All][over]
 	# Running across sites to update source information in the main dictionary
 	for cloud in d.keys():
 		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
