@@ -166,10 +166,10 @@ def buildFile(name, d):
 	# Load up the file intro
 	s=[startstr]
 	# Put the queue on/off switch in place if not an All file
-	if name is All: allFlag = 1
+	if name == All: allFlag = 1
 	else: allFlag = 0
 	try:
-		if allFlag: s.append(switchstr + str(d[enab]) + '\n\n')
+		if not allFlag: s.append(switchstr + str(d[enab]) + '\n\n')
 	except KeyError:
 		s.append(switchstr + 'True' + '\n\n')
 	# I'm taking advantage of the universality of lists.
