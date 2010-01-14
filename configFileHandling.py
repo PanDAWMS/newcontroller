@@ -167,7 +167,7 @@ def buildFile(name, d):
 	s=[startstr]
 	# Put the queue on/off switch in place if not an All file
 	try:
-		if name is not All: s.append(switchstr + d[enab] + '\n\n')
+		if name is not All: s.append(switchstr + str(d[enab]) + '\n\n')
 	except KeyError:
 		s.append(switchstr + 'True' + '\n\n')
 	if name == All: allFlag = 1
