@@ -15,7 +15,7 @@ def protoDict(queue,d,sourcestr='DB',keys=[]):
 	if not len(d):
 		en_val = 'False'
 		d = {queue:dict([(key,None) for key in keys])}
-	return {param:d[queue],over:{},source:dict([(key,sourcestr) for key in d[queue].keys() if key not in excl]),enab:en_val}
+	return {param:d[queue].copy(),over:{},source:dict([(key,sourcestr) for key in d[queue].keys() if key not in excl]),enab:en_val}
 	
 def sqlDictUnpacker(d):
 	'''Unpack the dictionary returned by Oracle or MySQL''' 
@@ -172,16 +172,18 @@ def collapseDict(d):
 				# This is a symbolic link, not a duplication:
 				p = d[cloud][site][queue][param]
 				# So copy out the values into a new dictionary (except excluded ones)
-				out_d[p[dbkey]] = dict([(key,p[key]) for key in p if key not in excl])
+				out_d[queue] = dict([(key,p[key]) for key in p if key not in excl])
 				# Make sure all the standard keys are present, even if not filled
 				for key in standardkeys:
-					if key not in p.keys(): out_d[p[dbkey]][key] = None
+					if key not in p.keys(): out_d[queue][key] = None
 				# Add the overrides (except the excluded ones)
-				for key in [i for i in d[cloud][site][queue][over] if i not in excl]: out_d[p[dbkey]][key] = d[cloud][site][queue][over][key]
+				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
+					out_d[queue][key] = d[cloud][site][queue][over][key]
+					if site == 'UTArlington' and queue == 'ANALY_UTA': print out_d[queue][key], d[cloud][site][queue][over][key] 
 				# Sanitization. Is this a good idea?
-				for key in out_d[p[dbkey]]:
-					if out_d[p[dbkey]][key] == 'None' or out_d[p[dbkey]][key] == '': out_d[p[dbkey]][key] = None
-					if type(out_d[p[dbkey]][key]) is str and out_d[p[dbkey]][key].isdigit(): out_d[p[dbkey]][key] = int(out_d[p[dbkey]][key])
+				for key in out_d[queue]:
+					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
+					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 			# Now process the All entry for the site, if it exists
 			if d[cloud][site].has_key(All):
 				for queue in d[cloud][site]:
