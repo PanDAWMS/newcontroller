@@ -20,9 +20,6 @@
 # Make sure that the All source is subordinate to the BDII source
 
 # This code has been organized for easy transition into a class structure.
-aa='TW'
-bb='Australia-ATLAS'
-cc='Australia-ATLAS-agh8-atlas-pbs'
 
 import os, sys, commands
 
