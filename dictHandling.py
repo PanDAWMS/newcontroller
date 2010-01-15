@@ -195,7 +195,7 @@ def collapseDict(d):
 			if d[cloud][site].has_key(All):
 				for queue in d[cloud][site]:
 					# No point in trying to apply the All parameters to the All queue.
-					if queue == All: continue
+					if queue is All: continue
 					# Get the parameter dictionary (vs the source or the overrides).
 					# This is a symbolic link, not a duplication:
 					allparams = d[cloud][site][All][param]
@@ -208,6 +208,11 @@ def collapseDict(d):
 					for key in out_d[queue]:
 						if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 						if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
+					try:
+						if queue == 'ANALY_UTA': print 'after', d[cloud][site][queue][over]['accesscontrol']
+					except:
+						pass
+
 	# Return the flattened dictionary
 	return out_d
 
