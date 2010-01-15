@@ -167,10 +167,6 @@ def collapseDict(d):
 		for site in d[cloud]:
 			# And for each queue
 			for queue in d[cloud][site]:
-				try:
-					if dflag: print 'waybefore', queue, out_d['ANALY_UTA']['accesscontrol']
-				except:
-					pass
 				# Don't bother for an "All" queue yet -- see below.
 				if queue == All or site == All: continue
 				# Get the parameter dictionary (vs the source or the overrides).
@@ -182,10 +178,6 @@ def collapseDict(d):
 				for key in standardkeys:
 					if key not in p.keys(): out_d[queue][key] = None
 				# Add the overrides (except the excluded ones)
-				try:
-					if dflag: print 'before', queue, out_d['ANALY_UTA']['accesscontrol']
-				except:
-					pass
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
 					out_d[queue][key] = d[cloud][site][queue][over][key]
 				# Sanitization. Is this a good idea?
@@ -194,10 +186,6 @@ def collapseDict(d):
 				for key in out_d[queue]:
 					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
-				try:
-					if dflag: print 'after', queue, out_d['ANALY_UTA']['accesscontrol']
-				except:
-					pass
 			# Now process the All entry for the site, if it exists
 			if d[cloud][site].has_key(All):
 				for queue in d[cloud][site]:
@@ -212,9 +200,9 @@ def collapseDict(d):
 					for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
 					for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
 					# Sanitization. Is this a good idea?
-					for key in out_d[queue]:
-						if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
-						if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
+## 					for key in out_d[queue]:
+## 						if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
+## 						if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 					try:
 						if dflag: print 'after allproc', queue, out_d['ANALY_UTA']['accesscontrol']
 					except:
