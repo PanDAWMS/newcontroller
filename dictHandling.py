@@ -171,7 +171,7 @@ def collapseDict(d):
 				if queue == All or site == All: continue
 				# Get the parameter dictionary (vs the source or the overrides).
 				# This is a symbolic link, not a duplication:
-				p = d[cloud][site][queue][param]
+				p = d[cloud][site][queue][param].copy()
 				# So copy out the values into a new dictionary (except excluded ones)
 				out_d[queue] = dict([(key,p[key]) for key in p if key not in excl])
 				# Make sure all the standard keys are present, even if not filled
