@@ -166,7 +166,6 @@ def collapseDict(d):
 		for site in d[cloud]:
 			# And for each queue
 			for queue in d[cloud][site]:
-				print queue, cloud, site
 				# Don't bother for an "All" queue yet -- see below.
 				if queue == All or site == All: continue
 				# Get the parameter dictionary (vs the source or the overrides).
