@@ -166,6 +166,7 @@ def collapseDict(d):
 		for site in d[cloud]:
 			# And for each queue
 			for queue in d[cloud][site]:
+				print queue, cloud, site
 				# Don't bother for an "All" queue yet -- see below.
 				if queue == All or site == All: continue
 				# Get the parameter dictionary (vs the source or the overrides).
@@ -177,17 +178,22 @@ def collapseDict(d):
 				for key in standardkeys:
 					if key not in p.keys(): out_d[queue][key] = None
 				# Add the overrides (except the excluded ones)
+				try:
+					if queue = 'ANALY_UTA': print 'before', d[cloud][site][queue][over]['accesscontrol']
+				except:
+					pass
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
 					out_d[queue][key] = d[cloud][site][queue][over][key]
-				if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'].has_key(over) and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 1, '***', out_d['ANALY_UTA']['accesscontrol'], queue
 				# Sanitization. Is this a good idea?
+				try:
+					if queue = 'ANALY_UTA': print 'after', d[cloud][site][queue][over]['accesscontrol']
+				except:
+					pass
 				for key in out_d[queue]:
 					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
-				if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'].has_key(over) and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 2, '***', out_d['ANALY_UTA']['accesscontrol'], queue
 			# Now process the All entry for the site, if it exists
 			if d[cloud][site].has_key(All):
-				if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'].has_key(over) and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 3, 'AP', out_d['ANALY_UTA']['accesscontrol'], queue
 				for queue in d[cloud][site]:
 					# No point in trying to apply the All parameters to the All queue.
 					if queue == All: continue
