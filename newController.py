@@ -70,7 +70,7 @@ if __name__ == "__main__":
 	# Compare the DB to the present built configuration
 	m = collapseDict(dbd)
 	n = collapseDict(configd)
-	#up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
+	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
 
 	u,d=compareQueues(collapseDict(dbd),collapseDict(configd))
 	a=buildDeleteList(d,'atlas_pandameta.schedconfig')
