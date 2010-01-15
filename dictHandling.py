@@ -195,7 +195,7 @@ def collapseDict(d):
 			if d[cloud][site].has_key(All):
 				for queue in d[cloud][site]:
 					# No point in trying to apply the All parameters to the All queue.
-					if queue is All: continue
+					if queue == All: continue
 					# Get the parameter dictionary (vs the source or the overrides).
 					# This is a symbolic link, not a duplication:
 					allparams = d[cloud][site][All][param]
