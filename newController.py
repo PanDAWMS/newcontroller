@@ -63,17 +63,17 @@ if __name__ == "__main__":
 	status = allMaker(configd)
 
 	# Add the BDII information
-	#bdiiIntegrator(configd, dbd)
+	bdiiIntegrator(configd, dbd)
 	# Now add ToA information to the whole shebang. No site-by-site as of yet.
-	#toaIntegrator(configd)
+	toaIntegrator(configd)
 
 	# Compare the DB to the present built configuration
-	#m = collapseDict(dbd)
+	m = collapseDict(dbd)
 	n = collapseDict(configd)
 	#up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
 
-	#u,d=compareQueues(collapseDict(dbd),collapseDict(configd))
-	#a=buildDeleteList(d,'atlas_pandameta.schedconfig')
-	#b=buildUpdateList(u,'atlas_pandameta.schedconfig')
+	u,d=compareQueues(collapseDict(dbd),collapseDict(configd))
+	a=buildDeleteList(d,'atlas_pandameta.schedconfig')
+	b=buildUpdateList(u,'atlas_pandameta.schedconfig')
 
 	os.chdir(base_path)
