@@ -179,7 +179,7 @@ def collapseDict(d):
 				# Add the overrides (except the excluded ones)
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
 					out_d[queue][key] = d[cloud][site][queue][over][key]
-					if site == 'UTArlington' and queue == 'ANALY_UTA': print out_d[queue][key], d[cloud][site][queue][over][key] 
+					if site == 'UTArlington' and queue == 'ANALY_UTA': print queue, key, out_d[queue], d[cloud][site][queue][over][key] 
 				# Sanitization. Is this a good idea?
 				for key in out_d[queue]:
 					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
