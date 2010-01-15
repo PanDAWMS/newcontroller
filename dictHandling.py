@@ -167,6 +167,10 @@ def collapseDict(d):
 		for site in d[cloud]:
 			# And for each queue
 			for queue in d[cloud][site]:
+				try:
+					if dflag: print 'waybefore', queue, d[cloud][site][queue][over]
+				except:
+					pass
 				# Don't bother for an "All" queue yet -- see below.
 				if queue == All or site == All: continue
 				# Get the parameter dictionary (vs the source or the overrides).
