@@ -179,14 +179,14 @@ def collapseDict(d):
 					if key not in p.keys(): out_d[queue][key] = None
 				# Add the overrides (except the excluded ones)
 				try:
-					if queue = 'ANALY_UTA': print 'before', d[cloud][site][queue][over]['accesscontrol']
+					if queue == 'ANALY_UTA': print 'before', d[cloud][site][queue][over]['accesscontrol']
 				except:
 					pass
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
 					out_d[queue][key] = d[cloud][site][queue][over][key]
 				# Sanitization. Is this a good idea?
 				try:
-					if queue = 'ANALY_UTA': print 'after', d[cloud][site][queue][over]['accesscontrol']
+					if queue == 'ANALY_UTA': print 'after', d[cloud][site][queue][over]['accesscontrol']
 				except:
 					pass
 				for key in out_d[queue]:
