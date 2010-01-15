@@ -192,9 +192,9 @@ def collapseDict(d):
 					# No point in trying to apply the All parameters to the All queue.
 					if queue == All: continue
 					# Get the parameter dictionary (vs the source or the overrides).
-					# This is a duplication:
-					allparams = d[cloud][site][All][param].copy()
-					alloverrides = d[cloud][site][All][over].copy()
+					# This is a link, not a duplication:
+					allparams = d[cloud][site][All][param]
+					alloverrides = d[cloud][site][All][over]
 					# So copy out the values into the present queue dictionary (except excluded ones)
 					for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
 					for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
@@ -203,7 +203,7 @@ def collapseDict(d):
 						if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 						if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 					try:
-						if dflag: print 'after allproc', queue, out_d['ANALY_UTA']['accesscontrol']
+						if dflag: print 'after allproc', queue, out_d['ANALY_UTA']['wntmpdir']
 					except:
 						pass
 
