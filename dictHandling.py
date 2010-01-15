@@ -160,7 +160,6 @@ def buildDict():
 def collapseDict(d):
 	''' Collapses a nested dictionary into a flat set of queues '''
 	out_d={}
-	dflag = 0
 	# Rip through the clouds
 	for cloud in d:
 		# And for each site
@@ -180,9 +179,7 @@ def collapseDict(d):
 				# Add the overrides (except the excluded ones)
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
 					out_d[queue][key] = d[cloud][site][queue][over][key]
-				# Sanitization. Is this a good idea?
-				if queue == 'ANALY_UTA': dflag = 1
-				if dflag and site != 'UTArlington': dflag = 0
+				# Sanitization.
 				for key in out_d[queue]:
 					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
@@ -198,14 +195,10 @@ def collapseDict(d):
 					# So copy out the values into the present queue dictionary (except excluded ones)
 					for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
 					for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
-					# Sanitization. Is this a good idea?
+					# Sanitization.
 					for key in out_d[queue]:
 						if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 						if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
-					try:
-						if dflag: print 'after allproc', queue, out_d['ANALY_UTA']['wntmpdir']
-					except:
-						pass
 
 	# Return the flattened dictionary
 	return out_d
