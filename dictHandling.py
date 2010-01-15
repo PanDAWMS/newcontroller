@@ -162,13 +162,13 @@ def collapseDict(d):
 	out_d={}
 	# Rip through the clouds
 	for cloud in d:
-		if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 1, '***********************', out_d['ANALY_UTA']['accesscontrol'], cloud
+		if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'].has_key(over) and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 1, '***********************', out_d['ANALY_UTA']['accesscontrol'], cloud
 		# And for each site
 		for site in d[cloud]:
-			if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 2, '************', out_d['ANALY_UTA']['accesscontrol'], site
+			if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'].has_key(over) and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 2, '************', out_d['ANALY_UTA']['accesscontrol'], site
 			# And for each queue
 			for queue in d[cloud][site]:
-				if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 3, '***', out_d['ANALY_UTA']['accesscontrol'], queue
+				if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'].has_key(over) and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 3, '***', out_d['ANALY_UTA']['accesscontrol'], queue
 				# Don't bother for an "All" queue yet -- see below.
 				if queue == All or site == All: continue
 				# Get the parameter dictionary (vs the source or the overrides).
@@ -182,13 +182,14 @@ def collapseDict(d):
 				# Add the overrides (except the excluded ones)
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
 					out_d[queue][key] = d[cloud][site][queue][over][key]
+				if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'].has_key(over) and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 4, '***', out_d['ANALY_UTA']['accesscontrol'], queue
 				# Sanitization. Is this a good idea?
 				for key in out_d[queue]:
 					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 			# Now process the All entry for the site, if it exists
 			if d[cloud][site].has_key(All):
-				if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 4, 'AP', out_d['ANALY_UTA']['accesscontrol'], queue
+				if out_d.has_key('ANALY_UTA') and out_d['ANALY_UTA'].has_key(over) and out_d['ANALY_UTA'][over].has_key('accesscontrol'): print 5, 'AP', out_d['ANALY_UTA']['accesscontrol'], queue
 				for queue in d[cloud][site]:
 					# No point in trying to apply the All parameters to the All queue.
 					if queue == All: continue
