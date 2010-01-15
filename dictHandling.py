@@ -168,7 +168,7 @@ def collapseDict(d):
 			# And for each queue
 			for queue in d[cloud][site]:
 				try:
-					if dflag: print 'waybefore', queue, out_d['ANALY_UTA']
+					if dflag: print 'waybefore', queue, out_d['ANALY_UTA']['accesscontrol']
 				except:
 					pass
 				# Don't bother for an "All" queue yet -- see below.
@@ -183,7 +183,7 @@ def collapseDict(d):
 					if key not in p.keys(): out_d[queue][key] = None
 				# Add the overrides (except the excluded ones)
 				try:
-					if dflag: print 'before', queue, out_d['ANALY_UTA']
+					if dflag: print 'before', queue, out_d['ANALY_UTA']['accesscontrol']
 				except:
 					pass
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
@@ -195,7 +195,7 @@ def collapseDict(d):
 					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 				try:
-					if dflag: print 'after', queue, out_d['ANALY_UTA']
+					if dflag: print 'after', queue, out_d['ANALY_UTA']['accesscontrol']
 				except:
 					pass
 			# Now process the All entry for the site, if it exists
@@ -216,7 +216,7 @@ def collapseDict(d):
 						if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 						if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 					try:
-						if dflag: print 'after allproc', queue, out_d['ANALY_UTA'][over]
+						if dflag: print 'after allproc', queue, out_d['ANALY_UTA']['accesscontrol']
 					except:
 						pass
 
