@@ -203,7 +203,7 @@ def collapseDict(d):
 					# This is a symbolic link, not a duplication:
 					allparams = d[cloud][site][All][param]
 					alloverrides = d[cloud][site][All][over]
-					p = d[cloud][site][queue][param]
+					p = d[cloud][site][queue][param].copy()
 					# So copy out the values into the present queue dictionary (except excluded ones)
 					for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
 					for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
