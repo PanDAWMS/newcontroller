@@ -55,13 +55,9 @@ def allMaker(d):
 						d[cloud][site][queue][source][key] = 'the site All.py file for the %s site' % site
 				# Adding the "All" queue to the site
 				if not d[cloud][site].has_key(All): d[cloud][site][All]={}
-				if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 5, d['US']['UTArlington'][All][over]
 				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over]={}
-				if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 6, d['US']['UTArlington'][All][over]
 				d[cloud][site][All][param] = all_d[cloud][site].copy()
-				if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 7, d['US']['UTArlington'][All][over]
 				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over] = {}
-				if site == 'UTArlington' and d['US']['UTArlington'].has_key(All) and d['US']['UTArlington'][All].has_key(over): print 8, d['US']['UTArlington'][All][over]
 				
 	return 0
 
