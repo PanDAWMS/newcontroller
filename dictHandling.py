@@ -168,7 +168,7 @@ def collapseDict(d):
 			# And for each queue
 			for queue in d[cloud][site]:
 				try:
-					if dflag: print 'waybefore', queue, out_d['ANALY_UTA'][over]
+					if dflag: print 'waybefore', queue, out_d['ANALY_UTA']
 				except:
 					pass
 				# Don't bother for an "All" queue yet -- see below.
@@ -182,20 +182,20 @@ def collapseDict(d):
 				for key in standardkeys:
 					if key not in p.keys(): out_d[queue][key] = None
 				# Add the overrides (except the excluded ones)
-				if queue == 'ANALY_UTA': dflag = 1
-				if dflag and site != 'UTArlington': dflag = 0
 				try:
-					if dflag: print 'before', queue, out_d['ANALY_UTA'][over]
+					if dflag: print 'before', queue, out_d['ANALY_UTA']
 				except:
 					pass
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
 					out_d[queue][key] = d[cloud][site][queue][over][key]
 				# Sanitization. Is this a good idea?
+				if queue == 'ANALY_UTA': dflag = 1
+				if dflag and site != 'UTArlington': dflag = 0
 				for key in out_d[queue]:
 					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 				try:
-					if dflag: print 'after', queue, out_d['ANALY_UTA'][over]
+					if dflag: print 'after', queue, out_d['ANALY_UTA']
 				except:
 					pass
 			# Now process the All entry for the site, if it exists
