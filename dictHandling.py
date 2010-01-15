@@ -160,6 +160,7 @@ def buildDict():
 def collapseDict(d):
 	''' Collapses a nested dictionary into a flat set of queues '''
 	out_d={}
+	dflag = 0
 	# Rip through the clouds
 	for cloud in d:
 		# And for each site
@@ -177,8 +178,10 @@ def collapseDict(d):
 				for key in standardkeys:
 					if key not in p.keys(): out_d[queue][key] = None
 				# Add the overrides (except the excluded ones)
+				if queue == 'ANALY_UTA': dflag = 1
+				if dflag and site != 'UTArlington': dflag = 0
 				try:
-					if queue == 'ANALY_UTA': print 'before', d[cloud][site][queue][over]['accesscontrol']
+					if dflag: print 'before', d[cloud][site][queue][over]['accesscontrol'], queue
 				except:
 					pass
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
@@ -188,7 +191,7 @@ def collapseDict(d):
 					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 				try:
-					if queue == 'ANALY_UTA': print 'after', d[cloud][site][queue][over]['accesscontrol']
+					if dflag: print 'after', d[cloud][site][queue][over]['accesscontrol'], queue
 				except:
 					pass
 			# Now process the All entry for the site, if it exists
@@ -209,7 +212,7 @@ def collapseDict(d):
 						if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 						if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 					try:
-						if queue == 'ANALY_UTA': print 'after', d[cloud][site][queue][over]['accesscontrol']
+						if dflag: print 'after', d[cloud][site][queue][over]['accesscontrol'], queue
 					except:
 						pass
 
