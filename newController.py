@@ -41,8 +41,9 @@ if __name__ == "__main__":
 					if k not in ['jdladd','releases']:
 						if m[i][k] != n[i][k]:
 							print i, k, m[i][k], n[i][k], type(m[i][k]), type(n[i][k])
+						
 			except KeyError:
-				print '\n\n********************** %s was not found in the db\n\n' % i
+				pass
 
 	#cloudd = sqlDictUnpacker(unPickler('pickledSchedConfig.p'))
 	# Load the present status of the DB, and describe a standard list of keys
@@ -55,14 +56,13 @@ if __name__ == "__main__":
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 	# Load the present config files
 	configd = buildDict()
-	
-	# Compose the "All" queues for each site
-	status = allMaker(configd)
-
 	# Add the BDII information
 	bdiiIntegrator(configd, dbd)
 	# Now add ToA information to the whole shebang. No site-by-site as of yet.
 	toaIntegrator(configd)
+
+	# Compose the "All" queues for each site
+	status = allMaker(configd)
 
 	# Compare the DB to the present built configuration
 	m = collapseDict(dbd)
