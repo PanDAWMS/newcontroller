@@ -64,6 +64,8 @@ def keyCheckReplace(d,key,value):
 		return 1
 
 # Rewrite this to be more efficient -- it needs to parse the ddmsites once into a dictionary, then do matchmaking.
+# All kinds of modifications to keep this from clobbering perfectly good configurations at random.
+
 def toaIntegrator(confd):
 	''' Adds ToA information to the confd (legacy from Rod, incomplete commenting. Will enhance later.) '''
 	print 'Running ToA Integrator'
@@ -86,14 +88,14 @@ def toaIntegrator(confd):
 							 # upper case for matching
 							gocnames_up=[]
 							for gn in gocnames:
-								gocnames_up+=[gn.upper()]  
+								gocnames_up += [gn.upper()]  
 							# If PRODDISK found use that
 							if confd[cloud][site][queue][param]['site'].upper() in gocnames_up and ds.endswith('PRODDISK'):
 								if toaDebug: print "Assign site %s to DDM %s" % ( confd[cloud][site][queue][param]['site'], ds )
-								confd[cloud][site][queue][param]['ddm'] = ds
-								confd[cloud][site][queue][source]['ddm'] = 'ToA'
-								confd[cloud][site][queue][param]['setokens'] = 'ATLASPRODDISK'
-								confd[cloud][site][queue][source]['setokens'] = 'ToA'
+								if keyCheckReplace(confd[cloud][site][queue][param], 'ddm', ds):
+									confd[cloud][site][queue][source]['ddm'] = 'ToA'
+								if keyCheckReplace(confd[cloud][site][queue][param], 'setokens', 'ATLASPRODDISK'):
+									confd[cloud][site][queue][source]['setokens'] = 'ToA'
 								# Set the lfc host 
 								re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
 								if toaDebug: print "ds:",ds
@@ -101,20 +103,21 @@ def toaIntegrator(confd):
 									relfc=re_lfc.search(ToA.getLocalCatalog(ds))
 									if relfc:
 										lfchost=relfc.group(1)
-										if toaDebug: print "Set lfchost to %s"%lfchost 
-										confd[cloud][site][queue][param]['lfchost'] = lfchost
-										confd[cloud][site][queue][source]['lfchost'] = 'ToA'
+										if keyCheckReplace(confd[cloud][site][queue][param], 'lfchost', lfchost):
+											if toaDebug: print "Set lfchost to %s" % lfchost 
+											confd[cloud][site][queue][source]['lfchost'] = 'ToA'
 									else:
 										if toaDebug: print " Cannot get lfc host for %s"%ds
 								except:
 									if toaDebug: print " Cannot get local catalog for %s"%ds
 								# And work out the cloud
-								if not confd[cloud][site][queue][param].has_key('cloud'): confd[cloud][site][queue][param]['cloud'] = ''
+								if keyCheckReplace(confd[cloud][site][queue][param],'cloud', ''):
+									confd[cloud][site][queue][source]['cloud'] = 'ToA'
 								if not confd[cloud][site][queue][param]['cloud']:
 									if toaDebug: print "Cloud not set for %s"%ds
 									for cl in ToA.ToACache.dbcloud.keys():
 										if ds in ToA.getSitesInCloud(cl):
-											confd[cloud][site][queue][param]['cloud']=cl
+											confd[cloud][site][queue][param]['cloud']= cl
 											confd[cloud][site][queue][source]['cloud'] = 'ToA'
 
 					# EGEE defaults
@@ -131,10 +134,14 @@ def toaIntegrator(confd):
 						## confd[cloud][site][queue][source]['lfcpath'] = 'ToA'
 						## confd[cloud][site][queue][param]['lfcprodpath'] = '/grid/atlas/dq2'
 						## confd[cloud][site][queue][source]['lfcprodpath'] = 'ToA'
-						if keyCheckReplace(confd[cloud][site][queue][param],'proxy','noimport'): confd[cloud][site][queue][source]['proxy'] = 'ToA'
-						if keyCheckReplace(confd[cloud][site][queue][param],'lfcpath','/grid/atlas/users/pathena'): confd[cloud][site][queue][source]['lfcpath'] = 'ToA'
-						if keyCheckReplace(confd[cloud][site][queue][param],'lfcprodpath','/grid/atlas/dq2'): confd[cloud][site][queue][source]['lfcprodpath'] = 'ToA'
-						if keyCheckReplace(confd[cloud][site][queue][param],'copytool','lcgcp'): confd[cloud][site][queue][source]['copytool'] = 'ToA'
+						if keyCheckReplace(confd[cloud][site][queue][param],'proxy','noimport'):
+							confd[cloud][site][queue][source]['proxy'] = 'ToA'
+						if keyCheckReplace(confd[cloud][site][queue][param],'lfcpath','/grid/atlas/users/pathena'):
+							confd[cloud][site][queue][source]['lfcpath'] = 'ToA'
+						if keyCheckReplace(confd[cloud][site][queue][param],'lfcprodpath','/grid/atlas/dq2'):
+							confd[cloud][site][queue][source]['lfcprodpath'] = 'ToA'
+						if keyCheckReplace(confd[cloud][site][queue][param],'copytool','lcgcp'):
+							confd[cloud][site][queue][source]['copytool'] = 'ToA'
 
 						if confd[cloud][site][queue][param].has_key('ddm') and confd[cloud][site][queue][param]['ddm']:
 							ddm1 = confd[cloud][site][queue][param]['ddm'].split(',')[0]
@@ -182,7 +189,7 @@ def toaIntegrator(confd):
 										confd[cloud][site][queue][param]['se'] = se
 										confd[cloud][site][queue][source]['se'] = 'ToA'
 									if not confd[cloud][site][queue][param].has_key('sepath'):
-										confd[cloud][site][queue][param]['sepath'] = sepath+'/users/pathena'
+										confd[cloud][site][queue][param]['sepath'] = sepath + '/users/pathena'
 										confd[cloud][site][queue][source]['sepath'] = 'ToA'
 									if not confd[cloud][site][queue][param].has_key('seprodpath'):
 										confd[cloud][site][queue][param]['seprodpath'] = sepath
