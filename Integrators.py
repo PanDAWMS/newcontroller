@@ -128,12 +128,6 @@ def toaIntegrator(confd):
 						# This was an original condition in Rod's version. I have removed it because there were
 						# too many exceptions, and will only apply the noimport default where there is no previous
 						# choice made.
-						## confd[cloud][site][queue][param]['proxy']  = 'noimport'
-						## confd[cloud][site][queue][source]['proxy'] = 'ToA'
-						## confd[cloud][site][queue][param]['lfcpath'] = '/grid/atlas/users/pathena'
-						## confd[cloud][site][queue][source]['lfcpath'] = 'ToA'
-						## confd[cloud][site][queue][param]['lfcprodpath'] = '/grid/atlas/dq2'
-						## confd[cloud][site][queue][source]['lfcprodpath'] = 'ToA'
 						if keyCheckReplace(confd[cloud][site][queue][param],'proxy','noimport'):
 							confd[cloud][site][queue][source]['proxy'] = 'ToA'
 						if keyCheckReplace(confd[cloud][site][queue][param],'lfcpath','/grid/atlas/users/pathena'):
@@ -156,8 +150,8 @@ def toaIntegrator(confd):
 									if relfc:
 										lfchost = relfc.group(1)
 										if toaDebug: print "ROD sets lfchost for %s %s" % (confd[cloud][site][queue][param]['ddm'],lfchost) 
-										confd[cloud][site][queue][param]['lfchost'] = lfchost
-										confd[cloud][site][queue][source]['lfchost'] = 'ToA'
+										if keyCheckReplace(confd[cloud][site][queue][param], 'lfchost', lfchost):
+											confd[cloud][site][queue][source]['lfchost'] = 'ToA'
 									else:
 										if toaDebug: print "Cannot get lfc host for %s" % ddm1
 
