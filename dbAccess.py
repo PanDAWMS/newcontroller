@@ -33,7 +33,8 @@ def execUpdate(updateList):
 	utils.commit()
 	utils.closeDB()
 	return loadSchedConfig()
-  
+
+# We need to cut out all that dictionary crap, set the bind variables to real vars, and be fine.
 def buildUpdateList(updDict, tableName):
 	'''Build a list of SQL commands to add or supersede queue definitions''' 
 	
