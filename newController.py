@@ -59,7 +59,7 @@ if __name__ == "__main__":
 	bdiiIntegrator(configd, dbd)
 	# Now add ToA information to the whole shebang. No site-by-site as of yet.
 	toaIntegrator(configd)
-
+	
 	# Compose the "All" queues for each site
 	status = allMaker(configd)
 
@@ -76,5 +76,9 @@ if __name__ == "__main__":
 
 	utils.replaceDB('schedconfig',up_l,key='nickname')
 	utils.replaceDB('jdllist',jdl_l,key='name')
+
+	newdb, sk = sqlDictUnpacker(loadSchedConfig())
+
+	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(dbd))
 	
 	os.chdir(base_path)
