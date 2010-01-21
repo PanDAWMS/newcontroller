@@ -34,23 +34,14 @@ def execUpdate(updateList):
 	utils.closeDB()
 	return loadSchedConfig()
 
-# We need to cut out all that dictionary crap, set the bind variables to real vars, and be fine.
-def buildUpdateList(updDict, tableName):
-	'''Build a list of SQL commands to add or supersede queue definitions''' 
-	
-	matched = ' WHEN MATCHED THEN UPDATE SET '
-	insert = ' WHEN NOT MATCHED THEN INSERT '
-	values1 = ' VALUES '
-	values2 = ' WITH VALUES '
-	sql = []
-	for key in updDict:
-		merge = "MERGE INTO %s USING DUAL ON ( %s.nickname='%s' ) " % (tableName, tableName, key)
-		mergetxt1 = ' %s ' % ','.join(['%s=:%s' % (i,i) for i in sorted(updDict[key].keys())])
-		mergetxt2 = ' (%s) ' % ',:'.join(sorted(updDict[key].keys()))
-		valuestxt = '{%s} ' % ', '.join(["'%s': '%s'" % (i,updDict[key][i]) for i in sorted(updDict[key].keys())])
-		sql.append(merge+matched+mergetxt1+insert+values1+mergetxt2+values2+valuestxt+';')
+def buildUpdateList(updDict):
+	'''Build a list of dictionaries that define queues''' 
+	l=[]
+	for i in updDict:
+		l.append(updDict[i])
 		
-	return '\n'.join(sql)
+	return l
+	
 
 def buildDeleteList(delDict, tableName):
 	'''Build a list of SQL commands that deletes queues no longer in the definition files'''
