@@ -1,3 +1,10 @@
+##########################################################################################
+# Simple utilities used in various newController components                              #
+#                                                                                        #
+# Alden Stradling 10 Oct 2009                                                            #
+# Alden.Stradling@cern.ch                                                                #
+##########################################################################################
+
 import pickle, os
 
 from controllerSettings import *

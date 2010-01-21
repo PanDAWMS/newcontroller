@@ -1,3 +1,10 @@
+##########################################################################################
+# Tools for handling database operations in newController                                #
+#                                                                                        #
+# Alden Stradling 10 Oct 2009                                                            #
+# Alden.Stradling@cern.ch                                                                #
+##########################################################################################
+
 from SchedulerUtils import utils
 
 from miscUtils import *
@@ -21,9 +28,8 @@ def loadSchedConfig():
 
 	return d
 
-# To be completed!!
 def execUpdate(updateList):
-	''' Run the updates into the schedconfig database '''
+	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
 	if safety is "on":
 		print "Not touching the database! The safety's on ol' Bessie."
 		return 1
@@ -32,7 +38,7 @@ def execUpdate(updateList):
 		utils.dictcursor().execute(query)
 	utils.commit()
 	utils.closeDB()
-	return loadSchedConfig()
+	return 
 
 def buildUpdateList(updDict):
 	'''Build a list of dictionaries that define queues''' 

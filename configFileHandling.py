@@ -1,3 +1,10 @@
+##########################################################################################
+# Creation, reading and manipulation of configuration files for schedconfig              #
+#                                                                                        #
+# Alden Stradling 10 Oct 2009                                                            #
+# Alden.Stradling@cern.ch                                                                #
+##########################################################################################
+
 import os
 
 from miscUtils import *

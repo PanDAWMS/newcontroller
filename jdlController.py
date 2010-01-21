@@ -1,3 +1,10 @@
+##########################################################################################
+# Tools for controlling the content of the jdllist table in the atlas_pandameta database #
+#                                                                                        #
+# Alden Stradling 5 Jan 2010                                                             #
+# Alden.Stradling@cern.ch                                                                #
+##########################################################################################
+
 import os
 
 from dbAccess import utils
@@ -5,7 +12,7 @@ from configFileHandling import *
 from controllerSettings import *
 
 def buildJdlFiles(d):
-	'''Build th JDL configuration files'''
+	'''Build the JDL configuration files'''
 	startstr = '''
 # This dictionary contains the parameters for one jdl spec.
 # Changing this will update it in the jdllist table.

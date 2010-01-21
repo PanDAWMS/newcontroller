@@ -1,3 +1,10 @@
+##########################################################################################
+# Tools for handling dictionary operations in newController                              #
+#                                                                                        #
+# Alden Stradling 10 Oct 2009                                                            #
+# Alden.Stradling@cern.ch                                                                #
+##########################################################################################
+
 import os
 
 from miscUtils import *

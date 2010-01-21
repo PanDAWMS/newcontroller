@@ -1,6 +1,14 @@
+##########################################################################################
+# Global settings for the newController system                                           #
+#                                                                                        #
+# Alden Stradling 5 Jan 2010                                                             #
+# Alden.Stradling@cern.ch                                                                #
+##########################################################################################
+
 import os
 
 # Debug Flags
+genDebug = True
 toaDebug = False
 jdlDebug = False
 bdiiDebug = False
