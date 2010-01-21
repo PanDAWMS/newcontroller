@@ -252,7 +252,7 @@ def bdiiIntegrator(confd,d):
 				confd[c][s][nickname][enab] = 'False'
 				# Either way, we need to put the queue in without a cloud defined. 
 		# Check for manual setting. If it's manual, DON'T TOUCH
-		if confd[c][s][nickname][param].has_key() and confd[c][s][nickname][param]['sysconfig']:
+		if confd[c][s][nickname][param].has_key('sysconfig') and confd[c][s][nickname][param]['sysconfig']:
 			if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
 				if bdiiDebug: print 'Skipping %s -- sysconfig set to manual' % nickname
 				continue
