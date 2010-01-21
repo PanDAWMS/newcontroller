@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
 	utils.replaceDB('schedconfig',up_l,key='nickname')
 	utils.replaceDB('jdllist',jdl_l,key='name')
-
+	utils.commit()
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
 
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(dbd))
