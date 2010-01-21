@@ -17,7 +17,6 @@
 # Add change detection to avoid DB change collisions
 # Add queue insertion scripts
 # Add checking of queue "on" and "off"
-# Make sure that the All source is subordinate to the BDII source
 
 # This code has been organized for easy transition into a class structure.
 
@@ -65,12 +64,17 @@ if __name__ == "__main__":
 	status = allMaker(configd)
 
 	# Compare the DB to the present built configuration
-	m = collapseDict(dbd)
-	n = collapseDict(configd)
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
 
-	u,d=compareQueues(collapseDict(dbd),collapseDict(configd))
-	a=buildDeleteList(d,'atlas_pandameta.schedconfig')
-	b=buildUpdateList(u,'atlas_pandameta.schedconfig')
+	del_l = buildDeleteList(del_d)
+	up_l = buildUpdateList(up_d)
+	jdl_l = buildUpdateList(newjdl)
 
+	utils.initDB()
+	for i in del_l:
+		utils.dictcursor().execute(i)
+
+	utils.replaceDB('schedconfig',up_l,key='nickname')
+	utils.replaceDB('jdllist',jdl_l,key='name')
+	
 	os.chdir(base_path)
