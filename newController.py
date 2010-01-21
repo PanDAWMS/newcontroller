@@ -66,7 +66,7 @@ if __name__ == "__main__":
 	# Compare the DB to the present built configuration
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
 
-	del_l = buildDeleteList(del_d)
+	del_l = buildDeleteList(del_d,'schedconfig')
 	up_l = buildUpdateList(up_d)
 	jdl_l = buildUpdateList(newjdl)
 
