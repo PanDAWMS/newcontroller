@@ -89,7 +89,7 @@ if __name__ == "__main__":
 	keydict={}
 	def testDiff(m,n):
 		
-		for i in up_d:
+		for i in m:
 			try:
 				for k in m[i].keys():
 					if k not in ['jdladd','releases']:
