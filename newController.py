@@ -87,7 +87,7 @@ def loadConfigs():
 
 if __name__ == "__main__":
 	keydict={}
-	def testDiff():
+	def testDiff(m,n):
 		
 		for i in up_d:
 			try:
