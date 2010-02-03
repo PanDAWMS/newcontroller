@@ -81,7 +81,7 @@ def loadConfigs():
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
 
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(dbd))
-	if genDebug: return dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newdb, checkUp, checkDel
+	if genDebug: return dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel
 	return 0
 	
 
@@ -100,7 +100,6 @@ if __name__ == "__main__":
 				pass
 
 	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
-	dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newdb, checkUp, checkDel = loadConfigs()
-	jdld, newjdl = loadJdl()
+	dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
 
 	os.chdir(base_path)
