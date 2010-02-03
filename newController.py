@@ -49,6 +49,10 @@ def loadConfigs():
 	# Load the present config files
 	configd = buildDict()
 
+	# Load the JDL
+
+	jdld, newjdl = loadJdl()
+
 	# Add the BDII information
 	bdiiIntegrator(configd, dbd)
 
