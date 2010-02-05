@@ -88,13 +88,19 @@ def loadConfigs():
 if __name__ == "__main__":
 	keydict={}
 	def testDiff(m,n):
-		
 		for i in m:
+			if type(m[i]) == dict: mm = collapseDict(m)
+			else: mm = m
+		for i in n:
+			if type(n[i]) == dict: nn = collapseDict(n)
+			else: nn = n
+				
+		for i in mm:
 			try:
-				for k in m[i].keys():
+				for k in mm[i].keys():
 					if k not in ['jdladd','releases']:
-						if m[i][k] != n[i][k]:
-							print i, k, m[i][k], n[i][k], type(m[i][k]), type(n[i][k])
+						if mm[i][k] != nn[i][k]:
+							print i, k, mm[i][k], nn[i][k], type(mm[i][k]), type(nn[i][k])
 						
 			except KeyError:
 				pass
