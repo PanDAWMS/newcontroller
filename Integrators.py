@@ -122,7 +122,7 @@ def toaIntegrator(confd):
 
 					# EGEE defaults
 					if confd[cloud][site][queue][param]['sysconfig'] == 'manual': print 'How did we get here?'
-					if confd[cloud][site][queue][param]['region'] != 'US':
+					if confd[cloud][site][queue][param]['region'] not in ['US','OSG']:
 
 						# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
 						# This was an original condition in Rod's version. I have removed it because there were
