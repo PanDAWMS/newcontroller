@@ -18,7 +18,7 @@ configReadDebug = False
 configWriteDebug = False
 
 # Global strings and lists
-safety = 'on'
+safety = 'off'
 All = 'All'
 ndef = 'Deactivated'
 param = 'Parameters'
