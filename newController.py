@@ -74,7 +74,9 @@ def loadConfigs():
 		for i in del_l:
 			utils.dictcursor().execute(i)
 
+		print 'Updating SchedConfig'
 		utils.replaceDB('schedconfig',up_l,key='nickname')
+		print 'Updating JDLList'
 		utils.replaceDB('jdllist',jdl_l,key='name')
 		utils.commit()
 		
