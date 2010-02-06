@@ -44,7 +44,8 @@ def buildUpdateList(updDict):
 	'''Build a list of dictionaries that define queues''' 
 	l=[]
 	for i in updDict:
-		l.append(updDict[i])
+		# Gets only the parameter dictionary part.
+		l.append(updDict[i][param])
 		
 	return l
 	
