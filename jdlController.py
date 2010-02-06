@@ -72,7 +72,7 @@ def buildJdlDict():
 		# When SVN is in place, this should be replaced by a svn checkout.
 		# We choose element 0 to get the first result. This hack will go away.
 		jdlListAdder()
-		jdls = os.listdir(configs)
+		jdls = os.listdir(jdlconfigs)
 
 	for j in jdls:
 		# Add each jdl to the dictionary and remove the .py
@@ -81,7 +81,7 @@ def buildJdlDict():
 		# Run the file to extract the appropriate dictionaries
 		# As a clarification, the JDL and Override variable are created when the config python file is executed
 		# The appropriate dictionaries are placed in locvars
-		execfile(configs+os.sep+j,{},locvars)
+		execfile(jdlconfigs+os.sep+j,{},locvars)
 		# Feed in the configuration
 		jdld[name][jdl] = locvars[jdl]
 		jdld[name][over] = locvars[over] 
