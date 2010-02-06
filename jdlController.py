@@ -81,7 +81,7 @@ def buildJdlDict():
 		# Run the file to extract the appropriate dictionaries
 		# As a clarification, the JDL and Override variable are created when the config python file is executed
 		# The appropriate dictionaries are placed in locvars
-		execfile(j,{},locvars)
+		execfile(configs+os.sep+j,{},locvars)
 		# Feed in the configuration
 		jdld[name][jdl] = locvars[jdl]
 		jdld[name][over] = locvars[over] 
