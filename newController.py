@@ -32,12 +32,11 @@ from jdlController import *
 def loadJdl():
 	'''Runs the jdllist table updates'''
 
-	jdld = {}
-	jdlListAdder(jdld)
-	buildJdlFiles(jdld)
-	newjdl=buildJdlDict()
+	jdldb = {}
+	jdlListAdder(jdldb)
+	jdldc=buildJdlDict()
 
-	if genDebug: return jdld, newjdl
+	if genDebug: return jdldb, jdldc
 	return 0
 
 def loadConfigs():
@@ -51,7 +50,7 @@ def loadConfigs():
 
 	# Load the JDL
 
-	jdld, newjdl = loadJdl()
+	jdldb, newjdc = loadJdl()
 
 	# Add the BDII information
 	bdiiIntegrator(configd, dbd)
@@ -64,10 +63,11 @@ def loadConfigs():
 
 	# Compare the DB to the present built configuration
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
+	jdl_up_d, jdl_del_d = compareQueues(jldb, jdldc)
 	
 	del_l = buildDeleteList(del_d,'schedconfig')
 	up_l = buildUpdateList(up_d,param)
-	jdl_l = buildUpdateList(newjdl,jdl)
+	jdl_l = buildUpdateList(jdl_up_d,jdl)
 
 	if safety is not 'on':
 		utils.initDB()
@@ -83,7 +83,7 @@ def loadConfigs():
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
 
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(dbd))
-	if genDebug: return dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel
+	if genDebug: return dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
 	return 0
 	
 
