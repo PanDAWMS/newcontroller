@@ -40,7 +40,7 @@ def execUpdate(updateList):
 	utils.closeDB()
 	return 
 
-def buildUpdateList(updDict):
+def buildUpdateList(updDict,param):
 	'''Build a list of dictionaries that define queues''' 
 	l=[]
 	for i in updDict:
