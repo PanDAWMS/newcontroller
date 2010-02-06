@@ -63,7 +63,7 @@ def loadConfigs():
 
 	# Compare the DB to the present built configuration
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
-	jdl_up_d, jdl_del_d = compareQueues(jldb, jdldc)
+	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc)
 	
 	del_l = buildDeleteList(del_d,'schedconfig')
 	up_l = buildUpdateList(up_d,param)
