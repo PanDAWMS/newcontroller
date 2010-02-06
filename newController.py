@@ -64,10 +64,10 @@ def loadConfigs():
 
 	# Compare the DB to the present built configuration
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
-
+	
 	del_l = buildDeleteList(del_d,'schedconfig')
-	up_l = buildUpdateList(up_d)
-	jdl_l = buildUpdateList(newjdl)
+	up_l = buildUpdateList(up_d,param)
+	jdl_l = buildUpdateList(newjdl,jdl)
 
 	if safety is not 'on':
 		utils.initDB()
