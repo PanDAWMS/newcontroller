@@ -242,6 +242,10 @@ def bdiiIntegrator(confd,d):
 				if bdict[qn]['site']: c,s = ndef,bdict[qn]['site']
 				# If not, time to give up. BDII is hopelessly misconfigured -- best not to contaminate
 				else: continue
+				# If cloud doesn't exist, create it:
+				if c not in confd:
+					if bdiiDebug: print 'Creating cloud %s' % c
+					confd[c]={}
 				# If site doesn't yet exist, create it:
 				if s not in confd[c]:
 					if bdiiDebug: print 'Creating site %s in cloud %s as requested by BDII'  % (s,c)
@@ -252,7 +256,6 @@ def bdiiIntegrator(confd,d):
 				confd[c][s][nickname][enab] = 'False'
 				# Either way, we need to put the queue in without a cloud defined. 
 		# If the queue doesn't actually exist, we need to add it.
-		print c, s, nickname, confd[c][s]
 		if not confd[c][s].has_key(nickname): confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
 		# Check for manual setting. If it's manual, DON'T TOUCH
 		if confd[c][s][nickname][param].has_key('sysconfig'):
