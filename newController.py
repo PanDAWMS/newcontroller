@@ -66,8 +66,7 @@ def loadConfigs():
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc)
 	
 	del_l = buildDeleteList(del_d,'schedconfig')
-	print up_d
-	up_l = buildUpdateList(up_d,param)
+		up_l = buildUpdateList(up_d,param)
 	jdl_l = buildUpdateList(jdl_up_d,jdl)
 
 	if safety is not 'on':
