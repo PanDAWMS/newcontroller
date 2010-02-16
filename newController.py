@@ -69,21 +69,17 @@ def loadConfigs():
 	up_l = buildUpdateList(up_d,param)
 	jdl_l = buildUpdateList(jdl_up_d,jdl)
 
-	try:
-		if safety is not 'on':
-			utils.initDB()
-			for i in del_l:
-				utils.dictcursor().execute(i)
+	if safety is not 'on':
+		utils.initDB()
+		for i in del_l:
+			utils.dictcursor().execute(i)
+			
+		print 'Updating SchedConfig'
+		utils.replaceDB('schedconfig',up_l,key='nickname')
+		print 'Updating JDLList'
+		utils.replaceDB('jdllist',jdl_l,key='name')
+		utils.commit()
 
-			print 'Updating SchedConfig'
-			utils.replaceDB('schedconfig',up_l,key='nickname')
-			print 'Updating JDLList'
-			utils.replaceDB('jdllist',jdl_l,key='name')
-			utils.commit()
-
-	except:
-		pass
-	
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
 
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(dbd))
