@@ -45,8 +45,8 @@ def buildUpdateList(updDict,param):
 	l=[]
 	for i in updDict:
 		# Gets only the parameter dictionary part.
-		print updDict[i]
-		l.append(updDict[i])
+		if param in updDict[i]: l.append(updDict[i][param])
+		else: l.append(updDict[i])
 		
 	return l
 	
