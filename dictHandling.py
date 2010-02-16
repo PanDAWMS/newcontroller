@@ -99,7 +99,7 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 			# If the queue was changed in the configs, tag it for update.
 			updDict[i]=cfgDict[i]
 
-	# Return the appro
+	# Return the appropriate queues to update and eliminate
 	return updDict, delDict
 
 def buildDict():
