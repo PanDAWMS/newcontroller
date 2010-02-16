@@ -58,5 +58,5 @@ def buildDeleteList(delDict, tableName):
 	sql=[]
 	for i in delDict:
 		sql.append(delstr+delDict[i]['nickname']+';')
-	return '\n'.join(sql)
+	return sql
 
