@@ -264,8 +264,10 @@ def bdiiIntegrator(confd,d):
 			if bdiiDebug: print 'Creating site %s in cloud %s as requested by BDII'  % (s,c)
 			confd[c][s] = {}
 			# Create it in the main config dictionary, using the standard keys from the DB (set in the initial import)
-		print 'Creating queue %s in site %s and cloud %s as requested by BDII. This queue must be enabled by hand.' % (nickname, s, c)
-		if not confd[c][s].has_key(nickname): confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
+		if not confd[c][s].has_key(nickname):
+			confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
+			print 'Creating queue %s in site %s and cloud %s as requested by BDII. This queue must be enabled by hand.' % (nickname, s, c)
+
 		# Check for manual setting. If it's manual, DON'T TOUCH
 		if confd[c][s][nickname][param].has_key('sysconfig'):
 			if confd[c][s][nickname][param]['sysconfig']:
