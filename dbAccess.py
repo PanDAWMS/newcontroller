@@ -57,6 +57,6 @@ def buildDeleteList(delDict, tableName):
 	delstr='DELETE FROM %s WHERE NICKNAME = ' % tableName
 	sql=[]
 	for i in delDict:
-		sql.append("%s'%s';" % (delstr,delDict[i]['nickname']))
+		sql.append("%s'%s'" % (delstr,delDict[i]['nickname']))
 	return sql
 
