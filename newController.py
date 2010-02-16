@@ -50,7 +50,7 @@ def loadConfigs():
 
 	# Load the JDL
 
-	jdldb, loadJdl = jdldc()
+	jdldb, jdldc = loadJdl()
 
 	# Add the BDII information
 	bdiiIntegrator(configd, dbd)
