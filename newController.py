@@ -72,7 +72,10 @@ def loadConfigs():
 	if safety is not 'on':
 		utils.initDB()
 		for i in del_l:
-			utils.dictcursor().execute(i)
+			try:
+				utils.dictcursor().execute(i)
+			except:
+				print i
 			
 		print 'Updating SchedConfig'
 		utils.replaceDB('schedconfig',up_l,key='nickname')
