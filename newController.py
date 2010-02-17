@@ -28,7 +28,7 @@ from dictHandling import *
 from Integrators import *
 from configFileHandling import *
 from jdlController import *
-from svnHandler import *
+from svnHandling import *
 
 def loadJdl():
 	'''Runs the jdllist table updates'''

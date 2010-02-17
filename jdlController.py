@@ -10,6 +10,7 @@ import os
 from dbAccess import utils
 from configFileHandling import *
 from controllerSettings import *
+from svnHandling import *
 
 def buildJdlFiles(d):
 	'''Build the JDL configuration files'''
@@ -72,8 +73,9 @@ def buildJdlDict():
 		# Reload this from the DB.
 		# When SVN is in place, this should be replaced by a svn checkout.
 		# We choose element 0 to get the first result. This hack will go away.
-		jdlListAdder(jdldb)
-		buildJdlFiles(jdldb)
+		svnCheckout()
+		#jdlListAdder(jdldb)
+		#buildJdlFiles(jdldb)
 		jdls = os.listdir(jdlconfigs)
 
 	for j in jdls:

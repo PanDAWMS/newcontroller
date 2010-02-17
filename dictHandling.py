@@ -11,7 +11,7 @@ from miscUtils import *
 from controllerSettings import *
 from configFileHandling import *
 from dbAccess import *
-from svnHandler import *
+from svnHandling import *
 
 #----------------------------------------------------------------------#
 # Dictionary Handling
