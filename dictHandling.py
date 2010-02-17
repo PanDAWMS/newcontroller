@@ -175,16 +175,12 @@ def collapseDict(d):
 		# And for each site
 		for site in d[cloud]:
 			# And for each queue
-			qback = ''
 			for queue in d[cloud][site]:
 				# Don't bother for an "All" queue yet -- see below.
 				if queue == All or site == All: continue
 				# If the queue is not Enabled, no need to work with it.
 				if enab in d[cloud][site][queue]:
-					if not d[cloud][site][queue][enab]:
-						# Avoiding an error where a disabled queue is the last in the site.
-						if qback: queue = qback
-						continue
+					if not d[cloud][site][queue][enab]: continue
 				# Get the parameter dictionary (vs the source or the overrides).
 				# This is a symbolic link, not a duplication:
 				p = d[cloud][site][queue][param]
@@ -200,9 +196,6 @@ def collapseDict(d):
 				for key in out_d[queue]:
 					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
-				# Under certain circumstances, the All file processing might find itself with a nonexistent queue because the queue
-				# is not enabled. This stored queue name makes it possible to step back one.
-				qback = queue
 			# Now process the All entry for the site, if it exists
 			if d[cloud][site].has_key(All):
 				for queue in d[cloud][site]:
@@ -213,8 +206,11 @@ def collapseDict(d):
 					allparams = d[cloud][site][All][param]
 					alloverrides = d[cloud][site][All][over]
 					# So copy out the values into the present queue dictionary (except excluded ones)
-					for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
-					for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
+					try:
+						for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
+						for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
+					except:
+						pass
 					# Sanitization.
 					for key in out_d[queue]:
 						if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
