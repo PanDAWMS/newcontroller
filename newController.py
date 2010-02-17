@@ -28,6 +28,7 @@ from dictHandling import *
 from Integrators import *
 from configFileHandling import *
 from jdlController import *
+from svnHandler import *
 
 def loadJdl():
 	'''Runs the jdllist table updates'''
@@ -45,12 +46,15 @@ def loadConfigs():
 	# Load the database as it stands as a primary reference
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 
-	# Load the present config files
+	# Update the local configuration files from SVN
+	svnUpdate()
+	
+	# Load the present config files, based on the SVN update
 	configd = buildDict()
 
-	# Load the JDL
-
-	jdldb, jdldc = loadJdl()
+	# Load the JDL from the DB and from the config files, respectively
+	if genDebug: jdldb, jdldc = loadJdl()
+	else: loadJdl()
 
 	# Add the BDII information
 	bdiiIntegrator(configd, dbd)
@@ -68,29 +72,42 @@ def loadConfigs():
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
 	del_l = buildDeleteList(del_d,'schedconfig')
+
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
 	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.
-	# The primary key is specified for the replaceDB method. For schedconfig, it's nickname
+	# The primary key is specified for the replaceDB method. For schedconfig, it's dbkey, and for the jdls it's jdlkey
+	# (specified in controllerSettings
 	up_l = buildUpdateList(up_d,param)
 	jdl_l = buildUpdateList(jdl_up_d,jdl)
 
+	# If the safety is off, the DB update can continue
 	if safety is not 'on':
 		utils.initDB()
+		# Individual SQL statements to delete queues that need deleted
 		for i in del_l:
 			try:
 				utils.dictcursor().execute(i)
 			except:
 				print 'Failed SQL Statement: ', i
 			
+		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
 		utils.replaceDB('schedconfig',up_l,key=dbkey)
+		# Jdllist table gets updated all at once
 		print 'Updating JDLList'
 		utils.replaceDB('jdllist',jdl_l,key=jdlkey)
+		# Changes committed after all is successful, to avoid partial updates
 		utils.commit()
-
+		svnstring=''
+		
+	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
 
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(dbd))
+	# Check the changes just committed into Subversion
+	svnCheckin(svnstring)
+
+	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug: return dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
 	return 0
 	
@@ -116,6 +133,7 @@ if __name__ == "__main__":
 				pass
 
 	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
-	dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
+	if genDebug: dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
+	else: loadConfigs()
 
 	os.chdir(base_path)
