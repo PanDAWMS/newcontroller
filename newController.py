@@ -64,8 +64,13 @@ def loadConfigs():
 	# Compare the DB to the present built configuration
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc)
-	
+
+	# Get the database updates prepared for insertion.
+	# The Delete list is just a list of SQL commands (don't add semicolons!)
 	del_l = buildDeleteList(del_d,'schedconfig')
+	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
+	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.
+	# The primary key is specified for the replaceDB method. For schedconfig, it's nickname
 	up_l = buildUpdateList(up_d,param)
 	jdl_l = buildUpdateList(jdl_up_d,jdl)
 
@@ -75,12 +80,12 @@ def loadConfigs():
 			try:
 				utils.dictcursor().execute(i)
 			except:
-				print i
+				print 'Failed SQL Statement: ', i
 			
 		print 'Updating SchedConfig'
-		utils.replaceDB('schedconfig',up_l,key='nickname')
+		utils.replaceDB('schedconfig',up_l,key=dbkey)
 		print 'Updating JDLList'
-		utils.replaceDB('jdllist',jdl_l,key='name')
+		utils.replaceDB('jdllist',jdl_l,key=jdlkey)
 		utils.commit()
 
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
