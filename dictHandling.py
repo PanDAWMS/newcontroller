@@ -212,7 +212,7 @@ def collapseDict(d):
 						for key in out_d[queue]:
 							if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
 							if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
-					except:
+					except KeyError:
 						pass
 					# Sanitization.
 
@@ -224,8 +224,8 @@ def disabledQueues(d, key = param):
 	del_d = {}
 	# Run through the clouds, sites and queues
 	for cloud in d:
-		for site in cloud:
-			for queue in site:
+		for site in d[cloud]:
+			for queue in d[cloud][site]:
 				# If the queue has the Enabled flag (excluding All files):
 				if enab in d[cloud][site][queue]:
 					# If the flag is Enabled = False:
