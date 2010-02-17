@@ -11,6 +11,7 @@ import os
 genDebug = True
 toaDebug = False
 jdlDebug = False
+svnDebug = True
 bdiiDebug = False
 dbReadDebug = False
 dbWriteDebug = False
