@@ -70,11 +70,10 @@ def loadConfigs():
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc)
 
 	# Delete queues that are not Enabled
-	
+	del_d.update(disabledQueues(configd))
 
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
-	del_d.update(disabledQueues(configd))
 	del_l = buildDeleteList(del_d,'schedconfig')
 
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
@@ -84,10 +83,12 @@ def loadConfigs():
 	up_l = buildUpdateList(up_d,param)
 	jdl_l = buildUpdateList(jdl_up_d,jdl)
 
-	supdates=[i[dbkey] for i in up_l]
-	jupdates=[i[jdlkey] for i in jdl_l]
+	supdates = [i[dbkey] for i in up_l]
+	deletes = [del_d[i][dbkey] for i in del_d]
+	jupdates = [i[jdlkey] for i in jdl_l]
 	print supdates
 	print jupdates
+	print deletes
 
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
