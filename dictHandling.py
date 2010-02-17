@@ -181,7 +181,7 @@ def collapseDict(d):
 				# If the queue is not Enabled, no need to work with it.
 				if enab in d[cloud][site][queue]:
 					if not d[cloud][site][queue][enab]:
-						continue
+						break
 				# Get the parameter dictionary (vs the source or the overrides).
 				# This is a symbolic link, not a duplication:
 				p = d[cloud][site][queue][param]
