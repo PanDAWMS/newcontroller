@@ -68,6 +68,7 @@ def loadConfigs():
 	# Compare the DB to the present built configuration to find the queues that are changed.
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc)
+	deletes = [del_d[i][dbkey] for i in del_d]
 
 	# Delete queues that are not Enabled
 	del_d.update(disabledQueues(configd))
@@ -84,11 +85,7 @@ def loadConfigs():
 	jdl_l = buildUpdateList(jdl_up_d,jdl)
 
 	supdates = [i[dbkey] for i in up_l]
-	deletes = [del_d[i][dbkey] for i in del_d]
 	jupdates = [i[jdlkey] for i in jdl_l]
-	print supdates
-	print jupdates
-	print deletes
 
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
