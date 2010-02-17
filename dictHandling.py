@@ -178,6 +178,10 @@ def collapseDict(d):
 			for queue in d[cloud][site]:
 				# Don't bother for an "All" queue yet -- see below.
 				if queue == All or site == All: continue
+				# If the queue is not Enabled, no need to work with it.
+				if enab in d[cloud][site][queue]:
+					if not d[cloud][site][queue][enab]:
+						continue
 				# Get the parameter dictionary (vs the source or the overrides).
 				# This is a symbolic link, not a duplication:
 				p = d[cloud][site][queue][param]
