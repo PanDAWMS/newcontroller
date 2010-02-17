@@ -51,12 +51,12 @@ def buildUpdateList(updDict,param):
 	return l
 	
 
-def buildDeleteList(delDict, tableName):
-	'''Build a list of SQL commands that deletes queues no longer in the definition files'''
+def buildDeleteList(delDict, tableName, key = dbkey):
+	'''Build a list of SQL commands that deletes queues no longer in the definition files. Key defaults to dbkey'''
 	#delstr='DELETE FROM atlas_pandameta.%s WHERE NICKNAME = '
 	delstr='DELETE FROM %s WHERE NICKNAME = ' % tableName
 	sql=[]
 	for i in delDict:
-		sql.append("%s'%s'" % (delstr,delDict[i]['nickname']))
+		sql.append("%s'%s'" % (delstr,delDict[i][key]))
 	return sql
 
