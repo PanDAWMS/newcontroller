@@ -65,7 +65,7 @@ def loadConfigs():
 	# Compose the "All" queues for each site
 	status = allMaker(configd)
 
-	# Compare the DB to the present built configuration
+	# Compare the DB to the present built configuration to find the queues that are changed.
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc)
 
@@ -79,6 +79,11 @@ def loadConfigs():
 	# (specified in controllerSettings
 	up_l = buildUpdateList(up_d,param)
 	jdl_l = buildUpdateList(jdl_up_d,jdl)
+
+	supdates=[i[dbkey] for i in up_l]
+	jupdates=[i[jdlkey] for i in jdl_l]
+	print supdates
+	print jupdates
 
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
