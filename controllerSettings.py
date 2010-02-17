@@ -8,7 +8,7 @@
 import os
 
 # Debug Flags
-genDebug = False
+genDebug = True
 toaDebug = False
 jdlDebug = False
 bdiiDebug = False
