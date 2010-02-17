@@ -217,7 +217,7 @@ def collapseDict(d):
 	# Return the flattened dictionary
 	return out_d
 
-def disabledQueues(d, key = params)
+def disabledQueues(d, key = param)
 	''' Creates a list of dictionaries to be deleted because their Enabled state is False. Defaults to returning the params dict in the list. ''' 
 	del_d = {}
 	# Run through the clouds, sites and queues
