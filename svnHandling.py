@@ -27,7 +27,7 @@ def svnCheckin(notestr = ''):
 	''' Update the SVN repo with changes from BDII and ToA. Argument, if provided, notes which files received updates. '''
 	if svnDebug: print 'Beginning SVN checkin'
 	path = os.getcwd()
-	os.chdir(cfg_path + os.sep + )
+	os.chdir(cfg_path)
 	# Timestamp in GMT
 	message = 'Changes made: %s%s' % (time.asctime(time.gmtime()),notestr)
 	os.system('svn ci %s -m "%s"' % (confrepo, message))
