@@ -19,6 +19,11 @@ configWriteDebug = False
 
 # Global strings and lists
 
+# SVN repositories
+
+confrepo = 'https://telperion.uta.edu/repo/pandaconf'
+# confrepo = 'https://svn.usatlas.bnl.gov/svn/pandaconf'
+
 # If safety is on, nothing is written to the DB.
 safety = 'off'
 
