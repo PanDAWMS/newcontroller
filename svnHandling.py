@@ -1,10 +1,9 @@
 #! /usr/bin/env python
 #######################################################
-# Handles storage and modification of queue data      #
-# in the ATLAS PanDA schedconfig and jdllist tables   #
-# for ATLAS production and analysis queues.           #
+# Handles changes to the configuration files and      #
+# backup file stored in Subversion as a backup.       #
 #                                                     #
-# Alden Stradling (Alden.Stradling@cern.ch) 23 Jun 09 #
+# Alden Stradling (Alden.Stradling@cern.ch) 17 Feb 10 #
 #######################################################
 
 import os, sys, commands, time
