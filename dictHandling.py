@@ -11,6 +11,7 @@ from miscUtils import *
 from controllerSettings import *
 from configFileHandling import *
 from dbAccess import *
+from svnHandler import *
 
 #----------------------------------------------------------------------#
 # Dictionary Handling
@@ -117,7 +118,8 @@ def buildDict():
 		# Reload this from the DB.
 		# When SVN is in place, this should be replaced by a svn checkout.
 		# We choose element 0 to get the first result. This hack will go away.
-		makeConfigs(sqlDictUnpacker(loadSchedConfig())[0])
+		svnCheckout()
+		#makeConfigs(sqlDictUnpacker(loadSchedConfig())[0])
 		clouds = os.listdir(configs)
 	if clouds.count('.svn') > 0: clouds.remove('.svn')
 		
