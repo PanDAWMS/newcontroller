@@ -90,8 +90,9 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 	if dbOverride: dbDict, cfgDict = cfgDict, dbDict
 	if dbDict == cfgDict: return updDict, delDict
 	for i in dbDict:
+		# If the configDict doesn't have the key found in the DB:
 		if not cfgDict.has_key(i):
-			# Queues must be deleted in the configs.
+			# Queues must be deleted in the configs. The file has been removed, as long as we're not in DB override mode.
 			if not dbOverride:
 				# If the queue is not in the configs, delete it.
 				delDict[i]=dbDict[i]
@@ -214,7 +215,7 @@ def collapseDict(d):
 
 def disabledQueues(d, key = params)
 	''' Creates a list of dictionaries to be deleted because their Enabled state is False. Defaults to returning the params dict in the list. ''' 
-	del_l = []
+	del_d = {}
 	# Run through the clouds, sites and queues
 	for cloud in d:
 		for site in cloud:
@@ -224,6 +225,6 @@ def disabledQueues(d, key = params)
 					# If the flag is Enabled = False:
 					if not d[cloud][site][queue][enab]:
 						# Append that dictionary to the list
-						del_l.append( d[cloud][site][queue][key])
+						del_d[queue] = d[cloud][site][queue][key]
 	# And return the completed list to the main routine
-	return del_l
+	return del_d
