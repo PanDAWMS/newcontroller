@@ -107,11 +107,15 @@ def loadConfigs():
 		
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
-
-	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(dbd))
-	# Check the changes just committed into Subversion
-	svnCheckin(svnstring)
-
+	
+	# If the checks pass (no difference between the DB and the new configuration)
+	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
+	if not len(checkUp) + len(checkDel):
+		# Make the necessary changes to the configuration files:
+		makeConfigs(configd)
+		# Check the changes just committed into Subversion
+		svnCheckin(svnstring)
+	else: print '########### Differences in the DB/Configs! ###########\n',checkUp, checkDel
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug: return dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
 	return 0
