@@ -17,7 +17,7 @@ def svnCheckout():
 	path = os.getcwd()
 	os.chdir(cfg_path)
 	print '####### Checking out the SVN repository anew -- this should be a RARE event! Is this really what you want to do? #############'
-	os.system('svn co %s' % configrepo)
+	os.system('svn co %s' % confrepo)
 	os.chdir(path)
 	return 0
 
