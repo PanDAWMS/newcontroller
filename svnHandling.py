@@ -6,6 +6,8 @@
 # Alden Stradling (Alden.Stradling@cern.ch) 17 Feb 10 #
 #######################################################
 
+# Might be nice to add some safeties -- checks on the success of these operations.
+
 import os, sys, commands, time
 
 from controllerSettings import *
@@ -19,7 +21,7 @@ def svnCheckout():
 	os.chdir(path)
 	return 0
 
-def svnUpdate(notestr = ''):
+def svnCheckin(notestr = ''):
 	''' Update the SVN repo with changes from BDII and ToA. Argument, if provided, notes which files received updates. '''
 	path = os.getcwd()
 	os.chdir(cfg_path)
@@ -28,4 +30,12 @@ def svnUpdate(notestr = ''):
 	os.system('svn ci %s -m "%s"' % (configrepo, message))
 	os.chdir(path)
 	return 0
-	
+
+def svnUpdate():
+	''' Update from the SVN repo -- introduce changes from user configs. '''
+	path = os.getcwd()
+	os.chdir(cfg_path)
+	os.system('svn up')
+	os.chdir(path)
+	return 0
+
