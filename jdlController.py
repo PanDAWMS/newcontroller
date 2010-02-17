@@ -103,9 +103,10 @@ def jdlListAdder(d):
 	# Use the same dictionary form
 	if jdlDebug: print 'Dictionary Created'
 	# Populate this (much simpler) dictionary with the JDL fields.
+	# jdlkey is the jdllist table primary key
 	for i in rows:
-		if jdlDebug: print i['name']
-		d[i['name']]={jdl:i,over:{}}
+		if jdlDebug: print i[jdlkey]
+		d[i[jdlkey]]={jdl:i,over:{}}
 
 	# There's no way to organize even by queue. The JDL will link to the
 	# schedconfig queues by matching the jdl field to the name field
