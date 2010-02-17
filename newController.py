@@ -69,8 +69,12 @@ def loadConfigs():
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc)
 
+	# Delete queues that are not Enabled
+	
+
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
+	del_d.update(disabledQueues(configd))
 	del_l = buildDeleteList(del_d,'schedconfig')
 
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
