@@ -13,6 +13,7 @@ toaDebug = False
 jdlDebug = False
 svnDebug = True
 bdiiDebug = False
+pickleDebug = True
 dbReadDebug = False
 dbWriteDebug = False
 configReadDebug = False
