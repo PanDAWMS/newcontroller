@@ -12,7 +12,7 @@ from dictHandling import *
 def backupCreate(d):
 	''' Create a backup pickle file of a list of queue spec dictionaries that can be fed to direct DB updates''' 
 	if pickleDebug: print 'Starting pickle creation'
-	timestamp = '_'.join([str(i) for i in gmtime()[:-3]])
+	timestamp = '_'.join([str(i) for i in time.gmtime()[:-3]])
 	# Check for an existing backup directory
 	try:
 		os.stat(backupPath)
