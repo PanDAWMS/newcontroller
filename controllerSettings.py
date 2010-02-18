@@ -8,12 +8,12 @@
 import os
 
 # Debug Flags
-genDebug = True
+genDebug = False
 toaDebug = False
 jdlDebug = False
-svnDebug = True
+svnDebug = False
 bdiiDebug = False
-pickleDebug = True
+pickleDebug = False
 dbReadDebug = False
 dbWriteDebug = False
 configReadDebug = False
