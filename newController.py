@@ -66,8 +66,8 @@ def loadConfigs():
 	status = allMaker(configd)
 
 	# Compare the DB to the present built configuration to find the queues that are changed.
-	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd))
-	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc)
+	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd), dbOverride)
+	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc, dbOverride)
 	deletes = [del_d[i][dbkey] for i in del_d]
 
 	# Delete queues that are not Enabled
@@ -124,6 +124,9 @@ def loadConfigs():
 	
 
 if __name__ == "__main__":
+	args = sys.argv[1:]
+	# A better argument parser will be needed in the future
+	if 'dbOverride' in args: dbOverride = True
 	keydict={}
 	def testDiff(m,n):
 		for i in m:
