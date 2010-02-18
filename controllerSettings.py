@@ -57,3 +57,6 @@ shared, unshared = 'shared','unshared'
 excl = ['status','lastmod','dn','tspace','_comment']
 # This list is global, and is populated (during initial DB import) by the list of columns that the schedconfig table contains. 
 standardkeys = []
+
+# DB Override flag -- Default is False
+dbOverride = False
