@@ -33,9 +33,9 @@ def svnCheckin(notestr = ''):
 	message = 'Changes made: %s%s' % (time.asctime(time.gmtime()),notestr)
 	# Add all new files before checking in
 	for p in [backupPath.split(os.sep)[-1], configs.split(os.sep)[-1], jdlconfigs.split(os.sep)[-1]]:
-		os.system('svn add %s/*' % p)
-		os.system('svn add %s/*/*' % p)
-		os.system('svn add %s/*/*/*' % p)
+		o=commands.getoutput('svn add %s/*' % p)
+		o=commands.getoutput('svn add %s/*/*' % p)
+		o=commands.getoutput('svn add %s/*/*/*' % p)
 	# Check in the subversion
 	os.system('svn ci -m "%s"' % (message))
 	# Go back to original path
