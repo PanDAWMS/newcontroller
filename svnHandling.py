@@ -30,6 +30,7 @@ def svnCheckin(notestr = ''):
 	os.chdir(cfg_path)
 	# Timestamp in GMT
 	message = 'Changes made: %s%s' % (time.asctime(time.gmtime()),notestr)
+	os.system('svn add *')
 	os.system('svn ci -m "%s"' % (message))
 	os.chdir(path)
 	if svnDebug: print 'Completing SVN checkin'
