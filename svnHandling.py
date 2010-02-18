@@ -37,7 +37,7 @@ def svnCheckin(notestr = ''):
 
 def svnUpdate():
 	''' Update from the SVN repo -- introduce changes from user configs. '''
-	if svnDebug: print 'Beginning SVN checkin'
+	if svnDebug: print 'Beginning SVN update'
 	path = os.getcwd()
 	os.chdir(cfg_path)
 	os.system('svn up')
