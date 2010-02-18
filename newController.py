@@ -19,7 +19,7 @@
 
 # This code has been organized for easy transition into a class structure.
 
-import os, sys, commands
+import os, sys, commands, pickle
 
 from controllerSettings import *
 from miscUtils import *
@@ -105,6 +105,7 @@ def loadConfigs():
 		utils.replaceDB('jdllist',jdl_l,key=jdlkey)
 		# Changes committed after all is successful, to avoid partial updates
 		utils.commit()
+		# This string will eventually be filled with changed queue names and other info for the subversion checkin
 		svnstring=''
 		
 	# Check out the db as a new dictionary
@@ -117,6 +118,8 @@ def loadConfigs():
 		makeConfigs(configd)
 		# Check the changes just committed into Subversion
 		svnCheckin(svnstring)
+		# Create a backup pickle of the finalized DB as it stands.
+		backupCreate(newdb)
 	else: print '########### Differences in the DB/Configs! ###########\n', checkUp, checkDel
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug: return dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
