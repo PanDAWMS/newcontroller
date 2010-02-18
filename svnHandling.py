@@ -32,7 +32,7 @@ def svnCheckin(notestr = ''):
 	# Timestamp in GMT
 	message = 'Changes made: %s%s' % (time.asctime(time.gmtime()),notestr)
 	# Add all new files before checking in
-	for p in [backupPath, configs, jdlconfigs]:
+	for p in [backupPath.split(os.sep)[-1], configs.split(os.sep)[-1], jdlconfigs.split(os.sep)[-1]]:
 		os.system('svn add %s/*' % p)
 		os.system('svn add %s/*/*' % p)
 		os.system('svn add %s/*/*/*' % p)
