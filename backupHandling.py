@@ -11,8 +11,14 @@ from dictHandling import *
 
 def backupCreate(d):
 	''' Create a backup pickle file of a list of queue spec dictionaries that can be fed to direct DB updates''' 
-	# Opens the backup file and path
 	timestamp = '_'.join([str(i) for i in gmtime()[:-3]])
+	# Check for an existing backup directory
+	try:
+		os.stat(backupPath)
+	except:
+		# And make one if not present
+		os.makedirs(backupPath)
+	# Opens the backup file and path
 	f=file(backupPath + timestamp + backupName,'w')
 	# Creates a list from the collapsed queue def dictionary and pickles it into the file
 	pickle.dump([d[i] for i in collapseDict(d)],f)
