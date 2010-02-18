@@ -44,7 +44,7 @@ base_path = os.getcwd()
 # Step back a layer in the path for the configs, and put them in the config SVN directory
 cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf' + os.sep
 # Paths for backup files
-backupPath = cfg_path + 'Backup'
+backupPath = cfg_path + 'Backup' + os.sep
 backupName = 'schedConfigBackup.pickle'
 # Config file path specifications
 configs = cfg_path + os.sep + 'SchedConfigs'
