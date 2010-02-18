@@ -18,6 +18,7 @@ def svnCheckout():
 	path = os.getcwd()
 	os.chdir(cfg_path)
 	print '####### Checking out the SVN repository anew -- this should be a RARE event! Is this really what you want to do? #############'
+	# Check out the whole repo
 	os.system('svn co %s' % confrepo)
 	os.chdir(path)
 	if svnDebug: print 'Completing SVN checkout'
@@ -30,8 +31,14 @@ def svnCheckin(notestr = ''):
 	os.chdir(cfg_path)
 	# Timestamp in GMT
 	message = 'Changes made: %s%s' % (time.asctime(time.gmtime()),notestr)
-	os.system('svn add *')
+	# Add all new files before checking in
+	for p in [backupPath, configs, jdlconfigs]:
+		os.system('svn add %s/*' % p)
+		os.system('svn add %s/*/*' % p)
+		os.system('svn add %s/*/*/*' % p)
+	# Check in the subversion
 	os.system('svn ci -m "%s"' % (message))
+	# Go back to original path
 	os.chdir(path)
 	if svnDebug: print 'Completing SVN checkin'
 	return 0
@@ -41,6 +48,7 @@ def svnUpdate():
 	if svnDebug: print 'Beginning SVN update'
 	path = os.getcwd()
 	os.chdir(cfg_path)
+	# Update the whole subversion
 	os.system('svn up')
 	os.chdir(path)
 	if svnDebug: print 'Completing SVN update'
