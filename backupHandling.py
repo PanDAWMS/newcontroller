@@ -21,8 +21,10 @@ def backupCreate(d):
 		os.makedirs(backupPath)
 	# Opens the backup file and path
 	f=file(backupPath + timestamp + backupName,'w')
+	# Temporary dictionary collapsed from d
+	td = collapseDict(d)
 	# Creates a list from the collapsed queue def dictionary and pickles it into the file
-	pickle.dump([d[i] for i in collapseDict(d)],f)
+	pickle.dump([td[i] for i in td],f)
 	f.close()
 	if pickleDebug: print 'Ending pickle creation'
 	return 0
