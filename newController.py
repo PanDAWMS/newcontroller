@@ -54,8 +54,7 @@ def loadConfigs():
 	configd = buildDict()
 
 	# Load the JDL from the DB and from the config files, respectively
-	if genDebug: jdldb, jdldc = loadJdl()
-	else: loadJdl()
+	jdldb, jdldc = loadJdl()
 
 	# Add the BDII information
 	bdiiIntegrator(configd, dbd)
