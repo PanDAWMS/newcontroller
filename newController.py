@@ -38,8 +38,7 @@ def loadJdl():
 	jdlListAdder(jdldb)
 	jdldc=buildJdlDict()
 
-	if genDebug: return jdldb, jdldc
-	return 0
+	return jdldb, jdldc
 
 def loadConfigs():
 	'''Run the schedconfig table updates'''
