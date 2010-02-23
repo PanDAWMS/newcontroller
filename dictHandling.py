@@ -119,6 +119,8 @@ def buildDict():
 		# Reload this from the DB.
 		# When SVN is in place, this should be replaced by a svn checkout.
 		# We choose element 0 to get the first result. This hack will go away.
+		os.chdir(cfg_path)
+		os.chdir('..')
 		svnCheckout()
 		configd = buildDict()
 		status = allMaker(configd)
