@@ -18,9 +18,11 @@ def svnCheckout():
 	path = os.getcwd()
 	try:
 		os.chdir(cfg_path)
+		os.chdir('..')
 	except OSError:
 		os.makedirs(cfg_path)
 		os.chdir(cfg_path)
+		os.chdir('..')
 	print '####### Checking out the SVN repository anew -- this should be a RARE event! Is this really what you want to do? #############'
 	# Check out the whole repo
 	os.system('svn co %s' % confrepo)
@@ -57,6 +59,7 @@ def svnUpdate():
 	try:
 		os.chdir(cfg_path)
 	except OSError:
+		os.makedirs(cfg_path)
 		svnCheckout()
 	# Update the whole subversion
 	os.system('svn up')
