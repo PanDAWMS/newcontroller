@@ -16,7 +16,11 @@ def svnCheckout():
 	''' Check out the configuration SVN -- should only be necessary on rare occasions.'''
 	if svnDebug: print 'Beginning SVN checkout'
 	path = os.getcwd()
-	os.chdir(cfg_path)
+	try:
+		os.chdir(cfg_path)
+	except OSError:
+		os.makedirs(cfg_path)
+		os.chdir(cfg_path)
 	print '####### Checking out the SVN repository anew -- this should be a RARE event! Is this really what you want to do? #############'
 	# Check out the whole repo
 	os.system('svn co %s' % confrepo)
@@ -50,7 +54,10 @@ def svnUpdate():
 	''' Update from the SVN repo -- introduce changes from user configs. '''
 	if svnDebug: print 'Beginning SVN update'
 	path = os.getcwd()
-	os.chdir(cfg_path)
+	try:
+		os.chdir(cfg_path)
+	except OSError:
+		svnCheckout()
 	# Update the whole subversion
 	os.system('svn up')
 	os.chdir(path)
