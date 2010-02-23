@@ -60,7 +60,6 @@ def svnUpdate():
 		os.chdir(cfg_path)
 	except OSError:
 		os.makedirs(cfg_path)
-		svnCheckout()
 	# Update the whole subversion
 	os.system('svn up')
 	os.chdir(path)
