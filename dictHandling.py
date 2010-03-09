@@ -120,7 +120,7 @@ def buildDict():
 		# When SVN is in place, this should be replaced by a svn checkout.
 		# We choose element 0 to get the first result. This hack will go away.
 		#configd = buildDict()
-		status = allMaker(configd)
+		#status = allMaker(configd)
 		#makeConfigs(sqlDictUnpacker(loadSchedConfig())[0])
 		clouds = os.listdir(configs)
 	if clouds.count('.svn') > 0: clouds.remove('.svn')
