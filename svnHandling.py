@@ -14,6 +14,7 @@ from controllerSettings import *
 
 def svnCheckout():
 	''' Check out the configuration SVN -- should only be necessary on rare occasions.'''
+	return 0
 	if svnDebug: print 'Beginning SVN checkout'
 	path = os.getcwd()
 	try:
@@ -62,7 +63,7 @@ def svnUpdate():
 		os.makedirs(cfg_path)
 		os.chdir(cfg_path)
 		os.chdir('..')
-		svnCheckout()
+		#svnCheckout()
 	# Update the whole subversion
 	os.system('svn up')
 	os.chdir(path)
