@@ -23,7 +23,8 @@ configWriteDebug = False
 
 # SVN repositories
 
-confrepo = 'https://telperion.uta.edu/repo/pandaconf'
+confrepo = 'svn+ssh://svn.cern.ch/reps/atlasusr/atlpan pandaconf' 
+# confrepo = 'https://telperion.uta.edu/repo/pandaconf'
 # confrepo = 'https://svn.usatlas.bnl.gov/svn/pandaconf'
 
 # If safety is on, nothing is written to the DB.
