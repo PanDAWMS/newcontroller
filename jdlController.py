@@ -5,7 +5,6 @@
 # Alden.Stradling@cern.ch                                                                #
 ##########################################################################################
 
-
 import os
 
 from dbAccess import utils
