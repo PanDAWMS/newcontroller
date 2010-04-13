@@ -120,7 +120,7 @@ def loadConfigs():
 		svnCheckin(svnstring)
 		# Create a backup pickle of the finalized DB as it stands.
 		backupCreate(newdb)
-	else: print '########### Differences in the DB/Configs! ###########\n', checkUp, checkDel
+	else: print '########### Differences in the DB/Configs! ###########\n'
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug: return dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
 	return 0
