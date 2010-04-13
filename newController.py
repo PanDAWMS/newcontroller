@@ -112,7 +112,7 @@ def loadConfigs():
 	
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
-	If not len(checkUp) + len(checkDel):
+	if not len(checkUp) + len(checkDel):
 		print 'Passed checks!'
 		# Make the necessary changes to the configuration files:
 		makeConfigs(configd)
