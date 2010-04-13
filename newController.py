@@ -31,6 +31,18 @@ from jdlController import *
 from svnHandling import *
 from backupHandling import *
 
+def noneChecker(a):
+	for cloud in configd:
+		for site in configd[cloud]:
+			for queue in configd[cloud][site]:
+				if configd[cloud][site][queue][param][i] == a:
+					print type(configd[cloud][site][queue][param][i]), configd[cloud][site][queue][param][i]
+
+def colChecker(a,d):
+	for key in d:
+		if d[key] == a:
+			print type(a), key
+			
 def loadJdl():
 	'''Runs the jdllist table updates'''
 
