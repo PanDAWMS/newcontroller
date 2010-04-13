@@ -93,6 +93,7 @@ def loadConfigs():
 		for i in del_l:
 			try:
 				utils.dictcursor().execute(i)
+				utils.
 			except:
 				print 'Failed SQL Statement: ', i
 			
@@ -112,7 +113,7 @@ def loadConfigs():
 	
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
-	if not len(checkUp) + len(checkDel):
+	If not len(checkUp) + len(checkDel):
 		print 'Passed checks!'
 		# Make the necessary changes to the configuration files:
 		makeConfigs(configd)
