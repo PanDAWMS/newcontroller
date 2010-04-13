@@ -121,7 +121,7 @@ def buildDict():
 		# We choose element 0 to get the first result. This hack will go away.
 		#configd = buildDict()
 		#status = allMaker(configd)
-		makeConfigs(sqlDictUnpacker(loadSchedConfig())[0])
+		makeconfigs(sqlDictUnpacker(loadSchedConfig())[0])
 		clouds = os.listdir(configs)
 	if clouds.count('.svn') > 0: clouds.remove('.svn')
 		
@@ -193,10 +193,6 @@ def collapseDict(d):
 				# Add the overrides (except the excluded ones)
 				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
 					out_d[queue][key] = d[cloud][site][queue][over][key]
-				# Sanitization.
-				for key in out_d[queue]:
-					if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
-					if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 			# Now process the All entry for the site, if it exists
 			if d[cloud][site].has_key(All):
 				for queue in d[cloud][site]:
@@ -210,14 +206,26 @@ def collapseDict(d):
 					try:
 						for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
 						for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
-						for key in out_d[queue]:
-							if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
-							if type(out_d[queue][key]) is str and out_d[queue][key].isdigit(): out_d[queue][key] = int(out_d[queue][key])
 					except KeyError:
 						pass
-					# Sanitization.
 
 	# Return the flattened dictionary
+	for queue in out_d:
+		# Sanitization.
+		for key in out_d[queue]:
+			# Checking for None and blank values as strings -- need to be NoneType for consistency
+			if out_d[queue][key] == 'None' or out_d[queue][key] == '': out_d[queue][key] = None
+			# Checking for ints and floats (consistency)
+			if type(out_d[queue][key]) is str and out_d[queue][key].isdigit():
+				try:
+					out_d[queue][key] = int(out_d[queue][key])
+				except ValueError:
+					try:
+						# Trying floats as well.
+						out_d[queue][key] = float(out_d[queue][key])
+					except ValueError:
+						pass
+		
 	return out_d
 
 def disabledQueues(d, key = param):
