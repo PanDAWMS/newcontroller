@@ -93,10 +93,9 @@ def loadConfigs():
 		for i in del_l:
 			try:
 				utils.dictcursor().execute(i)
-				utils.commit()
 			except:
 				print 'Failed SQL Statement: ', i
-			
+
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
 		utils.replaceDB('schedconfig',up_l,key=dbkey)
