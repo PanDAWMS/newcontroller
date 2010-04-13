@@ -93,7 +93,7 @@ def loadConfigs():
 		for i in del_l:
 			try:
 				utils.dictcursor().execute(i)
-				utils.
+				utils.commit()
 			except:
 				print 'Failed SQL Statement: ', i
 			
