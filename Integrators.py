@@ -293,7 +293,7 @@ def bdiiIntegrator(confd,d):
 		for key in ['queue','jdl','nickname']:
 			confd[c][s][nickname][source][key] = 'BDII'
 		
-		# Tag code for installedSW. This is a raw inport from the other side -- needs a redo.
+		# Tag code for installedSW. This is a raw inport from the other side -- needs a redo. FIX
 		tags=linfotool.getSWtags(confd[c][s][nickname][param]['gatekeeper'])
 		etags=linfotool.getSWctags(confd[c][s][nickname][param]['gatekeeper'])
 		if len(etags) > 0:
