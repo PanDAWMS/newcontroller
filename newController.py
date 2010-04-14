@@ -63,8 +63,8 @@ def compDictColl(d1,d2,exclList=[]):
 				if d1[queue][i] != d2[queue][i]:
 					if i not in exclList:
 						print i, d1[queue][i], d2[queue][i], type(d1[queue][i]), type(d2[queue][i])	
-				except KeyError:
-					print 'No key %s in %s %s %s' % (i, queue)
+			except KeyError:
+				print 'No key %s in %s %s %s' % (i, queue)
 					
 					
 def loadJdl():
