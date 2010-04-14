@@ -32,11 +32,13 @@ def backupCreate(d):
 def backupRestore(fname):
 	''' Restore a DB backup pickle into the live database! Caution! If you err, tou will hose the database! '''
 	try:
+		# Set up the file
 		f=file(backupPath+fname)
 	except IOError:
 		print 'File %s is not found at %s. Exiting.' % (fname, backupPath)
 		return 1
 	try:
+		# And load the pickle inside, if possible
 		l=pickle.load(f)
 	except:
 		print 'File %s%s not in backup/pickle format. Exiting.' % (fname, backupPath)
