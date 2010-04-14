@@ -28,7 +28,7 @@ confrepo = 'svn+ssh://svn.cern.ch/reps/atlasusr/atlpan pandaconf'
 # confrepo = 'https://svn.usatlas.bnl.gov/svn/pandaconf'
 
 # If safety is on, nothing is written to the DB.
-safety = 'off'
+safety = 'on'
 
 # Widely used strings
 
