@@ -23,6 +23,7 @@ def protoDict(queue,d,sourcestr='DB',keys=[]):
 	if not len(d):
 		en_val = 'False'
 		d = {queue:dict([(key,None) for key in keys])}
+	# Create a baseline queue definition to pass back, using list comprehensions, and with Source and Override empty dicts.
 	return {param:d[queue].copy(),over:{},source:dict([(key,sourcestr) for key in d[queue].keys() if key not in excl]),enab:en_val}
 	
 def sqlDictUnpacker(d):
@@ -75,9 +76,11 @@ def findQueue(q,d):
 			# Not going to find sites in the All file
 			if site == All:
 				continue
+			# Flip through all the queues and return if you find one.
 			for queue in d[cloud][site]:
 				if queue == q:
 					return cloud, site
+	# If nothing comes up, return empties.
 	return '',''
 
 def compareQueues(dbDict,cfgDict,dbOverride=False):
