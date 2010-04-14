@@ -15,16 +15,23 @@ from controllerSettings import *
 #----------------------------------------------------------------------#
 def loadSchedConfig():
 	'''Returns the values in the schedconfig db as a dictionary'''
+	# Initialize DB
 	utils.initDB()
 	print "Init DB"
+	# Gets all rows from schedconfig table
 	query = "select * from schedconfig"
 	nrows = utils.dictcursor().execute(query)
 	if nrows > 0:
+		# Fetch all the rows
 		rows = utils.dictcursor().fetchall()
+	# Close DB connection
 	utils.endDB()
 	d={}
 	for i in rows:
-		d[i[dbkey]]=i
+		# Lower-casing all of the DB keys for consistency upon read
+		newd=dict([(key.lower(),i[key]) for key in i])
+		# Populate the output dictionary with queue definitions, keyed by queue nickname
+		d[newd[dbkey]]=newd
 
 	return d
 
@@ -35,7 +42,9 @@ def execUpdate(updateList):
 		return 1
 	utils.initDB()
 	for query in updateList:
+		# Each update is pre-rolled -- just gets executed
 		utils.dictcursor().execute(query)
+	# Commit all the updates
 	utils.commit()
 	utils.closeDB()
 	return 
@@ -57,6 +66,6 @@ def buildDeleteList(delDict, tableName, key = dbkey):
 	delstr='DELETE FROM %s WHERE NICKNAME = ' % tableName
 	sql=[]
 	for i in delDict:
+	# Build delete queries from an existing dict. Deletes by DB key (or other specification, if ever necesssary).
 		sql.append("%s'%s'" % (delstr,delDict[i][key]))
 	return sql
-
