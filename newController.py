@@ -44,11 +44,18 @@ def colChecker(a,d):
 		if d[key] == a:
 			print type(a), key
 
-def compDictLong(d1,d2):
+def compDictLong(d1,d2,exclList=[]):
 	for cloud in d1:
-		for site in configd[cloud]:
-			for queue in configd[cloud][site]:
-				if configd[cloud][site][queue][param][i] == a:
+		for site in d1[cloud]:
+			for queue in d1[cloud][site]:
+				for i in d1[cloud][site][queue][param]:
+					try:
+						if d1[cloud][site][queue][param][i] != d2[cloud][site][queue][param][i]:
+							if i not in exclList:
+								print d1[cloud][site][queue][param][i], d2[cloud][site][queue][param][i], type(d1[cloud][site][queue][param][i]), type(d2[cloud][site][queue][param][i])	
+					except KeyError:
+						print 'No key %s in %s %s %s' % (i, cloud, site, queue)
+					
 					
 def loadJdl():
 	'''Runs the jdllist table updates'''
