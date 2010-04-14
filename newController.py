@@ -55,6 +55,16 @@ def compDictLong(d1,d2,exclList=[]):
 								print d1[cloud][site][queue][param][i], d2[cloud][site][queue][param][i], type(d1[cloud][site][queue][param][i]), type(d2[cloud][site][queue][param][i])	
 					except KeyError:
 						print 'No key %s in %s %s %s' % (i, cloud, site, queue)
+
+def compDictColl(d1,d2,exclList=[]):
+	for queue in d1:
+		for i in d1[queue]:
+			try:
+				if d1[queue][i] != d2[queue][i]:
+					if i not in exclList:
+						print i, d1[queue][i], d2[queue][i], type(d1[queue][i]), type(d2[queue][i])	
+				except KeyError:
+					print 'No key %s in %s %s %s' % (i, queue)
 					
 					
 def loadJdl():
