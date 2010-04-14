@@ -57,16 +57,20 @@ def svnCheckin(notestr = ''):
 def svnUpdate():
 	''' Update from the SVN repo -- introduce changes from user configs. '''
 	if svnDebug: print 'Beginning SVN update'
+	# Get the present path
 	path = os.getcwd()
 	try:
+		# Go to the configs directory path, if possible
 		os.chdir(cfg_path)
 	except OSError:
+		# Or create it if it's not there
 		os.makedirs(cfg_path)
 		os.chdir(cfg_path)
 		os.chdir('..')
 		#svnCheckout()
 	# Update the whole subversion
 	os.system('svn up')
+	# Back to where you were.
 	os.chdir(path)
 	if svnDebug: print 'Completing SVN update'
 	return 0
