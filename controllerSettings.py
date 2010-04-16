@@ -23,7 +23,7 @@ configWriteDebug = False
 
 # SVN repositories
 
-confrepo = 'svn+ssh://svn.cern.ch/reps/atlasusr/atlpan pandaconf' 
+confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf' 
 # confrepo = 'https://telperion.uta.edu/repo/pandaconf'
 # confrepo = 'https://svn.usatlas.bnl.gov/svn/pandaconf'
 
