@@ -72,3 +72,21 @@ def compDictColl(d1,d2,exclList=[]):
 						print i, d1[queue][i], d2[queue][i], type(d1[queue][i]), type(d2[queue][i])	
 			except KeyError:
 				print 'No key %s in %s' % (i, queue)
+
+def testDiff(m,n):
+	for i in m:
+		if type(m[i]) == dict: mm = collapseDict(m)
+		else: mm = m
+	for i in n:
+		if type(n[i]) == dict: nn = collapseDict(n)
+		else: nn = n
+
+	for i in mm:
+		try:
+			for k in mm[i].keys():
+				if k not in ['jdladd','releases']:
+					if mm[i][k] != nn[i][k]:
+						print i, k, mm[i][k], nn[i][k], type(mm[i][k]), type(nn[i][k])
+
+		except KeyError:
+			pass
