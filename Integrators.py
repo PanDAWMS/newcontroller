@@ -209,7 +209,7 @@ def toaIntegrator(confd):
 	print 'Finished ToA integrator'
 	return
 
-def bdiiIntegrator(confd,d):
+def bdiiIntegrator(confd,rellist,d):
 	'''Adds BDII values to the configurations, overriding what was there. Must be run after downloading the DB
 	and parsing the config files.'''
 	print 'Running BDII Integrator'
@@ -221,9 +221,6 @@ def bdiiIntegrator(confd,d):
 	linfotool = lcgInfositeTool.lcgInfositeTool()
 	if bdiiDebug: print 'Completed the LGC SiteInfo tool run'
 
-	# Defining a release dictionary
-	rellist={}
-	
 	# Load the site information directly from BDII and hold it. In the previous software, this was the osgsites dict.
 	# This designation is obsolete -- this is strictly BDII information, and no separation is made.
 	for qn in bdict:
@@ -294,6 +291,8 @@ def bdiiIntegrator(confd,d):
 			confd[c][s][nickname][source][key] = 'BDII'
 		
 		# Tag code for installedSW. This is a raw inport from the other side -- needs a redo. FIX
+		# Need to get cloud into place, and really we just need to make this clean. No need for separate loops?
+		# Fix the indexing to match the loadInstalledSW() method
 		tags=linfotool.getSWtags(confd[c][s][nickname][param]['gatekeeper'])
 		etags=linfotool.getSWctags(confd[c][s][nickname][param]['gatekeeper'])
 		if len(etags) > 0:
