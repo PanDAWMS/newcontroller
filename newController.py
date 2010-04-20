@@ -30,42 +30,6 @@ from configFileHandling import *
 from jdlController import *
 from svnHandling import *
 from backupHandling import *
-
-def noneChecker(a):
-	for cloud in configd:
-		for site in configd[cloud]:
-			for queue in configd[cloud][site]:
-				for i in configd[cloud][site][queue][param]:
-					if configd[cloud][site][queue][param][i] == a:
-						print type(configd[cloud][site][queue][param][i]), configd[cloud][site][queue][param][i]
-
-def colChecker(a,d):
-	for key in d:
-		if d[key] == a:
-			print type(a), key
-
-def compDictLong(d1,d2,exclList=[]):
-	for cloud in d1:
-		for site in d1[cloud]:
-			for queue in d1[cloud][site]:
-				for i in d1[cloud][site][queue][param]:
-					try:
-						if d1[cloud][site][queue][param][i] != d2[cloud][site][queue][param][i]:
-							if i not in exclList:
-								print d1[cloud][site][queue][param][i], d2[cloud][site][queue][param][i], type(d1[cloud][site][queue][param][i]), type(d2[cloud][site][queue][param][i])	
-					except KeyError:
-						print 'No key %s in %s %s %s' % (i, cloud, site, queue)
-
-def compDictColl(d1,d2,exclList=[]):
-	for queue in d1:
-		for i in d1[queue]:
-			try:
-				if d1[queue][i] != d2[queue][i]:
-					if i not in exclList:
-						print i, d1[queue][i], d2[queue][i], type(d1[queue][i]), type(d2[queue][i])	
-			except KeyError:
-				print 'No key %s in %s' % (i, queue)
-					
 					
 def loadJdl():
 	'''Runs the jdllist table updates'''
@@ -91,8 +55,13 @@ def loadConfigs():
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
 
-	# Add the BDII information
-	bdiiIntegrator(configd, dbd)
+	# Add the BDII information, and build a list of releases
+	old_rel_db = loadInstalledSW()
+	new_rel_db = {}
+	bdiiIntegrator(configd, new_rel_db, dbd)
+	# Check the old DB for releases to delete, and the new one for releases to insert.
+## 	delete_sw = [old_rel_db[i] for i in old_rel_db if i not in new_rel_db]
+## 	insert_sw = [new_rel_db[i] for i in new_rel_db if i not in old_rel_db]
 
 	# Now add ToA information
 	toaIntegrator(configd)
@@ -119,9 +88,6 @@ def loadConfigs():
 	up_l = buildUpdateList(up_d,param)
 	jdl_l = buildUpdateList(jdl_up_d,jdl)
 
-	supdates = [i[dbkey] for i in up_l]
-	jupdates = [i[jdlkey] for i in jdl_l]
-
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
 		utils.initDB()
@@ -140,8 +106,28 @@ def loadConfigs():
 		utils.replaceDB('jdllist',jdl_l,key=jdlkey)
 		# Changes committed after all is successful, to avoid partial updates
 		utils.commit()
-		# This string will eventually be filled with changed queue names and other info for the subversion checkin
+		# FIX This string will eventually be filled with changed queue names and other info for the subversion checkin
 		svnstring=''
+
+		# Delete outdated installedsw entries
+## 		for i in delete_sw:
+## 			try:
+## 				sql = "DELETE FROM installedsw WHERE release = '%s' and cache = '%s' and siteid = '%s'" % (i['release'],i['cache'],i['siteid'])
+## 				utils.dictcursor().execute(sql)
+## 			except:
+## 				print 'Failed SQL Statement: ', sql, i
+
+## 		# Insert new installedsw entries. Not using replaceDB because of a lack of single DB key.
+## 		for i in insert_sw:
+## 			try:
+## 				sql = "INSERT INTO installedsw (release, cache, siteid, cloud) values ('%s','%s','%s','%s')" % (i['release'],i['cache'],i['siteid'],i['cloud'])
+## 				utils.dictcursor().execute(sql)
+## 			except:
+## 				print 'Failed SQL Statement: ', sql, i
+## 		# Commit installedsw changes
+## 		utils.commit()
+
+
 		
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
@@ -167,23 +153,6 @@ if __name__ == "__main__":
 	# A better argument parser will be needed in the future
 	if 'dbOverride' in args: dbOverride = True
 	keydict={}
-	def testDiff(m,n):
-		for i in m:
-			if type(m[i]) == dict: mm = collapseDict(m)
-			else: mm = m
-		for i in n:
-			if type(n[i]) == dict: nn = collapseDict(n)
-			else: nn = n
-				
-		for i in mm:
-			try:
-				for k in mm[i].keys():
-					if k not in ['jdladd','releases']:
-						if mm[i][k] != nn[i][k]:
-							print i, k, mm[i][k], nn[i][k], type(mm[i][k]), type(nn[i][k])
-						
-			except KeyError:
-				pass
 
 	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 	if genDebug: dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
