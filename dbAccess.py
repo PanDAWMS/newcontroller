@@ -35,6 +35,21 @@ def loadSchedConfig():
 
 	return d
 
+def loadInstalledSW():
+	'''Load the values from the installedsw table into a dictionary keyed by release_site_cache'''
+	utils.initDB()
+	print "Init DB"
+	# Gets all rows from installedsw table
+	query = 'SELECT * from installedsw'
+	nrows = utils.dictcursor().execute(query)
+	if nrows > 0:
+		# Fetch all the rows
+		rows = utils.dictcursor().fetchall()
+	# Close DB connection
+	utils.endDB()
+	# Return a dictionaried version of the DB contents, keyed release_site_cache
+	return dict([('%s_%s_%s' % (i['release'],i['siteid'],i['cache']),i) for i in rows])
+
 def execUpdate(updateList):
 	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
 	if safety is "on":
