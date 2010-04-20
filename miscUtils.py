@@ -38,3 +38,37 @@ def reducer(l):
 	''' Reduce the entries in a list by removing dupes'''
 	return dict([(i,1) for i in l]).keys()
 
+def noneChecker(a):
+	for cloud in configd:
+		for site in configd[cloud]:
+			for queue in configd[cloud][site]:
+				for i in configd[cloud][site][queue][param]:
+					if configd[cloud][site][queue][param][i] == a:
+						print type(configd[cloud][site][queue][param][i]), configd[cloud][site][queue][param][i]
+
+def colChecker(a,d):
+	for key in d:
+		if d[key] == a:
+			print type(a), key
+
+def compDictLong(d1,d2,exclList=[]):
+	for cloud in d1:
+		for site in d1[cloud]:
+			for queue in d1[cloud][site]:
+				for i in d1[cloud][site][queue][param]:
+					try:
+						if d1[cloud][site][queue][param][i] != d2[cloud][site][queue][param][i]:
+							if i not in exclList:
+								print d1[cloud][site][queue][param][i], d2[cloud][site][queue][param][i], type(d1[cloud][site][queue][param][i]), type(d2[cloud][site][queue][param][i])	
+					except KeyError:
+						print 'No key %s in %s %s %s' % (i, cloud, site, queue)
+
+def compDictColl(d1,d2,exclList=[]):
+	for queue in d1:
+		for i in d1[queue]:
+			try:
+				if d1[queue][i] != d2[queue][i]:
+					if i not in exclList:
+						print i, d1[queue][i], d2[queue][i], type(d1[queue][i]), type(d2[queue][i])	
+			except KeyError:
+				print 'No key %s in %s' % (i, queue)
