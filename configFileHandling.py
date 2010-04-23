@@ -133,7 +133,9 @@ def makeConfigs(d):
 			try:
 				os.makedirs(path)
 			except OSError:
-				pass
+				if configWriteDebug:
+					print 'Failed to make path ', path
+					os.listdir(cloudpath)
 			# Go on in...
 			os.chdir(path)
 			# And for each queue, create a config file. 

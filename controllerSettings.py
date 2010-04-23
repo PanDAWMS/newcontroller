@@ -17,7 +17,7 @@ pickleDebug = False
 dbReadDebug = False
 dbWriteDebug = False
 configReadDebug = False
-configWriteDebug = False
+configWriteDebug = True
 
 # Global strings and lists
 
