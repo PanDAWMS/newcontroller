@@ -56,9 +56,9 @@ def loadConfigs():
 	jdldb, jdldc = loadJdl()
 
 	# Add the BDII information, and build a list of releases
-	old_rel_db = loadInstalledSW()
-	new_rel_db = {}
-	bdiiIntegrator(configd, new_rel_db, dbd)
+## 	old_rel_db = loadInstalledSW()
+ 	new_rel_db = {}
+ 	bdiiIntegrator(configd, new_rel_db, dbd)
 	# Check the old DB for releases to delete, and the new one for releases to insert.
 ## 	delete_sw = [old_rel_db[i] for i in old_rel_db if i not in new_rel_db]
 ## 	insert_sw = [new_rel_db[i] for i in new_rel_db if i not in old_rel_db]
