@@ -195,10 +195,13 @@ ldapdat = ldapdat.split('\n')
 
 for ced in cedict:
     if ced.find('blah') == -1:
+#        if ced.startswith('bugaboo'):
+#            print ced
+#            raw_input()
         ## Get BDII data
         patstr = cedict[ced]['fullname']
         patstr = patstr.replace('.','\.')
-        patstr = "^\#[\s]*atlas,[\s]*.*%s[^ ]*,[\s]*([^,]+).*$" % patstr
+        patstr = "^\#[\s]*%s[^ ]*,[\s]*([^,]+).*$" % patstr
         pat = re.compile(patstr)
         matched = 0
         qname = ''
@@ -206,6 +209,7 @@ for ced in cedict:
         region = getRegion(cedict[ced]['gatekeeper'])
         
         for l in ldapdat:
+			
             mat = pat.match(l)
             if mat:
                 cename = mat.group(1)
@@ -243,9 +247,9 @@ for ced in cedict:
             print "no match to ",cedict[ced]['gatekeeper']
             nickname = "%s-%s" % ( qname, cedict[ced]['batchsys'] )
         if utils.isFilled(matched):
-            #print "Queue %s exists in DB with nickname %s" % ( ced, matched )
+            print "Queue %s exists in DB with nickname %s" % ( ced, matched )
             if matched != nickname:
-                #print "   DIFFERENT to preferred nickname %s. Will use existing nickname" % nickname
+                print "   DIFFERENT to preferred nickname %s. Will use existing nickname" % nickname
                 nickname = matched
         else:
             print "Queue %s name %s not found in DB" % ( ced, nickname )

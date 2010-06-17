@@ -1,4 +1,15 @@
 
+osgsites['Taiwan-LCG2-w-ce03-atlas'] = {
+  'gatekeeper' : 'w-ce03.grid.sinica.edu.tw',
+  'site' : 'Taiwan-LCG2',
+  'region' : 'Taiwan',
+  'gstat' : 'Taiwan-LCG2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
 osgsites['UKI-SCOTGRID-DURHAM-ce02-q6h'] = {
   'gatekeeper' : 'ce02.dur.scotgrid.ac.uk',
   'site' : 'UKI-SCOTGRID-DURHAM',
@@ -8,17 +19,6 @@ osgsites['UKI-SCOTGRID-DURHAM-ce02-q6h'] = {
   'localqueue' : 'q6h',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=q6h)\n',
-  'status' : 'online',
-}
-osgsites['INFN-T1-ce05-lcg-debug'] = {
-  'gatekeeper' : 'ce05-lcg.cr.cnaf.infn.it',
-  'site' : 'INFN-CNAF',
-  'region' : 'Italy',
-  'gstat' : 'INFN-T1',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'debug',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=debug)\n',
   'status' : 'online',
 }
 osgsites['IN2P3-CPPM-marce01-atlas'] = {
@@ -32,15 +32,15 @@ osgsites['IN2P3-CPPM-marce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['NIKHEF-ELPROD-trekker-qshort'] = {
-  'gatekeeper' : 'trekker.nikhef.nl',
-  'site' : 'NIKHEF-ELPROD',
-  'region' : 'Holland',
-  'gstat' : 'NIKHEF-ELPROD',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'qshort',
+osgsites['DESY-ZN-lcg-ce0-atlas'] = {
+  'gatekeeper' : 'lcg-ce0.ifh.de',
+  'site' : 'DESY-ZN',
+  'region' : 'Germany',
+  'gstat' : 'DESY-ZN',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=qshort)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce126-grid_2nh_atlas'] = {
@@ -54,6 +54,17 @@ osgsites['CERN-PROD-ce126-grid_2nh_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
+osgsites['IN2P3-CC-cccreamceli01-long'] = {
+  'gatekeeper' : 'cccreamceli01.in2p3.fr',
+  'site' : 'IN2P3-CC',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'long',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=long)\n',
+  'status' : 'online',
+}
 osgsites['RUG-CIT-ce-medium'] = {
   'gatekeeper' : 'ce.grid.rug.nl',
   'site' : 'RUG-CIT',
@@ -63,17 +74,6 @@ osgsites['RUG-CIT-ce-medium'] = {
   'localqueue' : 'medium',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=medium)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SCOTGRID-GLASGOW-svr021-q7d'] = {
-  'gatekeeper' : 'svr021.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
-  'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q7d',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q7d)\n',
   'status' : 'online',
 }
 osgsites['UKI-SCOTGRID-DURHAM-ce02-q30m'] = {
@@ -109,6 +109,28 @@ osgsites['NYSGRID-CCR-U2-u2-grid-feed'] = {
   'jdladd' : 'globusrsl = (queue=feed)\n',
   'status' : 'online',
 }
+osgsites['UKI-NORTHGRID-LIV-HEP-hepgrid5-long'] = {
+  'gatekeeper' : 'hepgrid5.ph.liv.ac.uk',
+  'site' : 'UKI-NORTHGRID-LIV-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-NORTHGRID-LIV-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'long',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=long)\n',
+  'status' : 'online',
+}
+osgsites['UTD-HEP-fester-all.q'] = {
+  'gatekeeper' : 'fester.utdallas.edu',
+  'site' : 'UTD-HEP',
+  'region' : 'US',
+  'gstat' : 'UTD-HEP',
+  'jobmanager' : 'sge',
+  'localqueue' : 'all.q',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=all.q)\n',
+  'status' : 'online',
+}
 osgsites['INFN-ROMA1-atlas-ce-02-atlasglong'] = {
   'gatekeeper' : 'atlas-ce-02.roma1.infn.it',
   'site' : 'INFN-ROMA1',
@@ -120,26 +142,26 @@ osgsites['INFN-ROMA1-atlas-ce-02-atlasglong'] = {
   'jdladd' : 'globusrsl = (queue=atlasglong)\n',
   'status' : 'online',
 }
-osgsites['pic-ce06-glong64'] = {
-  'gatekeeper' : 'ce06.pic.es',
-  'site' : 'PIC',
-  'region' : 'Spain',
-  'gstat' : 'pic',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'glong64',
+osgsites['prague_cesnet_lcg2-ce1-egee_atlas'] = {
+  'gatekeeper' : 'ce1.egee.cesnet.cz',
+  'site' : 'prague_cesnet_lcg2',
+  'region' : 'CzechR',
+  'gstat' : 'prague_cesnet_lcg2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'egee_atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=glong64)\n',
+  'jdladd' : 'globusrsl = (queue=egee_atlas)\n',
   'status' : 'online',
 }
-osgsites['TTU-ANTAEUS-antaeus-serial'] = {
-  'gatekeeper' : 'antaeus.hpcc.ttu.edu',
-  'site' : 'TTU-ANTAEUS',
+osgsites['MWT2_UC-uct2-grid6-analy_x'] = {
+  'gatekeeper' : 'uct2-grid6.uchicago.edu',
+  'site' : 'MWT2_UC',
   'region' : 'US',
-  'gstat' : 'TTU-ANTAEUS',
-  'jobmanager' : 'lsf',
-  'localqueue' : 'serial',
+  'gstat' : 'MWT2_UC',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'analy_x',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=serial)\n',
+  'jdladd' : 'globusrsl = (queue=analy_x)\n',
   'status' : 'online',
 }
 osgsites['IN2P3-LPC-clrlcgce02-atlas'] = {
@@ -153,15 +175,37 @@ osgsites['IN2P3-LPC-clrlcgce02-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['CERN-PROD-ce109-grid_2nh_atlas'] = {
-  'gatekeeper' : 'ce109.cern.ch',
-  'site' : 'CERN-PROD',
-  'region' : 'CERN',
-  'gstat' : 'CERN-PROD',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'grid_2nh_atlas',
+osgsites['GRIF-LAL-grid10-atlas'] = {
+  'gatekeeper' : 'grid10.lal.in2p3.fr',
+  'site' : 'GRIF-LAL',
+  'region' : 'France',
+  'gstat' : 'GRIF-LAL',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['INFN-BOLOGNA-bocecream-atlasSL5'] = {
+  'gatekeeper' : 'bocecream.bo.infn.it',
+  'site' : 'INFN-BOLOGNA',
+  'region' : 'Italy',
+  'gstat' : 'INFN-BOLOGNA',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlasSL5',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlasSL5)\n',
+  'status' : 'online',
+}
+osgsites['NWICG_NotreDame-nwicg-default'] = {
+  'gatekeeper' : 'nwicg.crc.nd.edu',
+  'site' : 'NWICG_NotreDame',
+  'region' : 'US',
+  'gstat' : 'NWICG_NotreDame',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
 osgsites['UKI-SOUTHGRID-OX-HEP-t2ce05-shortfive'] = {
@@ -186,6 +230,28 @@ osgsites['TR-09-ITU-ituce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['UTA_SWT2-gk04-default'] = {
+  'gatekeeper' : 'gk04.swt2.uta.edu',
+  'site' : 'UTA_SWT2',
+  'region' : 'US',
+  'gstat' : 'UTA_SWT2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
+  'status' : 'online',
+}
+osgsites['UKI-SOUTHGRID-BHAM-HEP-epgr04-gshort'] = {
+  'gatekeeper' : 'epgr04.ph.bham.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BHAM-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-BHAM-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'gshort',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=gshort)\n',
+  'status' : 'online',
+}
 osgsites['IN2P3-LPC-clrlcgce03-atlasana'] = {
   'gatekeeper' : 'clrlcgce03.in2p3.fr',
   'site' : 'IN2P3-LPC',
@@ -208,48 +274,48 @@ osgsites['JINR-LCG2-lcgce02-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['IFIC-LCG2-lcg2ce-atlasL'] = {
-  'gatekeeper' : 'lcg2ce.ific.uv.es',
-  'site' : 'IFIC-LCG2',
-  'region' : 'Spain',
-  'gstat' : 'IFIC-LCG2',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlasL',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasL)\n',
-  'status' : 'online',
-}
-osgsites['HG-06-EKT-ce01-atlas'] = {
-  'gatekeeper' : 'ce01.athena.hellasgrid.gr',
-  'site' : 'HG-06-EKT',
-  'region' : 'Greece',
-  'gstat' : 'HG-06-EKT',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['pic-ce07-glong64'] = {
-  'gatekeeper' : 'ce07.pic.es',
+osgsites['pic-ce06-gmedium_sl5'] = {
+  'gatekeeper' : 'ce06.pic.es',
   'site' : 'PIC',
   'region' : 'Spain',
   'gstat' : 'pic',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'glong64',
+  'localqueue' : 'gmedium_sl5',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=glong64)\n',
+  'jdladd' : 'globusrsl = (queue=gmedium_sl5)\n',
   'status' : 'online',
 }
-osgsites['praguelcg2-golias25-lcgatlasprod'] = {
-  'gatekeeper' : 'golias25.farm.particle.cz',
-  'site' : 'praguelcg2',
-  'region' : 'CzechR',
-  'gstat' : 'praguelcg2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'lcgatlasprod',
+osgsites['AGLT2-gate01-default'] = {
+  'gatekeeper' : 'gate01.aglt2.org',
+  'site' : 'AGLT2',
+  'region' : 'US',
+  'gstat' : 'AGLT2',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=lcgatlasprod)\n',
+  'jdladd' : 'globusrsl = (queue=default)\n',
+  'status' : 'online',
+}
+osgsites['UNI-FREIBURG-ce2-medium'] = {
+  'gatekeeper' : 'ce2.bfg.uni-freiburg.de',
+  'site' : 'UNI-FREIBURG',
+  'region' : 'Germany',
+  'gstat' : 'UNI-FREIBURG',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
+  'status' : 'online',
+}
+osgsites['Purdue-RCAC-osg-default'] = {
+  'gatekeeper' : 'osg.rcac.purdue.edu',
+  'site' : 'Purdue-RCAC',
+  'region' : 'US',
+  'gstat' : 'Purdue-RCAC',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
 osgsites['IFJ-PAN-BG-fwe01-atlas'] = {
@@ -285,70 +351,59 @@ osgsites['CERN-PROD-ce201-grid_2nh_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
-osgsites['RAL-LCG2-lcgce03-grid700M'] = {
-  'gatekeeper' : 'lcgce03.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
-  'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid700M',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid700M)\n',
-  'status' : 'online',
-}
-osgsites['INFN-MILANO-t2-ce-01-atlas'] = {
-  'gatekeeper' : 't2-ce-01.mi.infn.it',
-  'site' : 'INFN-MILANO',
-  'region' : 'Italy',
-  'gstat' : 'INFN-MILANO',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['UKI-LT2-RHUL-ce2-atlas'] = {
-  'gatekeeper' : 'ce2.ppgrid1.rhul.ac.uk',
-  'site' : 'UKI-LT2-RHUL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-RHUL',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['FZK-LCG2-ce-2-fzk-atlasS'] = {
-  'gatekeeper' : 'ce-2-fzk.gridka.de',
-  'site' : 'FZK-LCG2',
+osgsites['LRZ-LMU-lcg-lrz-ce1-lcglong'] = {
+  'gatekeeper' : 'lcg-lrz-ce1.grid.lrz-muenchen.de',
+  'site' : 'LRZ-LMU',
   'region' : 'Germany',
-  'gstat' : 'FZK-LCG2',
-  'jobmanager' : 'pbspro',
-  'localqueue' : 'atlasS',
+  'gstat' : 'LRZ-LMU',
+  'jobmanager' : 'sge',
+  'localqueue' : 'lcglong',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasS)\n',
+  'jdladd' : 'globusrsl = (queue=lcglong)\n',
   'status' : 'online',
 }
-osgsites['praguelcg2-golias25-lcgatlas'] = {
-  'gatekeeper' : 'golias25.farm.particle.cz',
-  'site' : 'praguelcg2',
-  'region' : 'CzechR',
-  'gstat' : 'praguelcg2',
+osgsites['INFN-MILANO-ATLASC-t2-ce-01-atlas'] = {
+  'gatekeeper' : 't2-ce-01.mi.infn.it',
+  'site' : 'INFN-MILANO-ATLASC',
+  'region' : 'Italy',
+  'gstat' : 'INFN-MILANO-ATLASC',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'lcgatlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=lcgatlas)\n',
-  'status' : 'online',
-}
-osgsites['AGLT2-gate01-atlas'] = {
-  'gatekeeper' : 'gate01.aglt2.org',
-  'site' : 'AGLT2',
-  'region' : 'US',
-  'gstat' : 'AGLT2',
-  'jobmanager' : 'condor',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['UFlorida-PG-pg-default'] = {
+  'gatekeeper' : 'pg.ihepa.ufl.edu',
+  'site' : 'UFlorida-PG',
+  'region' : 'US',
+  'gstat' : 'UFlorida-PG',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
+  'status' : 'online',
+}
+osgsites['GRIF-LAL-grid10-atlasana'] = {
+  'gatekeeper' : 'grid10.lal.in2p3.fr',
+  'site' : 'GRIF-LAL',
+  'region' : 'France',
+  'gstat' : 'GRIF-LAL',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlasana',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlasana)\n',
+  'status' : 'online',
+}
+osgsites['WT2-osgserv01-express'] = {
+  'gatekeeper' : 'osgserv01.slac.stanford.edu',
+  'site' : 'WT2',
+  'region' : 'US',
+  'gstat' : 'WT2',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'express',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=express)\n',
   'status' : 'online',
 }
 osgsites['SiGNET-lcgce-atlas'] = {
@@ -373,6 +428,28 @@ osgsites['CERN-PROD-ce128-grid_2nh_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
+osgsites['UKI-SOUTHGRID-BRIS-HEP-lcgce03-express'] = {
+  'gatekeeper' : 'lcgce03.phy.bris.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'express',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=express)\n',
+  'status' : 'online',
+}
+osgsites['CA-SCINET-T2-lcg-ce1-atlas'] = {
+  'gatekeeper' : 'lcg-ce1.scinet.utoronto.ca',
+  'site' : 'CA-SCINET-T2',
+  'region' : 'Canada',
+  'gstat' : 'CA-SCINET-T2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
 osgsites['CERN-PROD-ce124-grid_atlas'] = {
   'gatekeeper' : 'ce124.cern.ch',
   'site' : 'CERN-PROD',
@@ -382,6 +459,28 @@ osgsites['CERN-PROD-ce124-grid_atlas'] = {
   'localqueue' : 'grid_atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'status' : 'online',
+}
+osgsites['CYFRONET-LCG2-cream-atlas5'] = {
+  'gatekeeper' : 'cream.grid.cyf-kr.edu.pl',
+  'site' : 'CYFRONET-LCG2',
+  'region' : 'Poland',
+  'gstat' : 'CYFRONET-LCG2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas5',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas5)\n',
+  'status' : 'online',
+}
+osgsites['SWITCH-diana-atlas'] = {
+  'gatekeeper' : 'diana.switch.ch',
+  'site' : 'SWITCH',
+  'region' : 'Switzerland',
+  'gstat' : 'SWITCH',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['TECHNION-HEP-tech-ce-atlas'] = {
@@ -406,17 +505,6 @@ osgsites['INFN-T1-ce04-lcg-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['NIKHEF-ELPROD-trekker-qlong'] = {
-  'gatekeeper' : 'trekker.nikhef.nl',
-  'site' : 'NIKHEF-ELPROD',
-  'region' : 'Holland',
-  'gstat' : 'NIKHEF-ELPROD',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'qlong',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=qlong)\n',
-  'status' : 'online',
-}
 osgsites['WCSS64-dwarf-atlas'] = {
   'gatekeeper' : 'dwarf.wcss.wroc.pl',
   'site' : 'WCSS',
@@ -439,17 +527,6 @@ osgsites['egee.fesb.hr-ce1-egee-grid'] = {
   'jdladd' : 'globusrsl = (queue=grid)\n',
   'status' : 'online',
 }
-osgsites['INFN-LNL-2-t2-ce-01-atlas'] = {
-  'gatekeeper' : 't2-ce-01.lnl.infn.it',
-  'site' : 'INFN-LNL-2',
-  'region' : 'Italy',
-  'gstat' : 'INFN-LNL-2',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
 osgsites['WARSAW-EGEE-ce-atlas'] = {
   'gatekeeper' : 'ce.polgrid.pl',
   'site' : 'WARSAW-EGEE',
@@ -459,17 +536,6 @@ osgsites['WARSAW-EGEE-ce-atlas'] = {
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['praguelcg2-cream1-gridatlasprod'] = {
-  'gatekeeper' : 'cream1.farm.particle.cz',
-  'site' : 'praguelcg2',
-  'region' : 'CzechR',
-  'gstat' : 'praguelcg2',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'gridatlasprod',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gridatlasprod)\n',
   'status' : 'online',
 }
 osgsites['UKI-SOUTHGRID-RALPP-heplnx207-grid1000'] = {
@@ -483,81 +549,59 @@ osgsites['UKI-SOUTHGRID-RALPP-heplnx207-grid1000'] = {
   'jdladd' : 'globusrsl = (queue=grid1000)\n',
   'status' : 'online',
 }
-osgsites['UKI-SOUTHGRID-OX-HEP-t2ce02-shortoct'] = {
-  'gatekeeper' : 't2ce02.physics.ox.ac.uk',
-  'site' : 'UKI-SOUTHGRID-OX-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'shortoct',
+osgsites['BNL-ATLAS-gridgk05-default'] = {
+  'gatekeeper' : 'gridgk05.racf.bnl.gov',
+  'site' : 'BNL-ATLAS',
+  'region' : 'US',
+  'gstat' : 'BNL-ATLAS',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=shortoct)\n',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
-osgsites['IFIC-LCG2-lcg2ce-short'] = {
-  'gatekeeper' : 'lcg2ce.ific.uv.es',
-  'site' : 'IFIC-LCG2',
-  'region' : 'Spain',
-  'gstat' : 'IFIC-LCG2',
+osgsites['GR-01-AUTH-cream-ce01-atlas'] = {
+  'gatekeeper' : 'cream-ce01.grid.auth.gr',
+  'site' : 'GR-01-AUTH',
+  'region' : 'Greece',
+  'gstat' : 'GR-01-AUTH',
   'jobmanager' : 'pbs',
-  'localqueue' : 'short',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
-  'status' : 'online',
-}
-osgsites['TOKYO-LCG2-lcg-ce01-atlas'] = {
-  'gatekeeper' : 'lcg-ce01.icepp.jp',
-  'site' : 'TOKYO-LCG2',
-  'region' : 'Japan',
-  'gstat' : 'TOKYO-LCG2',
-  'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['TUDresden-ZIH-desdemona-route_scli'] = {
-  'gatekeeper' : 'desdemona.zih.tu-dresden.de',
-  'site' : 'TUDresden-ZIH',
-  'region' : 'Germany',
-  'gstat' : 'TUDresden-ZIH',
+osgsites['pic-ce05-gshort_sl5'] = {
+  'gatekeeper' : 'ce05.pic.es',
+  'site' : 'PIC',
+  'region' : 'Spain',
+  'gstat' : 'pic',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'route_scli',
+  'localqueue' : 'gshort_sl5',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=route_scli)\n',
+  'jdladd' : 'globusrsl = (queue=gshort_sl5)\n',
   'status' : 'online',
 }
-osgsites['DESY-HH-grid-ce2-testing'] = {
-  'gatekeeper' : 'grid-ce2.desy.de',
-  'site' : 'DESY-HH',
-  'region' : 'Germany',
-  'gstat' : 'DESY-HH',
+osgsites['UKI-LT2-UCL-HEP-gw-6-Luornu'] = {
+  'gatekeeper' : 'gw-6.ccc.ucl.ac.uk',
+  'site' : 'UKI-LT2-UCL-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-UCL-HEP',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'testing',
+  'localqueue' : 'Luornu',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=testing)\n',
+  'jdladd' : 'globusrsl = (queue=Luornu)\n',
   'status' : 'online',
 }
-osgsites['INFN-BARI-gridba2-infinite'] = {
-  'gatekeeper' : 'gridba2.ba.infn.it',
-  'site' : 'INFN-BARI',
-  'region' : 'Italy',
-  'gstat' : 'INFN-BARI',
+osgsites['UKI-SOUTHGRID-RALPP-heplnx206-grid2000'] = {
+  'gatekeeper' : 'heplnx206.pp.rl.ac.uk',
+  'site' : 'UKI-SOUTHGRID-RALPP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-RALPP',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'infinite',
+  'localqueue' : 'grid2000',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=infinite)\n',
-  'status' : 'online',
-}
-osgsites['IN2P3-CC-T2-cclcgceli06-short'] = {
-  'gatekeeper' : 'cclcgceli06.in2p3.fr',
-  'site' : 'IN2P3-CC-T2',
-  'region' : 'France',
-  'gstat' : 'IN2P3-CC-T2',
-  'jobmanager' : 'bqs',
-  'localqueue' : 'short',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
+  'jdladd' : 'globusrsl = (queue=grid2000)\n',
   'status' : 'online',
 }
 osgsites['SWT2_CPB-gk01-input_q'] = {
@@ -571,6 +615,17 @@ osgsites['SWT2_CPB-gk01-input_q'] = {
   'jdladd' : 'globusrsl = (queue=input_q)\n',
   'status' : 'online',
 }
+osgsites['wuppertalprod-grid-ce5-dg_short'] = {
+  'gatekeeper' : 'grid-ce5.physik.uni-wuppertal.de',
+  'site' : 'wuppertalprod',
+  'region' : 'Germany',
+  'gstat' : 'wuppertalprod',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'dg_short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=dg_short)\n',
+  'status' : 'online',
+}
 osgsites['ru-Moscow-SINP-LCG2-grid129-atlas'] = {
   'gatekeeper' : 'grid129.sinp.msu.ru',
   'site' : 'ru-Moscow-SINP-LCG2',
@@ -582,37 +637,37 @@ osgsites['ru-Moscow-SINP-LCG2-grid129-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-SCOTGRID-GLASGOW-svr026-q6h'] = {
-  'gatekeeper' : 'svr026.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
-  'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+osgsites['SARA-MATRIX-ce-short'] = {
+  'gatekeeper' : 'ce.gina.sara.nl',
+  'site' : 'SARA-MATRIX',
+  'region' : 'Holland',
+  'gstat' : 'SARA-MATRIX',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q6h',
+  'localqueue' : 'short',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q6h)\n',
+  'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
-osgsites['Taiwan-LCG2-w-ce03-atlas'] = {
-  'gatekeeper' : 'w-ce03.grid.sinica.edu.tw',
-  'site' : 'Taiwan-LCG2',
-  'region' : 'Taiwan',
-  'gstat' : 'Taiwan-LCG2',
-  'jobmanager' : 'lcgpbs',
+osgsites['INFN-TORINO-t2-ce-01-atlas'] = {
+  'gatekeeper' : 't2-ce-01.to.infn.it',
+  'site' : 'INFN-TORINO',
+  'region' : 'Italy',
+  'gstat' : 'INFN-TORINO',
+  'jobmanager' : 'pbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['IN2P3-CC-cclcgceli01-medium'] = {
-  'gatekeeper' : 'cclcgceli01.in2p3.fr',
-  'site' : 'IN2P3-CC',
-  'region' : 'France',
-  'gstat' : 'IN2P3-CC',
-  'jobmanager' : 'bqs',
-  'localqueue' : 'medium',
+osgsites['INFN-LNL-2-t2-ce-06-atlas1'] = {
+  'gatekeeper' : 't2-ce-06.lnl.infn.it',
+  'site' : 'INFN-LNL-2',
+  'region' : 'Italy',
+  'gstat' : 'INFN-LNL-2',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'atlas1',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=medium)\n',
+  'jdladd' : 'globusrsl = (queue=atlas1)\n',
   'status' : 'online',
 }
 osgsites['SWT2_CPB-gk01-default'] = {
@@ -637,6 +692,28 @@ osgsites['SFU-LCG2-bugaboo-hep-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['BNL-ATLAS-gridgk03-default'] = {
+  'gatekeeper' : 'gridgk03.racf.bnl.gov',
+  'site' : 'BNL-ATLAS',
+  'region' : 'US',
+  'gstat' : 'BNL-ATLAS',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
+  'status' : 'online',
+}
+osgsites['IEPSAS-Kosice-ce-iep-grid-short'] = {
+  'gatekeeper' : 'ce-iep-grid.saske.sk',
+  'site' : 'IEPSAS-Kosice',
+  'region' : 'Slovakia',
+  'gstat' : 'IEPSAS-Kosice',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
+  'status' : 'online',
+}
 osgsites['BG02-IM-ce001-atlas'] = {
   'gatekeeper' : 'ce001.imbm.bas.bg',
   'site' : 'BG02-IM',
@@ -648,26 +725,15 @@ osgsites['BG02-IM-ce001-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-SCOTGRID-GLASGOW-svr021-q3d'] = {
-  'gatekeeper' : 'svr021.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
-  'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+osgsites['pic-ce05-glong_sl5'] = {
+  'gatekeeper' : 'ce05.pic.es',
+  'site' : 'PIC',
+  'region' : 'Spain',
+  'gstat' : 'pic',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q3d',
+  'localqueue' : 'glong_sl5',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q3d)\n',
-  'status' : 'online',
-}
-osgsites['Purdue-RCAC-osg-atlas'] = {
-  'gatekeeper' : 'osg.rcac.purdue.edu',
-  'site' : 'Purdue-RCAC',
-  'region' : 'US',
-  'gstat' : 'Purdue-RCAC',
-  'jobmanager' : 'condor',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=glong_sl5)\n',
   'status' : 'online',
 }
 osgsites['TR-01-ULAKBIM-ce-atlas'] = {
@@ -681,11 +747,88 @@ osgsites['TR-01-ULAKBIM-ce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['UKI-SOUTHGRID-OX-HEP-t2ce06-shortfive'] = {
+  'gatekeeper' : 't2ce06.physics.ox.ac.uk',
+  'site' : 'UKI-SOUTHGRID-OX-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'shortfive',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=shortfive)\n',
+  'status' : 'online',
+}
+osgsites['UKI-NORTHGRID-LANCS-HEP-fal-pygrid-44-sl5'] = {
+  'gatekeeper' : 'fal-pygrid-44.lancs.ac.uk',
+  'site' : 'UKI-NORTHGRID-LANCS-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-NORTHGRID-LANCS-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'sl5',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=sl5)\n',
+  'status' : 'online',
+}
+osgsites['CA-ALBERTA-WESTGRID-T2-ce01-atlas'] = {
+  'gatekeeper' : 'ce01.atlas.ualberta.ca',
+  'site' : 'CA-ALBERTA-WESTGRID-T2',
+  'region' : 'Canada',
+  'gstat' : 'CA-ALBERTA-WESTGRID-T2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['pic-ce08-gshort_sl5'] = {
+  'gatekeeper' : 'ce08.pic.es',
+  'site' : 'pic',
+  'region' : 'Spain',
+  'gstat' : 'pic',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'gshort_sl5',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=gshort_sl5)\n',
+  'status' : 'online',
+}
+osgsites['UKI-SOUTHGRID-OX-HEP-t2ce02-mediumoct'] = {
+  'gatekeeper' : 't2ce02.physics.ox.ac.uk',
+  'site' : 'UKI-SOUTHGRID-OX-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'mediumoct',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=mediumoct)\n',
+  'status' : 'online',
+}
+osgsites['UKI-SCOTGRID-DURHAM-ce02-q1d'] = {
+  'gatekeeper' : 'ce02.dur.scotgrid.ac.uk',
+  'site' : 'UKI-SCOTGRID-DURHAM',
+  'region' : 'UK',
+  'gstat' : 'UKI-SCOTGRID-DURHAM',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'q1d',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=q1d)\n',
+  'status' : 'online',
+}
 osgsites['ru-Moscow-FIAN-LCG2-ce1-atlas'] = {
   'gatekeeper' : 'ce1.grid.lebedev.ru',
   'site' : 'ru-Moscow-FIAN-LCG2',
   'region' : 'Russia',
   'gstat' : 'ru-Moscow-FIAN-LCG2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['CN-BEIJING-PKU-grid04-atlas'] = {
+  'gatekeeper' : 'grid04.phy.pku.edu.cn',
+  'site' : 'CN-BEIJING-PKU',
+  'region' : 'China',
+  'gstat' : 'CN-BEIJING-PKU',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
@@ -725,6 +868,28 @@ osgsites['FZK-LCG2-cream-2-fzk-atlasXS'] = {
   'jdladd' : 'globusrsl = (queue=atlasXS)\n',
   'status' : 'online',
 }
+osgsites['UCSDT2-osg-gw-2-group_other'] = {
+  'gatekeeper' : 'osg-gw-2.t2.ucsd.edu',
+  'site' : 'UCSDT2',
+  'region' : 'US',
+  'gstat' : 'UCSDT2',
+  'jobmanager' : 'condor',
+  'localqueue' : 'group_other',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=group_other)\n',
+  'status' : 'online',
+}
+osgsites['RAL-LCG2-lcgce01-grid2000M'] = {
+  'gatekeeper' : 'lcgce01.gridpp.rl.ac.uk',
+  'site' : 'RAL-LCG2',
+  'region' : 'UK',
+  'gstat' : 'RAL-LCG2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'grid2000M',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid2000M)\n',
+  'status' : 'online',
+}
 osgsites['egee.srce.hr-ce1-egee-prod'] = {
   'gatekeeper' : 'ce1-egee.srce.hr',
   'site' : 'SRCE',
@@ -734,39 +899,6 @@ osgsites['egee.srce.hr-ce1-egee-prod'] = {
   'localqueue' : 'prod',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=prod)\n',
-  'status' : 'online',
-}
-osgsites['GLOW-cmsgrid01-atlas'] = {
-  'gatekeeper' : 'cmsgrid01.hep.wisc.edu',
-  'site' : 'GLOW',
-  'region' : 'US',
-  'gstat' : 'GLOW',
-  'jobmanager' : 'condor',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SOUTHGRID-BHAM-HEP-epgce3-short'] = {
-  'gatekeeper' : 'epgce3.ph.bham.ac.uk',
-  'site' : 'UKI-SOUTHGRID-BHAM-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-BHAM-HEP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'short',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
-  'status' : 'online',
-}
-osgsites['GRIF-LAL-grid10-atlas'] = {
-  'gatekeeper' : 'grid10.lal.in2p3.fr',
-  'site' : 'GRIF-LAL',
-  'region' : 'France',
-  'gstat' : 'GRIF-LAL',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['FZK-LCG2-cream-2-fzk-atlasXL'] = {
@@ -789,6 +921,17 @@ osgsites['FZK-LCG2-ce-2-fzk-atlasXS'] = {
   'localqueue' : 'atlasXS',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlasXS)\n',
+  'status' : 'online',
+}
+osgsites['UKI-LT2-QMUL-ce02-lcg_long'] = {
+  'gatekeeper' : 'ce02.esc.qmul.ac.uk',
+  'site' : 'UKI-LT2-QMUL',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-QMUL',
+  'jobmanager' : 'lcgsge',
+  'localqueue' : 'lcg_long',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=lcg_long)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce113-grid_atlas'] = {
@@ -824,26 +967,26 @@ osgsites['HG-02-IASA-ce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-SCOTGRID-GLASGOW-svr026-q3d'] = {
-  'gatekeeper' : 'svr026.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
-  'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q3d',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q3d)\n',
-  'status' : 'online',
-}
-osgsites['UNI-DORTMUND-udo-ce03-atlas'] = {
-  'gatekeeper' : 'udo-ce03.grid.tu-dortmund.de',
-  'site' : 'UNI-DORTMUND',
-  'region' : 'Germany',
-  'gstat' : 'UNI-DORTMUND',
-  'jobmanager' : 'lcgpbs',
+osgsites['INFN-BOLOGNA-bocecream-atlas'] = {
+  'gatekeeper' : 'bocecream.bo.infn.it',
+  'site' : 'INFN-BOLOGNA',
+  'region' : 'Italy',
+  'gstat' : 'INFN-BOLOGNA',
+  'jobmanager' : 'pbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['Nebraska-red-group_other'] = {
+  'gatekeeper' : 'red.unl.edu',
+  'site' : 'Nebraska',
+  'region' : 'US',
+  'gstat' : 'Nebraska',
+  'jobmanager' : 'condor',
+  'localqueue' : 'group_other',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=group_other)\n',
   'status' : 'online',
 }
 osgsites['csTCDie-gridgate-himem'] = {
@@ -857,17 +1000,6 @@ osgsites['csTCDie-gridgate-himem'] = {
   'jdladd' : 'globusrsl = (queue=himem)\n',
   'status' : 'online',
 }
-osgsites['UKI-LT2-QMUL-ce03-lcg_long2_x86'] = {
-  'gatekeeper' : 'ce03.esc.qmul.ac.uk',
-  'site' : 'UKI-LT2-QMUL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-QMUL',
-  'jobmanager' : 'lcgsge',
-  'localqueue' : 'lcg_long2_x86',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=lcg_long2_x86)\n',
-  'status' : 'online',
-}
 osgsites['CERN-PROD-ce201-grid_atlas'] = {
   'gatekeeper' : 'ce201.cern.ch',
   'site' : 'CERN-PROD',
@@ -879,48 +1011,59 @@ osgsites['CERN-PROD-ce201-grid_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-SCOTGRID-ECDF-ce-ecdf'] = {
-  'gatekeeper' : 'ce.glite.ecdf.ed.ac.uk',
-  'site' : 'UKI-SCOTGRID-ECDF',
-  'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-ECDF',
-  'jobmanager' : 'lcgsge',
-  'localqueue' : 'ecdf',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=ecdf)\n',
-  'status' : 'online',
-}
-osgsites['FZK-LCG2-ce-3-fzk-atlasXXL'] = {
-  'gatekeeper' : 'ce-3-fzk.gridka.de',
-  'site' : 'FZK-LCG2',
+osgsites['UNI-DORTMUND-udo-ce04-atlas'] = {
+  'gatekeeper' : 'udo-ce04.grid.tu-dortmund.de',
+  'site' : 'UNI-DORTMUND',
   'region' : 'Germany',
-  'gstat' : 'FZK-LCG2',
-  'jobmanager' : 'pbspro',
-  'localqueue' : 'atlasXXL',
+  'gstat' : 'UNI-DORTMUND',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasXXL)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['pic-ce06-gmedium64'] = {
-  'gatekeeper' : 'ce06.pic.es',
-  'site' : 'PIC',
-  'region' : 'Spain',
-  'gstat' : 'pic',
+osgsites['UKI-LT2-UCL-HEP-gw-6-Chuck'] = {
+  'gatekeeper' : 'gw-6.ccc.ucl.ac.uk',
+  'site' : 'UKI-LT2-UCL-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-UCL-HEP',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gmedium64',
+  'localqueue' : 'Chuck',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gmedium64)\n',
+  'jdladd' : 'globusrsl = (queue=Chuck)\n',
   'status' : 'online',
 }
-osgsites['INFN-PISA-gridce-atlas4'] = {
-  'gatekeeper' : 'gridce.pi.infn.it',
-  'site' : 'INFN-PISA',
-  'region' : 'Italy',
-  'gstat' : 'INFN-PISA',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'atlas4',
+osgsites['MWT2_IU-iut2-grid6-prod'] = {
+  'gatekeeper' : 'iut2-grid6.iu.edu',
+  'site' : 'MWT2_IU',
+  'region' : 'US',
+  'gstat' : 'MWT2_IU',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'prod',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas4)\n',
+  'jdladd' : 'globusrsl = (queue=prod)\n',
+  'status' : 'online',
+}
+osgsites['IFIC-LCG2-ce04-short'] = {
+  'gatekeeper' : 'ce04.ific.uv.es',
+  'site' : 'IFIC-LCG2',
+  'region' : 'Spain',
+  'gstat' : 'IFIC-LCG2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
+  'status' : 'online',
+}
+osgsites['IN2P3-CC-cclcgceli07-verylong'] = {
+  'gatekeeper' : 'cclcgceli07.in2p3.fr',
+  'site' : 'IN2P3-CC',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'verylong',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=verylong)\n',
   'status' : 'online',
 }
 osgsites['TW-FTT-f-ce01-atlas'] = {
@@ -934,26 +1077,15 @@ osgsites['TW-FTT-f-ce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UNI-FREIBURG-ce-medium'] = {
-  'gatekeeper' : 'ce.bfg.uni-freiburg.de',
-  'site' : 'UNI-FREIBURG',
-  'region' : 'Germany',
-  'gstat' : 'UNI-FREIBURG',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'medium',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=medium)\n',
-  'status' : 'online',
-}
-osgsites['UKI-LT2-UCL-CENTRAL-gw-4-Luornu'] = {
-  'gatekeeper' : 'gw-4.ccc.ucl.ac.uk',
-  'site' : 'UKI-LT2-UCL-CENTRAL',
+osgsites['UKI-NORTHGRID-MAN-HEP-bohr3216-long'] = {
+  'gatekeeper' : 'bohr3216.tier2.hep.manchester.ac.uk',
+  'site' : 'UKI-NORTHGRID-MAN-HEP',
   'region' : 'UK',
-  'gstat' : 'UKI-LT2-UCL-CENTRAL',
-  'jobmanager' : 'uclpbs',
-  'localqueue' : 'Luornu',
+  'gstat' : 'UKI-NORTHGRID-MAN-HEP',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'long',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=Luornu)\n',
+  'jdladd' : 'globusrsl = (queue=long)\n',
   'status' : 'online',
 }
 osgsites['BG05-SUGrid-ce001-atlas'] = {
@@ -965,6 +1097,17 @@ osgsites['BG05-SUGrid-ce001-atlas'] = {
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['pic-ce07-gshort_sl5'] = {
+  'gatekeeper' : 'ce07.pic.es',
+  'site' : 'PIC',
+  'region' : 'Spain',
+  'gstat' : 'pic',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'gshort_sl5',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=gshort_sl5)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce107-grid_2nh_atlas'] = {
@@ -1000,37 +1143,26 @@ osgsites['RU-Protvino-IHEP-ce0003-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['IN2P3-CC-cclcgceli01-short'] = {
-  'gatekeeper' : 'cclcgceli01.in2p3.fr',
-  'site' : 'IN2P3-CC',
-  'region' : 'France',
-  'gstat' : 'IN2P3-CC',
-  'jobmanager' : 'bqs',
-  'localqueue' : 'short',
+osgsites['SPRACE-osg-ce-default'] = {
+  'gatekeeper' : 'osg-ce.sprace.org.br',
+  'site' : 'SPRACE',
+  'region' : 'Brazil',
+  'gstat' : 'SPRACE',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
-osgsites['INFN-BARI-gridba2-short'] = {
-  'gatekeeper' : 'gridba2.ba.infn.it',
-  'site' : 'INFN-BARI',
-  'region' : 'Italy',
-  'gstat' : 'INFN-BARI',
+osgsites['pic-ce07-glong_sl5'] = {
+  'gatekeeper' : 'ce07.pic.es',
+  'site' : 'PIC',
+  'region' : 'Spain',
+  'gstat' : 'pic',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'short',
+  'localqueue' : 'glong_sl5',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
-  'status' : 'online',
-}
-osgsites['CERN-PROD-ce105-grid_atlas'] = {
-  'gatekeeper' : 'ce105.cern.ch',
-  'site' : 'CERN-PROD',
-  'region' : 'CERN',
-  'gstat' : 'CERN-PROD',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'grid_atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'jdladd' : 'globusrsl = (queue=glong_sl5)\n',
   'status' : 'online',
 }
 osgsites['PDC-sg2-ce-atlas'] = {
@@ -1044,26 +1176,26 @@ osgsites['PDC-sg2-ce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['IFIC-LCG2-ce01-short'] = {
-  'gatekeeper' : 'ce01.ific.uv.es',
-  'site' : 'IFIC-LCG2',
-  'region' : 'Spain',
-  'gstat' : 'IFIC-LCG2',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'short',
+osgsites['IN2P3-CC-cclcgceli07-medium'] = {
+  'gatekeeper' : 'cclcgceli07.in2p3.fr',
+  'site' : 'IN2P3-CC',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'medium',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
   'status' : 'online',
 }
-osgsites['RAL-LCG2-lcgce05-grid2000M'] = {
-  'gatekeeper' : 'lcgce05.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
+osgsites['UKI-SCOTGRID-DURHAM-ce01-q2d'] = {
+  'gatekeeper' : 'ce01.dur.scotgrid.ac.uk',
+  'site' : 'UKI-SCOTGRID-DURHAM',
   'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
+  'gstat' : 'UKI-SCOTGRID-DURHAM',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid2000M',
+  'localqueue' : 'q2d',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid2000M)\n',
+  'jdladd' : 'globusrsl = (queue=q2d)\n',
   'status' : 'online',
 }
 osgsites['INFN-ROMA1-atlas-ce-02-atlasgshort'] = {
@@ -1077,26 +1209,15 @@ osgsites['INFN-ROMA1-atlas-ce-02-atlasgshort'] = {
   'jdladd' : 'globusrsl = (queue=atlasgshort)\n',
   'status' : 'online',
 }
-osgsites['TUDresden-ZIH-desdemona-gridshort_scli'] = {
-  'gatekeeper' : 'desdemona.zih.tu-dresden.de',
-  'site' : 'TUDresden-ZIH',
-  'region' : 'Germany',
-  'gstat' : 'TUDresden-ZIH',
+osgsites['RAL-LCG2-lcgce08-grid3000M'] = {
+  'gatekeeper' : 'lcgce08.gridpp.rl.ac.uk',
+  'site' : 'RAL-LCG2',
+  'region' : 'UK',
+  'gstat' : 'RAL-LCG2',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gridshort_scli',
+  'localqueue' : 'grid3000M',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gridshort_scli)\n',
-  'status' : 'online',
-}
-osgsites['CSCS-LCG2-ce01-egee48h'] = {
-  'gatekeeper' : 'ce01.lcg.cscs.ch',
-  'site' : 'CSCS-LCG2',
-  'region' : 'Switzerland',
-  'gstat' : 'CSCS-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'egee48h',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=egee48h)\n',
+  'jdladd' : 'globusrsl = (queue=grid3000M)\n',
   'status' : 'online',
 }
 osgsites['INFN-LNS-grid-ce-short'] = {
@@ -1110,37 +1231,26 @@ osgsites['INFN-LNS-grid-ce-short'] = {
   'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
-osgsites['UKI-LT2-UCL-CENTRAL-gw-4-Reep'] = {
-  'gatekeeper' : 'gw-4.ccc.ucl.ac.uk',
-  'site' : 'UKI-LT2-UCL-CENTRAL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-UCL-CENTRAL',
-  'jobmanager' : 'uclpbs',
-  'localqueue' : 'Reep',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=Reep)\n',
-  'status' : 'online',
-}
-osgsites['SPACI-NAPOLI-spacin-ce1-atlas'] = {
-  'gatekeeper' : 'spacin-ce1.dma.unina.it',
-  'site' : 'SPACI-NAPOLI',
-  'region' : 'Italy',
-  'gstat' : 'SPACI-NAPOLI',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['RUG-CIT-ce-atlas'] = {
-  'gatekeeper' : 'ce.grid.rug.nl',
-  'site' : 'RUG-CIT',
-  'region' : 'Holland',
-  'gstat' : 'RUG-CIT',
+osgsites['AEGIS01-IPB-SCL-cream-atlas'] = {
+  'gatekeeper' : 'cream.ipb.ac.rs',
+  'site' : 'AEGIS01-IPB-SCL',
+  'region' : '',
+  'gstat' : 'AEGIS01-IPB-SCL',
   'jobmanager' : 'pbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['GRIF-IRFU-node07-atlasana'] = {
+  'gatekeeper' : 'node07.datagrid.cea.fr',
+  'site' : 'GRIF-IRFU',
+  'region' : 'France',
+  'gstat' : 'GRIF-IRFU',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlasana',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlasana)\n',
   'status' : 'online',
 }
 osgsites['NYSGRID_CORNELL_NYS1-nys1-default'] = {
@@ -1152,6 +1262,17 @@ osgsites['NYSGRID_CORNELL_NYS1-nys1-default'] = {
   'localqueue' : 'default',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=default)\n',
+  'status' : 'online',
+}
+osgsites['IN2P3-CC-T2-cclcgceli09-short'] = {
+  'gatekeeper' : 'cclcgceli09.in2p3.fr',
+  'site' : 'IN2P3-CC-T2',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC-T2',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
 osgsites['INFN-CAGLIARI-grid002-atlas'] = {
@@ -1187,6 +1308,17 @@ osgsites['GoeGrid-ce-goegrid-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['RU-SPbSU-alice16-atlas'] = {
+  'gatekeeper' : 'alice16.spbu.ru',
+  'site' : 'RU-SPbSU',
+  'region' : 'Russia',
+  'gstat' : 'RU-SPbSU',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
 osgsites['IN2P3-CC-cclcgceli02-verylong'] = {
   'gatekeeper' : 'cclcgceli02.in2p3.fr',
   'site' : 'IN2P3-CC',
@@ -1196,17 +1328,6 @@ osgsites['IN2P3-CC-cclcgceli02-verylong'] = {
   'localqueue' : 'verylong',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=verylong)\n',
-  'status' : 'online',
-}
-osgsites['INFN-LNL-2-t2-ce-03-atlas'] = {
-  'gatekeeper' : 't2-ce-03.lnl.infn.it',
-  'site' : 'INFN-LNL-2',
-  'region' : 'Italy',
-  'gstat' : 'INFN-LNL-2',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce104-grid_2nh_atlas'] = {
@@ -1220,26 +1341,48 @@ osgsites['CERN-PROD-ce104-grid_2nh_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
-osgsites['INFN-PISA-gridce1-atlas4'] = {
-  'gatekeeper' : 'gridce1.pi.infn.it',
-  'site' : 'INFN-PISA',
-  'region' : 'Italy',
-  'gstat' : 'INFN-PISA',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'atlas4',
+osgsites['DESY-HH-grid-cr5-atlas'] = {
+  'gatekeeper' : 'grid-cr5.desy.de',
+  'site' : 'DESY-HH',
+  'region' : 'Germany',
+  'gstat' : 'DESY-HH',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas4)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['INFN-T1-ce06-lcg-debug'] = {
-  'gatekeeper' : 'ce06-lcg.cr.cnaf.infn.it',
-  'site' : 'INFN-CNAF',
-  'region' : 'Italy',
-  'gstat' : 'INFN-T1',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'debug',
+osgsites['UKI-SCOTGRID-GLASGOW-svr014-atlas'] = {
+  'gatekeeper' : 'svr014.gla.scotgrid.ac.uk',
+  'site' : 'UKI-SCOTGRID-GLASGOW',
+  'region' : 'UK',
+  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=debug)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['MIT_CMS-ce01-default'] = {
+  'gatekeeper' : 'ce01.cmsaf.mit.edu',
+  'site' : 'MIT_CMS',
+  'region' : 'US',
+  'gstat' : 'MIT_CMS',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
+  'status' : 'online',
+}
+osgsites['CA-SCINET-T2-lcg-ce2-atlas'] = {
+  'gatekeeper' : 'lcg-ce2.scinet.utoronto.ca',
+  'site' : 'CA-SCINET-T2',
+  'region' : 'Canada',
+  'gstat' : 'CA-SCINET-T2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['UKI-SOUTHGRID-OX-HEP-t2ce05-mediumfive'] = {
@@ -1253,17 +1396,6 @@ osgsites['UKI-SOUTHGRID-OX-HEP-t2ce05-mediumfive'] = {
   'jdladd' : 'globusrsl = (queue=mediumfive)\n',
   'status' : 'online',
 }
-osgsites['CYFRONET-LCG2-ce-atlas'] = {
-  'gatekeeper' : 'ce.cyf-kr.edu.pl',
-  'site' : 'CYFRONET-LCG2',
-  'region' : 'Poland',
-  'gstat' : 'CYFRONET-LCG2',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
 osgsites['FZK-LCG2-cream-1-fzk-atlasS'] = {
   'gatekeeper' : 'cream-1-fzk.gridka.de',
   'site' : 'FZK-LCG2',
@@ -1273,6 +1405,17 @@ osgsites['FZK-LCG2-cream-1-fzk-atlasS'] = {
   'localqueue' : 'atlasS',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlasS)\n',
+  'status' : 'online',
+}
+osgsites['UKI-LT2-UCL-HEP-gw-6-Imra'] = {
+  'gatekeeper' : 'gw-6.ccc.ucl.ac.uk',
+  'site' : 'UKI-LT2-UCL-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-UCL-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'Imra',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=Imra)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce103-grid_2nh_atlas'] = {
@@ -1286,6 +1429,17 @@ osgsites['CERN-PROD-ce103-grid_2nh_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
+osgsites['UKI-SOUTHGRID-OX-HEP-t2ce06-longfive'] = {
+  'gatekeeper' : 't2ce06.physics.ox.ac.uk',
+  'site' : 'UKI-SOUTHGRID-OX-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'longfive',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=longfive)\n',
+  'status' : 'online',
+}
 osgsites['EFDA-JET-grid002-atlas'] = {
   'gatekeeper' : 'grid002.jet.efda.org',
   'site' : 'EFDA-JET',
@@ -1297,12 +1451,34 @@ osgsites['EFDA-JET-grid002-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UFlorida-PG-pg-atlas'] = {
-  'gatekeeper' : 'pg.ihepa.ufl.edu',
-  'site' : 'UFlorida-PG',
+osgsites['HG-06-EKT-ce01-atlas'] = {
+  'gatekeeper' : 'ce01.athena.hellasgrid.gr',
+  'site' : 'HG-06-EKT',
+  'region' : 'Greece',
+  'gstat' : 'HG-06-EKT',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['BNL-ATLAS-gridgk01-default'] = {
+  'gatekeeper' : 'gridgk01.racf.bnl.gov',
+  'site' : 'BNL-ATLAS',
   'region' : 'US',
-  'gstat' : 'UFlorida-PG',
+  'gstat' : 'BNL-ATLAS',
   'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
+  'status' : 'online',
+}
+osgsites['AEGIS07-IPB-ATLAS-ce-atlas-atlas'] = {
+  'gatekeeper' : 'ce-atlas.ipb.ac.rs',
+  'site' : 'AEGIS07-IPB-ATLAS',
+  'region' : '',
+  'gstat' : 'AEGIS07-IPB-ATLAS',
+  'jobmanager' : 'pbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
@@ -1319,26 +1495,48 @@ osgsites['BG03-NGCC-ce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['praguelcg2-ce2-gridatlasprod'] = {
-  'gatekeeper' : 'ce2.farm.particle.cz',
-  'site' : 'praguelcg2',
-  'region' : 'CzechR',
-  'gstat' : 'praguelcg2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gridatlasprod',
+osgsites['FNAL_FERMIGRID-fermigridosg1-default'] = {
+  'gatekeeper' : 'fermigridosg1.fnal.gov',
+  'site' : 'FNAL_FERMIGRID',
+  'region' : 'US',
+  'gstat' : 'FNAL_FERMIGRID',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gridatlasprod)\n',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
-osgsites['IN2P3-CC-T2-cclcgceli05-short'] = {
-  'gatekeeper' : 'cclcgceli05.in2p3.fr',
-  'site' : 'IN2P3-CC-T2',
-  'region' : 'France',
-  'gstat' : 'IN2P3-CC-T2',
-  'jobmanager' : 'bqs',
-  'localqueue' : 'short',
+osgsites['RO-16-UAIC-ce-grid-atlas'] = {
+  'gatekeeper' : 'ce-grid.grid.uaic.ro',
+  'site' : 'RO-16-UAIC',
+  'region' : 'Romania',
+  'gstat' : 'RO-16-UAIC',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['TUDresden-ZIH-desdemona-gridmedium_scli'] = {
+  'gatekeeper' : 'desdemona.zih.tu-dresden.de',
+  'site' : 'TUDresden-ZIH',
+  'region' : 'Germany',
+  'gstat' : 'TUDresden-ZIH',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'gridmedium_scli',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=gridmedium_scli)\n',
+  'status' : 'online',
+}
+osgsites['UTA_SWT2-gk04-atlas_analy_q'] = {
+  'gatekeeper' : 'gk04.swt2.uta.edu',
+  'site' : 'UTA_SWT2',
+  'region' : 'US',
+  'gstat' : 'UTA_SWT2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas_analy_q',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas_analy_q)\n',
   'status' : 'online',
 }
 osgsites['Vanderbilt-vampire-all'] = {
@@ -1363,6 +1561,28 @@ osgsites['FZK-LCG2-cream-2-fzk-atlasS'] = {
   'jdladd' : 'globusrsl = (queue=atlasS)\n',
   'status' : 'online',
 }
+osgsites['pic-ce08-gmedium_sl5'] = {
+  'gatekeeper' : 'ce08.pic.es',
+  'site' : 'pic',
+  'region' : 'Spain',
+  'gstat' : 'pic',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'gmedium_sl5',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=gmedium_sl5)\n',
+  'status' : 'online',
+}
+osgsites['IN2P3-CC-cccreamceli01-short'] = {
+  'gatekeeper' : 'cccreamceli01.in2p3.fr',
+  'site' : 'IN2P3-CC',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
+  'status' : 'online',
+}
 osgsites['FZK-LCG2-cream-2-fzk-atlasL'] = {
   'gatekeeper' : 'cream-2-fzk.gridka.de',
   'site' : 'FZK-LCG2',
@@ -1374,66 +1594,77 @@ osgsites['FZK-LCG2-cream-2-fzk-atlasL'] = {
   'jdladd' : 'globusrsl = (queue=atlasL)\n',
   'status' : 'online',
 }
-osgsites['UKI-SOUTHGRID-BHAM-HEP-epgce3-long'] = {
-  'gatekeeper' : 'epgce3.ph.bham.ac.uk',
-  'site' : 'UKI-SOUTHGRID-BHAM-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-BHAM-HEP',
-  'jobmanager' : 'lcgpbs',
+osgsites['WT2-osgserv01-long'] = {
+  'gatekeeper' : 'osgserv01.slac.stanford.edu',
+  'site' : 'WT2',
+  'region' : 'US',
+  'gstat' : 'WT2',
+  'jobmanager' : 'lsf',
   'localqueue' : 'long',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=long)\n',
   'status' : 'online',
 }
-osgsites['ifae-ifaece02-ifae'] = {
-  'gatekeeper' : 'ifaece02.pic.es',
-  'site' : 'PIC',
-  'region' : 'Spain',
-  'gstat' : 'ifae',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'ifae',
+osgsites['CERN-PROD-ce133-grid_2nh_atlas'] = {
+  'gatekeeper' : 'ce133.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_2nh_atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=ifae)\n',
+  'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-SCOTGRID-GLASGOW-svr026-q7d'] = {
-  'gatekeeper' : 'svr026.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
-  'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q7d',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q7d)\n',
-  'status' : 'online',
-}
-osgsites['pic-ce07-gshort64'] = {
-  'gatekeeper' : 'ce07.pic.es',
-  'site' : 'PIC',
-  'region' : 'Spain',
-  'gstat' : 'pic',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gshort64',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gshort64)\n',
-  'status' : 'online',
-}
-osgsites['TR-03-METU-cox01-atlas'] = {
-  'gatekeeper' : 'cox01.grid.metu.edu.tr',
-  'site' : 'METU',
-  'region' : 'Turkey',
-  'gstat' : 'TR-03-METU',
+osgsites['BG01-IPP-ce002-atlas'] = {
+  'gatekeeper' : 'ce002.ipp.acad.bg',
+  'site' : 'BG01-IPP',
+  'region' : 'Bulgaria',
+  'gstat' : 'BG01-IPP',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-NORTHGRID-LANCS-HEP-fal-pygrid-18-atlas'] = {
-  'gatekeeper' : 'fal-pygrid-18.lancs.ac.uk',
-  'site' : 'UKI-NORTHGRID-LANCS-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-NORTHGRID-LANCS-HEP',
+osgsites['TUDresden-ZIH-desdemona-gridlong_scli'] = {
+  'gatekeeper' : 'desdemona.zih.tu-dresden.de',
+  'site' : 'TUDresden-ZIH',
+  'region' : 'Germany',
+  'gstat' : 'TUDresden-ZIH',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'gridlong_scli',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=gridlong_scli)\n',
+  'status' : 'online',
+}
+osgsites['WT2-osgserv01-short'] = {
+  'gatekeeper' : 'osgserv01.slac.stanford.edu',
+  'site' : 'WT2',
+  'region' : 'US',
+  'gstat' : 'WT2',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
+  'status' : 'online',
+}
+osgsites['SARA-MATRIX-creamce-short'] = {
+  'gatekeeper' : 'creamce.gina.sara.nl',
+  'site' : 'SARA-MATRIX',
+  'region' : 'Holland',
+  'gstat' : 'SARA-MATRIX',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
+  'status' : 'online',
+}
+osgsites['ESA-ESRIN-grid-eo-engine04-atlas'] = {
+  'gatekeeper' : 'grid-eo-engine04.esrin.esa.int',
+  'site' : 'ESA-ESRIN',
+  'region' : 'International',
+  'gstat' : 'ESA-ESRIN',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
@@ -1451,6 +1682,17 @@ osgsites['INFN-NAPOLI-PAMELA-pamelace01-grid'] = {
   'jdladd' : 'globusrsl = (queue=grid)\n',
   'status' : 'online',
 }
+osgsites['BNL-ATLAS-gridgk02-default'] = {
+  'gatekeeper' : 'gridgk02.racf.bnl.gov',
+  'site' : 'BNL-ATLAS',
+  'region' : 'US',
+  'gstat' : 'BNL-ATLAS',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
+  'status' : 'online',
+}
 osgsites['IN2P3-CC-T2-cclcgceli06-medium'] = {
   'gatekeeper' : 'cclcgceli06.in2p3.fr',
   'site' : 'IN2P3-CC-T2',
@@ -1460,6 +1702,17 @@ osgsites['IN2P3-CC-T2-cclcgceli06-medium'] = {
   'localqueue' : 'medium',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=medium)\n',
+  'status' : 'online',
+}
+osgsites['INFN-T1-ce07-lcg-atlas'] = {
+  'gatekeeper' : 'ce07-lcg.cr.cnaf.infn.it',
+  'site' : 'INFN-T1',
+  'region' : 'Italy',
+  'gstat' : 'INFN-T1',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['INFN-T1-ce01-lcg-atlas'] = {
@@ -1473,15 +1726,26 @@ osgsites['INFN-T1-ce01-lcg-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['CSCS-LCG2-ce01-egee24h'] = {
-  'gatekeeper' : 'ce01.lcg.cscs.ch',
-  'site' : 'CSCS-LCG2',
-  'region' : 'Switzerland',
-  'gstat' : 'CSCS-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'egee24h',
+osgsites['NIKHEF-ELPROD-gazon-atlas'] = {
+  'gatekeeper' : 'gazon.nikhef.nl',
+  'site' : 'NIKHEF-ELPROD',
+  'region' : 'Holland',
+  'gstat' : 'NIKHEF-ELPROD',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=egee24h)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['pic-ce05-gmedium_sl5'] = {
+  'gatekeeper' : 'ce05.pic.es',
+  'site' : 'PIC',
+  'region' : 'Spain',
+  'gstat' : 'pic',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'gmedium_sl5',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=gmedium_sl5)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce111-grid_2nh_atlas'] = {
@@ -1506,6 +1770,39 @@ osgsites['TR-10-ULAKBIM-kalkan1-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['UKI-SOUTHGRID-BRIS-HEP-lcgce04-medium'] = {
+  'gatekeeper' : 'lcgce04.phy.bris.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
+  'status' : 'online',
+}
+osgsites['UKI-LT2-IC-HEP-ceprod00-long'] = {
+  'gatekeeper' : 'ceprod00.hep.ph.ic.ac.uk',
+  'site' : 'UKI-LT2-IC-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-IC-HEP',
+  'jobmanager' : 'sge',
+  'localqueue' : 'long',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=long)\n',
+  'status' : 'online',
+}
+osgsites['NIKHEF-ELPROD-trekker-medium'] = {
+  'gatekeeper' : 'trekker.nikhef.nl',
+  'site' : 'NIKHEF-ELPROD',
+  'region' : 'Holland',
+  'gstat' : 'NIKHEF-ELPROD',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
+  'status' : 'online',
+}
 osgsites['CNR-ILC-PISA-gridce-atlas'] = {
   'gatekeeper' : 'gridce.ilc.cnr.it',
   'site' : 'CNR-ILC-PISA',
@@ -1517,11 +1814,11 @@ osgsites['CNR-ILC-PISA-gridce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['ALBERTA-LCG2-lcgce01-atlas'] = {
-  'gatekeeper' : 'lcgce01.cpp.ualberta.ca',
-  'site' : 'ALBERTA-LCG2',
-  'region' : 'Canada',
-  'gstat' : 'ALBERTA-LCG2',
+osgsites['IL-TAU-HEP-tau-ce-atlas'] = {
+  'gatekeeper' : 'tau-ce.hep.tau.ac.il',
+  'site' : 'IL-TAU-HEP',
+  'region' : 'Israel',
+  'gstat' : 'IL-TAU-HEP',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
@@ -1539,15 +1836,37 @@ osgsites['INFN-FRASCATI-atlasce1-atlas_short'] = {
   'jdladd' : 'globusrsl = (queue=atlas_short)\n',
   'status' : 'online',
 }
-osgsites['pic-ppsce02-pps'] = {
-  'gatekeeper' : 'ppsce02.pic.es',
-  'site' : 'pic',
-  'region' : 'Spain',
-  'gstat' : 'pic',
+osgsites['MWT2_UC-uct2-grid6-analy'] = {
+  'gatekeeper' : 'uct2-grid6.uchicago.edu',
+  'site' : 'MWT2_UC',
+  'region' : 'US',
+  'gstat' : 'MWT2_UC',
   'jobmanager' : 'pbs',
-  'localqueue' : 'pps',
+  'localqueue' : 'analy',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=pps)\n',
+  'jdladd' : 'globusrsl = (queue=analy)\n',
+  'status' : 'online',
+}
+osgsites['UKI-SOUTHGRID-BHAM-HEP-epgr02-short'] = {
+  'gatekeeper' : 'epgr02.ph.bham.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BHAM-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-BHAM-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
+  'status' : 'online',
+}
+osgsites['RO-07-NIPNE-tbit01-atlas'] = {
+  'gatekeeper' : 'tbit01.nipne.ro',
+  'site' : 'NIPNE',
+  'region' : 'Romania',
+  'gstat' : 'RO-07-NIPNE',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['INFN-CNAF-gridit-ce-001-lcg'] = {
@@ -1572,15 +1891,15 @@ osgsites['SWT2_CPB-gk01-atlas_analy_q'] = {
   'jdladd' : 'globusrsl = (queue=atlas_analy_q)\n',
   'status' : 'online',
 }
-osgsites['UKI-SOUTHGRID-RALPP-heplnx206-grid2000'] = {
-  'gatekeeper' : 'heplnx206.pp.rl.ac.uk',
-  'site' : 'UKI-SOUTHGRID-RALPP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-RALPP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid2000',
+osgsites['IN2P3-CC-T2-cclcgceli06-short'] = {
+  'gatekeeper' : 'cclcgceli06.in2p3.fr',
+  'site' : 'IN2P3-CC-T2',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC-T2',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'short',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid2000)\n',
+  'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce114-grid_2nh_atlas'] = {
@@ -1605,6 +1924,17 @@ osgsites['UKI-SCOTGRID-DURHAM-ce01-q6h'] = {
   'jdladd' : 'globusrsl = (queue=q6h)\n',
   'status' : 'online',
 }
+osgsites['RAL-LCG2-lcgce06-grid3000M'] = {
+  'gatekeeper' : 'lcgce06.gridpp.rl.ac.uk',
+  'site' : 'RAL-LCG2',
+  'region' : 'UK',
+  'gstat' : 'RAL-LCG2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'grid3000M',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid3000M)\n',
+  'status' : 'online',
+}
 osgsites['CERN-PROD-ce112-grid_atlas'] = {
   'gatekeeper' : 'ce112.cern.ch',
   'site' : 'CERN-PROD',
@@ -1614,6 +1944,17 @@ osgsites['CERN-PROD-ce112-grid_atlas'] = {
   'localqueue' : 'grid_atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'status' : 'online',
+}
+osgsites['AGLT2-gate02-default'] = {
+  'gatekeeper' : 'gate02.grid.umich.edu',
+  'site' : 'AGLT2',
+  'region' : 'US',
+  'gstat' : 'AGLT2',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
 osgsites['UKI-NORTHGRID-MAN-HEP-ce02-long'] = {
@@ -1627,6 +1968,17 @@ osgsites['UKI-NORTHGRID-MAN-HEP-ce02-long'] = {
   'jdladd' : 'globusrsl = (queue=long)\n',
   'status' : 'online',
 }
+osgsites['NWICG_NotreDame-osg-8.q'] = {
+  'gatekeeper' : 'osg.crc.nd.edu',
+  'site' : 'NWICG_NotreDame',
+  'region' : 'US',
+  'gstat' : 'NWICG_NotreDame',
+  'jobmanager' : 'r20',
+  'localqueue' : '8.q',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=8.q)\n',
+  'status' : 'online',
+}
 osgsites['VICTORIA-LCG2-lcg-ce-general'] = {
   'gatekeeper' : 'lcg-ce.rcf.uvic.ca',
   'site' : 'VICTORIA-LCG2',
@@ -1638,37 +1990,37 @@ osgsites['VICTORIA-LCG2-lcg-ce-general'] = {
   'jdladd' : 'globusrsl = (queue=general)\n',
   'status' : 'online',
 }
-osgsites['Nebraska-ff-grid-default'] = {
-  'gatekeeper' : 'ff-grid.unl.edu',
-  'site' : 'Nebraska',
-  'region' : 'US',
-  'gstat' : 'Nebraska',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'default',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=default)\n',
-  'status' : 'online',
-}
-osgsites['Nebraska-red-default'] = {
-  'gatekeeper' : 'red.unl.edu',
-  'site' : 'Nebraska',
-  'region' : 'US',
-  'gstat' : 'Nebraska',
-  'jobmanager' : 'condor',
-  'localqueue' : 'default',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=default)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SCOTGRID-GLASGOW-svr026-q2d'] = {
-  'gatekeeper' : 'svr026.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
+osgsites['UKI-SOUTHGRID-BHAM-HEP-epgr05-short'] = {
+  'gatekeeper' : 'epgr05.ph.bham.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BHAM-HEP',
   'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q2d',
+  'gstat' : 'UKI-SOUTHGRID-BHAM-HEP',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'short',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q2d)\n',
+  'jdladd' : 'globusrsl = (queue=short)\n',
+  'status' : 'online',
+}
+osgsites['GRIF-IRFU-node74-atlas'] = {
+  'gatekeeper' : 'node74.datagrid.cea.fr',
+  'site' : 'GRIF-IRFU',
+  'region' : 'France',
+  'gstat' : 'GRIF-IRFU',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['RRC-KI-foam-atlas'] = {
+  'gatekeeper' : 'foam.grid.kiae.ru',
+  'site' : 'RRC-KI',
+  'region' : 'Russia',
+  'gstat' : 'RRC-KI',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['UNINA-EGEE-ce-atlas'] = {
@@ -1682,39 +2034,6 @@ osgsites['UNINA-EGEE-ce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['INFN-MILANO-ATLASC-ce-b1-1-short'] = {
-  'gatekeeper' : 'ce-b1-1.mi.infn.it',
-  'site' : 'INFN-MILANO-ATLASC',
-  'region' : 'Italy',
-  'gstat' : 'INFN-MILANO-ATLASC',
-  'jobmanager' : 'lcgcondor',
-  'localqueue' : 'short',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
-  'status' : 'online',
-}
-osgsites['UKI-LT2-QMUL-ce03-lcg_long_x86'] = {
-  'gatekeeper' : 'ce03.esc.qmul.ac.uk',
-  'site' : 'UKI-LT2-QMUL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-QMUL',
-  'jobmanager' : 'lcgsge',
-  'localqueue' : 'lcg_long_x86',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=lcg_long_x86)\n',
-  'status' : 'online',
-}
-osgsites['RAL-LCG2-lcgce07-grid2000M'] = {
-  'gatekeeper' : 'lcgce07.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
-  'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid2000M',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid2000M)\n',
-  'status' : 'online',
-}
 osgsites['CERN-PROD-ce128-grid_atlas'] = {
   'gatekeeper' : 'ce128.cern.ch',
   'site' : 'CERN-PROD',
@@ -1724,6 +2043,17 @@ osgsites['CERN-PROD-ce128-grid_atlas'] = {
   'localqueue' : 'grid_atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'status' : 'online',
+}
+osgsites['IN2P3-CC-T2-cclcgceli09-medium'] = {
+  'gatekeeper' : 'cclcgceli09.in2p3.fr',
+  'site' : 'IN2P3-CC-T2',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC-T2',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
   'status' : 'online',
 }
 osgsites['HG-02-IASA-cream-ce01-atlas'] = {
@@ -1737,48 +2067,26 @@ osgsites['HG-02-IASA-cream-ce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['FZK-LCG2-ce-1-fzk-atlasXL'] = {
-  'gatekeeper' : 'ce-1-fzk.gridka.de',
-  'site' : 'FZK-LCG2',
-  'region' : 'Germany',
-  'gstat' : 'FZK-LCG2',
-  'jobmanager' : 'pbspro',
-  'localqueue' : 'atlasXL',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasXL)\n',
-  'status' : 'online',
-}
-osgsites['IN2P3-CC-T2-cclcgceli05-medium'] = {
-  'gatekeeper' : 'cclcgceli05.in2p3.fr',
-  'site' : 'IN2P3-CC-T2',
-  'region' : 'France',
-  'gstat' : 'IN2P3-CC-T2',
-  'jobmanager' : 'bqs',
-  'localqueue' : 'medium',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=medium)\n',
-  'status' : 'online',
-}
-osgsites['ESA-ESRIN-grid-eo-engine04-atlas'] = {
-  'gatekeeper' : 'grid-eo-engine04.esrin.esa.int',
-  'site' : 'ESA-ESRIN',
-  'region' : 'International',
-  'gstat' : 'ESA-ESRIN',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SCOTGRID-GLASGOW-svr021-q30m'] = {
-  'gatekeeper' : 'svr021.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
+osgsites['UKI-SOUTHGRID-BRIS-HEP-lcgce03-long'] = {
+  'gatekeeper' : 'lcgce03.phy.bris.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BRIS-HEP',
   'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+  'gstat' : 'UKI-SOUTHGRID-BRIS-HEP',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q30m',
+  'localqueue' : 'long',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q30m)\n',
+  'jdladd' : 'globusrsl = (queue=long)\n',
+  'status' : 'online',
+}
+osgsites['IFIC-LCG2-ce03-short'] = {
+  'gatekeeper' : 'ce03.ific.uv.es',
+  'site' : 'IFIC-LCG2',
+  'region' : 'Spain',
+  'gstat' : 'IFIC-LCG2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce104-grid_atlas'] = {
@@ -1790,6 +2098,28 @@ osgsites['CERN-PROD-ce104-grid_atlas'] = {
   'localqueue' : 'grid_atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'status' : 'online',
+}
+osgsites['UCSDT2-osg-gw-4-default'] = {
+  'gatekeeper' : 'osg-gw-4.t2.ucsd.edu',
+  'site' : 'UCSDT2',
+  'region' : 'US',
+  'gstat' : 'UCSDT2',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
+  'status' : 'online',
+}
+osgsites['SARA-MATRIX-creamce-medium'] = {
+  'gatekeeper' : 'creamce.gina.sara.nl',
+  'site' : 'SARA-MATRIX',
+  'region' : 'Holland',
+  'gstat' : 'SARA-MATRIX',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
   'status' : 'online',
 }
 osgsites['BG04-ACAD-ce02-atlas'] = {
@@ -1814,22 +2144,33 @@ osgsites['HG-05-FORTH-ce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['UKI-SOUTHGRID-OX-HEP-t2ce04-mediumfive'] = {
+  'gatekeeper' : 't2ce04.physics.ox.ac.uk',
+  'site' : 'UKI-SOUTHGRID-OX-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'mediumfive',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=mediumfive)\n',
+  'status' : 'online',
+}
+osgsites['CERN-PROD-ce125-grid_2nh_atlas'] = {
+  'gatekeeper' : 'ce125.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_2nh_atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
+  'status' : 'online',
+}
 osgsites['CY-01-KIMON-ce101-atlas'] = {
   'gatekeeper' : 'ce101.grid.ucy.ac.cy',
   'site' : 'CY-01-KIMON',
   'region' : 'Cyprus',
   'gstat' : 'CY-01-KIMON',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['PAKGRID-LCG2-gcg01-atlas'] = {
-  'gatekeeper' : 'gcg01.pakgrid.org.pk',
-  'site' : 'PAKGRID-LCG2',
-  'region' : 'Pakistan',
-  'gstat' : 'PAKGRID-LCG2',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
@@ -1845,6 +2186,39 @@ osgsites['INFN-NAPOLI-griditce01-atlas'] = {
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['CERN-PROD-ce133-grid_atlas'] = {
+  'gatekeeper' : 'ce133.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'status' : 'online',
+}
+osgsites['CYFRONET-LCG2-ce-atlas5'] = {
+  'gatekeeper' : 'ce.grid.cyf-kr.edu.pl',
+  'site' : 'CYFRONET-LCG2',
+  'region' : 'Poland',
+  'gstat' : 'CYFRONET-LCG2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas5',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas5)\n',
+  'status' : 'online',
+}
+osgsites['CERN-PROD-ce131-grid_atlas'] = {
+  'gatekeeper' : 'ce131.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
   'status' : 'online',
 }
 osgsites['MPPMU-grid-lcgce-long'] = {
@@ -1869,37 +2243,37 @@ osgsites['CERN-PROD-ce107-grid_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
   'status' : 'online',
 }
-osgsites['ru-Moscow-SINP-LCG2-lcg06-atlas'] = {
-  'gatekeeper' : 'lcg06.sinp.msu.ru',
-  'site' : 'ru-Moscow-SINP-LCG2',
-  'region' : 'Russia',
-  'gstat' : 'ru-Moscow-SINP-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
+osgsites['NWICG_NotreDame-osg-2.q'] = {
+  'gatekeeper' : 'osg.crc.nd.edu',
+  'site' : 'NWICG_NotreDame',
+  'region' : 'US',
+  'gstat' : 'NWICG_NotreDame',
+  'jobmanager' : 'r20',
+  'localqueue' : '2.q',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=2.q)\n',
   'status' : 'online',
 }
-osgsites['ru-Moscow-SINP-LCG2-lcg02-atlas'] = {
-  'gatekeeper' : 'lcg02.sinp.msu.ru',
-  'site' : 'ru-Moscow-SINP-LCG2',
-  'region' : 'Russia',
-  'gstat' : 'ru-Moscow-SINP-LCG2',
+osgsites['IFIC-LCG2-ce03-long'] = {
+  'gatekeeper' : 'ce03.ific.uv.es',
+  'site' : 'IFIC-LCG2',
+  'region' : 'Spain',
+  'gstat' : 'IFIC-LCG2',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
+  'localqueue' : 'long',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=long)\n',
   'status' : 'online',
 }
-osgsites['INFN-T1-ce06-lcg-atlas'] = {
-  'gatekeeper' : 'ce06-lcg.cr.cnaf.infn.it',
-  'site' : 'INFN-CNAF',
-  'region' : 'Italy',
-  'gstat' : 'INFN-T1',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'atlas',
+osgsites['IN2P3-CC-T2-cclcgceli09-long'] = {
+  'gatekeeper' : 'cclcgceli09.in2p3.fr',
+  'site' : 'IN2P3-CC-T2',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC-T2',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'long',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=long)\n',
   'status' : 'online',
 }
 osgsites['IN2P3-LPSC-lpsc-ce-atlas'] = {
@@ -1913,6 +2287,17 @@ osgsites['IN2P3-LPSC-lpsc-ce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['INFN-LNL-2-t2-ce-04-atlas1'] = {
+  'gatekeeper' : 't2-ce-04.lnl.infn.it',
+  'site' : 'INFN-LNL-2',
+  'region' : 'Italy',
+  'gstat' : 'INFN-LNL-2',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'atlas1',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas1)\n',
+  'status' : 'online',
+}
 osgsites['IN2P3-CC-cclcgceli02-long'] = {
   'gatekeeper' : 'cclcgceli02.in2p3.fr',
   'site' : 'IN2P3-CC',
@@ -1922,17 +2307,6 @@ osgsites['IN2P3-CC-cclcgceli02-long'] = {
   'localqueue' : 'long',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=long)\n',
-  'status' : 'online',
-}
-osgsites['PAKGRID-LCG2-ce-atlas'] = {
-  'gatekeeper' : 'ce.pakgrid.org.pk',
-  'site' : 'PAKGRID-LCG2',
-  'region' : 'Pakistan',
-  'gstat' : 'PAKGRID-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['UKI-NORTHGRID-LIV-HEP-hepgrid2-atlas'] = {
@@ -1946,15 +2320,15 @@ osgsites['UKI-NORTHGRID-LIV-HEP-hepgrid2-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['SPRACE-osg-ce-atlas'] = {
-  'gatekeeper' : 'osg-ce.sprace.org.br',
-  'site' : 'SPRACE',
-  'region' : 'Brazil',
-  'gstat' : 'SPRACE',
-  'jobmanager' : 'condor',
-  'localqueue' : 'atlas',
+osgsites['BU_ATLAS_Tier2-atlas-dque'] = {
+  'gatekeeper' : 'atlas.bu.edu',
+  'site' : 'BU_ATLAS_Tier2',
+  'region' : 'US',
+  'gstat' : 'BU_ATLAS_Tier2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'dque',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=dque)\n',
   'status' : 'online',
 }
 osgsites['IN2P3-LPC-clrlcgce03-atlas'] = {
@@ -1968,15 +2342,37 @@ osgsites['IN2P3-LPC-clrlcgce03-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['INFN-PISA-gridce2-atlas4'] = {
-  'gatekeeper' : 'gridce2.pi.infn.it',
-  'site' : 'INFN-PISA',
-  'region' : 'Italy',
-  'gstat' : 'INFN-PISA',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'atlas4',
+osgsites['UKI-SOUTHGRID-CAM-HEP-serv03-atlas'] = {
+  'gatekeeper' : 'serv03.hep.phy.cam.ac.uk',
+  'site' : 'UKI-SOUTHGRID-CAM-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-CAM-HEP',
+  'jobmanager' : 'lcgcondor',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas4)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['TTU-ANTAEUS-antaeus-serial'] = {
+  'gatekeeper' : 'antaeus.hpcc.ttu.edu',
+  'site' : 'TTU-ANTAEUS',
+  'region' : 'US',
+  'gstat' : 'TTU-ANTAEUS',
+  'jobmanager' : 'sge',
+  'localqueue' : 'serial',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=serial)\n',
+  'status' : 'online',
+}
+osgsites['UKI-LT2-UCL-HEP-gw-6-Tinya'] = {
+  'gatekeeper' : 'gw-6.ccc.ucl.ac.uk',
+  'site' : 'UKI-LT2-UCL-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-UCL-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'Tinya',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=Tinya)\n',
   'status' : 'online',
 }
 osgsites['Nebraska-gpn-husker-default'] = {
@@ -1990,37 +2386,15 @@ osgsites['Nebraska-gpn-husker-default'] = {
   'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
-osgsites['pic-ce05-gmedium64'] = {
-  'gatekeeper' : 'ce05.pic.es',
-  'site' : 'PIC',
-  'region' : 'Spain',
-  'gstat' : 'pic',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gmedium64',
+osgsites['NWICG_NotreDame-osg-4.q'] = {
+  'gatekeeper' : 'osg.crc.nd.edu',
+  'site' : 'NWICG_NotreDame',
+  'region' : 'US',
+  'gstat' : 'NWICG_NotreDame',
+  'jobmanager' : 'r20',
+  'localqueue' : '4.q',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gmedium64)\n',
-  'status' : 'online',
-}
-osgsites['IFIC-LCG2-lcg2ce-atlas'] = {
-  'gatekeeper' : 'lcg2ce.ific.uv.es',
-  'site' : 'IFIC-LCG2',
-  'region' : 'Spain',
-  'gstat' : 'IFIC-LCG2',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['pic-ce07-gmedium64'] = {
-  'gatekeeper' : 'ce07.pic.es',
-  'site' : 'PIC',
-  'region' : 'Spain',
-  'gstat' : 'pic',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gmedium64',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gmedium64)\n',
+  'jdladd' : 'globusrsl = (queue=4.q)\n',
   'status' : 'online',
 }
 osgsites['SDU-LCG2-ce-atlas'] = {
@@ -2034,6 +2408,17 @@ osgsites['SDU-LCG2-ce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['UCSDT2-osg-gw-2-default'] = {
+  'gatekeeper' : 'osg-gw-2.t2.ucsd.edu',
+  'site' : 'UCSDT2',
+  'region' : 'US',
+  'gstat' : 'UCSDT2',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
+  'status' : 'online',
+}
 osgsites['UKI-SCOTGRID-DURHAM-ce01-q3d'] = {
   'gatekeeper' : 'ce01.dur.scotgrid.ac.uk',
   'site' : 'UKI-SCOTGRID-DURHAM',
@@ -2043,6 +2428,17 @@ osgsites['UKI-SCOTGRID-DURHAM-ce01-q3d'] = {
   'localqueue' : 'q3d',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=q3d)\n',
+  'status' : 'online',
+}
+osgsites['AGLT2-gate02-group_gatekpr'] = {
+  'gatekeeper' : 'gate02.grid.umich.edu',
+  'site' : 'AGLT2',
+  'region' : 'US',
+  'gstat' : 'AGLT2',
+  'jobmanager' : 'condor',
+  'localqueue' : 'group_gatekpr',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=group_gatekpr)\n',
   'status' : 'online',
 }
 osgsites['IN2P3-CC-cclcgceli02-short'] = {
@@ -2056,15 +2452,26 @@ osgsites['IN2P3-CC-cclcgceli02-short'] = {
   'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
-osgsites['RAL-LCG2-lcgce05-grid500M'] = {
-  'gatekeeper' : 'lcgce05.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
+osgsites['UKI-NORTHGRID-LIV-HEP-hepgrid3-HEP'] = {
+  'gatekeeper' : 'hepgrid3.ph.liv.ac.uk',
+  'site' : 'UKI-NORTHGRID-LIV-HEP',
   'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid500M',
+  'gstat' : 'UKI-NORTHGRID-LIV-HEP',
+  'jobmanager' : 'lcgsge',
+  'localqueue' : 'HEP',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid500M)\n',
+  'jdladd' : 'globusrsl = (queue=HEP)\n',
+  'status' : 'online',
+}
+osgsites['wuppertalprod-grid-ce5-dg_med'] = {
+  'gatekeeper' : 'grid-ce5.physik.uni-wuppertal.de',
+  'site' : 'wuppertalprod',
+  'region' : 'Germany',
+  'gstat' : 'wuppertalprod',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'dg_med',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=dg_med)\n',
   'status' : 'online',
 }
 osgsites['AUVERGRID-iut15auvergridce01-atlas'] = {
@@ -2078,48 +2485,37 @@ osgsites['AUVERGRID-iut15auvergridce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['RAL-LCG2-lcgce05-grid1000M'] = {
-  'gatekeeper' : 'lcgce05.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
-  'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid1000M',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid1000M)\n',
-  'status' : 'online',
-}
-osgsites['IN2P3-CC-cclcgceli01-verylong'] = {
-  'gatekeeper' : 'cclcgceli01.in2p3.fr',
-  'site' : 'IN2P3-CC',
-  'region' : 'France',
-  'gstat' : 'IN2P3-CC',
-  'jobmanager' : 'bqs',
-  'localqueue' : 'verylong',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=verylong)\n',
-  'status' : 'online',
-}
-osgsites['FZK-LCG2-ce-1-fzk-atlasXS'] = {
-  'gatekeeper' : 'ce-1-fzk.gridka.de',
-  'site' : 'FZK-LCG2',
-  'region' : 'Germany',
-  'gstat' : 'FZK-LCG2',
-  'jobmanager' : 'pbspro',
-  'localqueue' : 'atlasXS',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasXS)\n',
-  'status' : 'online',
-}
-osgsites['WARSAW-EGEE-ce2-atlas'] = {
-  'gatekeeper' : 'ce2.polgrid.pl',
-  'site' : 'WARSAW-EGEE',
-  'region' : 'Poland',
-  'gstat' : 'WARSAW-EGEE',
+osgsites['JINR-LCG2-lcgce01-atlas'] = {
+  'gatekeeper' : 'lcgce01.jinr.ru',
+  'site' : 'JINR-LCG2',
+  'region' : 'Russia',
+  'gstat' : 'JINR-LCG2',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['JINR-LCG2-lcgce21-atlas'] = {
+  'gatekeeper' : 'lcgce21.jinr.ru',
+  'site' : 'JINR-LCG2',
+  'region' : 'Russia',
+  'gstat' : 'JINR-LCG2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['INFN-LNL-2-t2-ce-02-atlas1'] = {
+  'gatekeeper' : 't2-ce-02.lnl.infn.it',
+  'site' : 'INFN-LNL-2',
+  'region' : 'Italy',
+  'gstat' : 'INFN-LNL-2',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'atlas1',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas1)\n',
   'status' : 'online',
 }
 osgsites['IN2P3-CC-T2-cclcgceli06-long'] = {
@@ -2133,56 +2529,89 @@ osgsites['IN2P3-CC-T2-cclcgceli06-long'] = {
   'jdladd' : 'globusrsl = (queue=long)\n',
   'status' : 'online',
 }
-osgsites['UKI-LT2-UCL-CENTRAL-gw-4-Gim'] = {
-  'gatekeeper' : 'gw-4.ccc.ucl.ac.uk',
-  'site' : 'UKI-LT2-UCL-CENTRAL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-UCL-CENTRAL',
-  'jobmanager' : 'uclpbs',
-  'localqueue' : 'Gim',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=Gim)\n',
-  'status' : 'online',
-}
-osgsites['DESY-HH-grid-ce3-default'] = {
-  'gatekeeper' : 'grid-ce3.desy.de',
-  'site' : 'DESY-HH',
-  'region' : 'Germany',
-  'gstat' : 'DESY-HH',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'default',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=default)\n',
-  'status' : 'online',
-}
-osgsites['INFN-MILANO-ATLASC-ce-b1-1-atlas'] = {
-  'gatekeeper' : 'ce-b1-1.mi.infn.it',
-  'site' : 'INFN-MILANO-ATLASC',
+osgsites['INFN-LNL-2-t2-ce-05-atlas1'] = {
+  'gatekeeper' : 't2-ce-05.lnl.infn.it',
+  'site' : 'INFN-LNL-2',
   'region' : 'Italy',
-  'gstat' : 'INFN-MILANO-ATLASC',
-  'jobmanager' : 'lcgcondor',
+  'gstat' : 'INFN-LNL-2',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'atlas1',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas1)\n',
+  'status' : 'online',
+}
+osgsites['INFN-LNL-2-t2-ce-01-atlas1'] = {
+  'gatekeeper' : 't2-ce-01.lnl.infn.it',
+  'site' : 'INFN-LNL-2',
+  'region' : 'Italy',
+  'gstat' : 'INFN-LNL-2',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'atlas1',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas1)\n',
+  'status' : 'online',
+}
+osgsites['UKI-SOUTHGRID-RALPP-heplnx206-grid1000'] = {
+  'gatekeeper' : 'heplnx206.pp.rl.ac.uk',
+  'site' : 'UKI-SOUTHGRID-RALPP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-RALPP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'grid1000',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid1000)\n',
+  'status' : 'online',
+}
+osgsites['UKI-SOUTHGRID-BRIS-HEP-lcgce04-long'] = {
+  'gatekeeper' : 'lcgce04.phy.bris.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'long',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=long)\n',
+  'status' : 'online',
+}
+osgsites['NYSGRID-CCR-U2-u2-grid-ccr'] = {
+  'gatekeeper' : 'u2-grid.ccr.buffalo.edu',
+  'site' : 'NYSGRID-CCR-U2',
+  'region' : 'US',
+  'gstat' : 'NYSGRID-CCR-U2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'ccr',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=ccr)\n',
+  'status' : 'online',
+}
+osgsites['INFN-T1-ce06-lcg-atlas'] = {
+  'gatekeeper' : 'ce06-lcg.cr.cnaf.infn.it',
+  'site' : 'INFN-CNAF',
+  'region' : 'Italy',
+  'gstat' : 'INFN-T1',
+  'jobmanager' : 'lcglsf',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['SARA-MATRIX-ce-short'] = {
-  'gatekeeper' : 'ce.gina.sara.nl',
-  'site' : 'SARA-MATRIX',
-  'region' : 'Holland',
-  'gstat' : 'SARA-MATRIX',
+osgsites['UNI-DORTMUND-udo-ce01-atlas'] = {
+  'gatekeeper' : 'udo-ce01.grid.tu-dortmund.de',
+  'site' : 'UNI-DORTMUND',
+  'region' : 'Germany',
+  'gstat' : 'UNI-DORTMUND',
   'jobmanager' : 'pbs',
-  'localqueue' : 'short',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['TR-05-BOUN-yildirim-atlas'] = {
-  'gatekeeper' : 'yildirim.grid.boun.edu.tr',
-  'site' : 'TR-05-BOUN',
-  'region' : 'Turkey',
-  'gstat' : 'TR-05-BOUN',
-  'jobmanager' : 'lcgpbs',
+osgsites['INFN-PISA-gridce1-atlas'] = {
+  'gatekeeper' : 'gridce1.pi.infn.it',
+  'site' : 'INFN-PISA',
+  'region' : 'Italy',
+  'gstat' : 'INFN-PISA',
+  'jobmanager' : 'lcglsf',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
@@ -2221,37 +2650,37 @@ osgsites['CERN-PROD-ce129-grid_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
   'status' : 'online',
 }
-osgsites['NIKHEF-ELPROD-gazon-qshort'] = {
-  'gatekeeper' : 'gazon.nikhef.nl',
-  'site' : 'NIKHEF-ELPROD',
-  'region' : 'Holland',
-  'gstat' : 'NIKHEF-ELPROD',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'qshort',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=qshort)\n',
-  'status' : 'online',
-}
-osgsites['praguelcg2-ce1-lcgatlasprod'] = {
-  'gatekeeper' : 'ce1.farm.particle.cz',
-  'site' : 'praguelcg2',
-  'region' : 'CzechR',
-  'gstat' : 'praguelcg2',
+osgsites['UKI-SOUTHGRID-OX-HEP-t2ce04-shortfive'] = {
+  'gatekeeper' : 't2ce04.physics.ox.ac.uk',
+  'site' : 'UKI-SOUTHGRID-OX-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'lcgatlasprod',
+  'localqueue' : 'shortfive',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=lcgatlasprod)\n',
+  'jdladd' : 'globusrsl = (queue=shortfive)\n',
   'status' : 'online',
 }
-osgsites['INFN-NAPOLI-ATLAS-atlasce01-atlas'] = {
-  'gatekeeper' : 'atlasce01.na.infn.it',
-  'site' : 'INFN-NAPOLI-ATLAS',
-  'region' : 'Italy',
-  'gstat' : 'INFN-NAPOLI-ATLAS',
+osgsites['DESY-HH-grid-ce5-atlas'] = {
+  'gatekeeper' : 'grid-ce5.desy.de',
+  'site' : 'DESY-HH',
+  'region' : 'Germany',
+  'gstat' : 'DESY-HH',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['IFIC-LCG2-ce04-long'] = {
+  'gatekeeper' : 'ce04.ific.uv.es',
+  'site' : 'IFIC-LCG2',
+  'region' : 'Spain',
+  'gstat' : 'IFIC-LCG2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'long',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=long)\n',
   'status' : 'online',
 }
 osgsites['PDC-cream-ce-atlas'] = {
@@ -2276,26 +2705,48 @@ osgsites['UKI-LT2-Brunel-dgc-grid-44-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['LIP-Coimbra-grid006-atlas'] = {
-  'gatekeeper' : 'grid006.gridc.lip.pt',
-  'site' : 'LIP-Coimbra',
-  'region' : 'Portugal',
-  'gstat' : 'LIP-Coimbra',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
+osgsites['UCSDT2-osg-gw-4-group_other'] = {
+  'gatekeeper' : 'osg-gw-4.t2.ucsd.edu',
+  'site' : 'UCSDT2',
+  'region' : 'US',
+  'gstat' : 'UCSDT2',
+  'jobmanager' : 'condor',
+  'localqueue' : 'group_other',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=group_other)\n',
   'status' : 'online',
 }
-osgsites['UKI-LT2-UCL-CENTRAL-gw-4-Garth'] = {
-  'gatekeeper' : 'gw-4.ccc.ucl.ac.uk',
-  'site' : 'UKI-LT2-UCL-CENTRAL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-UCL-CENTRAL',
-  'jobmanager' : 'uclpbs',
-  'localqueue' : 'Garth',
+osgsites['pic-ce06-gshort_sl5'] = {
+  'gatekeeper' : 'ce06.pic.es',
+  'site' : 'PIC',
+  'region' : 'Spain',
+  'gstat' : 'pic',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'gshort_sl5',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=Garth)\n',
+  'jdladd' : 'globusrsl = (queue=gshort_sl5)\n',
+  'status' : 'online',
+}
+osgsites['LIP-Lisbon-ce02-atlas-atlasgrid_x86_64'] = {
+  'gatekeeper' : 'ce02-atlas.lip.pt',
+  'site' : 'LIP-Lisbon',
+  'region' : 'Portugal',
+  'gstat' : 'LIP-Lisbon',
+  'jobmanager' : 'lcgsge',
+  'localqueue' : 'atlasgrid_x86_64',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlasgrid_x86_64)\n',
+  'status' : 'online',
+}
+osgsites['INFN-BARI-cream-ce-1-infinite'] = {
+  'gatekeeper' : 'cream-ce-1.ba.infn.it',
+  'site' : 'INFN-BARI',
+  'region' : 'Italy',
+  'gstat' : 'INFN-BARI',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'infinite',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=infinite)\n',
   'status' : 'online',
 }
 osgsites['ru-PNPI-cluster-atlas'] = {
@@ -2309,15 +2760,15 @@ osgsites['ru-PNPI-cluster-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-SOUTHGRID-RALPP-heplnx206-short'] = {
-  'gatekeeper' : 'heplnx206.pp.rl.ac.uk',
-  'site' : 'UKI-SOUTHGRID-RALPP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-RALPP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'short',
+osgsites['CERN-PROD-ce132-grid_atlas'] = {
+  'gatekeeper' : 'ce132.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
+  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
   'status' : 'online',
 }
 osgsites['IN2P3-LPC-clrlcgce02-atlasana'] = {
@@ -2331,37 +2782,48 @@ osgsites['IN2P3-LPC-clrlcgce02-atlasana'] = {
   'jdladd' : 'globusrsl = (queue=atlasana)\n',
   'status' : 'online',
 }
-osgsites['DESY-HH-grid-ce2-default'] = {
-  'gatekeeper' : 'grid-ce2.desy.de',
-  'site' : 'DESY-HH',
-  'region' : 'Germany',
-  'gstat' : 'DESY-HH',
+osgsites['INFN-BARI-grid-ce-01-infinite'] = {
+  'gatekeeper' : 'grid-ce-01.ba.infn.it',
+  'site' : 'INFN-BARI',
+  'region' : 'Italy',
+  'gstat' : 'INFN-BARI',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'default',
+  'localqueue' : 'infinite',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=default)\n',
+  'jdladd' : 'globusrsl = (queue=infinite)\n',
   'status' : 'online',
 }
-osgsites['IISAS-Bratislava-ce-atlas'] = {
-  'gatekeeper' : 'ce.ui.savba.sk',
-  'site' : 'IISAS-Bratislava',
-  'region' : 'Slovakia',
-  'gstat' : 'IISAS-Bratislava',
-  'jobmanager' : 'pbs',
+osgsites['UKI-SOUTHGRID-BHAM-HEP-epgr02-long'] = {
+  'gatekeeper' : 'epgr02.ph.bham.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BHAM-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-BHAM-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'long',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=long)\n',
+  'status' : 'online',
+}
+osgsites['ru-Moscow-SINP-LCG2-lcg02-atlas'] = {
+  'gatekeeper' : 'lcg02.sinp.msu.ru',
+  'site' : 'ru-Moscow-SINP-LCG2',
+  'region' : 'Russia',
+  'gstat' : 'ru-Moscow-SINP-LCG2',
+  'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['TTU-ANTAEUS-antaeus-tigre'] = {
-  'gatekeeper' : 'antaeus.hpcc.ttu.edu',
-  'site' : 'TTU-ANTAEUS',
-  'region' : 'US',
-  'gstat' : 'TTU-ANTAEUS',
-  'jobmanager' : 'lsf',
-  'localqueue' : 'tigre',
+osgsites['UKI-LT2-UCL-HEP-gw-6-Reep'] = {
+  'gatekeeper' : 'gw-6.ccc.ucl.ac.uk',
+  'site' : 'UKI-LT2-UCL-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-UCL-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'Reep',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=tigre)\n',
+  'jdladd' : 'globusrsl = (queue=Reep)\n',
   'status' : 'online',
 }
 osgsites['UKI-NORTHGRID-SHEF-HEP-lcgce0-atlas'] = {
@@ -2397,15 +2859,15 @@ osgsites['HG-01-GRNET-ce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['pic-ppsce03-condor'] = {
-  'gatekeeper' : 'ppsce03.pic.es',
-  'site' : 'pic',
-  'region' : 'Spain',
-  'gstat' : 'pic',
-  'jobmanager' : 'condor',
-  'localqueue' : 'condor',
+osgsites['INFN-BARI-cream-ce-1-short'] = {
+  'gatekeeper' : 'cream-ce-1.ba.infn.it',
+  'site' : 'INFN-BARI',
+  'region' : 'Italy',
+  'gstat' : 'INFN-BARI',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'short',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=condor)\n',
+  'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
 osgsites['EELA-UTFSM-ce-atlas'] = {
@@ -2463,17 +2925,6 @@ osgsites['CESGA-EGEE-ce2-GRID_atlas'] = {
   'jdladd' : 'globusrsl = (queue=GRID_atlas)\n',
   'status' : 'online',
 }
-osgsites['TUDresden-ZIH-desdemona-gridlong_scli'] = {
-  'gatekeeper' : 'desdemona.zih.tu-dresden.de',
-  'site' : 'TUDresden-ZIH',
-  'region' : 'Germany',
-  'gstat' : 'TUDresden-ZIH',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gridlong_scli',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gridlong_scli)\n',
-  'status' : 'online',
-}
 osgsites['INFN-LNS-grid-ce-infinite'] = {
   'gatekeeper' : 'grid-ce.lns.infn.it',
   'site' : 'INFN-LNS',
@@ -2505,17 +2956,6 @@ osgsites['RUG-CIT-ce-short'] = {
   'localqueue' : 'short',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=short)\n',
-  'status' : 'online',
-}
-osgsites['UKI-LT2-QMUL-ce01-lcg_long_x86'] = {
-  'gatekeeper' : 'ce01.esc.qmul.ac.uk',
-  'site' : 'UKI-LT2-QMUL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-QMUL',
-  'jobmanager' : 'lcgsge',
-  'localqueue' : 'lcg_long_x86',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=lcg_long_x86)\n',
   'status' : 'online',
 }
 osgsites['FZK-LCG2-ce-3-fzk-atlasL'] = {
@@ -2551,6 +2991,17 @@ osgsites['INFN-ROMA3-ce-01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['UKI-SOUTHGRID-BRIS-HEP-lcgce03-short'] = {
+  'gatekeeper' : 'lcgce03.phy.bris.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
+  'status' : 'online',
+}
 osgsites['UKI-SCOTGRID-ECDF-mw05-ecdf'] = {
   'gatekeeper' : 'mw05.ecdf.ed.ac.uk',
   'site' : 'UKI-SCOTGRID-ECDF',
@@ -2584,37 +3035,70 @@ osgsites['INFN-NAPOLI-ATLAS-atlasce01-atlas_short'] = {
   'jdladd' : 'globusrsl = (queue=atlas_short)\n',
   'status' : 'online',
 }
-osgsites['RO-02-NIPNE-tbat01-atlas'] = {
-  'gatekeeper' : 'tbat01.nipne.ro',
-  'site' : 'NIPNE',
-  'region' : 'Romania',
-  'gstat' : 'RO-02-NIPNE',
-  'jobmanager' : 'lcgpbs',
+osgsites['CERN-PROD-ce130-grid_atlas'] = {
+  'gatekeeper' : 'ce130.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'status' : 'online',
+}
+osgsites['Taiwan-LCG2-cream01-atlas'] = {
+  'gatekeeper' : 'cream01.grid.sinica.edu.tw',
+  'site' : 'Taiwan-LCG2',
+  'region' : 'Taiwan',
+  'gstat' : 'Taiwan-LCG2',
+  'jobmanager' : 'pbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['MIT_CMS-ce01-atlas'] = {
-  'gatekeeper' : 'ce01.cmsaf.mit.edu',
-  'site' : 'MIT_CMS',
-  'region' : 'US',
-  'gstat' : 'MIT_CMS',
-  'jobmanager' : 'condor',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['RAL-LCG2-lcgce03-grid3000M'] = {
-  'gatekeeper' : 'lcgce03.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
+osgsites['UKI-SOUTHGRID-BHAM-HEP-epgr05-long'] = {
+  'gatekeeper' : 'epgr05.ph.bham.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BHAM-HEP',
   'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid3000M',
+  'gstat' : 'UKI-SOUTHGRID-BHAM-HEP',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'long',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid3000M)\n',
+  'jdladd' : 'globusrsl = (queue=long)\n',
+  'status' : 'online',
+}
+osgsites['UKI-SOUTHGRID-OX-HEP-t2ce02-longoct'] = {
+  'gatekeeper' : 't2ce02.physics.ox.ac.uk',
+  'site' : 'UKI-SOUTHGRID-OX-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'longoct',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=longoct)\n',
+  'status' : 'online',
+}
+osgsites['GRIF-LAL-grid36-atlas'] = {
+  'gatekeeper' : 'grid36.lal.in2p3.fr',
+  'site' : 'GRIF-LAL',
+  'region' : 'France',
+  'gstat' : 'GRIF-LAL',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['NWICG_NotreDame-osg-6.q'] = {
+  'gatekeeper' : 'osg.crc.nd.edu',
+  'site' : 'NWICG_NotreDame',
+  'region' : 'US',
+  'gstat' : 'NWICG_NotreDame',
+  'jobmanager' : 'r20',
+  'localqueue' : '6.q',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=6.q)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce129-grid_2nh_atlas'] = {
@@ -2628,70 +3112,48 @@ osgsites['CERN-PROD-ce129-grid_2nh_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
-osgsites['UCR-HEP-top-atlas'] = {
-  'gatekeeper' : 'top.ucr.edu',
-  'site' : 'UCR-HEP',
+osgsites['AEGIS01-IPB-SCL-ce64-atlas'] = {
+  'gatekeeper' : 'ce64.ipb.ac.rs',
+  'site' : 'AEGIS01-IPB-SCL',
+  'region' : '',
+  'gstat' : 'AEGIS01-IPB-SCL',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['wuppertalprod-grid-ce5-dg_long'] = {
+  'gatekeeper' : 'grid-ce5.physik.uni-wuppertal.de',
+  'site' : 'wuppertalprod',
+  'region' : 'Germany',
+  'gstat' : 'wuppertalprod',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'dg_long',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=dg_long)\n',
+  'status' : 'online',
+}
+osgsites['LIP-Coimbra-grid006-atlas'] = {
+  'gatekeeper' : 'grid006.gridc.lip.pt',
+  'site' : 'LIP-Coimbra',
+  'region' : 'Portugal',
+  'gstat' : 'LIP-Coimbra',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['MWT2_UC-uct2-grid6-prod'] = {
+  'gatekeeper' : 'uct2-grid6.uchicago.edu',
+  'site' : 'MWT2_UC',
   'region' : 'US',
-  'gstat' : 'UCR-HEP',
-  'jobmanager' : 'condor',
-  'localqueue' : 'atlas',
+  'gstat' : 'MWT2_UC',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'prod',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SCOTGRID-GLASGOW-svr021-q1d'] = {
-  'gatekeeper' : 'svr021.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
-  'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q1d',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q1d)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SOUTHGRID-RALPP-heplnx206-grid1000'] = {
-  'gatekeeper' : 'heplnx206.pp.rl.ac.uk',
-  'site' : 'UKI-SOUTHGRID-RALPP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-RALPP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid1000',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid1000)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SOUTHGRID-OX-HEP-t2ce02-mediumoct'] = {
-  'gatekeeper' : 't2ce02.physics.ox.ac.uk',
-  'site' : 'UKI-SOUTHGRID-OX-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'mediumoct',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=mediumoct)\n',
-  'status' : 'online',
-}
-osgsites['GoeGrid-ce-goegrid-atlasS'] = {
-  'gatekeeper' : 'ce-goegrid.gwdg.de',
-  'site' : 'GoeGrid',
-  'region' : 'Germany',
-  'gstat' : 'GoeGrid',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlasS',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasS)\n',
-  'status' : 'online',
-}
-osgsites['DESY-ZN-lcg-ce1-atlas'] = {
-  'gatekeeper' : 'lcg-ce1.ifh.de',
-  'site' : 'DESY-ZN',
-  'region' : 'Germany',
-  'gstat' : 'DESY-ZN',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=prod)\n',
   'status' : 'online',
 }
 osgsites['UKI-SCOTGRID-DURHAM-ce02-q3d'] = {
@@ -2705,26 +3167,15 @@ osgsites['UKI-SCOTGRID-DURHAM-ce02-q3d'] = {
   'jdladd' : 'globusrsl = (queue=q3d)\n',
   'status' : 'online',
 }
-osgsites['UTA_DPCC-atlas-atlas_analy_q'] = {
-  'gatekeeper' : 'atlas.dpcc.uta.edu',
-  'site' : 'UTA_DPCC',
-  'region' : 'US',
-  'gstat' : 'UTA_DPCC',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas_analy_q',
+osgsites['GRIF-IRFU-node07-atlas'] = {
+  'gatekeeper' : 'node07.datagrid.cea.fr',
+  'site' : 'GRIF-IRFU',
+  'region' : 'France',
+  'gstat' : 'GRIF-IRFU',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas_analy_q)\n',
-  'status' : 'online',
-}
-osgsites['CERN-PROD-ce115-grid_atlas'] = {
-  'gatekeeper' : 'ce115.cern.ch',
-  'site' : 'CERN-PROD',
-  'region' : 'CERN',
-  'gstat' : 'CERN-PROD',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'grid_atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['RENCI-Engagement-belhaven-1-default'] = {
@@ -2738,15 +3189,26 @@ osgsites['RENCI-Engagement-belhaven-1-default'] = {
   'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
-osgsites['TUDresden-ZIH-desdemona-gridmedium_scli'] = {
-  'gatekeeper' : 'desdemona.zih.tu-dresden.de',
-  'site' : 'TUDresden-ZIH',
-  'region' : 'Germany',
-  'gstat' : 'TUDresden-ZIH',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gridmedium_scli',
+osgsites['INFN-PISA-gridce0-atlas'] = {
+  'gatekeeper' : 'gridce0.pi.infn.it',
+  'site' : 'INFN-PISA',
+  'region' : 'Italy',
+  'gstat' : 'INFN-PISA',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gridmedium_scli)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['GoeGrid-ce-goegrid-atlasS'] = {
+  'gatekeeper' : 'ce-goegrid.gwdg.de',
+  'site' : 'GoeGrid',
+  'region' : 'Germany',
+  'gstat' : 'GoeGrid',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlasS',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlasS)\n',
   'status' : 'online',
 }
 osgsites['Umontreal-LCG2-lcg-ce-atlas'] = {
@@ -2754,6 +3216,28 @@ osgsites['Umontreal-LCG2-lcg-ce-atlas'] = {
   'site' : 'Umontreal-LCG2',
   'region' : 'Canada',
   'gstat' : 'Umontreal-LCG2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['pic-ce06-glong_sl5'] = {
+  'gatekeeper' : 'ce06.pic.es',
+  'site' : 'PIC',
+  'region' : 'Spain',
+  'gstat' : 'pic',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'glong_sl5',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=glong_sl5)\n',
+  'status' : 'online',
+}
+osgsites['TOKYO-LCG2-lcg-ce01-atlas'] = {
+  'gatekeeper' : 'lcg-ce01.icepp.jp',
+  'site' : 'TOKYO-LCG2',
+  'region' : 'Japan',
+  'gstat' : 'TOKYO-LCG2',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
@@ -2782,15 +3266,15 @@ osgsites['GoeGrid-ce-goegrid-atlasL'] = {
   'jdladd' : 'globusrsl = (queue=atlasL)\n',
   'status' : 'online',
 }
-osgsites['FNAL_GPGRID_1-fnpcosg1-group_usatlas'] = {
-  'gatekeeper' : 'fnpcosg1.fnal.gov',
-  'site' : 'FNAL_GPGRID_1',
+osgsites['WT2-osgserv01-xxl'] = {
+  'gatekeeper' : 'osgserv01.slac.stanford.edu',
+  'site' : 'WT2',
   'region' : 'US',
-  'gstat' : 'FNAL_GPGRID_1',
-  'jobmanager' : 'condor',
-  'localqueue' : 'group_usatlas',
+  'gstat' : 'WT2',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'xxl',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=group_usatlas)\n',
+  'jdladd' : 'globusrsl = (queue=xxl)\n',
   'status' : 'online',
 }
 osgsites['MA-01-CNRST-ce1-atlas'] = {
@@ -2815,6 +3299,39 @@ osgsites['SFU-LCG2-snowpatch-hep-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['INFN-LNL-2-t2-ce-03-atlas1'] = {
+  'gatekeeper' : 't2-ce-03.lnl.infn.it',
+  'site' : 'INFN-LNL-2',
+  'region' : 'Italy',
+  'gstat' : 'INFN-LNL-2',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'atlas1',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas1)\n',
+  'status' : 'online',
+}
+osgsites['RAL-LCG2-lcgce01-grid3000M'] = {
+  'gatekeeper' : 'lcgce01.gridpp.rl.ac.uk',
+  'site' : 'RAL-LCG2',
+  'region' : 'UK',
+  'gstat' : 'RAL-LCG2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'grid3000M',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid3000M)\n',
+  'status' : 'online',
+}
+osgsites['TUDresden-ZIH-desdemona-gridshort_scli'] = {
+  'gatekeeper' : 'desdemona.zih.tu-dresden.de',
+  'site' : 'TUDresden-ZIH',
+  'region' : 'Germany',
+  'gstat' : 'TUDresden-ZIH',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'gridshort_scli',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=gridshort_scli)\n',
+  'status' : 'online',
+}
 osgsites['UKI-SOUTHGRID-RALPP-heplnx206-grid500'] = {
   'gatekeeper' : 'heplnx206.pp.rl.ac.uk',
   'site' : 'UKI-SOUTHGRID-RALPP',
@@ -2826,15 +3343,26 @@ osgsites['UKI-SOUTHGRID-RALPP-heplnx206-grid500'] = {
   'jdladd' : 'globusrsl = (queue=grid500)\n',
   'status' : 'online',
 }
-osgsites['FMPhI-UNIBA-lcgceatlas-atlas'] = {
-  'gatekeeper' : 'lcgceatlas.dnp.fmph.uniba.sk',
-  'site' : 'FMPhI-UNIBA',
-  'region' : 'Slovakia',
-  'gstat' : 'FMPhI-UNIBA',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
+osgsites['pic-ce08-glong_sl5'] = {
+  'gatekeeper' : 'ce08.pic.es',
+  'site' : 'pic',
+  'region' : 'Spain',
+  'gstat' : 'pic',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'glong_sl5',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=glong_sl5)\n',
+  'status' : 'online',
+}
+osgsites['NIKHEF-ELPROD-gazon-medium'] = {
+  'gatekeeper' : 'gazon.nikhef.nl',
+  'site' : 'NIKHEF-ELPROD',
+  'region' : 'Holland',
+  'gstat' : 'NIKHEF-ELPROD',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
   'status' : 'online',
 }
 osgsites['INFN-ROMA1-atlas-ce-01-atlasglong'] = {
@@ -2848,37 +3376,70 @@ osgsites['INFN-ROMA1-atlas-ce-01-atlasglong'] = {
   'jdladd' : 'globusrsl = (queue=atlasglong)\n',
   'status' : 'online',
 }
-osgsites['FZK-LCG2-ce-1-fzk-atlasS'] = {
-  'gatekeeper' : 'ce-1-fzk.gridka.de',
-  'site' : 'FZK-LCG2',
-  'region' : 'Germany',
-  'gstat' : 'FZK-LCG2',
-  'jobmanager' : 'pbspro',
-  'localqueue' : 'atlasS',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasS)\n',
-  'status' : 'online',
-}
-osgsites['INFN-MILANO-t2-ce-01-short'] = {
-  'gatekeeper' : 't2-ce-01.mi.infn.it',
-  'site' : 'INFN-MILANO',
-  'region' : 'Italy',
-  'gstat' : 'INFN-MILANO',
+osgsites['UKI-SOUTHGRID-BRIS-HEP-lcgce04-short'] = {
+  'gatekeeper' : 'lcgce04.phy.bris.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-BRIS-HEP',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'short',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
-osgsites['DESY-HH-grid-ce3-testing'] = {
-  'gatekeeper' : 'grid-ce3.desy.de',
-  'site' : 'DESY-HH',
-  'region' : 'Germany',
-  'gstat' : 'DESY-HH',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'testing',
+osgsites['UAM-LCG2-grid003-atlas'] = {
+  'gatekeeper' : 'grid003.ft.uam.es',
+  'site' : 'UAM-LCG2',
+  'region' : 'Spain',
+  'gstat' : 'UAM-LCG2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=testing)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['INFN-MILANO-ATLASC-t2-ce-01-short'] = {
+  'gatekeeper' : 't2-ce-01.mi.infn.it',
+  'site' : 'INFN-MILANO-ATLASC',
+  'region' : 'Italy',
+  'gstat' : 'INFN-MILANO-ATLASC',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
+  'status' : 'online',
+}
+osgsites['TR-07-PAMUKKALE-paugrid1-atlas'] = {
+  'gatekeeper' : 'paugrid1.pamukkale.edu.tr',
+  'site' : 'TR-07-PAMUKKALE',
+  'region' : 'Turkey',
+  'gstat' : 'TR-07-PAMUKKALE',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['TW-FTT-f-ce02-atlas'] = {
+  'gatekeeper' : 'f-ce02.grid.sinica.edu.tw',
+  'site' : 'TW-FTT',
+  'region' : 'Taiwan',
+  'gstat' : 'TW-FTT',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['IN2P3-CC-cclcgceli07-short'] = {
+  'gatekeeper' : 'cclcgceli07.in2p3.fr',
+  'site' : 'IN2P3-CC',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
 osgsites['INFN-T1-ce05-lcg-atlas'] = {
@@ -2903,34 +3464,67 @@ osgsites['GRIF-LPNHE-lpnce-atlasana'] = {
   'jdladd' : 'globusrsl = (queue=atlasana)\n',
   'status' : 'online',
 }
-osgsites['CERN-PROD-ce111-grid_atlas'] = {
-  'gatekeeper' : 'ce111.cern.ch',
-  'site' : 'CERN-PROD',
-  'region' : 'CERN',
-  'gstat' : 'CERN-PROD',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'grid_atlas',
+osgsites['UTA_SWT2-gk04-input_q'] = {
+  'gatekeeper' : 'gk04.swt2.uta.edu',
+  'site' : 'UTA_SWT2',
+  'region' : 'US',
+  'gstat' : 'UTA_SWT2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'input_q',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'jdladd' : 'globusrsl = (queue=input_q)\n',
   'status' : 'online',
 }
-osgsites['SPACI-CS-IA64-square-atlas'] = {
-  'gatekeeper' : 'square.hpcc.unical.it',
-  'site' : 'SPACI-CS-IA64',
-  'region' : 'Italy',
-  'gstat' : 'SPACI-CS-IA64',
+osgsites['HU_ATLAS_Tier2-heroatlas-ATLAS_Install'] = {
+  'gatekeeper' : 'heroatlas.fas.harvard.edu',
+  'site' : 'HU_ATLAS_Tier2',
+  'region' : 'US',
+  'gstat' : 'HU_ATLAS_Tier2',
   'jobmanager' : 'lsf',
-  'localqueue' : 'atlas',
+  'localqueue' : 'ATLAS_Install',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=ATLAS_Install)\n',
   'status' : 'online',
 }
-osgsites['HEPGRID_UERJ-osgce-atlas'] = {
-  'gatekeeper' : 'osgce.hepgrid.uerj.br',
+osgsites['HEPGRID_UERJ-osgce64-default'] = {
+  'gatekeeper' : 'osgce64.hepgrid.uerj.br',
   'site' : 'HEPGRID_UERJ',
   'region' : 'Brazil',
   'gstat' : 'HEPGRID_UERJ',
   'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
+  'status' : 'online',
+}
+osgsites['UNI-FREIBURG-ce1-medium'] = {
+  'gatekeeper' : 'ce1.bfg.uni-freiburg.de',
+  'site' : 'UNI-FREIBURG',
+  'region' : 'Germany',
+  'gstat' : 'UNI-FREIBURG',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
+  'status' : 'online',
+}
+osgsites['TUDresden-ZIH-desdemona-route_scli'] = {
+  'gatekeeper' : 'desdemona.zih.tu-dresden.de',
+  'site' : 'TUDresden-ZIH',
+  'region' : 'Germany',
+  'gstat' : 'TUDresden-ZIH',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'route_scli',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=route_scli)\n',
+  'status' : 'online',
+}
+osgsites['BY-NCPHEP-grid03-atlas'] = {
+  'gatekeeper' : 'grid03.hep.by',
+  'site' : 'BY-NCPHEP',
+  'region' : '',
+  'gstat' : 'BY-NCPHEP',
+  'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
@@ -2947,17 +3541,6 @@ osgsites['praguelcg2-ce2-gridatlas'] = {
   'jdladd' : 'globusrsl = (queue=gridatlas)\n',
   'status' : 'online',
 }
-osgsites['IllinoisHEP-osgx0-default'] = {
-  'gatekeeper' : 'osgx0.hep.uiuc.edu',
-  'site' : 'IllinoisHEP',
-  'region' : 'US',
-  'gstat' : 'IllinoisHEP',
-  'jobmanager' : 'condor',
-  'localqueue' : 'default',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=default)\n',
-  'status' : 'online',
-}
 osgsites['IN2P3-LPSC-lpsc-ce-atlasana'] = {
   'gatekeeper' : 'lpsc-ce.in2p3.fr',
   'site' : 'IN2P3-LPSC',
@@ -2969,48 +3552,59 @@ osgsites['IN2P3-LPSC-lpsc-ce-atlasana'] = {
   'jdladd' : 'globusrsl = (queue=atlasana)\n',
   'status' : 'online',
 }
-osgsites['UTA_DPCC-atlas-batch'] = {
-  'gatekeeper' : 'atlas.dpcc.uta.edu',
-  'site' : 'UTA_DPCC',
-  'region' : 'US',
-  'gstat' : 'UTA_DPCC',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'batch',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=batch)\n',
-  'status' : 'online',
-}
-osgsites['INFN-FRASCATI-atlasce1-atlas'] = {
-  'gatekeeper' : 'atlasce1.lnf.infn.it',
-  'site' : 'INFN-FRASCATI',
+osgsites['INFN-TORINO-t2-ce-02-atlas'] = {
+  'gatekeeper' : 't2-ce-02.to.infn.it',
+  'site' : 'INFN-TORINO',
   'region' : 'Italy',
-  'gstat' : 'INFN-FRASCATI',
+  'gstat' : 'INFN-TORINO',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['RAL-LCG2-lcgce03-grid1000M'] = {
-  'gatekeeper' : 'lcgce03.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
-  'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
+osgsites['IFIC-LCG2-ce01-short'] = {
+  'gatekeeper' : 'ce01.ific.uv.es',
+  'site' : 'IFIC-LCG2',
+  'region' : 'Spain',
+  'gstat' : 'IFIC-LCG2',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid1000M',
+  'localqueue' : 'short',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid1000M)\n',
+  'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
-osgsites['UKI-LT2-UCL-CENTRAL-gw-4-Tinya'] = {
-  'gatekeeper' : 'gw-4.ccc.ucl.ac.uk',
-  'site' : 'UKI-LT2-UCL-CENTRAL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-UCL-CENTRAL',
-  'jobmanager' : 'uclpbs',
-  'localqueue' : 'Tinya',
+osgsites['FZK-LCG2-ce-3-fzk-atlasXL'] = {
+  'gatekeeper' : 'ce-3-fzk.gridka.de',
+  'site' : 'FZK-LCG2',
+  'region' : 'Germany',
+  'gstat' : 'FZK-LCG2',
+  'jobmanager' : 'pbspro',
+  'localqueue' : 'atlasXL',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=Tinya)\n',
+  'jdladd' : 'globusrsl = (queue=atlasXL)\n',
+  'status' : 'online',
+}
+osgsites['ifae-ifaece02-glong_sl5'] = {
+  'gatekeeper' : 'ifaece02.pic.es',
+  'site' : 'PIC',
+  'region' : 'Spain',
+  'gstat' : 'ifae',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'glong_sl5',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=glong_sl5)\n',
+  'status' : 'online',
+}
+osgsites['Firefly-ff-grid-default'] = {
+  'gatekeeper' : 'ff-grid.unl.edu',
+  'site' : 'Firefly',
+  'region' : 'US',
+  'gstat' : 'Firefly',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
 osgsites['FZK-LCG2-ce-3-fzk-atlasXS'] = {
@@ -3035,28 +3629,6 @@ osgsites['CERN-PROD-ce127-grid_2nh_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-LT2-RHUL-ce1-atlasgrid'] = {
-  'gatekeeper' : 'ce1.pp.rhul.ac.uk',
-  'site' : 'UKI-LT2-RHUL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-RHUL',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlasgrid',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasgrid)\n',
-  'status' : 'online',
-}
-osgsites['UKI-LT2-UCL-CENTRAL-gw-4-Rokk'] = {
-  'gatekeeper' : 'gw-4.ccc.ucl.ac.uk',
-  'site' : 'UKI-LT2-UCL-CENTRAL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-UCL-CENTRAL',
-  'jobmanager' : 'uclpbs',
-  'localqueue' : 'Rokk',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=Rokk)\n',
-  'status' : 'online',
-}
 osgsites['BEIJING-LCG2-lcg002-atlas'] = {
   'gatekeeper' : 'lcg002.ihep.ac.cn',
   'site' : 'BEIJING-LCG2',
@@ -3079,26 +3651,26 @@ osgsites['CERN-PROD-ce202-grid_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
   'status' : 'online',
 }
-osgsites['PEARL-AMU-pearl-atlas'] = {
-  'gatekeeper' : 'pearl.amu.edu.pl',
-  'site' : 'PEARL-AMU',
-  'region' : 'Poland',
-  'gstat' : 'PEARL-AMU',
+osgsites['AGLT2-gate01-group_gatekpr'] = {
+  'gatekeeper' : 'gate01.aglt2.org',
+  'site' : 'AGLT2',
+  'region' : 'US',
+  'gstat' : 'AGLT2',
+  'jobmanager' : 'condor',
+  'localqueue' : 'group_gatekpr',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=group_gatekpr)\n',
+  'status' : 'online',
+}
+osgsites['GR-04-FORTH-ICS-grid001-atlas'] = {
+  'gatekeeper' : 'grid001.ics.forth.gr',
+  'site' : 'GR-04-FORTH-ICS',
+  'region' : 'Greece',
+  'gstat' : 'GR-04-FORTH-ICS',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['UKI-LT2-QMUL-ce01-lcg_long2_x86'] = {
-  'gatekeeper' : 'ce01.esc.qmul.ac.uk',
-  'site' : 'UKI-LT2-QMUL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-QMUL',
-  'jobmanager' : 'lcgsge',
-  'localqueue' : 'lcg_long2_x86',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=lcg_long2_x86)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce105-grid_2nh_atlas'] = {
@@ -3112,6 +3684,17 @@ osgsites['CERN-PROD-ce105-grid_2nh_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
+osgsites['UKI-SCOTGRID-GLASGOW-svr021-atlas'] = {
+  'gatekeeper' : 'svr021.gla.scotgrid.ac.uk',
+  'site' : 'UKI-SCOTGRID-GLASGOW',
+  'region' : 'UK',
+  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
 osgsites['CERN-PROD-ce126-grid_atlas'] = {
   'gatekeeper' : 'ce126.cern.ch',
   'site' : 'CERN-PROD',
@@ -3123,6 +3706,17 @@ osgsites['CERN-PROD-ce126-grid_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
   'status' : 'online',
 }
+osgsites['IN2P3-CC-cccreamceli01-medium'] = {
+  'gatekeeper' : 'cccreamceli01.in2p3.fr',
+  'site' : 'IN2P3-CC',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
+  'status' : 'online',
+}
 osgsites['UKI-SOUTHGRID-RALPP-heplnx207-grid500'] = {
   'gatekeeper' : 'heplnx207.pp.rl.ac.uk',
   'site' : 'UKI-SOUTHGRID-RALPP',
@@ -3132,6 +3726,28 @@ osgsites['UKI-SOUTHGRID-RALPP-heplnx207-grid500'] = {
   'localqueue' : 'grid500',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=grid500)\n',
+  'status' : 'online',
+}
+osgsites['NYSGRID-CCR-U2-u2-grid-pvfs'] = {
+  'gatekeeper' : 'u2-grid.ccr.buffalo.edu',
+  'site' : 'NYSGRID-CCR-U2',
+  'region' : 'US',
+  'gstat' : 'NYSGRID-CCR-U2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'pvfs',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=pvfs)\n',
+  'status' : 'online',
+}
+osgsites['MWT2_IU-iut2-grid6-iut2'] = {
+  'gatekeeper' : 'iut2-grid6.iu.edu',
+  'site' : 'MWT2_IU',
+  'region' : 'US',
+  'gstat' : 'MWT2_IU',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'iut2',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=iut2)\n',
   'status' : 'online',
 }
 osgsites['INFN-GENOVA-grid01-atlas'] = {
@@ -3167,6 +3783,50 @@ osgsites['Taiwan-LCG2-lcg00125-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['NIKHEF-ELPROD-trekker-short'] = {
+  'gatekeeper' : 'trekker.nikhef.nl',
+  'site' : 'NIKHEF-ELPROD',
+  'region' : 'Holland',
+  'gstat' : 'NIKHEF-ELPROD',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
+  'status' : 'online',
+}
+osgsites['UKI-LT2-UCL-HEP-gw-6-Rokk'] = {
+  'gatekeeper' : 'gw-6.ccc.ucl.ac.uk',
+  'site' : 'UKI-LT2-UCL-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-UCL-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'Rokk',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=Rokk)\n',
+  'status' : 'online',
+}
+osgsites['UKI-SCOTGRID-ECDF-ce2-ecdf'] = {
+  'gatekeeper' : 'ce2.glite.ecdf.ed.ac.uk',
+  'site' : 'UKI-SCOTGRID-ECDF',
+  'region' : 'UK',
+  'gstat' : 'UKI-SCOTGRID-ECDF',
+  'jobmanager' : 'lcgsge',
+  'localqueue' : 'ecdf',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=ecdf)\n',
+  'status' : 'online',
+}
+osgsites['GRISU-SPACI-NAPOLI-spacina-ce-atlas'] = {
+  'gatekeeper' : 'spacina-ce.scope.unina.it',
+  'site' : 'GRISU-SPACI-NAPOLI',
+  'region' : 'Italy',
+  'gstat' : 'GRISU-SPACI-NAPOLI',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
 osgsites['FZK-LCG2-ce-4-fzk-atlasL'] = {
   'gatekeeper' : 'ce-4-fzk.gridka.de',
   'site' : 'FZK-LCG2',
@@ -3176,6 +3836,17 @@ osgsites['FZK-LCG2-ce-4-fzk-atlasL'] = {
   'localqueue' : 'atlasL',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlasL)\n',
+  'status' : 'online',
+}
+osgsites['BU_ATLAS_Tier2-atlas-opteron'] = {
+  'gatekeeper' : 'atlas.bu.edu',
+  'site' : 'BU_ATLAS_Tier2',
+  'region' : 'US',
+  'gstat' : 'BU_ATLAS_Tier2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'opteron',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=opteron)\n',
   'status' : 'online',
 }
 osgsites['FZK-LCG2-ce-4-fzk-atlasS'] = {
@@ -3189,15 +3860,15 @@ osgsites['FZK-LCG2-ce-4-fzk-atlasS'] = {
   'jdladd' : 'globusrsl = (queue=atlasS)\n',
   'status' : 'online',
 }
-osgsites['CSCS-LCG2-ce01-egee8h'] = {
-  'gatekeeper' : 'ce01.lcg.cscs.ch',
-  'site' : 'CSCS-LCG2',
-  'region' : 'Switzerland',
-  'gstat' : 'CSCS-LCG2',
+osgsites['ifae-ifaece01-glong_sl5'] = {
+  'gatekeeper' : 'ifaece01.pic.es',
+  'site' : 'PIC',
+  'region' : 'Spain',
+  'gstat' : 'ifae',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'egee8h',
+  'localqueue' : 'glong_sl5',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=egee8h)\n',
+  'jdladd' : 'globusrsl = (queue=glong_sl5)\n',
   'status' : 'online',
 }
 osgsites['WEIZMANN-LCG2-wipp-ce-atlas'] = {
@@ -3211,17 +3882,6 @@ osgsites['WEIZMANN-LCG2-wipp-ce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['SWT2_CPB-gk01-atlas_prod_q'] = {
-  'gatekeeper' : 'gk01.atlas-swt2.org',
-  'site' : 'SWT2_CPB',
-  'region' : 'US',
-  'gstat' : 'SWT2_CPB',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas_prod_q',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas_prod_q)\n',
-  'status' : 'online',
-}
 osgsites['UKI-SOUTHGRID-RALPP-heplnx207-grid2000'] = {
   'gatekeeper' : 'heplnx207.pp.rl.ac.uk',
   'site' : 'UKI-SOUTHGRID-RALPP',
@@ -3233,48 +3893,26 @@ osgsites['UKI-SOUTHGRID-RALPP-heplnx207-grid2000'] = {
   'jdladd' : 'globusrsl = (queue=grid2000)\n',
   'status' : 'online',
 }
-osgsites['pic-ce05-glong64'] = {
-  'gatekeeper' : 'ce05.pic.es',
-  'site' : 'PIC',
-  'region' : 'Spain',
-  'gstat' : 'pic',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'glong64',
+osgsites['HU_ATLAS_Tier2-heroatlas-ATLAS_Production'] = {
+  'gatekeeper' : 'heroatlas.fas.harvard.edu',
+  'site' : 'HU_ATLAS_Tier2',
+  'region' : 'US',
+  'gstat' : 'HU_ATLAS_Tier2',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'ATLAS_Production',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=glong64)\n',
+  'jdladd' : 'globusrsl = (queue=ATLAS_Production)\n',
   'status' : 'online',
 }
-osgsites['UKI-LT2-UCL-CENTRAL-gw-4-Test'] = {
-  'gatekeeper' : 'gw-4.ccc.ucl.ac.uk',
-  'site' : 'UKI-LT2-UCL-CENTRAL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-UCL-CENTRAL',
-  'jobmanager' : 'uclpbs',
-  'localqueue' : 'Test',
+osgsites['CERN-PROD-ce105-grid_atlas'] = {
+  'gatekeeper' : 'ce105.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=Test)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SOUTHGRID-RALPP-heplnx207-short'] = {
-  'gatekeeper' : 'heplnx207.pp.rl.ac.uk',
-  'site' : 'UKI-SOUTHGRID-RALPP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-RALPP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'short',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
-  'status' : 'online',
-}
-osgsites['pic-ce05-gshort64'] = {
-  'gatekeeper' : 'ce05.pic.es',
-  'site' : 'PIC',
-  'region' : 'Spain',
-  'gstat' : 'pic',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gshort64',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gshort64)\n',
+  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
   'status' : 'online',
 }
 osgsites['prague_cesnet_lcg2-ce2-egee_atlas'] = {
@@ -3299,37 +3937,26 @@ osgsites['RO-14-ITIM-cn-ce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['FZK-LCG2-ce-1-fzk-atlasXXL'] = {
-  'gatekeeper' : 'ce-1-fzk.gridka.de',
-  'site' : 'FZK-LCG2',
-  'region' : 'Germany',
-  'gstat' : 'FZK-LCG2',
-  'jobmanager' : 'pbspro',
-  'localqueue' : 'atlasXXL',
+osgsites['UKI-LT2-IC-HEP-ceprod00-short'] = {
+  'gatekeeper' : 'ceprod00.hep.ph.ic.ac.uk',
+  'site' : 'UKI-LT2-IC-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-IC-HEP',
+  'jobmanager' : 'sge',
+  'localqueue' : 'short',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasXXL)\n',
+  'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
-osgsites['JINR-LCG2-lcgce01-atlas'] = {
-  'gatekeeper' : 'lcgce01.jinr.ru',
-  'site' : 'JINR-LCG2',
-  'region' : 'Russia',
-  'gstat' : 'JINR-LCG2',
-  'jobmanager' : 'lcgpbs',
+osgsites['UNI-DORTMUND-udo-ce03-atlas'] = {
+  'gatekeeper' : 'udo-ce03.grid.tu-dortmund.de',
+  'site' : 'UNI-DORTMUND',
+  'region' : 'Germany',
+  'gstat' : 'UNI-DORTMUND',
+  'jobmanager' : 'pbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['UKI-LT2-UCL-CENTRAL-gw-4-Lyle'] = {
-  'gatekeeper' : 'gw-4.ccc.ucl.ac.uk',
-  'site' : 'UKI-LT2-UCL-CENTRAL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-UCL-CENTRAL',
-  'jobmanager' : 'uclpbs',
-  'localqueue' : 'Lyle',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=Lyle)\n',
   'status' : 'online',
 }
 osgsites['HG-04-CTI-CEID-ce01-atlas'] = {
@@ -3343,22 +3970,33 @@ osgsites['HG-04-CTI-CEID-ce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['CSCS-LCG2-ce01-egee1h'] = {
-  'gatekeeper' : 'ce01.lcg.cscs.ch',
-  'site' : 'CSCS-LCG2',
-  'region' : 'Switzerland',
-  'gstat' : 'CSCS-LCG2',
+osgsites['HEPHY-UIBK-grid-atlas'] = {
+  'gatekeeper' : 'grid.uibk.ac.at',
+  'site' : 'HEPHY-UIBK',
+  'region' : 'Austria',
+  'gstat' : 'HEPHY-UIBK',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'egee1h',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=egee1h)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['RU-Moscow-KIAM-LCG2-ce-atlas'] = {
-  'gatekeeper' : 'ce.keldysh.ru',
-  'site' : 'RU-Moscow-KIAM-LCG2',
-  'region' : 'Russia',
-  'gstat' : 'RU-Moscow-KIAM-LCG2',
+osgsites['UKI-SOUTHGRID-OX-HEP-t2ce04-longfive'] = {
+  'gatekeeper' : 't2ce04.physics.ox.ac.uk',
+  'site' : 'UKI-SOUTHGRID-OX-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'longfive',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=longfive)\n',
+  'status' : 'online',
+}
+osgsites['FMPhI-UNIBA-lcgceatlas-atlas'] = {
+  'gatekeeper' : 'lcgceatlas.dnp.fmph.uniba.sk',
+  'site' : 'FMPhI-UNIBA',
+  'region' : 'Slovakia',
+  'gstat' : 'FMPhI-UNIBA',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
@@ -3376,6 +4014,28 @@ osgsites['CERN-PROD-ce113-grid_2nh_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
+osgsites['UKI-SCOTGRID-GLASGOW-svr026-atlas'] = {
+  'gatekeeper' : 'svr026.gla.scotgrid.ac.uk',
+  'site' : 'UKI-SCOTGRID-GLASGOW',
+  'region' : 'UK',
+  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['INFN-MILANO-ATLASC-t2-ce-02-short'] = {
+  'gatekeeper' : 't2-ce-02.mi.infn.it',
+  'site' : 'INFN-MILANO-ATLASC',
+  'region' : 'Italy',
+  'gstat' : 'INFN-MILANO-ATLASC',
+  'jobmanager' : 'lcgcondor',
+  'localqueue' : 'short',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=short)\n',
+  'status' : 'online',
+}
 osgsites['LRZ-LMU-lcg-lrz-ce2-atlas'] = {
   'gatekeeper' : 'lcg-lrz-ce2.grid.lrz-muenchen.de',
   'site' : 'LRZ-LMU',
@@ -3387,30 +4047,41 @@ osgsites['LRZ-LMU-lcg-lrz-ce2-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-SOUTHGRID-BHAM-HEP-epgce4-gshort'] = {
-  'gatekeeper' : 'epgce4.ph.bham.ac.uk',
-  'site' : 'UKI-SOUTHGRID-BHAM-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-BHAM-HEP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gshort',
+osgsites['Nebraska-red-default'] = {
+  'gatekeeper' : 'red.unl.edu',
+  'site' : 'Nebraska',
+  'region' : 'US',
+  'gstat' : 'Nebraska',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gshort)\n',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
-osgsites['INFN-PAVIA-grid-ce-atlas'] = {
-  'gatekeeper' : 'grid-ce.pv.infn.it',
-  'site' : 'INFN-PAVIA',
-  'region' : 'Italy',
-  'gstat' : 'INFN-PAVIA',
+osgsites['NCG-INGRID-PT-ce01-atlasgrid'] = {
+  'gatekeeper' : 'ce01.ncg.ingrid.pt',
+  'site' : 'NCG-INGRID-PT',
+  'region' : 'Portugal',
+  'gstat' : 'NCG-INGRID-PT',
+  'jobmanager' : 'lcgsge',
+  'localqueue' : 'atlasgrid',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlasgrid)\n',
+  'status' : 'online',
+}
+osgsites['UKI-LT2-Brunel-dc2-grid-65-atlas'] = {
+  'gatekeeper' : 'dc2-grid-65.brunel.ac.uk',
+  'site' : 'UKI-LT2-Brunel',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-Brunel',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['NIKHEF-ELPROD-gazon-atlas'] = {
-  'gatekeeper' : 'gazon.nikhef.nl',
+osgsites['NIKHEF-ELPROD-stremsel-atlas'] = {
+  'gatekeeper' : 'stremsel.nikhef.nl',
   'site' : 'NIKHEF-ELPROD',
   'region' : 'Holland',
   'gstat' : 'NIKHEF-ELPROD',
@@ -3431,26 +4102,37 @@ osgsites['CERN-PROD-ce124-grid_2nh_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-SCOTGRID-GLASGOW-svr026-q1d'] = {
-  'gatekeeper' : 'svr026.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
+osgsites['UKI-LT2-UCL-HEP-gw-6-Gim'] = {
+  'gatekeeper' : 'gw-6.ccc.ucl.ac.uk',
+  'site' : 'UKI-LT2-UCL-HEP',
   'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+  'gstat' : 'UKI-LT2-UCL-HEP',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q1d',
+  'localqueue' : 'Gim',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q1d)\n',
+  'jdladd' : 'globusrsl = (queue=Gim)\n',
   'status' : 'online',
 }
-osgsites['AEGIS01-PHY-SCL-ce64-atlas'] = {
-  'gatekeeper' : 'ce64.phy.bg.ac.yu',
-  'site' : 'AEGIS01-PHY-SCL',
-  'region' : 'Serbia/Montenegro',
-  'gstat' : 'AEGIS01-PHY-SCL',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas',
+osgsites['CERN-PROD-ce130-grid_2nh_atlas'] = {
+  'gatekeeper' : 'ce130.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_2nh_atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
+  'status' : 'online',
+}
+osgsites['UKI-SOUTHGRID-OX-HEP-t2ce02-shortoct'] = {
+  'gatekeeper' : 't2ce02.physics.ox.ac.uk',
+  'site' : 'UKI-SOUTHGRID-OX-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'shortoct',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=shortoct)\n',
   'status' : 'online',
 }
 osgsites['Australia-ATLAS-agh2-atlas'] = {
@@ -3464,37 +4146,15 @@ osgsites['Australia-ATLAS-agh2-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['ru-Moscow-MEPHI-LCG2-lxfarm07-atlas'] = {
-  'gatekeeper' : 'lxfarm07.mephi.ru',
-  'site' : 'ru-Moscow-MEPHI-LCG2',
-  'region' : 'Russia',
-  'gstat' : 'ru-Moscow-MEPHI-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
+osgsites['WT2-osgserv01-xlong'] = {
+  'gatekeeper' : 'osgserv01.slac.stanford.edu',
+  'site' : 'WT2',
+  'region' : 'US',
+  'gstat' : 'WT2',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'xlong',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['RAL-LCG2-lcgce05-gridS'] = {
-  'gatekeeper' : 'lcgce05.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
-  'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gridS',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gridS)\n',
-  'status' : 'online',
-}
-osgsites['TR-07-PAMUKKALE-paugrid1-atlas'] = {
-  'gatekeeper' : 'paugrid1.pamukkale.edu.tr',
-  'site' : 'TR-07-PAMUKKALE',
-  'region' : 'Turkey',
-  'gstat' : 'TR-07-PAMUKKALE',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=xlong)\n',
   'status' : 'online',
 }
 osgsites['GoeGrid-ce-goegrid-atlasXL'] = {
@@ -3519,33 +4179,11 @@ osgsites['JINR-LCG2-lgdce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UNI-DORTMUND-udo-ce01-atlas'] = {
-  'gatekeeper' : 'udo-ce01.grid.tu-dortmund.de',
-  'site' : 'UNI-DORTMUND',
-  'region' : 'Germany',
-  'gstat' : 'UNI-DORTMUND',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
 osgsites['TR-04-ERCIYES-grid01-atlas'] = {
   'gatekeeper' : 'grid01.erciyes.edu.tr',
   'site' : 'ERCIYES',
   'region' : 'Turkey',
   'gstat' : 'TR-04-ERCIYES',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['PAKGRID-LCG2-gcg02-atlas'] = {
-  'gatekeeper' : 'gcg02.pakgrid.org.pk',
-  'site' : 'PAKGRID-LCG2',
-  'region' : 'Pakistan',
-  'gstat' : 'PAKGRID-LCG2',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
@@ -3563,56 +4201,34 @@ osgsites['LRZ-LMU-lcg-lrz-ce2-atlasS'] = {
   'jdladd' : 'globusrsl = (queue=atlasS)\n',
   'status' : 'online',
 }
-osgsites['TTU-ANTAEUS-antaeus-quadparallel'] = {
-  'gatekeeper' : 'antaeus.hpcc.ttu.edu',
-  'site' : 'TTU-ANTAEUS',
-  'region' : 'US',
-  'gstat' : 'TTU-ANTAEUS',
-  'jobmanager' : 'lsf',
-  'localqueue' : 'quadparallel',
+osgsites['IN2P3-CC-cclcgceli07-long'] = {
+  'gatekeeper' : 'cclcgceli07.in2p3.fr',
+  'site' : 'IN2P3-CC',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'long',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=quadparallel)\n',
+  'jdladd' : 'globusrsl = (queue=long)\n',
   'status' : 'online',
 }
-osgsites['NIKHEF-ELPROD-gazon-qlong'] = {
-  'gatekeeper' : 'gazon.nikhef.nl',
-  'site' : 'NIKHEF-ELPROD',
-  'region' : 'Holland',
-  'gstat' : 'NIKHEF-ELPROD',
+osgsites['CERN-PROD-ce111-grid_atlas'] = {
+  'gatekeeper' : 'ce111.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'status' : 'online',
+}
+osgsites['BY-NCPHEP-grid01-atlas'] = {
+  'gatekeeper' : 'grid01.hep.by',
+  'site' : 'BY-NCPHEP',
+  'region' : '',
+  'gstat' : 'BY-NCPHEP',
   'jobmanager' : 'pbs',
-  'localqueue' : 'qlong',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=qlong)\n',
-  'status' : 'online',
-}
-osgsites['RAL-LCG2-lcgce07-grid1000M'] = {
-  'gatekeeper' : 'lcgce07.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
-  'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid1000M',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid1000M)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SOUTHGRID-OX-HEP-t2ce04-longoct'] = {
-  'gatekeeper' : 't2ce04.physics.ox.ac.uk',
-  'site' : 'UKI-SOUTHGRID-OX-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'longoct',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=longoct)\n',
-  'status' : 'online',
-}
-osgsites['NWICG_NotreDame-osg-atlas'] = {
-  'gatekeeper' : 'osg.hpcc.nd.edu',
-  'site' : 'NWICG_NotreDame',
-  'region' : 'US',
-  'gstat' : 'NWICG_NotreDame',
-  'jobmanager' : 'sge',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
@@ -3629,26 +4245,70 @@ osgsites['LRZ-LMU-lcg-lrz-ce2-atlasL'] = {
   'jdladd' : 'globusrsl = (queue=atlasL)\n',
   'status' : 'online',
 }
-osgsites['UKI-SOUTHGRID-OX-HEP-t2ce04-shortoct'] = {
-  'gatekeeper' : 't2ce04.physics.ox.ac.uk',
-  'site' : 'UKI-SOUTHGRID-OX-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'shortoct',
+osgsites['MWT2_UC-uct2-grid6-uct2'] = {
+  'gatekeeper' : 'uct2-grid6.uchicago.edu',
+  'site' : 'MWT2_UC',
+  'region' : 'US',
+  'gstat' : 'MWT2_UC',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'uct2',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=shortoct)\n',
+  'jdladd' : 'globusrsl = (queue=uct2)\n',
   'status' : 'online',
 }
-osgsites['UKI-SCOTGRID-GLASGOW-svr021-q6h'] = {
-  'gatekeeper' : 'svr021.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
-  'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q6h',
+osgsites['NYSGRID-CCR-U2-u2-grid-debug'] = {
+  'gatekeeper' : 'u2-grid.ccr.buffalo.edu',
+  'site' : 'NYSGRID-CCR-U2',
+  'region' : 'US',
+  'gstat' : 'NYSGRID-CCR-U2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'debug',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q6h)\n',
+  'jdladd' : 'globusrsl = (queue=debug)\n',
+  'status' : 'online',
+}
+osgsites['BU_ATLAS_Tier2-atlas-analysis'] = {
+  'gatekeeper' : 'atlas.bu.edu',
+  'site' : 'BU_ATLAS_Tier2',
+  'region' : 'US',
+  'gstat' : 'BU_ATLAS_Tier2',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'analysis',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=analysis)\n',
+  'status' : 'online',
+}
+osgsites['UKI-LT2-UCL-HEP-gw-6-Garth'] = {
+  'gatekeeper' : 'gw-6.ccc.ucl.ac.uk',
+  'site' : 'UKI-LT2-UCL-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-UCL-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'Garth',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=Garth)\n',
+  'status' : 'online',
+}
+osgsites['SARA-MATRIX-ce-medium'] = {
+  'gatekeeper' : 'ce.gina.sara.nl',
+  'site' : 'SARA-MATRIX',
+  'region' : 'Holland',
+  'gstat' : 'SARA-MATRIX',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
+  'status' : 'online',
+}
+osgsites['UKI-LT2-IC-HEP-ceprod00-medium'] = {
+  'gatekeeper' : 'ceprod00.hep.ph.ic.ac.uk',
+  'site' : 'UKI-LT2-IC-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-IC-HEP',
+  'jobmanager' : 'sge',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
   'status' : 'online',
 }
 osgsites['Taiwan-LCG2-w-ce01-atlas'] = {
@@ -3662,37 +4322,48 @@ osgsites['Taiwan-LCG2-w-ce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['RAL-LCG2-lcgce05-grid700M'] = {
-  'gatekeeper' : 'lcgce05.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
-  'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
+osgsites['HEPHY-UIBK-hepx4-atlas'] = {
+  'gatekeeper' : 'hepx4.uibk.ac.at',
+  'site' : 'HEPHY-UIBK',
+  'region' : 'Austria',
+  'gstat' : 'HEPHY-UIBK',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid700M',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid700M)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['FZK-LCG2-test-mw-2-fzk-atlasXXL'] = {
-  'gatekeeper' : 'test-mw-2-fzk.gridka.de',
-  'site' : 'FZK-LCG2',
-  'region' : 'Germany',
-  'gstat' : 'FZK-LCG2',
-  'jobmanager' : 'pbspro',
-  'localqueue' : 'atlasXXL',
+osgsites['PSNC-creamce-atlas'] = {
+  'gatekeeper' : 'creamce.reef.man.poznan.pl',
+  'site' : 'PSNC',
+  'region' : 'Poland',
+  'gstat' : 'PSNC',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasXXL)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['IN2P3-CC-T2-cclcgceli05-long'] = {
-  'gatekeeper' : 'cclcgceli05.in2p3.fr',
-  'site' : 'IN2P3-CC-T2',
-  'region' : 'France',
-  'gstat' : 'IN2P3-CC-T2',
-  'jobmanager' : 'bqs',
-  'localqueue' : 'long',
+osgsites['UKI-SCOTGRID-GLASGOW-svr021-atlprd'] = {
+  'gatekeeper' : 'svr021.gla.scotgrid.ac.uk',
+  'site' : 'UKI-SCOTGRID-GLASGOW',
+  'region' : 'UK',
+  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlprd',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=long)\n',
+  'jdladd' : 'globusrsl = (queue=atlprd)\n',
+  'status' : 'online',
+}
+osgsites['WT2-osgserv01-atlasq'] = {
+  'gatekeeper' : 'osgserv01.slac.stanford.edu',
+  'site' : 'WT2',
+  'region' : 'US',
+  'gstat' : 'WT2',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'atlasq',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlasq)\n',
   'status' : 'online',
 }
 osgsites['FZK-LCG2-ce-4-fzk-atlasXS'] = {
@@ -3717,6 +4388,17 @@ osgsites['ITEP-ceglite-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['INFN-MILANO-ATLASC-t2-ce-02-atlas'] = {
+  'gatekeeper' : 't2-ce-02.mi.infn.it',
+  'site' : 'INFN-MILANO-ATLASC',
+  'region' : 'Italy',
+  'gstat' : 'INFN-MILANO-ATLASC',
+  'jobmanager' : 'lcgcondor',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
 osgsites['RUG-CIT-ce-long'] = {
   'gatekeeper' : 'ce.grid.rug.nl',
   'site' : 'RUG-CIT',
@@ -3728,15 +4410,15 @@ osgsites['RUG-CIT-ce-long'] = {
   'jdladd' : 'globusrsl = (queue=long)\n',
   'status' : 'online',
 }
-osgsites['CERN-PROD-ce109-grid_atlas'] = {
-  'gatekeeper' : 'ce109.cern.ch',
-  'site' : 'CERN-PROD',
-  'region' : 'CERN',
-  'gstat' : 'CERN-PROD',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'grid_atlas',
+osgsites['UKI-SCOTGRID-GLASGOW-svr026-atlprd'] = {
+  'gatekeeper' : 'svr026.gla.scotgrid.ac.uk',
+  'site' : 'UKI-SCOTGRID-GLASGOW',
+  'region' : 'UK',
+  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlprd',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'jdladd' : 'globusrsl = (queue=atlprd)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce202-grid_2nh_atlas'] = {
@@ -3750,6 +4432,17 @@ osgsites['CERN-PROD-ce202-grid_2nh_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
+osgsites['IN2P3-LPSC-lpsc-cream-ce-atlas'] = {
+  'gatekeeper' : 'lpsc-cream-ce.in2p3.fr',
+  'site' : 'IN2P3-LPSC',
+  'region' : 'France',
+  'gstat' : 'IN2P3-LPSC',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
 osgsites['FZK-LCG2-ce-4-fzk-atlasXL'] = {
   'gatekeeper' : 'ce-4-fzk.gridka.de',
   'site' : 'FZK-LCG2',
@@ -3761,48 +4454,37 @@ osgsites['FZK-LCG2-ce-4-fzk-atlasXL'] = {
   'jdladd' : 'globusrsl = (queue=atlasXL)\n',
   'status' : 'online',
 }
-osgsites['wuppertalprod-grid-ce-dg_med'] = {
-  'gatekeeper' : 'grid-ce.physik.uni-wuppertal.de',
-  'site' : 'wuppertalprod',
-  'region' : 'Germany',
-  'gstat' : 'wuppertalprod',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'dg_med',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=dg_med)\n',
-  'status' : 'online',
-}
-osgsites['INFN-LNL-2-t2-ce-02-atlas'] = {
-  'gatekeeper' : 't2-ce-02.lnl.infn.it',
-  'site' : 'INFN-LNL-2',
-  'region' : 'Italy',
-  'gstat' : 'INFN-LNL-2',
-  'jobmanager' : 'lcglsf',
+osgsites['NIKHEF-ELPROD-trekker-atlas'] = {
+  'gatekeeper' : 'trekker.nikhef.nl',
+  'site' : 'NIKHEF-ELPROD',
+  'region' : 'Holland',
+  'gstat' : 'NIKHEF-ELPROD',
+  'jobmanager' : 'pbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['TTU-ANTAEUS-antaeus-receiveq'] = {
-  'gatekeeper' : 'antaeus.hpcc.ttu.edu',
-  'site' : 'TTU-ANTAEUS',
+osgsites['MWT2_IU-iut2-grid6-routeq'] = {
+  'gatekeeper' : 'iut2-grid6.iu.edu',
+  'site' : 'MWT2_IU',
   'region' : 'US',
-  'gstat' : 'TTU-ANTAEUS',
-  'jobmanager' : 'lsf',
-  'localqueue' : 'receiveq',
+  'gstat' : 'MWT2_IU',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'routeq',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=receiveq)\n',
+  'jdladd' : 'globusrsl = (queue=routeq)\n',
   'status' : 'online',
 }
-osgsites['SARA-MATRIX-ce-medium'] = {
-  'gatekeeper' : 'ce.gina.sara.nl',
-  'site' : 'SARA-MATRIX',
-  'region' : 'Holland',
-  'gstat' : 'SARA-MATRIX',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'medium',
+osgsites['AGLT2-gate01-group_calibrate'] = {
+  'gatekeeper' : 'gate01.aglt2.org',
+  'site' : 'AGLT2',
+  'region' : 'US',
+  'gstat' : 'AGLT2',
+  'jobmanager' : 'condor',
+  'localqueue' : 'group_calibrate',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=medium)\n',
+  'jdladd' : 'globusrsl = (queue=group_calibrate)\n',
   'status' : 'online',
 }
 osgsites['INFN-PADOVA-prod-ce-01-atlas'] = {
@@ -3816,26 +4498,59 @@ osgsites['INFN-PADOVA-prod-ce-01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['BG01-IPP-ce002-atlas'] = {
-  'gatekeeper' : 'ce002.ipp.acad.bg',
-  'site' : 'BG01-IPP',
-  'region' : 'Bulgaria',
-  'gstat' : 'BG01-IPP',
+osgsites['TR-03-METU-cox01-atlas'] = {
+  'gatekeeper' : 'cox01.grid.metu.edu.tr',
+  'site' : 'METU',
+  'region' : 'Turkey',
+  'gstat' : 'TR-03-METU',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['Taiwan-IPAS-LCG2-atlasce-atlas'] = {
-  'gatekeeper' : 'atlasce.phys.sinica.edu.tw',
-  'site' : 'Taiwan-IPAS-LCG2',
-  'region' : 'Taiwan',
-  'gstat' : 'Taiwan-IPAS-LCG2',
-  'jobmanager' : 'lcgcondor',
-  'localqueue' : 'atlas',
+osgsites['INFN-BARI-grid-ce-01-long'] = {
+  'gatekeeper' : 'grid-ce-01.ba.infn.it',
+  'site' : 'INFN-BARI',
+  'region' : 'Italy',
+  'gstat' : 'INFN-BARI',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'long',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=long)\n',
+  'status' : 'online',
+}
+osgsites['WT2-osgserv01-analq'] = {
+  'gatekeeper' : 'osgserv01.slac.stanford.edu',
+  'site' : 'WT2',
+  'region' : 'US',
+  'gstat' : 'WT2',
+  'jobmanager' : 'atl',
+  'localqueue' : 'analq',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=analq)\n',
+  'status' : 'online',
+}
+osgsites['HPC2N-glite02-kvm-Eatlas'] = {
+  'gatekeeper' : 'glite02-kvm.hpc2n.umu.se',
+  'site' : 'HPC2N',
+  'region' : 'Sweden',
+  'gstat' : 'HPC2N',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'Eatlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=Eatlas)\n',
+  'status' : 'online',
+}
+osgsites['UKI-LT2-QMUL-ce03-lcg_long'] = {
+  'gatekeeper' : 'ce03.esc.qmul.ac.uk',
+  'site' : 'UKI-LT2-QMUL',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-QMUL',
+  'jobmanager' : 'lcgsge',
+  'localqueue' : 'lcg_long',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=lcg_long)\n',
   'status' : 'online',
 }
 osgsites['GRIF-LPNHE-lpnce-atlas'] = {
@@ -3849,15 +4564,15 @@ osgsites['GRIF-LPNHE-lpnce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['CERN-PROD-ce108-grid_2nh_atlas'] = {
-  'gatekeeper' : 'ce108.cern.ch',
-  'site' : 'CERN-PROD',
-  'region' : 'CERN',
-  'gstat' : 'CERN-PROD',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'grid_2nh_atlas',
+osgsites['WARSAW-EGEE-ce3-atlas'] = {
+  'gatekeeper' : 'ce3.polgrid.pl',
+  'site' : 'WARSAW-EGEE',
+  'region' : 'Poland',
+  'gstat' : 'WARSAW-EGEE',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['UKI-LT2-Brunel-dgc-grid-40-atlas'] = {
@@ -3871,26 +4586,15 @@ osgsites['UKI-LT2-Brunel-dgc-grid-40-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UCSDT2-osg-gw-2-atlas'] = {
-  'gatekeeper' : 'osg-gw-2.t2.ucsd.edu',
-  'site' : 'UCSDT2',
-  'region' : 'US',
-  'gstat' : 'UCSDT2',
-  'jobmanager' : 'condor',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['pic-ce-test-test'] = {
-  'gatekeeper' : 'ce-test.pic.es',
-  'site' : 'pic',
-  'region' : 'Spain',
-  'gstat' : 'pic',
+osgsites['INFN-BARI-cream-ce-1-long'] = {
+  'gatekeeper' : 'cream-ce-1.ba.infn.it',
+  'site' : 'INFN-BARI',
+  'region' : 'Italy',
+  'gstat' : 'INFN-BARI',
   'jobmanager' : 'pbs',
-  'localqueue' : 'test',
+  'localqueue' : 'long',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=test)\n',
+  'jdladd' : 'globusrsl = (queue=long)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce127-grid_atlas'] = {
@@ -3904,59 +4608,48 @@ osgsites['CERN-PROD-ce127-grid_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
   'status' : 'online',
 }
-osgsites['GRIF-LAL-grid10-atlasana'] = {
-  'gatekeeper' : 'grid10.lal.in2p3.fr',
-  'site' : 'GRIF-LAL',
-  'region' : 'France',
-  'gstat' : 'GRIF-LAL',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlasana',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasana)\n',
-  'status' : 'online',
-}
-osgsites['TORONTO-LCG2-bigmac-lcg-ce2-atlas'] = {
-  'gatekeeper' : 'bigmac-lcg-ce2.physics.utoronto.ca',
-  'site' : 'TORONTO-LCG2',
-  'region' : 'Canada',
-  'gstat' : 'TORONTO-LCG2',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SOUTHGRID-BRIS-HEP-lcgce01-atlas'] = {
-  'gatekeeper' : 'lcgce01.phy.bris.ac.uk',
-  'site' : 'UKI-SOUTHGRID-BRIS-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-BRIS-HEP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SOUTHGRID-OX-HEP-t2ce02-longoct'] = {
-  'gatekeeper' : 't2ce02.physics.ox.ac.uk',
-  'site' : 'UKI-SOUTHGRID-OX-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'longoct',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=longoct)\n',
-  'status' : 'online',
-}
-osgsites['TUDresden-ZIH-desdemona-gridexpr_scli'] = {
-  'gatekeeper' : 'desdemona.zih.tu-dresden.de',
-  'site' : 'TUDresden-ZIH',
+osgsites['FZK-LCG2-ce-2-fzk-atlasS'] = {
+  'gatekeeper' : 'ce-2-fzk.gridka.de',
+  'site' : 'FZK-LCG2',
   'region' : 'Germany',
-  'gstat' : 'TUDresden-ZIH',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gridexpr_scli',
+  'gstat' : 'FZK-LCG2',
+  'jobmanager' : 'pbspro',
+  'localqueue' : 'atlasS',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gridexpr_scli)\n',
+  'jdladd' : 'globusrsl = (queue=atlasS)\n',
+  'status' : 'online',
+}
+osgsites['IFIC-LCG2-ce03-atlasL'] = {
+  'gatekeeper' : 'ce03.ific.uv.es',
+  'site' : 'IFIC-LCG2',
+  'region' : 'Spain',
+  'gstat' : 'IFIC-LCG2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlasL',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlasL)\n',
+  'status' : 'online',
+}
+osgsites['INFN-ROMA1-atlas-creamce-01-atlasgshort'] = {
+  'gatekeeper' : 'atlas-creamce-01.roma1.infn.it',
+  'site' : 'INFN-ROMA1',
+  'region' : 'Italy',
+  'gstat' : 'INFN-ROMA1',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'atlasgshort',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlasgshort)\n',
+  'status' : 'online',
+}
+osgsites['WT2-osgserv01-medium'] = {
+  'gatekeeper' : 'osgserv01.slac.stanford.edu',
+  'site' : 'WT2',
+  'region' : 'US',
+  'gstat' : 'WT2',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
   'status' : 'online',
 }
 osgsites['FZK-LCG2-ce-2-fzk-atlasL'] = {
@@ -3981,45 +4674,23 @@ osgsites['UKI-NORTHGRID-LANCS-HEP-fal-pygrid-44-q'] = {
   'jdladd' : 'globusrsl = (queue=q)\n',
   'status' : 'online',
 }
-osgsites['TRIUMF-LCG2-ce3-atlas'] = {
-  'gatekeeper' : 'ce3.triumf.ca',
-  'site' : 'TRIUMF-LCG2',
-  'region' : 'Canada',
-  'gstat' : 'TRIUMF-LCG2',
+osgsites['UKI-SOUTHGRID-BRIS-HEP-lcgce03-medium'] = {
+  'gatekeeper' : 'lcgce03.phy.bris.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'medium',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=medium)\n',
+  'status' : 'online',
+}
+osgsites['HG-05-FORTH-cream-ce01-atlas'] = {
+  'gatekeeper' : 'cream-ce01.ariagni.hellasgrid.gr',
+  'site' : 'HG-05-FORTH',
+  'region' : 'Greece',
+  'gstat' : 'HG-05-FORTH',
   'jobmanager' : 'pbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['IN2P3-CC-cclcgceli01-long'] = {
-  'gatekeeper' : 'cclcgceli01.in2p3.fr',
-  'site' : 'IN2P3-CC',
-  'region' : 'France',
-  'gstat' : 'IN2P3-CC',
-  'jobmanager' : 'bqs',
-  'localqueue' : 'long',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=long)\n',
-  'status' : 'online',
-}
-osgsites['SARA-MATRIX-celisa-grid_short'] = {
-  'gatekeeper' : 'celisa.grid.sara.nl',
-  'site' : 'SARA-MATRIX',
-  'region' : 'Holland',
-  'gstat' : 'SARA-MATRIX',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid_short',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid_short)\n',
-  'status' : 'online',
-}
-osgsites['INFN-TORINO-t2-ce-01-atlas'] = {
-  'gatekeeper' : 't2-ce-01.to.infn.it',
-  'site' : 'INFN-TORINO',
-  'region' : 'Italy',
-  'gstat' : 'INFN-TORINO',
-  'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
@@ -4036,6 +4707,17 @@ osgsites['TRIUMF-LCG2-ce2-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['Australia-ATLAS-agh5-atlas'] = {
+  'gatekeeper' : 'agh5.atlas.unimelb.edu.au',
+  'site' : 'Australia-ATLAS',
+  'region' : 'Australia',
+  'gstat' : 'Australia-ATLAS',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
 osgsites['GR-10-UOI-ce01-atlas'] = {
   'gatekeeper' : 'ce01.grid.uoi.gr',
   'site' : 'GR-10-UOI',
@@ -4045,6 +4727,17 @@ osgsites['GR-10-UOI-ce01-atlas'] = {
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['UKI-LT2-UCL-HEP-gw-6-Lyle'] = {
+  'gatekeeper' : 'gw-6.ccc.ucl.ac.uk',
+  'site' : 'UKI-LT2-UCL-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-LT2-UCL-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'Lyle',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=Lyle)\n',
   'status' : 'online',
 }
 osgsites['UKI-NORTHGRID-MAN-HEP-ce01-long'] = {
@@ -4069,15 +4762,15 @@ osgsites['UKI-LT2-UCL-HEP-lcg-ce01-lcgatlas'] = {
   'jdladd' : 'globusrsl = (queue=lcgatlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-SOUTHGRID-BRIS-HEP-lcgce01-short'] = {
-  'gatekeeper' : 'lcgce01.phy.bris.ac.uk',
-  'site' : 'UKI-SOUTHGRID-BRIS-HEP',
+osgsites['UKI-SOUTHGRID-OX-HEP-t2ce06-mediumfive'] = {
+  'gatekeeper' : 't2ce06.physics.ox.ac.uk',
+  'site' : 'UKI-SOUTHGRID-OX-HEP',
   'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-BRIS-HEP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'short',
+  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'mediumfive',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=short)\n',
+  'jdladd' : 'globusrsl = (queue=mediumfive)\n',
   'status' : 'online',
 }
 osgsites['UFlorida-HPC-iogw1-submit'] = {
@@ -4091,15 +4784,26 @@ osgsites['UFlorida-HPC-iogw1-submit'] = {
   'jdladd' : 'globusrsl = (queue=submit)\n',
   'status' : 'online',
 }
-osgsites['FZK-LCG2-ce-3-fzk-atlasXL'] = {
-  'gatekeeper' : 'ce-3-fzk.gridka.de',
-  'site' : 'FZK-LCG2',
-  'region' : 'Germany',
-  'gstat' : 'FZK-LCG2',
-  'jobmanager' : 'pbspro',
-  'localqueue' : 'atlasXL',
+osgsites['INFN-FRASCATI-atlasce1-atlas'] = {
+  'gatekeeper' : 'atlasce1.lnf.infn.it',
+  'site' : 'INFN-FRASCATI',
+  'region' : 'Italy',
+  'gstat' : 'INFN-FRASCATI',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasXL)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['UCR-HEP-top-default'] = {
+  'gatekeeper' : 'top.ucr.edu',
+  'site' : 'UCR-HEP',
+  'region' : 'US',
+  'gstat' : 'UCR-HEP',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
 osgsites['GRASE-CSE-MAGIC-magic-atlas'] = {
@@ -4113,6 +4817,17 @@ osgsites['GRASE-CSE-MAGIC-magic-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['UKI-SCOTGRID-DURHAM-ce01-q1d'] = {
+  'gatekeeper' : 'ce01.dur.scotgrid.ac.uk',
+  'site' : 'UKI-SCOTGRID-DURHAM',
+  'region' : 'UK',
+  'gstat' : 'UKI-SCOTGRID-DURHAM',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'q1d',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=q1d)\n',
+  'status' : 'online',
+}
 osgsites['CERN-PROD-ce112-grid_2nh_atlas'] = {
   'gatekeeper' : 'ce112.cern.ch',
   'site' : 'CERN-PROD',
@@ -4122,6 +4837,28 @@ osgsites['CERN-PROD-ce112-grid_2nh_atlas'] = {
   'localqueue' : 'grid_2nh_atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
+  'status' : 'online',
+}
+osgsites['ru-PNPI-gt3-atlas'] = {
+  'gatekeeper' : 'gt3.pnpi.nw.ru',
+  'site' : 'ru-PNPI',
+  'region' : 'Russia',
+  'gstat' : 'ru-PNPI',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['GRISU-UNINA-grisuce-atlas'] = {
+  'gatekeeper' : 'grisuce.scope.unina.it',
+  'site' : 'GRISU-UNINA',
+  'region' : 'Italy',
+  'gstat' : 'GRISU-UNINA',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['INFN-LNS-grid-ce-long'] = {
@@ -4144,6 +4881,17 @@ osgsites['UKI-SOUTHGRID-OX-HEP-t2ce05-longfive'] = {
   'localqueue' : 'longfive',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=longfive)\n',
+  'status' : 'online',
+}
+osgsites['RAL-LCG2-lcgce08-grid2000M'] = {
+  'gatekeeper' : 'lcgce08.gridpp.rl.ac.uk',
+  'site' : 'RAL-LCG2',
+  'region' : 'UK',
+  'gstat' : 'RAL-LCG2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'grid2000M',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid2000M)\n',
   'status' : 'online',
 }
 osgsites['SNS-PISA-gridce-atlas'] = {
@@ -4179,6 +4927,28 @@ osgsites['ITEP-ce3-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['TR-05-BOUN-yildirim-atlas'] = {
+  'gatekeeper' : 'yildirim.grid.boun.edu.tr',
+  'site' : 'TR-05-BOUN',
+  'region' : 'Turkey',
+  'gstat' : 'TR-05-BOUN',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['INFN-ROMA1-atlas-creamce-01-atlasglong'] = {
+  'gatekeeper' : 'atlas-creamce-01.roma1.infn.it',
+  'site' : 'INFN-ROMA1',
+  'region' : 'Italy',
+  'gstat' : 'INFN-ROMA1',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'atlasglong',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlasglong)\n',
+  'status' : 'online',
+}
 osgsites['INFN-BOLOGNA-boalice3-atlas'] = {
   'gatekeeper' : 'boalice3.bo.infn.it',
   'site' : 'INFN-BOLOGNA',
@@ -4190,26 +4960,15 @@ osgsites['INFN-BOLOGNA-boalice3-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['IFIC-LCG2-ce01-atlasL'] = {
-  'gatekeeper' : 'ce01.ific.uv.es',
-  'site' : 'IFIC-LCG2',
+osgsites['pic-ce07-gmedium_sl5'] = {
+  'gatekeeper' : 'ce07.pic.es',
+  'site' : 'PIC',
   'region' : 'Spain',
-  'gstat' : 'IFIC-LCG2',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlasL',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasL)\n',
-  'status' : 'online',
-}
-osgsites['RAL-LCG2-lcgce03-gridS'] = {
-  'gatekeeper' : 'lcgce03.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
-  'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
+  'gstat' : 'pic',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gridS',
+  'localqueue' : 'gmedium_sl5',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gridS)\n',
+  'jdladd' : 'globusrsl = (queue=gmedium_sl5)\n',
   'status' : 'online',
 }
 osgsites['INFN-NAPOLI-CMS-cmsce01-atlas'] = {
@@ -4223,48 +4982,59 @@ osgsites['INFN-NAPOLI-CMS-cmsce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-SOUTHGRID-BHAM-HEP-epgce4-glong'] = {
-  'gatekeeper' : 'epgce4.ph.bham.ac.uk',
-  'site' : 'UKI-SOUTHGRID-BHAM-HEP',
+osgsites['UKI-SCOTGRID-GLASGOW-svr014-atlprd'] = {
+  'gatekeeper' : 'svr014.gla.scotgrid.ac.uk',
+  'site' : 'UKI-SCOTGRID-GLASGOW',
   'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-BHAM-HEP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'glong',
+  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'atlprd',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=glong)\n',
+  'jdladd' : 'globusrsl = (queue=atlprd)\n',
   'status' : 'online',
 }
-osgsites['UKI-SOUTHGRID-CAM-HEP-serv03-atlas'] = {
-  'gatekeeper' : 'serv03.hep.phy.cam.ac.uk',
-  'site' : 'UKI-SOUTHGRID-CAM-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-CAM-HEP',
-  'jobmanager' : 'lcgcondor',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['IL-BGU-cs-grid1-atlas'] = {
-  'gatekeeper' : 'cs-grid1.bgu.ac.il',
-  'site' : 'IL-BGU',
-  'region' : 'Israel',
-  'gstat' : 'IL-BGU',
+osgsites['Taiwan-LCG2-w-ce02-atlas'] = {
+  'gatekeeper' : 'w-ce02.grid.sinica.edu.tw',
+  'site' : 'Taiwan-LCG2',
+  'region' : 'Taiwan',
+  'gstat' : 'Taiwan-LCG2',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['ifae-ifaece01-glong64'] = {
-  'gatekeeper' : 'ifaece01.pic.es',
-  'site' : 'PIC',
-  'region' : 'Spain',
-  'gstat' : 'ifae',
+osgsites['CSCS-LCG2-ce01-atlas'] = {
+  'gatekeeper' : 'ce01.lcg.cscs.ch',
+  'site' : 'CSCS-LCG2',
+  'region' : 'Switzerland',
+  'gstat' : 'CSCS-LCG2',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'glong64',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=glong64)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['CSCS-LCG2-ce02-atlas'] = {
+  'gatekeeper' : 'ce02.lcg.cscs.ch',
+  'site' : 'CSCS-LCG2',
+  'region' : 'Switzerland',
+  'gstat' : 'CSCS-LCG2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['TUDresden-ZIH-desdemona-gridexpr_scli'] = {
+  'gatekeeper' : 'desdemona.zih.tu-dresden.de',
+  'site' : 'TUDresden-ZIH',
+  'region' : 'Germany',
+  'gstat' : 'TUDresden-ZIH',
+  'jobmanager' : 'pbs',
+  'localqueue' : 'gridexpr_scli',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=gridexpr_scli)\n',
   'status' : 'online',
 }
 osgsites['HG-03-AUTH-ce01-atlas'] = {
@@ -4278,26 +5048,26 @@ osgsites['HG-03-AUTH-ce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['FLTECH-uscms1-default'] = {
-  'gatekeeper' : 'uscms1.fltech-grid3.fit.edu',
-  'site' : 'FLTECH',
-  'region' : 'US',
-  'gstat' : 'FLTECH',
-  'jobmanager' : 'condor',
-  'localqueue' : 'default',
+osgsites['IFIC-LCG2-ce01-long'] = {
+  'gatekeeper' : 'ce01.ific.uv.es',
+  'site' : 'IFIC-LCG2',
+  'region' : 'Spain',
+  'gstat' : 'IFIC-LCG2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'long',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=default)\n',
+  'jdladd' : 'globusrsl = (queue=long)\n',
   'status' : 'online',
 }
-osgsites['UKI-SCOTGRID-GLASGOW-svr021-q2d'] = {
-  'gatekeeper' : 'svr021.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
+osgsites['UKI-SOUTHGRID-BHAM-HEP-epgr07-test'] = {
+  'gatekeeper' : 'epgr07.ph.bham.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BHAM-HEP',
   'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+  'gstat' : 'UKI-SOUTHGRID-BHAM-HEP',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q2d',
+  'localqueue' : 'test',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q2d)\n',
+  'jdladd' : 'globusrsl = (queue=test)\n',
   'status' : 'online',
 }
 osgsites['GR-01-AUTH-ce01-atlas'] = {
@@ -4305,17 +5075,6 @@ osgsites['GR-01-AUTH-ce01-atlas'] = {
   'site' : 'GR-01-AUTH',
   'region' : 'Greece',
   'gstat' : 'GR-01-AUTH',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['IFIC-LCG2-ce01-atlas'] = {
-  'gatekeeper' : 'ce01.ific.uv.es',
-  'site' : 'IFIC-LCG2',
-  'region' : 'Spain',
-  'gstat' : 'IFIC-LCG2',
   'jobmanager' : 'pbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
@@ -4333,37 +5092,15 @@ osgsites['GR-06-IASA-ce02-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['wuppertalprod-grid-ce-dg_short'] = {
-  'gatekeeper' : 'grid-ce.physik.uni-wuppertal.de',
-  'site' : 'wuppertalprod',
-  'region' : 'Germany',
-  'gstat' : 'wuppertalprod',
+osgsites['INFN-BARI-grid-ce-01-short'] = {
+  'gatekeeper' : 'grid-ce-01.ba.infn.it',
+  'site' : 'INFN-BARI',
+  'region' : 'Italy',
+  'gstat' : 'INFN-BARI',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'dg_short',
+  'localqueue' : 'short',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=dg_short)\n',
-  'status' : 'online',
-}
-osgsites['FZK-LCG2-ce-1-fzk-atlasL'] = {
-  'gatekeeper' : 'ce-1-fzk.gridka.de',
-  'site' : 'FZK-LCG2',
-  'region' : 'Germany',
-  'gstat' : 'FZK-LCG2',
-  'jobmanager' : 'pbspro',
-  'localqueue' : 'atlasL',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasL)\n',
-  'status' : 'online',
-}
-osgsites['RAL-LCG2-lcgce03-grid2000M'] = {
-  'gatekeeper' : 'lcgce03.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
-  'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid2000M',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid2000M)\n',
+  'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
 osgsites['INFN-ROMA1-atlas-ce-01-atlasgshort'] = {
@@ -4377,6 +5114,17 @@ osgsites['INFN-ROMA1-atlas-ce-01-atlasgshort'] = {
   'jdladd' : 'globusrsl = (queue=atlasgshort)\n',
   'status' : 'online',
 }
+osgsites['UNI-SIEGEN-HEP-vmiro3-long'] = {
+  'gatekeeper' : 'vmiro3.hep.physik.uni-siegen.de',
+  'site' : 'UNI-SIEGEN-HEP',
+  'region' : 'Germany',
+  'gstat' : 'UNI-SIEGEN-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'long',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=long)\n',
+  'status' : 'online',
+}
 osgsites['ITEP-ceitep-atlas'] = {
   'gatekeeper' : 'ceitep.itep.ru',
   'site' : 'ITEP',
@@ -4388,26 +5136,26 @@ osgsites['ITEP-ceitep-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['GR-01-AUTH-node001-atlas'] = {
-  'gatekeeper' : 'node001.grid.auth.gr',
-  'site' : 'GR-01-AUTH',
-  'region' : 'Greece',
-  'gstat' : 'GR-01-AUTH',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas',
+osgsites['NWICG_NotreDame-osg-9.q'] = {
+  'gatekeeper' : 'osg.crc.nd.edu',
+  'site' : 'NWICG_NotreDame',
+  'region' : 'US',
+  'gstat' : 'NWICG_NotreDame',
+  'jobmanager' : 'r20',
+  'localqueue' : '9.q',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=9.q)\n',
   'status' : 'online',
 }
-osgsites['UKI-SCOTGRID-GLASGOW-svr026-q30m'] = {
-  'gatekeeper' : 'svr026.gla.scotgrid.ac.uk',
-  'site' : 'UKI-SCOTGRID-GLASGOW',
+osgsites['UKI-SCOTGRID-DURHAM-ce02-q2d'] = {
+  'gatekeeper' : 'ce02.dur.scotgrid.ac.uk',
+  'site' : 'UKI-SCOTGRID-DURHAM',
   'region' : 'UK',
-  'gstat' : 'UKI-SCOTGRID-GLASGOW',
+  'gstat' : 'UKI-SCOTGRID-DURHAM',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'q30m',
+  'localqueue' : 'q2d',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=q30m)\n',
+  'jdladd' : 'globusrsl = (queue=q2d)\n',
   'status' : 'online',
 }
 osgsites['AUVERGRID-iut43auvergridce01-atlas'] = {
@@ -4421,15 +5169,15 @@ osgsites['AUVERGRID-iut43auvergridce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['RAL-LCG2-lcgce05-grid3000M'] = {
-  'gatekeeper' : 'lcgce05.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
-  'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid3000M',
+osgsites['NWICG_NotreDame-osg-1.q'] = {
+  'gatekeeper' : 'osg.crc.nd.edu',
+  'site' : 'NWICG_NotreDame',
+  'region' : 'US',
+  'gstat' : 'NWICG_NotreDame',
+  'jobmanager' : 'r20',
+  'localqueue' : '1.q',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid3000M)\n',
+  'jdladd' : 'globusrsl = (queue=1.q)\n',
   'status' : 'online',
 }
 osgsites['ITWM-fornax-ce-atlas'] = {
@@ -4443,81 +5191,48 @@ osgsites['ITWM-fornax-ce-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['Taiwan-NCUCC-LCG2-ce-atlas'] = {
-  'gatekeeper' : 'ce.cc.ncu.edu.tw',
-  'site' : 'Taiwan-NCUCC-LCG2',
-  'region' : 'Taiwan',
-  'gstat' : 'Taiwan-NCUCC-LCG2',
+osgsites['CSCS-LCG2-ce11-atlas'] = {
+  'gatekeeper' : 'ce11.lcg.cscs.ch',
+  'site' : 'CSCS-LCG2',
+  'region' : 'Switzerland',
+  'gstat' : 'CSCS-LCG2',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['CERN-PROD-ce108-grid_atlas'] = {
-  'gatekeeper' : 'ce108.cern.ch',
-  'site' : 'CERN-PROD',
-  'region' : 'CERN',
-  'gstat' : 'CERN-PROD',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'grid_atlas',
+osgsites['IllinoisHEP-osgx0-default'] = {
+  'gatekeeper' : 'osgx0.hep.uiuc.edu',
+  'site' : 'IllinoisHEP',
+  'region' : 'US',
+  'gstat' : 'IllinoisHEP',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
-osgsites['INFN-T1-ce04-lcg-debug'] = {
-  'gatekeeper' : 'ce04-lcg.cr.cnaf.infn.it',
-  'site' : 'INFN-CNAF',
-  'region' : 'Italy',
-  'gstat' : 'INFN-T1',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'debug',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=debug)\n',
-  'status' : 'online',
-}
-osgsites['praguelcg2-ce1-lcgatlas'] = {
-  'gatekeeper' : 'ce1.farm.particle.cz',
-  'site' : 'praguelcg2',
-  'region' : 'CzechR',
-  'gstat' : 'praguelcg2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'lcgatlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=lcgatlas)\n',
-  'status' : 'online',
-}
-osgsites['LIP-Lisbon-ce01-atlas-atlasgrid'] = {
-  'gatekeeper' : 'ce01-atlas.lip.pt',
-  'site' : 'LIP-Lisbon',
-  'region' : 'Portugal',
-  'gstat' : 'LIP-Lisbon',
-  'jobmanager' : 'lcgsge',
-  'localqueue' : 'atlasgrid',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlasgrid)\n',
-  'status' : 'online',
-}
-osgsites['UNI-BONN-grid-ce-atlas'] = {
+osgsites['Uni-Bonn-grid-ce-atlas'] = {
   'gatekeeper' : 'grid-ce.physik.uni-bonn.de',
-  'site' : 'UNI-BONN',
+  'site' : 'Uni-Bonn',
   'region' : 'Germany',
-  'gstat' : 'UNI-BONN',
+  'gstat' : 'Uni-Bonn',
   'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['pic-ce06-gshort64'] = {
-  'gatekeeper' : 'ce06.pic.es',
-  'site' : 'PIC',
-  'region' : 'Spain',
-  'gstat' : 'pic',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'gshort64',
+osgsites['UKI-SOUTHGRID-CAM-HEP-serv07-atlas'] = {
+  'gatekeeper' : 'serv07.hep.phy.cam.ac.uk',
+  'site' : 'UKI-SOUTHGRID-CAM-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-CAM-HEP',
+  'jobmanager' : 'lcgcondor',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=gshort64)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
 osgsites['IN2P3-LAPP-lapp-ce01-atlas'] = {
@@ -4531,26 +5246,70 @@ osgsites['IN2P3-LAPP-lapp-ce01-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['NYSGRID_CORNELL_NYS1-nys1-local'] = {
-  'gatekeeper' : 'nys1.cac.cornell.edu',
-  'site' : 'NYSGRID_CORNELL_NYS1',
-  'region' : 'US',
-  'gstat' : 'NYSGRID_CORNELL_NYS1',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'local',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=local)\n',
-  'status' : 'online',
-}
-osgsites['NIKHEF-ELPROD-trekker-atlas'] = {
-  'gatekeeper' : 'trekker.nikhef.nl',
-  'site' : 'NIKHEF-ELPROD',
-  'region' : 'Holland',
-  'gstat' : 'NIKHEF-ELPROD',
-  'jobmanager' : 'pbs',
+osgsites['INFN-NAPOLI-ATLAS-atlasce01-atlas'] = {
+  'gatekeeper' : 'atlasce01.na.infn.it',
+  'site' : 'INFN-NAPOLI-ATLAS',
+  'region' : 'Italy',
+  'gstat' : 'INFN-NAPOLI-ATLAS',
+  'jobmanager' : 'lcgpbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['DESY-HH-grid-ce4-atlas'] = {
+  'gatekeeper' : 'grid-ce4.desy.de',
+  'site' : 'DESY-HH',
+  'region' : 'Germany',
+  'gstat' : 'DESY-HH',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['CERN-PROD-ce125-grid_atlas'] = {
+  'gatekeeper' : 'ce125.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
+  'status' : 'online',
+}
+osgsites['CERN-PROD-ce132-grid_2nh_atlas'] = {
+  'gatekeeper' : 'ce132.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_2nh_atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
+  'status' : 'online',
+}
+osgsites['Nebraska-gpn-husker-group_other'] = {
+  'gatekeeper' : 'gpn-husker.unl.edu',
+  'site' : 'Nebraska',
+  'region' : 'US',
+  'gstat' : 'Nebraska',
+  'jobmanager' : 'condor',
+  'localqueue' : 'group_other',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=group_other)\n',
+  'status' : 'online',
+}
+osgsites['GLOW-cmsgrid01-default'] = {
+  'gatekeeper' : 'cmsgrid01.hep.wisc.edu',
+  'site' : 'GLOW',
+  'region' : 'US',
+  'gstat' : 'GLOW',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce114-grid_atlas'] = {
@@ -4564,15 +5323,15 @@ osgsites['CERN-PROD-ce114-grid_atlas'] = {
   'jdladd' : 'globusrsl = (queue=grid_atlas)\n',
   'status' : 'online',
 }
-osgsites['UTA_DPCC-atlas-atlas_prod_q'] = {
-  'gatekeeper' : 'atlas.dpcc.uta.edu',
-  'site' : 'UTA_DPCC',
+osgsites['LIGO_UWM_NEMO-osg-nemo-ce-default'] = {
+  'gatekeeper' : 'osg-nemo-ce.phys.uwm.edu',
+  'site' : 'LIGO_UWM_NEMO',
   'region' : 'US',
-  'gstat' : 'UTA_DPCC',
-  'jobmanager' : 'pbs',
-  'localqueue' : 'atlas_prod_q',
+  'gstat' : 'LIGO_UWM_NEMO',
+  'jobmanager' : 'condor',
+  'localqueue' : 'default',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas_prod_q)\n',
+  'jdladd' : 'globusrsl = (queue=default)\n',
   'status' : 'online',
 }
 osgsites['IN2P3-CC-cclcgceli02-medium'] = {
@@ -4597,26 +5356,26 @@ osgsites['RU-SPbSU-alice19-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['INFN-TORINO-t2-ce-02-atlas'] = {
-  'gatekeeper' : 't2-ce-02.to.infn.it',
-  'site' : 'INFN-TORINO',
-  'region' : 'Italy',
-  'gstat' : 'INFN-TORINO',
+osgsites['NIKHEF-ELPROD-gazon-short'] = {
+  'gatekeeper' : 'gazon.nikhef.nl',
+  'site' : 'NIKHEF-ELPROD',
+  'region' : 'Holland',
+  'gstat' : 'NIKHEF-ELPROD',
   'jobmanager' : 'pbs',
-  'localqueue' : 'atlas',
+  'localqueue' : 'short',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=short)\n',
   'status' : 'online',
 }
-osgsites['SARA-MATRIX-celisa-grid_medium'] = {
-  'gatekeeper' : 'celisa.grid.sara.nl',
-  'site' : 'SARA-MATRIX',
-  'region' : 'Holland',
-  'gstat' : 'SARA-MATRIX',
+osgsites['UKI-SOUTHGRID-BHAM-HEP-epgr04-glong'] = {
+  'gatekeeper' : 'epgr04.ph.bham.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BHAM-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-BHAM-HEP',
   'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid_medium',
+  'localqueue' : 'glong',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid_medium)\n',
+  'jdladd' : 'globusrsl = (queue=glong)\n',
   'status' : 'online',
 }
 osgsites['INFN-TRIESTE-grid001-atlas'] = {
@@ -4630,26 +5389,15 @@ osgsites['INFN-TRIESTE-grid001-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['AEGIS07-PHY-ATLAS-ce-atlas-atlas'] = {
-  'gatekeeper' : 'ce-atlas.phy.bg.ac.yu',
-  'site' : 'AEGIS07-PHY-ATLAS',
-  'region' : 'Serbia/Montenegro',
-  'gstat' : 'AEGIS07-PHY-ATLAS',
+osgsites['ITEP-glwms-atlas'] = {
+  'gatekeeper' : 'glwms.itep.ru',
+  'site' : 'ITEP',
+  'region' : 'Russia',
+  'gstat' : 'ITEP',
   'jobmanager' : 'pbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
-  'status' : 'online',
-}
-osgsites['wuppertalprod-grid-ce-dg_long'] = {
-  'gatekeeper' : 'grid-ce.physik.uni-wuppertal.de',
-  'site' : 'wuppertalprod',
-  'region' : 'Germany',
-  'gstat' : 'wuppertalprod',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'dg_long',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=dg_long)\n',
   'status' : 'online',
 }
 osgsites['INFN-FERRARA-grid0-lcg'] = {
@@ -4674,81 +5422,92 @@ osgsites['ru-Moscow-SINP-LCG2-lcg38-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['USCMS-FNAL-WC1-cmsosgce3-default'] = {
-  'gatekeeper' : 'cmsosgce3.fnal.gov',
-  'site' : 'USCMS-FNAL-WC1',
-  'region' : 'US',
-  'gstat' : 'USCMS-FNAL-WC1',
-  'jobmanager' : 'condor',
-  'localqueue' : 'default',
+osgsites['IN2P3-CC-cccreamceli01-verylong'] = {
+  'gatekeeper' : 'cccreamceli01.in2p3.fr',
+  'site' : 'IN2P3-CC',
+  'region' : 'France',
+  'gstat' : 'IN2P3-CC',
+  'jobmanager' : 'bqs',
+  'localqueue' : 'verylong',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=default)\n',
+  'jdladd' : 'globusrsl = (queue=verylong)\n',
   'status' : 'online',
 }
-osgsites['SPACI-LECCE-ce2-atlas'] = {
-  'gatekeeper' : 'ce2.egee.unisalento.it',
-  'site' : 'SPACI-LECCE',
-  'region' : 'Italy',
-  'gstat' : 'SPACI-LECCE',
+osgsites['NWICG_NotreDame-osg-3.q'] = {
+  'gatekeeper' : 'osg.crc.nd.edu',
+  'site' : 'NWICG_NotreDame',
+  'region' : 'US',
+  'gstat' : 'NWICG_NotreDame',
+  'jobmanager' : 'r20',
+  'localqueue' : '3.q',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=3.q)\n',
+  'status' : 'online',
+}
+osgsites['RAL-LCG2-lcgce06-grid2000M'] = {
+  'gatekeeper' : 'lcgce06.gridpp.rl.ac.uk',
+  'site' : 'RAL-LCG2',
+  'region' : 'UK',
+  'gstat' : 'RAL-LCG2',
   'jobmanager' : 'lcgpbs',
+  'localqueue' : 'grid2000M',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid2000M)\n',
+  'status' : 'online',
+}
+osgsites['INFN-BOLOGNA-boalice3-atlasSL5'] = {
+  'gatekeeper' : 'boalice3.bo.infn.it',
+  'site' : 'INFN-BOLOGNA',
+  'region' : 'Italy',
+  'gstat' : 'INFN-BOLOGNA',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlasSL5',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlasSL5)\n',
+  'status' : 'online',
+}
+osgsites['SiGNET-creamce-atlas'] = {
+  'gatekeeper' : 'creamce.ijs.si',
+  'site' : 'SiGNET',
+  'region' : 'Slovenia',
+  'gstat' : 'SiGNET',
+  'jobmanager' : 'pbs',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['INFN-BARI-gridba2-long'] = {
-  'gatekeeper' : 'gridba2.ba.infn.it',
-  'site' : 'INFN-BARI',
+osgsites['UKI-SOUTHGRID-BRIS-HEP-lcgce04-express'] = {
+  'gatekeeper' : 'lcgce04.phy.bris.ac.uk',
+  'site' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'region' : 'UK',
+  'gstat' : 'UKI-SOUTHGRID-BRIS-HEP',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'express',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=express)\n',
+  'status' : 'online',
+}
+osgsites['INFN-PADOVA-cert-15-atlas'] = {
+  'gatekeeper' : 'cert-15.pd.infn.it',
+  'site' : 'INFN-PADOVA',
   'region' : 'Italy',
-  'gstat' : 'INFN-BARI',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'long',
+  'gstat' : 'INFN-PADOVA',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'atlas',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=long)\n',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UKI-LT2-UCL-CENTRAL-gw-4-Imra'] = {
-  'gatekeeper' : 'gw-4.ccc.ucl.ac.uk',
-  'site' : 'UKI-LT2-UCL-CENTRAL',
-  'region' : 'UK',
-  'gstat' : 'UKI-LT2-UCL-CENTRAL',
-  'jobmanager' : 'uclpbs',
-  'localqueue' : 'Imra',
+osgsites['NWICG_NotreDame-osg-7.q'] = {
+  'gatekeeper' : 'osg.crc.nd.edu',
+  'site' : 'NWICG_NotreDame',
+  'region' : 'US',
+  'gstat' : 'NWICG_NotreDame',
+  'jobmanager' : 'r20',
+  'localqueue' : '7.q',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=Imra)\n',
-  'status' : 'online',
-}
-osgsites['UKI-SOUTHGRID-OX-HEP-t2ce04-mediumoct'] = {
-  'gatekeeper' : 't2ce04.physics.ox.ac.uk',
-  'site' : 'UKI-SOUTHGRID-OX-HEP',
-  'region' : 'UK',
-  'gstat' : 'UKI-SOUTHGRID-OX-HEP',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'mediumoct',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=mediumoct)\n',
-  'status' : 'online',
-}
-osgsites['RAL-LCG2-lcgce03-grid500M'] = {
-  'gatekeeper' : 'lcgce03.gridpp.rl.ac.uk',
-  'site' : 'RAL-LCG2',
-  'region' : 'UK',
-  'gstat' : 'RAL-LCG2',
-  'jobmanager' : 'lcgpbs',
-  'localqueue' : 'grid500M',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid500M)\n',
-  'status' : 'online',
-}
-osgsites['CERN-PROD-ce115-grid_2nh_atlas'] = {
-  'gatekeeper' : 'ce115.cern.ch',
-  'site' : 'CERN-PROD',
-  'region' : 'CERN',
-  'gstat' : 'CERN-PROD',
-  'jobmanager' : 'lcglsf',
-  'localqueue' : 'grid_2nh_atlas',
-  'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
+  'jdladd' : 'globusrsl = (queue=7.q)\n',
   'status' : 'online',
 }
 osgsites['FNAL_GPGRID_1-fnpcosg1-group_atlas'] = {
@@ -4760,6 +5519,28 @@ osgsites['FNAL_GPGRID_1-fnpcosg1-group_atlas'] = {
   'localqueue' : 'group_atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=group_atlas)\n',
+  'status' : 'online',
+}
+osgsites['INFN-ROMA2-gridvm01-atlas'] = {
+  'gatekeeper' : 'gridvm01.roma2.infn.it',
+  'site' : 'INFN-ROMA2',
+  'region' : 'Italy',
+  'gstat' : 'INFN-ROMA2',
+  'jobmanager' : 'lcgpbs',
+  'localqueue' : 'atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'status' : 'online',
+}
+osgsites['CERN-PROD-ce131-grid_2nh_atlas'] = {
+  'gatekeeper' : 'ce131.cern.ch',
+  'site' : 'CERN-PROD',
+  'region' : 'CERN',
+  'gstat' : 'CERN-PROD',
+  'jobmanager' : 'lcglsf',
+  'localqueue' : 'grid_2nh_atlas',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=grid_2nh_atlas)\n',
   'status' : 'online',
 }
 osgsites['CERN-PROD-ce106-grid_atlas'] = {
@@ -4784,6 +5565,17 @@ osgsites['RRC-KI-gate-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
+osgsites['NWICG_NotreDame-osg-5.q'] = {
+  'gatekeeper' : 'osg.crc.nd.edu',
+  'site' : 'NWICG_NotreDame',
+  'region' : 'US',
+  'gstat' : 'NWICG_NotreDame',
+  'jobmanager' : 'r20',
+  'localqueue' : '5.q',
+  'system' : 'lcg-cg',
+  'jdladd' : 'globusrsl = (queue=5.q)\n',
+  'status' : 'online',
+}
 osgsites['IEPSAS-Kosice-ce-iep-grid-atlas'] = {
   'gatekeeper' : 'ce-iep-grid.saske.sk',
   'site' : 'IEPSAS-Kosice',
@@ -4806,12 +5598,12 @@ osgsites['IN2P3-LPC-clrlcgce01-atlasana'] = {
   'jdladd' : 'globusrsl = (queue=atlasana)\n',
   'status' : 'online',
 }
-osgsites['HEPGRID_UERJ_OSG64-osgce64-atlas'] = {
-  'gatekeeper' : 'osgce64.hepgrid.uerj.br',
-  'site' : 'HEPGRID_UERJ_OSG64',
-  'region' : 'Brazil',
-  'gstat' : 'HEPGRID_UERJ_OSG64',
-  'jobmanager' : 'condor',
+osgsites['INFN-PISA-gridce2-atlas'] = {
+  'gatekeeper' : 'gridce2.pi.infn.it',
+  'site' : 'INFN-PISA',
+  'region' : 'Italy',
+  'gstat' : 'INFN-PISA',
+  'jobmanager' : 'lcglsf',
   'localqueue' : 'atlas',
   'system' : 'lcg-cg',
   'jdladd' : 'globusrsl = (queue=atlas)\n',
@@ -4828,14 +5620,14 @@ osgsites['TRIUMF-LCG2-ce1-atlas'] = {
   'jdladd' : 'globusrsl = (queue=atlas)\n',
   'status' : 'online',
 }
-osgsites['UCSDT2-osg-gw-4-atlas'] = {
-  'gatekeeper' : 'osg-gw-4.t2.ucsd.edu',
-  'site' : 'UCSDT2',
+osgsites['HU_ATLAS_Tier2-heroatlas-ATLAS_Analysis'] = {
+  'gatekeeper' : 'heroatlas.fas.harvard.edu',
+  'site' : 'HU_ATLAS_Tier2',
   'region' : 'US',
-  'gstat' : 'UCSDT2',
-  'jobmanager' : 'condor',
-  'localqueue' : 'atlas',
+  'gstat' : 'HU_ATLAS_Tier2',
+  'jobmanager' : 'lsf',
+  'localqueue' : 'ATLAS_Analysis',
   'system' : 'lcg-cg',
-  'jdladd' : 'globusrsl = (queue=atlas)\n',
+  'jdladd' : 'globusrsl = (queue=ATLAS_Analysis)\n',
   'status' : 'online',
 }
