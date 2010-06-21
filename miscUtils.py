@@ -73,13 +73,13 @@ def compDictColl(d1,d2,exclList=[]):
 			except KeyError:
 				print 'No key %s in %s' % (i, queue)
 
-def testDiff(m,n):
-	for i in m:
-		if type(m[i]) == dict: mm = collapseDict(m)
-		else: mm = m
-	for i in n:
-		if type(n[i]) == dict: nn = collapseDict(n)
-		else: nn = n
+def testDiff(mm,nn):
+## 	for i in m:
+## 		if type(m[i]) == dict: mm = collapseDict(m)
+## 		else: mm = m
+## 	for i in n:
+## 		if type(n[i]) == dict: nn = collapseDict(n)
+## 		else: nn = n
 
 	for i in mm:
 		try:
