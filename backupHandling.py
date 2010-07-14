@@ -20,17 +20,19 @@ def backupCreate(d):
 		# And make one if not present
 		os.makedirs(backupPath)
 	# Opens the backup file and path
-	f=file(backupPath + timestamp + backupName,'w')
+	bfile = backupPath + timestamp + backupName
+	f=file(bfile,'w')
 	# Temporary dictionary collapsed from d
 	td = collapseDict(d)
 	# Creates a list from the collapsed queue def dictionary and pickles it into the file
 	pickle.dump([td[i] for i in td],f)
 	f.close()
+	os.system('tar czf %s.tgz %s; rm -rf %s' % (bfile,bfile,bfile))
 	if pickleDebug: print 'Ending pickle creation'
 	return 0
 
 def backupRestore(fname):
-	''' Restore a DB backup pickle into the live database! Caution! If you err, tou will hose the database! '''
+	''' Restore a DB backup pickle into the live database! Caution! If you err, you will hose the database! '''
 	try:
 		# Set up the file
 		f=file(backupPath+fname)
