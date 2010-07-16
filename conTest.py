@@ -26,7 +26,7 @@ def loadConfigs():
 	# Load the database as it stands as a primary reference
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 
-	Update the local configuration files from SVN
+	#Update the local configuration files from SVN
 	svnUpdate()
 	
 	# Load the present config files, based on the SVN update
