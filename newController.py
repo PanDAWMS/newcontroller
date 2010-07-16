@@ -158,6 +158,7 @@ if __name__ == "__main__":
 	keydict={}
 
 	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
+	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 	if genDebug: dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
 	else: loadConfigs()
 
