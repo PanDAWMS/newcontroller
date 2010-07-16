@@ -154,12 +154,12 @@ def loadConfigs():
 if __name__ == "__main__":
 	args = sys.argv[1:]
 	# A better argument parser will be needed in the future
-	if 'dbOverride' in args: dbOverride = True
-	keydict={}
+	#if 'dbOverride' in args: dbOverride = True
+	#keydict={}
 
 	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
-	if genDebug: dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
-	else: loadConfigs()
+	#if genDebug: dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
+	#else: loadConfigs()
 
-	os.chdir(base_path)
+	#os.chdir(base_path)
