@@ -20,11 +20,11 @@ from backupHandling import *
 
 ## 	return jdldb, jdldc
 
-def loadConfigs():
-	'''Run the schedconfig table updates'''
+## def loadConfigs():
+## 	'''Run the schedconfig table updates'''
 
-	# Load the database as it stands as a primary reference
-	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+## 	# Load the database as it stands as a primary reference
+## 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 
 	# Update the local configuration files from SVN
 ## 	svnUpdate()
@@ -139,6 +139,7 @@ def loadConfigs():
 ## 	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 ## 	if genDebug: dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
 ## 	else: loadConfigs()
-a=loadConfigs()
+dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+
 ## 	os.chdir(base_path)
 
