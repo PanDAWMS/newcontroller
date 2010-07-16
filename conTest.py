@@ -141,5 +141,6 @@ if __name__ == "__main__":
 ## 	else: loadConfigs()
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 	jdldb, jdldc = loadJdl()
+	loadConfigs()
 ## 	os.chdir(base_path)
 
