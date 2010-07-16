@@ -24,7 +24,7 @@ def loadConfigs():
 	'''Run the schedconfig table updates'''
 	
 	# Load the database as it stands as a primary reference
-	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+	#dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 
 ## 	#Update the local configuration files from SVN
 ## 	svnUpdate()
