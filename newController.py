@@ -20,7 +20,7 @@
 
 # This code has been organized for easy transition into a class structure.
 
-import os, sys, commands, pickle, time
+import os, sys, commands, pickle
 
 from controllerSettings import *
 from miscUtils import *
@@ -43,7 +43,6 @@ def loadJdl():
 
 def loadConfigs():
 	'''Run the schedconfig table updates'''
-	time.sleep(1)
 	# Load the database as it stands as a primary reference
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 
@@ -154,12 +153,12 @@ def loadConfigs():
 if __name__ == "__main__":
 	args = sys.argv[1:]
 	# A better argument parser will be needed in the future
-	#if 'dbOverride' in args: dbOverride = True
-	#keydict={}
+	if 'dbOverride' in args: dbOverride = True
+	keydict={}
 
 	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
-#	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
-	#loadConfigs()
+	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+
 	if genDebug: dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
 	else: loadConfigs()
 
