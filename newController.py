@@ -55,7 +55,7 @@ def loadConfigs():
 		# Make the necessary changes to the configuration files:
 		makeConfigs(configd)
 		# Check the changes just committed into Subversion
-		svnCheckin(svnstring)
+		svnCheckin('Updated from DB')
 
 	else:
 		# Update the local configuration files from SVN
