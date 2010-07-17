@@ -86,7 +86,7 @@ def testDiff(mm,nn):
 			for k in mm[i].keys():
 				if k not in ['releases']:
 					if mm[i][k] != nn[i][k]:
-						if k='jdladd':
+						if k=='jdladd':
 							if mm[i][k].strip('Queue').strip() != nn[i][k].strip('Queue').strip():
 							print i, k, mm[i][k], nn[i][k], type(mm[i][k]), type(nn[i][k])
 						else:
