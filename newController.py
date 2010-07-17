@@ -46,8 +46,20 @@ def loadConfigs():
 	# Load the database as it stands as a primary reference
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 
-	# Update the local configuration files from SVN
-	svnUpdate()
+	# If the DB is overriding the config files, we need to recreate them now.
+	if dbOverride:
+		# Get the config dictionary directly from teh DB, and process the config file update from it.
+		configd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+		# Compose the "All" queues for each site
+		status = allMaker(configd)
+		# Make the necessary changes to the configuration files:
+		makeConfigs(configd)
+		# Check the changes just committed into Subversion
+		svnCheckin(svnstring)
+
+	else:
+		# Update the local configuration files from SVN
+		svnUpdate()
 	
 	# Load the present config files, based on the SVN update
 	configd = buildDict()
