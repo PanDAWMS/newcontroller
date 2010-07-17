@@ -88,7 +88,7 @@ def testDiff(mm,nn):
 					if mm[i][k] != nn[i][k]:
 						if k=='jdladd':
 							if mm[i][k].strip('Queue').strip() != nn[i][k].strip('Queue').strip():
-							print i, k, mm[i][k], nn[i][k], type(mm[i][k]), type(nn[i][k])
+								print i, k, mm[i][k], nn[i][k], type(mm[i][k]), type(nn[i][k])
 						else:
 							print i, k, mm[i][k], nn[i][k], type(mm[i][k]), type(nn[i][k])
 
