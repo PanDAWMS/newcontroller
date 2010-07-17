@@ -50,7 +50,7 @@ def allMaker(d):
 					all_d[cloud][site][key] = reducer(comp[key])[0]
 
 	# Running across sites to update source information in the main dictionary
-	for cloud in d.keys():
+	for cloud in [i for i in d.keys() if i is not ndef]:
 		for site in [i for i in d[cloud].keys() if i is not ndef]:
 			# No point in making an All file for one queue definition:
 			if len(d[cloud][site]) > 1:
