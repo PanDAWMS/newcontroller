@@ -118,6 +118,7 @@ def loadConfigs():
 		utils.replaceDB('jdllist',jdl_l,key=jdlkey)
 		# Changes committed after all is successful, to avoid partial updates
 		utils.commit()
+		utils.endDB()
 		# FIX This string will eventually be filled with changed queue names and other info for the subversion checkin
 		svnstring=''
 
