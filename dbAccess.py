@@ -16,6 +16,7 @@ from controllerSettings import *
 def loadSchedConfig():
 	'''Returns the values in the schedconfig db as a dictionary'''
 	# Initialize DB
+	utils.dbname='intr'
 	utils.initDB()
 	print "Init DB"
 	# Gets all rows from schedconfig table
