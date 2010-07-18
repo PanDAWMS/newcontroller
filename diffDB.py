@@ -14,9 +14,7 @@ def checkDB():
 	'''Check the INTR DB against the Prod DB (testing before deployment)'''
 	prod_db, standardkeys = sqlDictUnpacker(loadSchedConfig())
 	prod_db = collapseDict(prod_db)
-	utils.test=0
-	utils.dbname='pmeta'
-	intr_db, standardkeys = sqlDictUnpacker(loadSchedConfig())
+	intr_db, standardkeys = sqlDictUnpacker(loadSchedConfig('pmeta',0))
 	intr_db = collapseDict(intr_db)
 
 	testDiff(intr_db, prod_db)
