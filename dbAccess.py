@@ -13,10 +13,11 @@ from controllerSettings import *
 #----------------------------------------------------------------------#
 # DB Access Methods 
 #----------------------------------------------------------------------#
-def loadSchedConfig():
+def loadSchedConfig(db='intr', test='1'): # Set for INTR -- cahange for prod.
 	'''Returns the values in the schedconfig db as a dictionary'''
 	# Initialize DB
-	utils.dbname='intr'
+	utils.test=test
+	utils.dbname=db
 	utils.initDB()
 	print "Init DB"
 	# Gets all rows from schedconfig table
