@@ -25,4 +25,4 @@ def checkDB():
 if __name__ == "__main__":
 
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
-	intr_dn, prod_db = checkDB()
+	intr_db, prod_db = checkDB()
