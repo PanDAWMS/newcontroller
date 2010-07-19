@@ -94,13 +94,11 @@ def testDiff(mm,nn):
 							if mjdl != njdl:
 								print
 								print '==============================================='
-								print i, k
+								print 'Site %s, Queue %s' % (i, k)
 								print '***********************************************'
-								print mjdl
+								print '%s' %mjdl
 								print '***********************************************'
-								print njdl
-								print '***********************************************'
-								print type(mm[i][k]), type(nn[i][k])
+								print '%s' % njdl
 								print '==============================================='
 								print
 								
