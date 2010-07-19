@@ -84,7 +84,7 @@ def testDiff(mm,nn):
 	for i in mm:
 		try:
 			for k in mm[i].keys():
-				if k not in ['releases']:
+				if k not in ['releases','space']:
 					if mm[i][k] != nn[i][k]:
 						if k=='jdladd':
 							mjdl=mm[i][k].split(); njdl=nn[i][k].split(); 
