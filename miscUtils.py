@@ -103,6 +103,7 @@ def testDiff(mm,nn):
 								print type(mm[i][k]), type(nn[i][k])
 								print '==============================================='
 								print
+								
 						else:
 							print '->->-> ',
 							print i, k, mm[i][k], nn[i][k], type(mm[i][k]), type(nn[i][k])
