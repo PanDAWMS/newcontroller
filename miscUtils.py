@@ -89,7 +89,7 @@ def testDiff(mm,nn):
 						if k=='jdladd':
 							if mm[i][k][:mm[i][k].find('Queue')].strip() != nn[i][k][:nn[i][k].find('Queue')].strip():
 								print 
-								print i, k,
+								print i, k
 								print '***********************************************'
 								print mm[i][k][:mm[i][k].find('Queue')].strip()
 								print '***********************************************'
