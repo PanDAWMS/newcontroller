@@ -88,10 +88,15 @@ def testDiff(mm,nn):
 					if mm[i][k] != nn[i][k]:
 						if k=='jdladd':
 							if mm[i][k][:mm[i][k].find('Queue')].strip() != nn[i][k][:nn[i][k].find('Queue')].strip():
+								print 
 								print i, k,
+								print '***********************************************'
 								print mm[i][k][:mm[i][k].find('Queue')].strip()
+								print '***********************************************'
 								print nn[i][k][:nn[i][k].find('Queue')].strip()
+								print '***********************************************'
 								print type(mm[i][k]), type(nn[i][k])
+								print
 							else: print i, k, mm[i][k], nn[i][k], type(mm[i][k]), type(nn[i][k])
 
 		except KeyError:
