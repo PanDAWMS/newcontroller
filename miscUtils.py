@@ -92,7 +92,8 @@ def testDiff(mm,nn):
 							mjdl=' '.join(mjdl); njdl=' '.join(njdl)
 
 							if mjdl != njdl:
-								print 
+								print
+								print '==============================================='
 								print i, k
 								print '***********************************************'
 								print mm[i][k]
@@ -100,8 +101,11 @@ def testDiff(mm,nn):
 								print nn[i][k]
 								print '***********************************************'
 								print type(mm[i][k]), type(nn[i][k])
+								print '==============================================='
 								print
-						else: print i, k, mm[i][k], nn[i][k], type(mm[i][k]), type(nn[i][k])
+						else:
+							print '->->-> ',
+							print i, k, mm[i][k], nn[i][k], type(mm[i][k]), type(nn[i][k])
 
 		except KeyError:
 			pass
