@@ -95,9 +95,9 @@ def testDiff(mm,nn):
 								print 
 								print i, k
 								print '***********************************************'
-								print mm[i][k][:mm[i][k].find('Queue')].strip()
+								print mm[i][k]
 								print '***********************************************'
-								print nn[i][k][:nn[i][k].find('Queue')].strip()
+								print nn[i][k]
 								print '***********************************************'
 								print type(mm[i][k]), type(nn[i][k])
 								print
