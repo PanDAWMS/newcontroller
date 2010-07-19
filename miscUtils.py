@@ -88,7 +88,7 @@ def testDiff(mm,nn):
 					if mm[i][k] != nn[i][k]:
 						if k=='jdladd':
 							mjdl=mm[i][k].split(); njdl=nn[i][k].split(); 
-							mjdl=[i.strip() for i in mjdl]; njdl=[i.split() for i in njdl]; 
+							mjdl=[i.strip() for i in mjdl]; njdl=[i.strip() for i in njdl]; 
 							mjdl=' '.join(mjdl); njdl=' '.join(njdl)
 
 							if mjdl != njdl:
