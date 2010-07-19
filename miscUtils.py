@@ -91,7 +91,7 @@ def testDiff(mm,nn):
 							mjdl=[i.strip() for i in mjdl]; njdl=[i.split() for i in njdl]; 
 							mjdl=' '.join(mjdl); njdl=' '.join(njdl)
 
-							if  != nn[i][k][:nn[i][k].find('Queue')].strip():
+							if mjdl != njdl:
 								print 
 								print i, k
 								print '***********************************************'
