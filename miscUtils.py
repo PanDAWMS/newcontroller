@@ -87,7 +87,11 @@ def testDiff(mm,nn):
 				if k not in ['releases']:
 					if mm[i][k] != nn[i][k]:
 						if k=='jdladd':
-							if mm[i][k][:mm[i][k].find('Queue')].strip() != nn[i][k][:nn[i][k].find('Queue')].strip():
+							mjdl=mm[i][k].split(); njdl=nn[i][k].split(); 
+							mjdl=[i.strip() for i in mjdl]; njdl=[i.split() for i in njdl]; 
+							mjdl=' '.join(mjdl); njdl=' '.join(njdl)
+
+							if  != nn[i][k][:nn[i][k].find('Queue')].strip():
 								print 
 								print i, k
 								print '***********************************************'
