@@ -100,7 +100,7 @@ def testDiff(mm,nn):
 								print '***********************************************'
 								print '%s' % njdl
 								print '***********************************************'
-								print m['cloud'], m['site'], n['cloud'],n['site']
+								print mm['cloud'], mm['site'], nn['cloud'],nn['site']
 								print '==============================================='
 								print
 								
