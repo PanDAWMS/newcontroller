@@ -111,32 +111,86 @@ def testDiff(mm,nn):
 		except KeyError:
 			pass
 
+
+def unicodeConvert(x):
+	'''General-purpose unicode converter'''
+	if type(x) == str: return unicode(x)
+	if type(x) == dict: return unicodeDictConvert(x)
+	if type(x) == list: return unicodeListConvert(x)
+	if type(x) == tuple: return unicodeTupleConvert(x)	
+	return 0
+
 def unicodeListConvert(l):
 	'''Converts all strings in a list to unicode. No effort is made to detatch lists'''
 	for n, i in enumerate(l):
-		if type(i) == dict: unicodeDictConvert(i)
-		if type(i) == list: unicodeListConvert(i)
-		if type(i) == tuple: l[n] = unicodeTupleConvert(i)
 		if type(i) == str: l[n] = unicode(i)
+		elif type(i) == dict: unicodeDictConvert(i)
+		elif type(i) == list: unicodeListConvert(i)
+		elif type(i) == tuple: l[n] = unicodeTupleConvert(i)
 	return 0
 	
 def unicodeDictConvert(d):
 	'''Converts all strings in a dictionary to unicode. No effort is made to detatch dictionaries'''
 	for i in d:
 		if type(d[i]) == dict: unicodeDictConvert(i)
-		if type(d[i]) == list: unicodeListConvert(i)
-		if type(d[i]) == tuple: d[i] = unicodeTupleConvert(i)
-		if type(d[i]) == str: d[i] = unicode(i)
+		elif type(d[i]) == list: unicodeListConvert(i)
+		elif type(d[i]) == tuple: d[i] = unicodeTupleConvert(i)
+		elif type(d[i]) == str: d[i] = unicode(i)
 	return 0
 
 def unicodeTupleConvert(t):
 	'''Converts all strings in a tuple to unicode.'''
 	new_tuple_list=[]
 	for i in t:
-		if type(t[i]) == list:
+		if type(t[i]) == str: new_tuple_list.append(unicode(i))
+		elif type(i) == dict:
+			unicodeDictConvert(i)
+			new_tuple_list.append(i)
+		elif type(t[i]) == list:
 			unicodeListConvert(i)
 			new_tuple_list.append(i)
-		if type(t[i]) == tuple: new_tuple_list.append(unicodeTupleConvert(i))
-		if type(t[i]) == str: new_tuple_list.append(unicode(i))
+		elif type(t[i]) == tuple: new_tuple_list.append(unicodeTupleConvert(i))
 	return t
 
+def unicodeDecode(x):
+	'''General-purpose unicode decoder'''
+	if type(x) == str: return x.decode(unidef,'ignore')
+	if type(x) == dict: return unicodeDictDecode(x)
+	if type(x) == list: return unicodeListDecode(x)
+	if type(x) == tuple: return unicodeTupleDecode(x)	
+	return 0
+
+def unicodeListEncode(l):
+	'''Encodes all strings in a list to UTF-8, or the default defined. No effort is made to detatch lists'''
+	for n, i in enumerate(l):
+		if type(i) == str: l[n] = i.encode(unidef,'ignore')
+		elif type(i) == dict: unicodeDictConvert(i)
+		elif type(i) == list: unicodeListConvert(i)
+		elif type(i) == tuple: l[n] = unicodeTupleConvert(i)
+		elif type(i) == unicode: l[n] = i.encode(unidef,'ignore')
+	return 0
+	
+def unicodeDictEncode(d):
+	'''Encodes all strings in a dictionary to UTF-8, or the default defined. No effort is made to detatch dictionaries'''
+	for i in d:
+		if type(d[i]) == unicode: d[i] = d[i].encode(unidef,'ignore')
+		elif type(d[i]) == dict: unicodeDictConvert(i)
+		elif type(d[i]) == list: unicodeListConvert(i)
+		elif type(d[i]) == tuple: d[i] = unicodeTupleConvert(i)
+		elif type(d[i]) == str: d[i] = d[i].encode(unidef,'ignore')
+	return 0
+
+def unicodeTupleEncode(t):
+	'''Encodes all strings in a tuple from unicode to UTF-8, or the default.'''
+	new_tuple_list=[]
+	for i in t:
+		if type(t[i]) == unicode: new_tuple_list.append(i.encode(unidef,'ignore'))
+		elif type(t[i]) == dict:
+			unicodeDictConvert(i)
+			new_tuple_list.append(i)
+		elif type(t[i]) == list:
+			unicodeListConvert(i)
+			new_tuple_list.append(i)
+		elif type(t[i]) == tuple: new_tuple_list.append(unicodeTupleConvert(i))
+		elif type(t[i]) == str: new_tuple_list.append(i.encode(unidef,'ignore'))
+	return t
