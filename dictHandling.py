@@ -5,7 +5,7 @@
 # Alden.Stradling@cern.ch                                                                #
 ##########################################################################################
 
-import os
+import os, pickle
 
 from miscUtils import *
 from controllerSettings import *
@@ -169,10 +169,17 @@ def buildDict():
 				
 	# Leaving the All parameters unincorporated
 	os.chdir(base)
+	f=file('confd.p','w')
+	pickle.dump(confd)
+	f.close()
+	unicodeConvert(confd)
+	f=file('confduni.p','w')
+	pickle.dump(confd)
+	f.close()
 	return confd
 
 def collapseDict(d):
-	''' Collapses a nested dictionary into a flat set of queues '''
+	'''Collapses a nested dictionary into a flat set of queues '''
 	out_d = {}
 	# Rip through the clouds
 	for cloud in d:
