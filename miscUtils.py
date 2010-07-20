@@ -132,10 +132,10 @@ def unicodeListConvert(l):
 def unicodeDictConvert(d):
 	'''Converts all strings in a dictionary to unicode. No effort is made to detatch dictionaries'''
 	for i in d:
-		if type(d[i]) == dict: unicodeDictConvert(i)
-		elif type(d[i]) == list: unicodeListConvert(i)
-		elif type(d[i]) == tuple: d[i] = unicodeTupleConvert(i)
-		elif type(d[i]) == str: d[i] = unicode(i)
+		if type(d[i]) == str: d[i] = unicode(i)
+		elif type(d[i]) == dict: unicodeDictConvert(d[i])
+		elif type(d[i]) == list: unicodeListConvert(d[i])
+		elif type(d[i]) == tuple: d[i] = unicodeTupleConvert(d[i])
 	return 0
 
 def unicodeTupleConvert(t):
@@ -174,9 +174,9 @@ def unicodeDictEncode(d):
 	'''Encodes all strings in a dictionary to UTF-8, or the default defined. No effort is made to detatch dictionaries'''
 	for i in d:
 		if type(d[i]) == unicode: d[i] = d[i].encode(unidef,'ignore')
-		elif type(d[i]) == dict: unicodeDictConvert(i)
-		elif type(d[i]) == list: unicodeListConvert(i)
-		elif type(d[i]) == tuple: d[i] = unicodeTupleConvert(i)
+		elif type(d[i]) == dict: unicodeDictConvert(d[i])
+		elif type(d[i]) == list: unicodeListConvert(d[i])
+		elif type(d[i]) == tuple: d[i] = unicodeTupleConvert(d[i])
 		elif type(d[i]) == str: d[i] = d[i].encode(unidef,'ignore')
 	return 0
 
