@@ -169,13 +169,7 @@ def buildDict():
 				
 	# Leaving the All parameters unincorporated
 	os.chdir(base)
-	f=file('confd.p','w')
-	pickle.dump(confd,f)
-	f.close()
 	unicodeConvert(confd)
-	f=file('confduni.p','w')
-	pickle.dump(confd,f)
-	f.close()
 	return confd
 
 def collapseDict(d):
