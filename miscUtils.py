@@ -132,7 +132,7 @@ def unicodeListConvert(l):
 def unicodeDictConvert(d):
 	'''Converts all strings in a dictionary to unicode. No effort is made to detatch dictionaries'''
 	for i in d:
-		if type(d[i]) == str: d[i] = unicode(i)
+		if type(d[i]) == str: d[i] = unicode(d[i])
 		elif type(d[i]) == dict: unicodeDictConvert(d[i])
 		elif type(d[i]) == list: unicodeListConvert(d[i])
 		elif type(d[i]) == tuple: d[i] = unicodeTupleConvert(d[i])
