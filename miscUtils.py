@@ -152,21 +152,21 @@ def unicodeTupleConvert(t):
 		elif type(t[i]) == tuple: new_tuple_list.append(unicodeTupleConvert(i))
 	return t
 
-def unicodeDecode(x):
+def unicodeEncode(x):
 	'''General-purpose unicode decoder'''
 	if type(x) == str: return x.decode(unidef,'ignore')
-	if type(x) == dict: return unicodeDictDecode(x)
-	if type(x) == list: return unicodeListDecode(x)
-	if type(x) == tuple: return unicodeTupleDecode(x)	
+	if type(x) == dict: return unicodeDictEncode(x)
+	if type(x) == list: return unicodeListEncode(x)
+	if type(x) == tuple: return unicodeTupleEncode(x)	
 	return 0
 
 def unicodeListEncode(l):
 	'''Encodes all strings in a list to UTF-8, or the default defined. No effort is made to detatch lists'''
 	for n, i in enumerate(l):
 		if type(i) == str: l[n] = i.encode(unidef,'ignore')
-		elif type(i) == dict: unicodeDictConvert(i)
-		elif type(i) == list: unicodeListConvert(i)
-		elif type(i) == tuple: l[n] = unicodeTupleConvert(i)
+		elif type(i) == dict: unicodeDictEncode(i)
+		elif type(i) == list: unicodeListEndcode(i)
+		elif type(i) == tuple: l[n] = unicodeTupleEncode(i)
 		elif type(i) == unicode: l[n] = i.encode(unidef,'ignore')
 	return 0
 	
@@ -174,9 +174,9 @@ def unicodeDictEncode(d):
 	'''Encodes all strings in a dictionary to UTF-8, or the default defined. No effort is made to detatch dictionaries'''
 	for i in d:
 		if type(d[i]) == unicode: d[i] = d[i].encode(unidef,'ignore')
-		elif type(d[i]) == dict: unicodeDictConvert(d[i])
-		elif type(d[i]) == list: unicodeListConvert(d[i])
-		elif type(d[i]) == tuple: d[i] = unicodeTupleConvert(d[i])
+		elif type(d[i]) == dict: unicodeDictEncode(d[i])
+		elif type(d[i]) == list: unicodeListEncode(d[i])
+		elif type(d[i]) == tuple: d[i] = unicodeTupleEncode(d[i])
 		elif type(d[i]) == str: d[i] = d[i].encode(unidef,'ignore')
 	return 0
 
@@ -186,11 +186,11 @@ def unicodeTupleEncode(t):
 	for i in t:
 		if type(t[i]) == unicode: new_tuple_list.append(i.encode(unidef,'ignore'))
 		elif type(t[i]) == dict:
-			unicodeDictConvert(i)
+			unicodeDictEncode(i)
 			new_tuple_list.append(i)
 		elif type(t[i]) == list:
-			unicodeListConvert(i)
+			unicodeListEncode(i)
 			new_tuple_list.append(i)
-		elif type(t[i]) == tuple: new_tuple_list.append(unicodeTupleConvert(i))
+		elif type(t[i]) == tuple: new_tuple_list.append(unicodeTupleEncode(i))
 		elif type(t[i]) == str: new_tuple_list.append(i.encode(unidef,'ignore'))
 	return t
