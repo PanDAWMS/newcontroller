@@ -35,6 +35,7 @@ def loadSchedConfig(db='intr', test='1'): # Set for INTR -- cahange for prod.
 		# Populate the output dictionary with queue definitions, keyed by queue nickname
 		d[newd[dbkey]]=newd
 
+	unicodeConvert(d)
 	return d
 
 def loadInstalledSW():
@@ -50,6 +51,7 @@ def loadInstalledSW():
 	# Close DB connection
 	utils.endDB()
 	# Return a dictionaried version of the DB contents, keyed release_site_cache
+	unicodeConvert(rows)
 	return dict([('%s_%s_%s' % (i['release'],i['siteid'],i['cache']),i) for i in rows])
 
 def execUpdate(updateList):
