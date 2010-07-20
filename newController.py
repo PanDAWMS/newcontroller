@@ -166,7 +166,9 @@ def loadConfigs():
 if __name__ == "__main__":
 	args = sys.argv[1:]
 	# A better argument parser will be needed in the future
-	if '--dbOverride' in args: dbOverride = True
+	if '--dbOverride' in args:
+		print 'The DB will override existing config file settings.'
+		dbOverride = True
 	keydict={}
 
 	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
