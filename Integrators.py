@@ -50,6 +50,7 @@ def loadBDII():
 		print 'LCG Initial Load Complete'
 	else:
 		loadlcg = 0
+	unicodeConvert(osgsites)
 	return osgsites
 
 def keyCheckReplace(d,key,value):
@@ -206,6 +207,7 @@ def toaIntegrator(confd):
 						if toaDebug: print 'Failed to try'
 						if toaDebug: print cloud, site, queue, confd[cloud][site][queue][param]
 						
+	unicodeConvert(confd)
 	print 'Finished ToA integrator'
 	return
 
@@ -337,6 +339,7 @@ def bdiiIntegrator(confd,rellist,d):
 			if bdiiDebug: print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
 
 
+	unicodeConvert(confd)
 	# All changes to the dictionary happened live -- no need to return it.
 	print 'Finished BDII Integrator'
 	return 0
