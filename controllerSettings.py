@@ -7,6 +7,9 @@
 
 import os
 
+# Default unicode encoding
+unidef='utf-8'
+
 # Debug Flags
 genDebug = True
 toaDebug = False
