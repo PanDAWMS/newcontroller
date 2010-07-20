@@ -38,6 +38,8 @@ def loadJdl():
 	jdldb = {}
 	jdlListAdder(jdldb)
 	jdldc=buildJdlDict()
+	unicodeConvert(jdldb)
+	unicodeConvert(jdldc)
 
 	return jdldb, jdldc
 
@@ -45,7 +47,6 @@ def loadConfigs():
 	'''Run the schedconfig table updates'''
 	# Load the database as it stands as a primary reference
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
-
 	# If the DB is overriding the config files, we need to recreate them now.
 	if dbOverride:
 		# Get the config dictionary directly from teh DB, and process the config file update from it.
@@ -112,9 +113,13 @@ def loadConfigs():
 
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
+		# Since all inputs are unicode converted, all outputs need to be encoded.
+		unicodeEncode(up_l)
 		utils.replaceDB('schedconfig',up_l,key=dbkey)
 		# Jdllist table gets updated all at once
 		print 'Updating JDLList'
+		# Since all inputs are unicode converted, all outputs need to be encoded.
+		unicodeEncode(jdl_l)
 		utils.replaceDB('jdllist',jdl_l,key=jdlkey)
 		# Changes committed after all is successful, to avoid partial updates
 		utils.commit()
