@@ -122,6 +122,8 @@ def composeFields(d,s,dname,allFlag=0):
 
 def makeConfigs(d):
 	''' Reconstitutes the configuration files from the passed dictionary'''
+	# All outputs need to be re-encoded from unicode.
+	unicodeEncode(d)
 	for cloud in d:
 		# The working cloud path is made from the config base
 		cloudpath = configs + os.sep + cloud
