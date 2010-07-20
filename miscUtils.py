@@ -110,3 +110,33 @@ def testDiff(mm,nn):
 
 		except KeyError:
 			pass
+
+def unicodeListConvert(l):
+	'''Converts all strings in a list to unicode. No effort is made to detatch lists'''
+	for n, i in enumerate(l):
+		if type(i) == dict: unicodeDictConvert(i)
+		if type(i) == list: unicodeListConvert(i)
+		if type(i) == tuple: l[n] = unicodeTupleConvert(i)
+		if type(i) == str: l[n] = unicode(i)
+	return 0
+	
+def unicodeDictConvert(d):
+	'''Converts all strings in a dictionary to unicode. No effort is made to detatch dictionaries'''
+	for i in d:
+		if type(d[i]) == dict: unicodeDictConvert(i)
+		if type(d[i]) == list: unicodeListConvert(i)
+		if type(d[i]) == tuple: d[i] = unicodeTupleConvert(i)
+		if type(d[i]) == str: d[i] = unicode(i)
+	return 0
+
+def unicodeTupleConvert(t):
+	'''Converts all strings in a tuple to unicode.'''
+	new_tuple_list=[]
+	for i in t:
+		if type(t[i]) == list:
+			unicodeListConvert(i)
+			new_tuple_list.append(i)
+		if type(t[i]) == tuple: new_tuple_list.append(unicodeTupleConvert(i))
+		if type(t[i]) == str: new_tuple_list.append(unicode(i))
+	return t
+
