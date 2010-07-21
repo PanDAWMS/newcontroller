@@ -81,8 +81,7 @@ def buildUpdateList(updDict,param):
 
 def buildDeleteList(delDict, tableName, key = dbkey):
 	'''Build a list of SQL commands that deletes queues no longer in the definition files. Key defaults to dbkey'''
-	#delstr='DELETE FROM atlas_pandameta.%s WHERE NICKNAME = '
-	delstr='DELETE FROM %s WHERE NICKNAME = ' % tableName
+	delstr='DELETE FROM %s WHERE %s = ' % (tableName,dbkey)
 	sql=[]
 	for i in delDict:
 	# Build delete queries from an existing dict. Deletes by DB key (or other specification, if ever necesssary).
