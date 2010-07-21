@@ -35,13 +35,11 @@ except:
 # Integrators
 #----------------------------------------------------------------------#
 	  
-# To be completed!!
 def loadToA(queuedefs):
 	'''Acquires queue config information from ToA and updates the values we have. Should be run last. Overrides EVERYTHING else.'''
 	fillDDMpaths.fillDDMpaths(queuedefs)
 	return 0
 
-# To be completed!! Needs to warn on lcgLoad missing
 def loadBDII():
 	'''Loads LCG site definitions from the BDII, and dumps them in a file called lcgQueueUpdate.py in the local directory.
 	This file is executed (even if generating it failed this time) and populated a dictionary of queue definitions, which is
