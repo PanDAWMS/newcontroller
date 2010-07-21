@@ -104,6 +104,7 @@ def loadConfigs():
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
 		utils.initDB()
+		unicodeEncode(del_l)
 		# Individual SQL statements to delete queues that need deleted
 		for i in del_l:
 			try:
