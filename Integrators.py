@@ -275,13 +275,16 @@ def bdiiIntegrator(confd,rellist,d):
 					continue
 			if confd[c][s][nickname][param]['sysconfig'] == 'manual':
 				print 'Real problem! This manual queue is being edited'
+
+		# If jdladd is being set by BDII, check for an existing value first. Make sure it terminates with Queue, in any case.
+		if not confd[c][s][nickname][param]['jdladd']: confd[c][s][nickname][param]['jdladd'] = bdict[qn][key]
+		if not confd[c][s][nickname][param]['jdladd'].find('Queue') > 0: confd[c][s][nickname][param]['jdladd'] += '\n\nQueue\n'
 		# For all the simple translations, copy them in directly.
-		for key in ['localqueue','system','status','gatekeeper','jobmanager','jdladd','site','region','gstat']:
+		for key in ['localqueue','system','status','gatekeeper','jobmanager','site','region','gstat']:
 			confd[c][s][nickname][param][key] = bdict[qn][key]
 			# Complete the sourcing info
 			confd[c][s][nickname][source][key] = 'BDII'
 		# For the more complicated BDII derivatives, do some more complex work
-		confd[c][s][nickname][param]['jdladd'] = confd[c][s][nickname][param]['jdladd'].replace('Queue','\n\nQueue')
 		confd[c][s][nickname][param]['queue'] = bdict[qn]['gatekeeper'] + '/jobmanager-' + bdict[qn]['jobmanager']
 		if not confd[c][s][nickname][param].has_key('jdl'): confd[c][s][nickname][param]['jdl'] = None
 		if bdict[qn]['gatekeeper'] + '/jobmanager-' + bdict[qn]['jobmanager'] != confd[c][s][nickname][param]['jdl']:
