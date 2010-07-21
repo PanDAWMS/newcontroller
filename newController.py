@@ -73,7 +73,7 @@ def loadConfigs():
  	new_rel_db = {}
  	bdiiIntegrator(configd, new_rel_db, dbd)
 	f=file('confd_int.p','w')
-	pickle.dump(confd,f)
+	pickle.dump(configd,f)
 	f.close()
 	# Check the old DB for releases to delete, and the new one for releases to insert.
 ## 	delete_sw = [old_rel_db[i] for i in old_rel_db if i not in new_rel_db]
@@ -82,13 +82,13 @@ def loadConfigs():
 	# Now add ToA information
 	toaIntegrator(configd)
 	f=file('confd_toa.p','w')
-	pickle.dump(confd,f)
+	pickle.dump(configd,f)
 	f.close()
 	
 	# Compose the "All" queues for each site
 	status = allMaker(configd)
 	f=file('confd_all.p','w')
-	pickle.dump(confd,f)
+	pickle.dump(configd,f)
 	f.close()
 
 	# Compare the DB to the present built configuration to find the queues that are changed.
