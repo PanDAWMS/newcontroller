@@ -107,9 +107,11 @@ def loadConfigs():
 		# Individual SQL statements to delete queues that need deleted
 		for i in del_l:
 			try:
-				utils.dictcursor().execute(i)
+				status = utils.dictcursor().execute(i)
 			except:
 				print 'Failed SQL Statement: ', i
+				print status
+				print sys.exc_info()[0]
 
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
