@@ -25,16 +25,12 @@ configWriteDebug = False
 # Global strings and lists
 
 # SVN repositories
-
 confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf' 
-# confrepo = 'https://telperion.uta.edu/repo/pandaconf'
-# confrepo = 'https://svn.usatlas.bnl.gov/svn/pandaconf'
 
 # If safety is on, nothing is written to the DB.
 safety = 'off'
 
 # Widely used strings
-
 All = 'All' # Standard name for All files
 ndef = 'Deactivated' # Standard name for cloud=NULL queues
 param = 'Parameters' # Name for the parameters dictionary in a queue spec
@@ -48,18 +44,23 @@ base_path = os.getcwd()
 
 # Step back a layer in the path for the configs, and put them in the config SVN directory
 cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf' + os.sep
+
 # Paths for backup files
 backupPath = cfg_path + 'Backup' + os.sep
 backupName = 'schedConfigBackup.pickle'
+
 # Config file path specifications
 configs = cfg_path + os.sep + 'SchedConfigs'
 jdlconfigs = cfg_path + os.sep + 'JDLConfigs'
 postfix = '.py'
+
 # jdlkey is the jdllist table primary key, and dbkey is the schedconfig table primary key.
 jdlkey, dbkey, dsep, keysep, pairsep, spacing = 'name', 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
 shared, unshared = 'shared','unshared'
+
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
 excl = ['status','lastmod','dn','tspace','_comment','space','nqueue']
+
 # This list is global, and is populated (during initial DB import) by the list of columns that the schedconfig table contains. 
 standardkeys = []
 
