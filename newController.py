@@ -13,7 +13,6 @@
 # Add installedSW table support
 # Add a consistency checker
 # Add manual pickle restoration code
-# Add subversion update, file add and checkin. Comment changes.
 # Add change detection to avoid DB change collisions
 # Add queue insertion scripts
 # Add checking of queue "on" and "off"
@@ -72,6 +71,7 @@ def loadConfigs():
 ## 	old_rel_db = loadInstalledSW()
  	new_rel_db = {}
  	bdiiIntegrator(configd, new_rel_db, dbd)
+
 	# Check the old DB for releases to delete, and the new one for releases to insert.
 ## 	delete_sw = [old_rel_db[i] for i in old_rel_db if i not in new_rel_db]
 ## 	insert_sw = [new_rel_db[i] for i in new_rel_db if i not in old_rel_db]
@@ -113,14 +113,18 @@ def loadConfigs():
 
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
+
 		# Since all inputs are unicode converted, all outputs need to be encoded.
 		unicodeEncode(up_l)
 		utils.replaceDB('schedconfig',up_l,key=dbkey)
+
 		# Jdllist table gets updated all at once
 		print 'Updating JDLList'
+
 		# Since all inputs are unicode converted, all outputs need to be encoded.
 		unicodeEncode(jdl_l)
 		utils.replaceDB('jdllist',jdl_l,key=jdlkey)
+
 		# Changes committed after all is successful, to avoid partial updates
 		utils.commit()
 		utils.endDB()
@@ -174,6 +178,7 @@ if __name__ == "__main__":
 	if '--dbOverride' in args:
 		print 'The DB will override existing config file settings.'
 		dbOverride = True
+	if '--debug' in args: genDebug = True
 	keydict={}
 
 	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
