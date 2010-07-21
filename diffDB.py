@@ -12,10 +12,10 @@ from dictHandling import *
 
 def checkDB():
 	'''Check the INTR DB against the Prod DB (testing before deployment)'''
-	prod_db, standardkeys = sqlDictUnpacker(loadSchedConfig())
-	prod_db = collapseDict(prod_db)
-	intr_db, standardkeys = sqlDictUnpacker(loadSchedConfig('pmeta',0))
-	intr_db = collapseDict(intr_db)
+	intr_db, standardkeys = sqlDictUnpacker(loadSchedConfig('intr',1))
+	intr_db = collapseDict(prod_db)
+	prod_db, standardkeys = sqlDictUnpacker(loadSchedConfig('pmeta',0))
+	prod_db = collapseDict(intr_db)
 
 	testDiff(intr_db, prod_db)
 	
