@@ -118,6 +118,8 @@ def unicodeConvert(x):
 	if type(x) == dict: return unicodeDictConvert(x)
 	if type(x) == list: return unicodeListConvert(x)
 	if type(x) == tuple: return unicodeTupleConvert(x)	
+	if type(x) == int: return unicode(x)
+	if type(x) == float: return unicode(x)
 	return 0
 
 def unicodeListConvert(l):
@@ -127,6 +129,8 @@ def unicodeListConvert(l):
 		elif type(i) == dict: unicodeDictConvert(i)
 		elif type(i) == list: unicodeListConvert(i)
 		elif type(i) == tuple: l[n] = unicodeTupleConvert(i)
+		elif type(i) == int: l[n] = unicode(i)
+		elif type(x) == float: l[n] = unicode(i)
 	return 0
 	
 def unicodeDictConvert(d):
@@ -136,6 +140,8 @@ def unicodeDictConvert(d):
 		elif type(d[i]) == dict: unicodeDictConvert(d[i])
 		elif type(d[i]) == list: unicodeListConvert(d[i])
 		elif type(d[i]) == tuple: d[i] = unicodeTupleConvert(d[i])
+		if type(d[i]) == int: d[i] = unicode(d[i])
+		if type(d[i]) == float: d[i] = unicode(d[i])
 	return 0
 
 def unicodeTupleConvert(t):
@@ -150,6 +156,8 @@ def unicodeTupleConvert(t):
 			unicodeListConvert(i)
 			new_tuple_list.append(i)
 		elif type(t[i]) == tuple: new_tuple_list.append(unicodeTupleConvert(i))
+		if type(t[i]) == int: new_tuple_list.append(unicode(i))
+		if type(t[i]) == float: new_tuple_list.append(unicode(i))
 	return t
 
 def unicodeEncode(x):
