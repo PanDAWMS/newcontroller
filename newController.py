@@ -111,7 +111,7 @@ def loadConfigs():
 			except:
 				print 'Failed SQL Statement: ', i
 				print status
-				print sys.exc_info()[0]
+				print sys.exc_info()
 
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
