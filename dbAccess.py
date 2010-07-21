@@ -13,7 +13,7 @@ from controllerSettings import *
 #----------------------------------------------------------------------#
 # DB Access Methods 
 #----------------------------------------------------------------------#
-def loadSchedConfig(db='pmeta', test='0'): # Set for INTR -- cahange for prod.
+def loadSchedConfig(db='pmeta', test='0'): 
 	'''Returns the values in the schedconfig db as a dictionary'''
 	# Initialize DB
 	utils.test=test
