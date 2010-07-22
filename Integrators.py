@@ -283,6 +283,7 @@ def bdiiIntegrator(confd,rellist,d):
 				print 'Real problem! This manual queue is being edited'
 
 		# If jdladd is being set by BDII, check for an existing value first. Make sure it terminates with Queue, in any case.
+		if not confd[c][s][nickname][param].has_key('jdladd'): confd[c][s][nickname][param]['jdladd']=''
 		if not confd[c][s][nickname][param]['jdladd']: confd[c][s][nickname][param]['jdladd'] = bdict[qn][key]
 		if not confd[c][s][nickname][param]['jdladd'].find('Queue') > 0: confd[c][s][nickname][param]['jdladd'] += '\n\nQueue\n'
 		# For all the simple translations, copy them in directly.
