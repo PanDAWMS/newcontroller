@@ -165,8 +165,8 @@ def loadConfigs():
 		print 'Passed checks!'
 		# Make the necessary changes to the configuration files:
 		makeConfigs(configd)
-		# Check the changes just committed into Subversion
-		svnCheckin(svnstring)
+		# Check the changes just committed into Subversion, unless we're not updating from BDII/ToA
+		if not toaOverride and not bdiiOverride: svnCheckin(svnstring)
 		# Create a backup pickle of the finalized DB as it stands.
 		backupCreate(newdb)
 	else: print '########### Differences in the DB/Configs! ###########\n'
