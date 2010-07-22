@@ -70,14 +70,14 @@ def loadConfigs():
 	# Add the BDII information, and build a list of releases
 ## 	old_rel_db = loadInstalledSW()
  	new_rel_db = {}
- 	bdiiIntegrator(configd, new_rel_db, dbd)
+	if not bdiiOverride: bdiiIntegrator(configd, new_rel_db, dbd)
 
 	# Check the old DB for releases to delete, and the new one for releases to insert.
 ## 	delete_sw = [old_rel_db[i] for i in old_rel_db if i not in new_rel_db]
 ## 	insert_sw = [new_rel_db[i] for i in new_rel_db if i not in old_rel_db]
 
 	# Now add ToA information
-	toaIntegrator(configd)
+	if not toaOverride: toaIntegrator(configd)
 	
 	# Compose the "All" queues for each site
 	status = allMaker(configd)
@@ -181,6 +181,12 @@ if __name__ == "__main__":
 	if '--dbOverride' in args:
 		print 'The DB will override existing config file settings.'
 		dbOverride = True
+	if '--bdiiOverride' in args:
+		print 'BDII updating disabled.'
+		bdiiOverride = True
+	if '--dbOverride' in args:
+		print 'ToA updating disabled.'
+		toaOverride = True
 	if '--debug' in args: genDebug = True
 	keydict={}
 
