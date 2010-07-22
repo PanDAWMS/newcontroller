@@ -107,7 +107,7 @@ def composeFields(d,s,dname,allFlag=0):
 			else:
 				valsep = keysep
 			# If the value is being set somewhere other than the config files, comment it and send it to the bottom of the list
-			if dname == param and d.has_key(source) and d[source][key] is not 'Config':
+			if dname == param and d.has_key(source) and d[source].has_key(key) and d[source][key] is not 'Config':
 				# Add a comment to the line with the provenance info 
 				comment = ' # Defined in %s' % d[source][key]
 				s_aside.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
