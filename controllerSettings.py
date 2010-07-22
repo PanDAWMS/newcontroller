@@ -66,3 +66,6 @@ standardkeys = []
 
 # DB Override flag -- Default is False
 dbOverride = False
+
+bdiiOverride = False
+toaOverride = False
