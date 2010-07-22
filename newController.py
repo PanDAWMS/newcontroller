@@ -184,7 +184,7 @@ if __name__ == "__main__":
 	if '--bdiiOverride' in args:
 		print 'BDII updating disabled.'
 		bdiiOverride = True
-	if '--dbOverride' in args:
+	if '--toaOverride' in args:
 		print 'ToA updating disabled.'
 		toaOverride = True
 	if '--debug' in args: genDebug = True
