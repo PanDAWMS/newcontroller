@@ -104,16 +104,8 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 				continue
 		# If the dictionaries don't match:
 		if dbDict[i] != cfgDict[i]:
-			# Check for nulls from an underpopulated config file immediately after addition
-			tmpC = cfgDict[i].copy(); tmpD = dbDict[i].copy();
-			# Reduce out the None values
-			tmpC = dict([(i,tmpC[i]) for i in tmpC if tmpC[i] is not None])
-			tmpD = dict([(i,tmpD[i]) for i in tmpD if tmpD[i] is not None])
-			if tmpC != tmpD:
-				if i == 'UNI-BONN-grid-ce-atlas-lcgpbs':
-					print tmpD, tmpC, dbDict[i], cfgDict[i]
-				# If the queue was changed in the configs, tag it for update. In DB override, we aren't updating the DB.
-				if not dbOverride and cfgDict.has_key(i): updDict[i]=cfgDict[i]
+			# If the queue was changed in the configs, tag it for update. In DB override, we aren't updating the DB.
+			if not dbOverride and cfgDict.has_key(i): updDict[i]=cfgDict[i]
 	# If the queue is brand new (created in a config file), it is added to update.
 	for i in cfgDict:
 		if not dbDict.has_key(i):
