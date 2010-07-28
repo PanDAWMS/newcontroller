@@ -104,6 +104,7 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 				continue
 		# If the dictionaries don't match:
 		if dbDict[i] != cfgDict[i]:
+			cfgDict[i].update(dbDict[i].fromkeys([k for k in dbDict[i].keys() if not cfgDict.has_key(i)]))
 			# If the queue was changed in the configs, tag it for update. In DB override, we aren't updating the DB.
 			if not dbOverride and cfgDict.has_key(i): updDict[i]=cfgDict[i]
 	# If the queue is brand new (created in a config file), it is added to update.
