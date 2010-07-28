@@ -89,6 +89,8 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 	the default. Queues deleted in the DB will not be deleted in the configs.'''
 	updDict = {}
 	delDict = {}
+	unicodeConvert(dbDict)
+	unicodeConvert(cfgDict)
 	# Allow the reversal of master and subordinate dictionaries
 	if dbOverride: dbDict, cfgDict = cfgDict, dbDict
 	if dbDict == cfgDict: return updDict, delDict
@@ -105,6 +107,7 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 			# Check for nulls from an underpopulated config file immediately after addition
 			tmpC = cfgDict[i].copy(); tmpD = dbDict[i].copy();
 			# Reduce out the None values
+			tmpC = dict([(i,tmpC[i]) for i in tmpC if tmpC[i] is not None])
 			tmpD = dict([(i,tmpD[i]) for i in tmpD if tmpD[i] is not None])
 			if tmpC != tmpD:
 				# If the queue was changed in the configs, tag it for update. In DB override, we aren't updating the DB.
