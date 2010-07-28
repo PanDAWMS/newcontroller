@@ -19,6 +19,17 @@ def allMaker(d):
 	provenance info in the input dictionary. '''
 	print 'Starting AllMaker'
 	all_d = {}
+
+	# Presetting the All queue values from the Configs. These reign absolute -- to change individual queue
+	# settings, an override or deletion of the parameter from the All.py file is necessary.
+	for cloud in [i for i in d.keys() if i is not ndef]:
+		for site in [i for i in d[cloud].keys() if i is not ndef]:
+			if d[cloud][site].has_key(All):
+				for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
+					for key in d[cloud][site][All][params]:
+						d[cloud][site][queue][params][key] = d[cloud][site][All][params][key]
+
+
 	# This is where we'll put all verified keys that are common across sites/clouds
 	for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
 		# Create a dictionary for each cloud 
@@ -48,7 +59,7 @@ def allMaker(d):
 				if len(reducer(comp[key])) == 1:
 					# So write it to the output for this cloud and site.
 					all_d[cloud][site][key] = reducer(comp[key])[0]
-
+					
 	# Running across sites to update source information in the main dictionary
 	for cloud in [i for i in d.keys() if i is not ndef]:
 		for site in [i for i in d[cloud].keys() if i is not ndef]:
@@ -83,7 +94,7 @@ def composeFields(d,s,dname,allFlag=0):
 		keylist.remove(primary_key)
 		keylist.sort()
 		keylist.insert(0,primary_key)
-
+		
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
 		keylist.sort()
