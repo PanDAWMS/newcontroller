@@ -26,8 +26,8 @@ def allMaker(d):
 		for site in [i for i in d[cloud].keys() if i is not ndef]:
 			if d[cloud][site].has_key(All):
 				for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
-					for key in d[cloud][site][All][params]:
-						d[cloud][site][queue][params][key] = d[cloud][site][All][params][key]
+					for key in d[cloud][site][All][param]:
+						d[cloud][site][queue][param][key] = d[cloud][site][All][param][key]
 
 
 	# This is where we'll put all verified keys that are common across sites/clouds
