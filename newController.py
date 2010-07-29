@@ -33,13 +33,13 @@ from backupHandling import *
 					
 def loadJdl():
 	'''Runs the jdllist table updates'''
-
+	
 	jdldb = {}
 	jdlListAdder(jdldb)
 	jdldc=buildJdlDict()
 	unicodeConvert(jdldb)
 	unicodeConvert(jdldc)
-
+	
 	return jdldb, jdldc
 
 def loadConfigs():
@@ -51,27 +51,27 @@ def loadConfigs():
 		# Get the config dictionary directly from teh DB, and process the config file update from it.
 		configd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		# Compose the "All" queues for each site
-		status = allMaker(configd)
+		status = allMaker(configd, initial=True)
 		# Make the necessary changes to the configuration files:
 		makeConfigs(configd)
 		# Check the changes just committed into Subversion
 		svnCheckin('Updated from DB')
-
+		
 	else:
 		# Update the local configuration files from SVN
 		svnUpdate()
 	
 	# Load the present config files, based on the SVN update
 	configd = buildDict()
-
+	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
-
+	
 	# Add the BDII information, and build a list of releases
 ## 	old_rel_db = loadInstalledSW()
  	new_rel_db = {}
 	if not bdiiOverride: bdiiIntegrator(configd, new_rel_db, dbd)
-
+	
 	# Check the old DB for releases to delete, and the new one for releases to insert.
 ## 	delete_sw = [old_rel_db[i] for i in old_rel_db if i not in new_rel_db]
 ## 	insert_sw = [new_rel_db[i] for i in new_rel_db if i not in old_rel_db]
@@ -80,7 +80,7 @@ def loadConfigs():
 	if not toaOverride: toaIntegrator(configd)
 	
 	# Compose the "All" queues for each site
-	status = allMaker(configd)
+	status = allMaker(configd, initial = False)
 
 	# Compare the DB to the present built configuration to find the queues that are changed.
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd), dbOverride)
@@ -133,7 +133,15 @@ def loadConfigs():
 		utils.endDB()
 		# FIX This string will eventually be filled with changed queue names and other info for the subversion checkin
 		svnstring=''
+	# If the safety is on:
+	else:
+		print '\n\nUpdates:\n'
+		for i in up_d: print i, up_d[i]
+		print '\n\nDeletes:\n'
+		for i in del_d: print i, del_d[i]
 
+
+			
 		# Delete outdated installedsw entries
 ## 		for i in delete_sw:
 ## 			try:
@@ -187,6 +195,9 @@ if __name__ == "__main__":
 	if '--toaOverride' in args:
 		print 'ToA updating disabled.'
 		toaOverride = True
+	if '--safety' in args:
+		print 'Safety is ON! No writes to the DB.'
+		safety = 'on'
 	if '--debug' in args: genDebug = True
 	keydict={}
 
