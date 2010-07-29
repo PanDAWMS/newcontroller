@@ -30,7 +30,6 @@ def sqlDictUnpacker(d):
 	'''Unpack the dictionary returned by Oracle or MySQL''' 
 	# Organize by cloud, then site, then queue. Reading necessary data by key.
 	# Remember that these vars are limited in scope.
-	print 'Starting sqlDictUnpacker'
 	cloud = 'cloud'
 	site = 'site'
 	out_d={}
@@ -66,7 +65,6 @@ def sqlDictUnpacker(d):
 	if out_d.has_key(None):
 		out_d[ndef]=out_d.pop(None)
 
-	print 'Finishing sqlDictUnpacker'
 	return out_d, stdkeys
 
 def findQueue(q,d):
