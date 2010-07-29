@@ -70,7 +70,7 @@ def loadConfigs():
 	# Add the BDII information, and build a list of releases
 ## 	old_rel_db = loadInstalledSW()
  	new_rel_db = {}
-	if not bdiiOverride: bdiiIntegrator(configd, new_rel_db, dbd)
+	if not bdiiOverride: exceptions = bdiiIntegrator(configd, new_rel_db, dbd)
 	
 	# Check the old DB for releases to delete, and the new one for releases to insert.
 ## 	delete_sw = [old_rel_db[i] for i in old_rel_db if i not in new_rel_db]
@@ -167,8 +167,12 @@ def loadConfigs():
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
 	
-	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
+	# Check for new BDII additions (exceptions list) and remove them from checkUp.
+	for i in exceptions:
+		if checkUp.has_key(i): checkUp.pop(i)
+
+	# If the checks pass (no difference between the DB and the new configuration)
 	if not len(checkUp) + len(checkDel):
 		print 'Passed checks!'
 		# Make the necessary changes to the configuration files:
