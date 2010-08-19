@@ -221,8 +221,6 @@ def bdiiIntegrator(confd,rellist,d):
 	'''Adds BDII values to the configurations, overriding what was there. Must be run after downloading the DB
 	and parsing the config files.'''
 	print 'Running BDII Integrator'
-	# Exceptions will become a list of sites added from BDII if necessary
-	exceptions = []
 	out = {}
 	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
 	bdict = loadBDII()
@@ -261,8 +259,6 @@ def bdiiIntegrator(confd,rellist,d):
 				print 'Creating queue %s in site %s and cloud %s as requested by BDII. This queue must be enabled by hand.' % (nickname, s, c)
 				confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
 				confd[c][s][nickname][enab] = 'False'
-				# Newly created queues cause problems with final DB/config checks. Noting as an exception
-				if nickname not in exceptions: exceptions.append(nickname)
 				# Either way, we need to put the queue in without a cloud defined. 
 		# If the queue doesn't actually exist, we need to add it.
 		if c not in confd:
@@ -276,8 +272,6 @@ def bdiiIntegrator(confd,rellist,d):
 		if not confd[c][s].has_key(nickname):
 			confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
 			print 'Creating queue %s in site %s and cloud %s as requested by BDII. This queue must be enabled by hand.' % (nickname, s, c)
-			# Newly created queues cause problems with final DB/config checks. Noting as an exception
-			if nickname not in exceptions: exceptions.append(nickname)
 
 		# Check for manual setting. If it's manual, DON'T TOUCH
 		if confd[c][s][nickname][param].has_key('sysconfig'):
@@ -312,6 +306,12 @@ def bdiiIntegrator(confd,rellist,d):
 		# Tag code for installedSW. This is a raw inport from the other side -- needs a redo. FIX
 		# Need to get cloud into place, and really we just need to make this clean. No need for separate loops?
 		# Fix the indexing to match the loadInstalledSW() method
+
+		
+		
+
+
+
 		tags=linfotool.getSWtags(confd[c][s][nickname][param]['gatekeeper'])
 		etags=linfotool.getSWctags(confd[c][s][nickname][param]['gatekeeper'])
 		if len(etags) > 0:
@@ -354,8 +354,8 @@ def bdiiIntegrator(confd,rellist,d):
 		else:
 			if bdiiDebug: print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
 
-	
+
 	unicodeConvert(confd)
 	# All changes to the dictionary happened live -- no need to return it.
 	print 'Finished BDII Integrator'
-	return exceptions
+	return 0

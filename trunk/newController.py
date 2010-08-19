@@ -48,7 +48,7 @@ def loadConfigs():
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 	# If the DB is overriding the config files, we need to recreate them now.
 	if dbOverride:
-		# Get the config dictionary directly from teh DB, and process the config file update from it.
+		# Get the config dictionary directly from the DB, and process the config file update from it.
 		configd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		# Compose the "All" queues for each site
 		status = allMaker(configd, initial=True)
@@ -70,7 +70,7 @@ def loadConfigs():
 	# Add the BDII information, and build a list of releases
 ## 	old_rel_db = loadInstalledSW()
  	new_rel_db = {}
-	if not bdiiOverride: exceptions = bdiiIntegrator(configd, new_rel_db, dbd)
+	if not bdiiOverride: bdiiIntegrator(configd, new_rel_db, dbd)
 	
 	# Check the old DB for releases to delete, and the new one for releases to insert.
 ## 	delete_sw = [old_rel_db[i] for i in old_rel_db if i not in new_rel_db]
@@ -167,12 +167,8 @@ def loadConfigs():
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
 	
-	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
-	# Check for new BDII additions (exceptions list) and remove them from checkUp.
-	for i in exceptions:
-		if checkUp.has_key(i): checkUp.pop(i)
-
 	# If the checks pass (no difference between the DB and the new configuration)
+	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
 	if not len(checkUp) + len(checkDel):
 		print 'Passed checks!'
 		# Make the necessary changes to the configuration files:

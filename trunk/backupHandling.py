@@ -35,6 +35,7 @@ def backupRestore(fname):
 	''' Restore a DB backup pickle into the live database! Caution! If you err, you will hose the database! '''
 	try:
 		# Set up the file
+		os.system('tar xzf %s' % backupPath+fname)
 		f=file(backupPath+fname)
 	except IOError:
 		print 'File %s is not found at %s. Exiting.' % (fname, backupPath)
@@ -48,7 +49,7 @@ def backupRestore(fname):
 	# Enable the DB
 	utils.initDB()
 	# Clear the DB
-	utils.dictcursor().execute('DELETE FROM schedconfig')
+	#utils.dictcursor().execute('DELETE FROM schedconfig')
 	print 'Updating SchedConfig'
 	#Insert the queues as per the backup
 	utils.replaceDB('schedconfig',l,key=dbkey)
