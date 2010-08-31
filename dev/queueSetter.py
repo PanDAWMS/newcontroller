@@ -20,7 +20,7 @@ from svnHandling import *
 
 def queueSetter(d, key, val, nick):
 	''' When passed the key, value and nickname list, changes those nicknames\' parameter to that value.'''
-	# The input dictiodnary needs to be a dictionary
+	# The input dictionary needs to be a dictionary
 	if not type(d) == dict:
 		print 'You didn\'t pass in a dictionary. Try again.'
 		sys.exit()
@@ -30,6 +30,7 @@ def queueSetter(d, key, val, nick):
 	if type(d[d.keys()[0]]) == dict: run_d=collapseDict(d)
 	# Or we just use a copy of the dict.
 	else run_d = d.copy()
+	unicodeEncode(run_d)
 	
 	# Expand values list to match keys. Can be single value across multiple 
 	if type(nick) not in (dict, list, tuple): nick=[nick]
