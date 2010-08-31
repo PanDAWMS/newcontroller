@@ -210,8 +210,6 @@ def collapseDict(d):
 				# Make sure all the standard keys are present, even if not filled
 				for key in standardkeys:
 					if key not in p.keys(): out_d[queue][key] = None
-				# Add the overrides (except the excluded ones)
-				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
 					out_d[queue][key] = d[cloud][site][queue][over][key]
 			# Now process the All entry for the site, if it exists
 			if d[cloud][site].has_key(All):
@@ -221,10 +219,24 @@ def collapseDict(d):
 					# Get the parameter dictionary (vs the source or the overrides).
 					# This is a link, not a duplication:
 					allparams = d[cloud][site][All][param]
+					# Add the queue overrides
+				    queueoverrides = d[cloud][site][queue][over]
+					# Add the All overrides
 					alloverrides = d[cloud][site][All][over]
 					# So copy out the values into the present queue dictionary (except excluded ones)
+					# Each copy process is independently error protected.
+					# Site ALL parameters have first priority
 					try:
 						for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
+					except KeyError:
+						pass
+					# Followed by queue-specific overrides
+					try:
+						for key in [i for i in queueoverrides if i not in excl]: out_d[queue][key] = queueoverrides[key]
+					except KeyError:
+						pass
+					# Followed by site-specific overrides
+					try:
 						for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
 					except KeyError:
 						pass
