@@ -149,7 +149,11 @@ def buildDict():
 				# Run the file for the dictionaries
 				fname = configs + os.sep + cloud + os.sep + site
 				# The appropriate dictionaries are placed in locvars
-				execfile(fname,{},locvars)
+				try:
+					execfile(fname,{},locvars)
+				except SyntaxError:
+					print 'Syntax error in file %s -- modifications not made to queue.' % fname
+					continue
 				confd[cloud][s][param] = locvars[param]
 				confd[cloud][s][over] = locvars[over]
 			# Add each site to the cloud
@@ -165,7 +169,11 @@ def buildDict():
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
 				fname = configs + os.sep + cloud + os.sep + site + os.sep + q
 				# The appropriate dictionaries are placed in locvars
-				execfile(fname,{},locvars)
+				try:
+					execfile(fname,{},locvars)
+				except SyntaxError:
+					print 'Syntax error in file %s -- modifications not made to queue.' % fname
+					continue
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
 				confd[cloud][site][queue][over] = locvars[over] 
@@ -202,8 +210,6 @@ def collapseDict(d):
 				# Make sure all the standard keys are present, even if not filled
 				for key in standardkeys:
 					if key not in p.keys(): out_d[queue][key] = None
-				# Add the overrides (except the excluded ones)
-				for key in [i for i in d[cloud][site][queue][over] if i not in excl]:
 					out_d[queue][key] = d[cloud][site][queue][over][key]
 			# Now process the All entry for the site, if it exists
 			if d[cloud][site].has_key(All):
@@ -213,10 +219,24 @@ def collapseDict(d):
 					# Get the parameter dictionary (vs the source or the overrides).
 					# This is a link, not a duplication:
 					allparams = d[cloud][site][All][param]
+					# Add the queue overrides
+					queueoverrides = d[cloud][site][queue][over]
+					# Add the All overrides
 					alloverrides = d[cloud][site][All][over]
 					# So copy out the values into the present queue dictionary (except excluded ones)
+					# Each copy process is independently error protected.
+					# Site ALL parameters have first priority
 					try:
 						for key in [i for i in allparams if i not in excl]: out_d[queue][key] = allparams[key]
+					except KeyError:
+						pass
+					# Followed by queue-specific overrides
+					try:
+						for key in [i for i in queueoverrides if i not in excl]: out_d[queue][key] = queueoverrides[key]
+					except KeyError:
+						pass
+					# Followed by site-specific overrides
+					try:
 						for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
 					except KeyError:
 						pass
