@@ -19,7 +19,7 @@ from configFileHandling import *
 from svnHandling import *
 
 try:
-	import lcgInfositeTool
+	import lcgInfositeTool2 as lcgInfositeTool
 except:
 	print "Cannot import lcgInfositeTool, will exit"
 	sys.exit(-1)
