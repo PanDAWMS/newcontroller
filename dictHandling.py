@@ -172,7 +172,7 @@ def buildDict():
 				try:
 					execfile(fname,{},locvars)
 				except SyntaxError:
-					print 'Syntax error in file %s -- modifications not made to queue.' % fname
+					print 'A cSyntax error in file %s -- modifications not made to queue.' % fname
 					continue
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
