@@ -77,7 +77,8 @@ def releaseLister(confd,rellist):
 				if siteids.has_key(confd[c][s][nickname][param]['siteid']) and siteids[confd[c][s][nickname][param]['siteid']] != gk:
 					print 'There\'s more than one gatekeeper for siteid %s: %s, %s' % (confd[c][s][nickname][param]['siteid'],gk,siteids[confd[c][s][nickname][param]['siteid']])
 					print 'Overwriting.'
-				siteids[confd[c][s][nickname][param]['siteid']] = gk 
+				# Check for non-null siteid
+				if confd[c][s][nickname][param]['siteid']: siteids[confd[c][s][nickname][param]['siteid']] = gk 
 
 
 	for siteid in siteids: 
