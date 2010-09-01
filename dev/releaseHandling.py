@@ -96,16 +96,19 @@ def releaseLister(confd,rellist):
 
 	for siteid in siteids: 
 		releases,caches=linfotool.getSWtags(gk),linfotool.getSWctags(gk)
-		if len(rels):
+		if len(caches):
 			for c in caches:
 				cache=c.replace('production','AtlasProduction').replace('tier0','AtlasTier0').replace('topphys','TopPhys').replace('wzbenchmarks','WZBenchmarks') 
-				release='.'.join(tag.split('-')[1].split('.')[:3])
+				release='.'.join(cache.split('-')[1].split('.')[:3])
 				idx = '%s_%s' % (siteid,cache)
 				rellist[idx]=dict([('siteid',siteid),
 								   ('cloud',clouds[siteid]),
 								   ('release',release),
 								   ('cache',cache)])
 
+		if len(releases):
+			for release in releases:
+				idx = '%s_%s' % (siteid,release)
 				rellist[idx]=dict([('siteid',siteid),
 								   ('cloud',clouds[siteid]),
 								   ('release',release),
