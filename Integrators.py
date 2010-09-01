@@ -274,7 +274,7 @@ def bdiiIntegrator(confd,rellist,d):
 			print 'Creating queue %s in site %s and cloud %s as requested by BDII. This queue must be enabled by hand.' % (nickname, s, c)
 
 		# Check for manual setting. If it's manual, DON'T TOUCH
-		if confd[c][s][nickname][param].has_key('sysconfig'):
+		if confd[c][s][nickname].has_key(param) and confd[c][s][nickname][param].has_key('sysconfig'):
 			if confd[c][s][nickname][param]['sysconfig']:
 				if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
 					if bdiiDebug: print 'Skipping %s -- sysconfig set to manual' % nickname
