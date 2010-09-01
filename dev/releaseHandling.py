@@ -61,6 +61,7 @@ def releaseLister(confd,rellist):
 
 	gatekeepers=reducer(linfotool.getCEs()+linfotool.getCEcs())
 	siteids={}
+	clouds={}
 	
 	for cloud in [i for i in confd.keys() if i is not ndef]:
 		for site in [i for i in confd[cloud].keys() if i is not ndef]:
@@ -84,9 +85,13 @@ def releaseLister(confd,rellist):
 				if siteids.has_key(confd[cloud][site][queue][param]['siteid']) and siteids[confd[cloud][site][queue][param]['siteid']] != gk:
 					print 'There\'s more than one gatekeeper for siteid %s: %s, %s' % (confd[cloud][site][queue][param]['siteid'],gk,siteids[confd[cloud][site][queue][param]['siteid']])
 					print 'Overwriting.'
-				# Check for non-null siteid
-				if confd[cloud][site][queue][param]['siteid']: siteids[confd[cloud][site][queue][param]['siteid']] = gk 
+					# Check for non-null siteid
+				if confd[cloud][site][queue][param].has_key('siteid') and confd[cloud][site][queue][param]['siteid']:
+					siteids[confd[cloud][site][queue][param]['siteid']] = gk
+					clouds[confd[cloud][site][queue][param]['siteid']] = cloud
 
+				
+					
 
 	for siteid in siteids: 
 		releases,caches=linfotool.getSWtags(gk),linfotool.getSWctags(gk)
@@ -95,12 +100,12 @@ def releaseLister(confd,rellist):
 				cache=c.replace('production','AtlasProduction').replace('tier0','AtlasTier0').replace('topphys','TopPhys').replace('wzbenchmarks','WZBenchmarks') 
 				release='.'.join(tag.split('-')[1].split('.')[:3])
 				idx = '%s_%s' % (siteid,cache)
-				rellist[idx]=dict([('siteid',confd[cloud][site][queue][param]['siteid']),
-								   ('cloud',confd[cloud][site][queue][param]['cloud']),
+				rellist[idx]=dict([('siteid',siteid),
+								   ('cloud',clouds[siteid]),
 								   ('release',release),
 								   ('cache',cache)])
 
-				rellist[idx]=dict([('siteid',confd[cloud][site][queue][param]['siteid']),
-								   ('cloud',confd[cloud][site][queue][param]['cloud']),
+				rellist[idx]=dict([('siteid',siteid),
+								   ('cloud',clouds[siteid]),
 								   ('release',release),
 								   ('cache','')])
