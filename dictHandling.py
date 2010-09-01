@@ -149,11 +149,7 @@ def buildDict():
 				# Run the file for the dictionaries
 				fname = configs + os.sep + cloud + os.sep + site
 				# The appropriate dictionaries are placed in locvars
-## 				try:
-## 					execfile(fname,{},locvars)
-## 				except SyntaxError:
-## 					print 'Syntax error in file %s -- modifications not made to queue.' % fname
-## 					continue
+				execfile(fname,{},locvars)
 				confd[cloud][s][param] = locvars[param]
 				confd[cloud][s][over] = locvars[over]
 			# Add each site to the cloud
@@ -179,9 +175,9 @@ def buildDict():
 				confd[cloud][site][queue][over] = locvars[over] 
 				try:
 					if queue != All: confd[cloud][site][queue][enab] = locvars[enab]
+					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
 				except KeyError:
 					pass
-				confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
 				
 	# Leaving the All parameters unincorporated
 	os.chdir(base)
