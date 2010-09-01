@@ -65,20 +65,20 @@ def releaseLister(confd,rellist):
 	for cloud in [i for i in confd.keys() if i is not ndef]:
 		for site in [i for i in confd[cloud].keys() if i is not ndef]:
 			for queue in [i for i in confd[cloud][site].keys() if (i is not All and i is not ndef)]:
-				gk=linfotool.getSWctags(confd[c][s][nickname][param]['gatekeeper'])
+				gk=linfotool.getSWctags(confd[cloud][site][nickname][param]['gatekeeper'])
 				# Check to see if the gatekeeper is even listed in BDII
 				if gk not in gatekeepers:
 					# Or perhaps the beginning of the queue (which can substitute for the gatekeeper for some queues) 
-					gk=linfotool.getSWctags(confd[c][s][nickname][param]['queue'].split(os.sep)[0])
+					gk=linfotool.getSWctags(confd[cloud][site][nickname][param]['queue'].split(os.sep)[0])
 					if gk not in gatekeepers:
 						# If not, we just go on to the next queue.
 						continue
 				# This is deliberately single-valued -- siteids that associate to multiple gatekeepers will malfunction, on purpose
-				if siteids.has_key(confd[c][s][nickname][param]['siteid']) and siteids[confd[c][s][nickname][param]['siteid']] != gk:
-					print 'There\'s more than one gatekeeper for siteid %s: %s, %s' % (confd[c][s][nickname][param]['siteid'],gk,siteids[confd[c][s][nickname][param]['siteid']])
+				if siteids.has_key(confd[cloud][site][nickname][param]['siteid']) and siteids[confd[cloud][site][nickname][param]['siteid']] != gk:
+					print 'There\'s more than one gatekeeper for siteid %s: %s, %s' % (confd[cloud][site][nickname][param]['siteid'],gk,siteids[confd[cloud][site][nickname][param]['siteid']])
 					print 'Overwriting.'
 				# Check for non-null siteid
-				if confd[c][s][nickname][param]['siteid']: siteids[confd[c][s][nickname][param]['siteid']] = gk 
+				if confd[cloud][site][nickname][param]['siteid']: siteids[confd[cloud][site][nickname][param]['siteid']] = gk 
 
 
 	for siteid in siteids: 
@@ -88,12 +88,12 @@ def releaseLister(confd,rellist):
 				cache=c.replace('production','AtlasProduction').replace('tier0','AtlasTier0').replace('topphys','TopPhys').replace('wzbenchmarks','WZBenchmarks') 
 				release='.'.join(tag.split('-')[1].split('.')[:3])
 				idx = '%s_%s' % (siteid,cache)
-				rellist[idx]=dict([('siteid',confd[c][s][nickname][param]['siteid']),
-								   ('cloud',confd[c][s][nickname][param]['cloud']),
+				rellist[idx]=dict([('siteid',confd[cloud][site][nickname][param]['siteid']),
+								   ('cloud',confd[cloud][site][nickname][param]['cloud']),
 								   ('release',release),
 								   ('cache',cache)])
 
-				rellist[idx]=dict([('siteid',confd[c][s][nickname][param]['siteid']),
-								   ('cloud',confd[c][s][nickname][param]['cloud']),
+				rellist[idx]=dict([('siteid',confd[cloud][site][nickname][param]['siteid']),
+								   ('cloud',confd[cloud][site][nickname][param]['cloud']),
 								   ('release',release),
 								   ('cache','')])
