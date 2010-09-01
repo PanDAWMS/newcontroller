@@ -82,8 +82,11 @@ def releaseLister(confd,rellist):
 						# If not, we just go on to the next queue.
 						continue
 				# This is deliberately single-valued -- siteids that associate to multiple gatekeepers will malfunction, on purpose
-				if siteids.has_key(confd[cloud][site][queue][param]['siteid']) and siteids[confd[cloud][site][queue][param]['siteid']] != gk:
-					print 'There\'s more than one gatekeeper for siteid %s: %s, %s' % (confd[cloud][site][queue][param]['siteid'],gk,siteids[confd[cloud][site][queue][param]['siteid']])
+				if confd[cloud][site][queue][param].has_key('siteid')
+				and siteids.has_key(confd[cloud][site][queue][param]['siteid'])
+				and siteids[confd[cloud][site][queue][param]['siteid']] != gk:
+					print 'There\'s more than one gatekeeper for siteid %s: %s, %s'
+					% (confd[cloud][site][queue][param]['siteid'],gk,siteids[confd[cloud][site][queue][param]['siteid']])
 					print 'Overwriting.'
 					# Check for non-null siteid
 				if confd[cloud][site][queue][param].has_key('siteid') and confd[cloud][site][queue][param]['siteid']:
