@@ -65,11 +65,18 @@ def releaseLister(confd,rellist):
 	for cloud in [i for i in confd.keys() if i is not ndef]:
 		for site in [i for i in confd[cloud].keys() if i is not ndef]:
 			for queue in [i for i in confd[cloud][site].keys() if (i is not All and i is not ndef)]:
-				gk=linfotool.getSWctags(confd[cloud][site][queue][param]['gatekeeper'])
+				try:
+					confd[cloud][site][queue][param]['gatekeeper']
+				except KeyError:
+					pass
+					
 				# Check to see if the gatekeeper is even listed in BDII
 				if gk not in gatekeepers:
 					# Or perhaps the beginning of the queue (which can substitute for the gatekeeper for some queues) 
-					gk=linfotool.getSWctags(confd[cloud][site][queue][param]['queue'].split(os.sep)[0])
+					try:
+						confd[cloud][site][queue][param]['queue'].split(os.sep)[0]
+					except KeyError:
+						pass
 					if gk not in gatekeepers:
 						# If not, we just go on to the next queue.
 						continue
