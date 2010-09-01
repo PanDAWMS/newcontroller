@@ -165,11 +165,7 @@ def buildDict():
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
 				fname = configs + os.sep + cloud + os.sep + site + os.sep + q
 				# The appropriate dictionaries are placed in locvars
-				try:
-					execfile(fname,{},locvars)
-				except SyntaxError:
-					print 'Syntax error in file %s -- modifications not made to queue.' % fname
-					continue
+				execfile(fname,{},locvars)
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
 				confd[cloud][site][queue][over] = locvars[over] 
