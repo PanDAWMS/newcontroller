@@ -275,13 +275,13 @@ def bdiiIntegrator(confd,rellist,d):
 
 		# Check for manual setting. If it's manual, DON'T TOUCH
 		if not confd[c][s][nickname].has_key(param): continue
-			if confd[c][s][nickname][param].has_key('sysconfig'):
-				if confd[c][s][nickname][param]['sysconfig']:
-					if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
-						if bdiiDebug: print 'Skipping %s -- sysconfig set to manual' % nickname
-						continue
-				if confd[c][s][nickname][param]['sysconfig'] == 'manual':
-					print 'Real problem! This manual queue is being edited'
+		if confd[c][s][nickname][param].has_key('sysconfig'):
+			if confd[c][s][nickname][param]['sysconfig']:
+				if confd[c][s][nickname][param]['sysconfig'].lower() == 'manual':
+					if bdiiDebug: print 'Skipping %s -- sysconfig set to manual' % nickname
+					continue
+			if confd[c][s][nickname][param]['sysconfig'] == 'manual':
+				print 'Real problem! This manual queue is being edited'
 
 		# If jdladd is being set by BDII, check for an existing value first. Make sure it terminates with Queue, in any case.
 		if not confd[c][s][nickname][param].has_key('jdladd'): confd[c][s][nickname][param]['jdladd']=''
