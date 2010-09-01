@@ -149,15 +149,15 @@ def buildDict():
 				# Run the file for the dictionaries
 				fname = configs + os.sep + cloud + os.sep + site
 				# The appropriate dictionaries are placed in locvars
-				try:
-					execfile(fname,{},locvars)
-				except SyntaxError:
-					print 'Syntax error in file %s -- modifications not made to queue.' % fname
-					continue
+## 				try:
+## 					execfile(fname,{},locvars)
+## 				except SyntaxError:
+## 					print 'Syntax error in file %s -- modifications not made to queue.' % fname
+## 					continue
 				confd[cloud][s][param] = locvars[param]
 				confd[cloud][s][over] = locvars[over]
 			# Add each site to the cloud
-			confd[cloud][site] = {}
+ 			confd[cloud][site] = {}
 			# Loop throught the queues in the present site folders
 			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.')]
 			for q in queues:
@@ -172,7 +172,7 @@ def buildDict():
 				try:
 					execfile(fname,{},locvars)
 				except SyntaxError:
-					print 'A cSyntax error in file %s -- modifications not made to queue.' % fname
+					print 'Syntax error in file %s -- modifications not made to queue.' % fname
 					continue
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
