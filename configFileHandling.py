@@ -168,8 +168,8 @@ def buildFile(name, d):
 # dictionary. Any value in Override will supersede any value in the
 # Parameters dictionary.
 
-# Parameters that have a comment appended ARE BEING SET ELSEWHERE!
-# You can try to change them here, but it will FAIL!
+# Parameter comments tell you if the parameter is being set elsewhere.
+# You can try to change them here, but it will FAIL if they are being set elsewhere!
 # If you want to override one of these values, use the Override dictionary.
 
 # Global values for entire sites can also be set
