@@ -119,6 +119,7 @@ def buildDict():
 	'''Build a copy of the queue dictionary from the configuration files '''
 
 	confd={}
+	stdkeys=[]
 	# In executing files for variables, one has to put the variables in a contained, local context.
 	locvars={}
 	base = os.getcwd()
@@ -166,6 +167,9 @@ def buildDict():
 				fname = configs + os.sep + cloud + os.sep + site + os.sep + q
 				# The appropriate dictionaries are placed in locvars
 				execfile(fname,{},locvars)
+				# Add any new keys to the stdkeys dictionary (in case new keys are added to the DB)
+				stdkeys.update(dict([(i,0) for i in locvars[param]]))
+				stdkeys.update(dict([(i,0) for i in locvars[over]]))
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
 				confd[cloud][site][queue][over] = locvars[over] 
@@ -175,7 +179,20 @@ def buildDict():
 				except KeyError:
 					pass
 
-
+	# Now that we've seen all possible keys in stdkeys, make sure all queues have them:
+	for cloud in clouds:
+		for site in sites:
+			# Loop throught the queues in the present site folders
+			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.')]
+			for q in queues:
+				# Remove the '.py' 
+				queue=q[:-len(postfix)]
+				# Add each queue to the site
+				try:
+					for key in (set(stdkeys) - set(excl)) - set(confd[cloud][site][queue][param]):
+						confd[cloud][site][queue][param][key] = None
+				except KeyError:
+					pass
 				
 	# Leaving the All parameters unincorporated
 	os.chdir(base)
