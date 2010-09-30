@@ -119,7 +119,7 @@ def buildDict():
 	'''Build a copy of the queue dictionary from the configuration files '''
 
 	confd={}
-	stdkeys=[]
+	stdkeys={}
 	# In executing files for variables, one has to put the variables in a contained, local context.
 	locvars={}
 	base = os.getcwd()
