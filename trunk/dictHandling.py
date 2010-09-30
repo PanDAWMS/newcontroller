@@ -195,6 +195,7 @@ def buildDict():
 				try:
 					for key in (set(stdkeys) - set(excl)) - set(confd[cloud][site][queue][param]):
 						confd[cloud][site][queue][param][key] = None
+					if confd[cloud][site][queue][param]['name'] == None: confd[cloud][site][queue][param]['name'] = 'default'
 				except KeyError:
 					pass
 				
