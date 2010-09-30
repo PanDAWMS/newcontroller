@@ -180,8 +180,12 @@ def buildDict():
 					pass
 
 	# Now that we've seen all possible keys in stdkeys, make sure all queues have them:
+	# No need to reload the cloud list...
 	for cloud in clouds:
+		# But the site list needs to be redone per cloud
+		sites = os.listdir(configs + os.sep + cloud)
 		for site in sites:
+			# As does the queue list.
 			# Loop throught the queues in the present site folders
 			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.')]
 			for q in queues:
