@@ -115,7 +115,7 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 	# Return the appropriate queues to update and eliminate
 	return updDict, delDict
 
-def buildDict(stdkeys):
+def buildDict():
 	'''Build a copy of the queue dictionary from the configuration files '''
 
 	confd={}
@@ -172,12 +172,10 @@ def buildDict(stdkeys):
 				try:
 					if queue != All: confd[cloud][site][queue][enab] = locvars[enab]
 					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
-					# Check for keys present in other queues and make sure they are all available in all queues.
-					# If they don't yet exist, add them and set them to NULL
-					for k in (set(stdkeys)-set(excl)) - set(confd[cloud][site][queue][source]):
-						confd[cloud][site][queue][source][k] = None
 				except KeyError:
 					pass
+
+
 				
 	# Leaving the All parameters unincorporated
 	os.chdir(base)
