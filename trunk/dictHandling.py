@@ -58,7 +58,7 @@ def sqlDictUnpacker(d):
 	stdkeys=reducer(stdkeys)
 	# Parse the dictionary to create an All queue for each site
 
-	status = allMaker(out_d)
+	#status = allMaker(out_d)
 	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
 	# allMaker has to run before this to avoid causing KeyErrors with the new "empty cloud" values 
 	if out_d.has_key(''):
@@ -115,7 +115,7 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 	# Return the appropriate queues to update and eliminate
 	return updDict, delDict
 
-def buildDict():
+def buildDict(stdkeys):
 	'''Build a copy of the queue dictionary from the configuration files '''
 
 	confd={}
@@ -172,6 +172,10 @@ def buildDict():
 				try:
 					if queue != All: confd[cloud][site][queue][enab] = locvars[enab]
 					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
+					# Check for keys present in other queues and make sure they are all available in all queues.
+					# If they don't yet exist, add them and set them to NULL
+					for k in (set(stdkeys)-set(excl)) - set(confd[cloud][site][queue][source]):
+						confd[cloud][site][queue][source][k] = None
 				except KeyError:
 					pass
 				
