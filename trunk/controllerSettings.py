@@ -58,6 +58,9 @@ postfix = '.py'
 jdlkey, dbkey, dsep, keysep, pairsep, spacing = 'name', 'nickname', ' : ', "'", ',', '    '  # Standard python spacing of 4
 shared, unshared = 'shared','unshared'
 
+# These are the DB fields that are required not to be null, along with defaults. 
+nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0'}
+
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
 excl = ['status','lastmod','dn','tspace','_comment','space','nqueue']
 
