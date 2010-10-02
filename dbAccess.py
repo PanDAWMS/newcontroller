@@ -77,10 +77,9 @@ def buildUpdateList(updDict,param):
 		if param in updDict[i]: l.append(updDict[i][param])
 		else: l.append(updDict[i])
 		# Fix any NULL values being sent to the DB. The last row added on each loop is checked.
-		for queue in l[-1]:
-			for key in queue:
-				if queue[key] == 'None' and key in nonNull.keys():
-					queue[key] = nonNull[key]
+		for key in l[-1]:
+			if l[-1][key] == 'None' and key in nonNull.keys():
+				l[-1][key] = nonNull[key]
 	return l
 	
 
