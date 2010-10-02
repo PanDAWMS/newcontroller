@@ -13,6 +13,7 @@ from controllerSettings import *
 #----------------------------------------------------------------------#
 # DB Access Methods 
 #----------------------------------------------------------------------#
+
 def loadSchedConfig(db='pmeta', test='0'): 
 	'''Returns the values in the schedconfig db as a dictionary'''
 	# Initialize DB
@@ -75,7 +76,11 @@ def buildUpdateList(updDict,param):
 		# Gets only the parameter dictionary part.
 		if param in updDict[i]: l.append(updDict[i][param])
 		else: l.append(updDict[i])
-		
+		# Fix any NULL values being sent to the DB. The last row added on each loop is checked.
+		for queue in l[-1]:
+			for key in queue:
+				if queue[key] == 'None' and key in nonNull.keys():
+					queue[key] = nonNull[key]
 	return l
 	
 
