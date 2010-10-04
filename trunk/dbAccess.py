@@ -71,15 +71,18 @@ def execUpdate(updateList):
 
 def buildUpdateList(updDict,param):
 	'''Build a list of dictionaries that define queues''' 
+	print nonNull
 	l=[]
 	for i in updDict:
 		# Gets only the parameter dictionary part.
 		if param in updDict[i]: l.append(updDict[i][param])
 		else: l.append(updDict[i])
 		# Fix any NULL values being sent to the DB. The last row added on each loop is checked.
-		for key in l[-1]:
-			if l[-1][key] == 'None' and key in nonNull.keys():
-				l[-1][key] = nonNull[key]
+	for i in l:
+		for key in i:
+			if i[key] == 'None' and key in nonNull.keys():
+				i[key] = nonNull[key]
+				
 	return l
 	
 
