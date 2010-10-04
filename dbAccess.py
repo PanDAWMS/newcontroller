@@ -71,7 +71,6 @@ def execUpdate(updateList):
 
 def buildUpdateList(updDict,param):
 	'''Build a list of dictionaries that define queues''' 
-	print nonNull
 	l=[]
 	for i in updDict:
 		# Gets only the parameter dictionary part.
