@@ -293,12 +293,13 @@ def bdiiIntegrator(confd,rellist,d):
 			# Complete the sourcing info
 			confd[c][s][nickname][source][key] = 'BDII'
 		# For the more complicated BDII derivatives, do some more complex work
-		confd[c][s][nickname][param]['queue'] = bdict[qn]['gatekeeper'] + '/'+ bdict[qn]['mgrprefix'] + '-' + bdict[qn]['jobmanager']
+		#confd[c][s][nickname][param]['queue'] = bdict[qn]['gatekeeper'] + '/'+ bdict[qn]['mgrprefix'] + '-' + bdict[qn]['jobmanager']
+		confd[c][s][nickname][param]['queue'] = bdict[qn]['gatekeeper'] + '/jobmanager-' + bdict[qn]['jobmanager']
 		if not confd[c][s][nickname][param].has_key('jdl'): confd[c][s][nickname][param]['jdl'] = None
 		if bdict[qn]['gatekeeper'] + '/jobmanager-' + bdict[qn]['jobmanager'] != confd[c][s][nickname][param]['jdl']:
 			if bdiiDebug:
 				print 'jdl mismatch!\n', bdict[qn], key, confd[c][s][nickname][param]['jdl'], 
-		confd[c][s][nickname][param]['jdl'] = bdict[qn]['gatekeeper'] + '/'+ bdict[qn]['mgrprefix'] + '-' + bdict[qn]['jobmanager']
+		confd[c][s][nickname][param]['jdl'] = bdict[qn]['gatekeeper'] + '/jobmanager-' + bdict[qn]['jobmanager']
 		confd[c][s][nickname][param]['nickname'] = nickname
 		# Fill in sourcing here as well for the last few fields
 		for key in ['queue','jdl','nickname']:
