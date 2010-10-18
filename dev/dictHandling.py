@@ -58,7 +58,7 @@ def sqlDictUnpacker(d):
 	stdkeys=reducer(stdkeys)
 	# Parse the dictionary to create an All queue for each site
 
-	status = allMaker(out_d)
+	#status = allMaker(out_d)
 	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
 	# allMaker has to run before this to avoid causing KeyErrors with the new "empty cloud" values 
 	if out_d.has_key(''):
@@ -119,6 +119,7 @@ def buildDict():
 	'''Build a copy of the queue dictionary from the configuration files '''
 
 	confd={}
+	stdkeys={}
 	# In executing files for variables, one has to put the variables in a contained, local context.
 	locvars={}
 	base = os.getcwd()
@@ -149,15 +150,11 @@ def buildDict():
 				# Run the file for the dictionaries
 				fname = configs + os.sep + cloud + os.sep + site
 				# The appropriate dictionaries are placed in locvars
-				try:
-					execfile(fname,{},locvars)
-				except SyntaxError:
-					print 'Syntax error in file %s -- modifications not made to queue.' % fname
-					continue
+				execfile(fname,{},locvars)
 				confd[cloud][s][param] = locvars[param]
 				confd[cloud][s][over] = locvars[over]
 			# Add each site to the cloud
-			confd[cloud][site] = {}
+ 			confd[cloud][site] = {}
 			# Loop throught the queues in the present site folders
 			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.')]
 			for q in queues:
@@ -169,19 +166,38 @@ def buildDict():
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
 				fname = configs + os.sep + cloud + os.sep + site + os.sep + q
 				# The appropriate dictionaries are placed in locvars
-				try:
-					execfile(fname,{},locvars)
-				except SyntaxError:
-					print 'Syntax error in file %s -- modifications not made to queue.' % fname
-					continue
+				execfile(fname,{},locvars)
+				# Add any new keys to the stdkeys dictionary (in case new keys are added to the DB)
+				stdkeys.update(dict([(i,0) for i in locvars[param]]))
+				stdkeys.update(dict([(i,0) for i in locvars[over]]))
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
 				confd[cloud][site][queue][over] = locvars[over] 
 				try:
 					if queue != All: confd[cloud][site][queue][enab] = locvars[enab]
+					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
 				except KeyError:
 					pass
-				confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
+
+	# Now that we've seen all possible keys in stdkeys, make sure all queues have them:
+	# No need to reload the cloud list...
+	for cloud in clouds:
+		# But the site list needs to be redone per cloud
+		sites = os.listdir(configs + os.sep + cloud)
+		for site in sites:
+			# As does the queue list.
+			# Loop throught the queues in the present site folders
+			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.')]
+			for q in queues:
+				# Remove the '.py' 
+				queue=q[:-len(postfix)]
+				# Add each queue to the site
+				try:
+					for key in (set(stdkeys) - set(excl)) - set(confd[cloud][site][queue][param]):
+						confd[cloud][site][queue][param][key] = None
+					if confd[cloud][site][queue][param]['name'] == None: confd[cloud][site][queue][param]['name'] = 'default'
+				except KeyError:
+					pass
 				
 	# Leaving the All parameters unincorporated
 	os.chdir(base)
