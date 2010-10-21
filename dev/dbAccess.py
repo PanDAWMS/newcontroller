@@ -53,7 +53,7 @@ def loadInstalledSW():
 	utils.endDB()
 	# Return a dictionaried version of the DB contents, keyed release_site_cache
 	unicodeConvert(rows)
-	return dict([(i['release'],i['siteid'],i['cache']),i) for i in rows])
+	return dict([((i['release'],i['siteid'],i['cache']),i) for i in rows])
 
 def execUpdate(updateList):
 	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
