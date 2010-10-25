@@ -64,6 +64,10 @@ nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0'
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
 excl = ['status','lastmod','dn','tspace','comment_','space','nqueue']
 
+# Standard mappings for legacy software tags in the BDII:
+
+tagsTranslation = {'production':'AtlasProduction','tier0':'AtlasTier0','topphys':'TopPhys','wzbenchmarks':'WZBenchmarks'}
+
 # This list is global, and is populated (during initial DB import) by the list of columns that the schedconfig table contains. 
 standardkeys = []
 
