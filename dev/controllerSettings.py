@@ -32,6 +32,7 @@ safety = 'off'
 
 # Widely used strings
 All = 'All' # Standard name for All files
+Conditions = 'Conditions' # Standard meta-tag for the presence of Conditions data at a site
 ndef = 'Deactivated' # Standard name for cloud=NULL queues
 param = 'Parameters' # Name for the parameters dictionary in a queue spec
 over = 'Override' # Name for the override dictionary in a queue spec
