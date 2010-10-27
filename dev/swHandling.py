@@ -86,6 +86,8 @@ def updateInstalledSW(confd,lcgdict):
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':Conditions,'cache':Conditions}
 	
 				
+	print 'Length of DB list: %d' % len(sw_db)
+	print 'Length of BDII list: %d' % len(sw_bdii)
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_bdii]
 	addList = [sw_bdii[i] for i in sw_bdii if i not in sw_db]
 	
