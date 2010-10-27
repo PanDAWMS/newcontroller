@@ -77,11 +77,10 @@ def loadConfigs():
 	# Add the BDII information, and build a list of releases
 	if not bdiiOverride:
 		linfotool = lcgInfositeTool.lcgInfositeTool()
-		bdiiIntegrator(configd, new_rel_db, dbd, linfotool)
-		updateInstalledSW(linfotool)
 	
 	# Now add ToA information
 	if not toaOverride: toaIntegrator(configd)
+	if not bdiiOverride: updateInstalledSW(configd,linfotool)
 	
 	# Compose the "All" queues for each site
 	status = allMaker(configd, initial = False)
@@ -188,4 +187,5 @@ if __name__ == "__main__":
 	if genDebug: dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
 	else: loadConfigs()
 
+	updateInstalledSW(configd,lcgdict)
 	#os.chdir(base_path)
