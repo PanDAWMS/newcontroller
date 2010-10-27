@@ -55,6 +55,18 @@ def loadInstalledSW():
 	unicodeConvert(rows)
 	return dict([((i['siteid'],i['release'],i['cache']),i) for i in rows])
 
+def updateInstalledSW(addList, delList):
+	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
+	utils.initDB()
+	print "Init DB"
+	for i in addList:
+		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
+		utils.dictcursor().execute(sql)
+	for i in delList:
+		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s'" % (i['siteid'],i['release'],i['cache'])
+		utils.dictcursor().execute(sql)
+	utils.commit
+
 def execUpdate(updateList):
 	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
 	if safety is "on":
