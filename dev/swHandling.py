@@ -68,8 +68,8 @@ def updateInstalledSW(confd,lcgdict):
 				release=baseReleaseSep.join(cache.split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
 				# The unique name for this entry as a tuple
 				index = (siteid,release,cache)
+				print index, 'siteid', siteid[queue],'cloud',cloud[queue],'release',release,'cache',cache
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache}
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':None}
 			# If the Conditions meta-tag is present, create an entry for it in the dictionary
 			if Conditions in release_tags[gatekeeper[queue]]:
 				# The unique name for this entry as a tuple
