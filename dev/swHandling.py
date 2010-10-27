@@ -28,6 +28,8 @@ def updateInstalledSW(confd,lcgdict):
 	# Get the present BDII tags information from the (previously called) lcgInfositeTool2 
 	release_tags = lcgdict.CEtags
 	cache_tags = lcgdict.CEctags
+	print release_tags
+	print cache_tags
 	siteid = {}
 	gatekeeper = {}
 	cloud = {}
