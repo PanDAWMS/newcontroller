@@ -41,7 +41,11 @@ def loadSchedConfig(db='pmeta', test='0'):
 
 def loadInstalledSW():
 	'''Load the values from the installedsw table into a dictionary keyed by release_site_cache'''
+	utils.setTestDB()
 	utils.initDB()
+	utils.dictcursor().execute('select * from installedsw')
+	print utils.dictcursor().fetchall()
+	raw_input()
 	print "Init DB"
 	# Gets all rows from installedsw table
 	query = 'SELECT * from installedsw'
