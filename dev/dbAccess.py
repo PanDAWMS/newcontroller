@@ -43,9 +43,6 @@ def loadInstalledSW():
 	'''Load the values from the installedsw table into a dictionary keyed by release_site_cache'''
 	utils.setTestDB()
 	utils.initDB()
-	utils.dictcursor().execute('select * from installedsw')
-	print utils.dictcursor().fetchall()
-	raw_input()
 	print "Init DB"
 	# Gets all rows from installedsw table
 	query = 'SELECT * from installedsw'
@@ -63,22 +60,15 @@ def updateInstalledSWdb(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
 	unicodeEncode(addList)
 	unicodeEncode(delList)
-	print addList
-	print delList
 
 	utils.setTestDB()
 	utils.initDB()
-	utils.dictcursor().execute('select * from installedsw')
-	print utils.dictcursor().fetchall()
-	raw_input()
 	print "Init DB"
 	for i in addList:
 		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
-		print i, sql
 		utils.dictcursor().execute(sql)
 	for i in delList:
 		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s'" % (i['siteid'],i['release'],i['cache'])
-		print i, sql
 		utils.dictcursor().execute(sql)
 	utils.commit
 	utils.endDB()
