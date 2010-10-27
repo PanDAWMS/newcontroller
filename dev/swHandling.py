@@ -34,6 +34,7 @@ def updateInstalledSW(confd,lcgdict):
 	translateTags(cache_tags)
 
 	# We now have a full set of lookups. We need to build a list of siteids, gatekeepers and clouds from the config dict:
+	print 'Confd: %d' * len(confd)
 	for queue in confd:
 		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 
 		if confd[queue].has_key('siteid') and confd[queue]['siteid']:
@@ -47,7 +48,10 @@ def updateInstalledSW(confd,lcgdict):
 			elif confd[queue]['queue']:
 				# and make sure you split off the non-gatekeeper-name part at the end.
 				gatekeeper[queue] = confd[queue]['queue'].split('/')[0]
-
+	print 'Confd: %d' * len(confd)
+	print 'GK: %d' * len(gatekeeper)
+	print 'Siteid: %d' * len(siteid)
+	print 'cloud: %d' * len(cloud)
 	# Time to build the master list from BDII:
 
 	# The values will be de-duplicated in a dictionary. Keys will be (siteid,release,queue) together in a tuple
