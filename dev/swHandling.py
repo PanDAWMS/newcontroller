@@ -34,11 +34,9 @@ def updateInstalledSW(confd,lcgdict):
 	translateTags(cache_tags)
 
 	# We now have a full set of lookups. We need to build a list of siteids, gatekeepers and clouds from the config dict:
-	print 'Confd: %d' % len(confd)
 	for queue in confd:
 		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 
 		if confd[queue].has_key('siteid') and confd[queue]['siteid']:
-			print queue
 			cloud[queue] = confd[queue]['cloud']
 			siteid[queue] = confd[queue]['siteid']
 			# If it's not an analysis queue and has a siteid, use gatekeeper as the BDII key
@@ -48,10 +46,7 @@ def updateInstalledSW(confd,lcgdict):
 			elif confd[queue]['queue']:
 				# and make sure you split off the non-gatekeeper-name part at the end.
 				gatekeeper[queue] = confd[queue]['queue'].split('/')[0]
-	print 'Confd: %d' % len(confd)
-	print 'GK: %d' % len(gatekeeper)
-	print 'Siteid: %d' % len(siteid)
-	print 'cloud: %d' % len(cloud)
+
 	# Time to build the master list from BDII:
 
 	# The values will be de-duplicated in a dictionary. Keys will be (siteid,release,queue) together in a tuple
@@ -68,7 +63,6 @@ def updateInstalledSW(confd,lcgdict):
 				release=baseReleaseSep.join(cache.split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
 				# The unique name for this entry as a tuple
 				index = (siteid[queue],release,cache)
-				print index, 'siteid', siteid[queue],'cloud',cloud[queue],'release',release,'cache',cache
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache}
 			# If the Conditions meta-tag is present, create an entry for it in the dictionary
 			if Conditions in release_tags[gatekeeper[queue]]:
@@ -92,8 +86,11 @@ def updateInstalledSW(confd,lcgdict):
 				
 	print 'Length of DB list: %d' % len(sw_db)
 	print 'Length of BDII list: %d' % len(sw_bdii)
+	
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_bdii]
 	addList = [sw_bdii[i] for i in sw_bdii if i not in sw_db]
+	print 'Length of DB list: %d' % len(sw_db)
+	print 'Length of BDII list: %d' % len(sw_bdii)
 	
 	updateInstalledSWdb(addList,deleteList)
 
