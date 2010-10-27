@@ -64,24 +64,12 @@ def updateInstalledSW(confd,lcgdict):
 				# The unique name for this entry as a tuple
 				index = (siteid[queue],release,cache)
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache}
-			# If the Conditions meta-tag is present, create an entry for it in the dictionary
-			if Conditions in release_tags[gatekeeper[queue]]:
-				# The unique name for this entry as a tuple
-				index = (siteid[queue],Conditions,Conditions)
-				# Adding the Conditions meta-tag from the caches dictionary
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':Conditions,'cache':Conditions}
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
 				# The unique name for this entry as a tuple
 				index = (siteid[queue],release,None)
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':None}
-			# If the Conditions meta-tag is present, create an entry for it in the dictionary
-			if Conditions in release_tags[gatekeeper[queue]]:
-				# The unique name for this entry as a tuple
-				index = (siteid[queue],Conditions,Conditions)
-				# Adding the Conditions meta-tag from the releases dictionary (redundant, but that's fine)
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':Conditions,'cache':Conditions}
 	
 				
 	print 'Length of DB list: %d' % len(sw_db)
