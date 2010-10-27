@@ -28,13 +28,13 @@ def updateInstalledSW(confd,lcgdict):
 	# Get the present BDII tags information from the (previously called) lcgInfositeTool2 
 	release_tags = lcgdict.CEtags
 	cache_tags = lcgdict.CEctags
-	print release_tags
-	print cache_tags
 	siteid = {}
 	gatekeeper = {}
 	cloud = {}
 	# Make any translation necessary to the cache tags (see controllerSettings for more info)
 	translateTags(cache_tags)
+	print release_tags
+	print cache_tags
 
 	# We now have a full set of lookups. We need to build a list of siteids, gatekeepers and clouds from the config dict:
 	for queue in confd:
