@@ -149,17 +149,15 @@ def loadConfigs():
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
 	
-#	if not len(checkUp) + len(checkDel):
-#	print 'Passed checks!'
 	# Make the necessary changes to the configuration files:
 	makeConfigs(configd)
 	# Check the changes just committed into Subversion, unless we're not updating from BDII/ToA
 	if not toaOverride and not bdiiOverride: svnCheckin(svnstring)
 	# Create a backup pickle of the finalized DB as it stands.
 	backupCreate(newdb)
-#	else: print '########### Differences in the DB/Configs! ###########\n'
+
 	# For development purposes, we can get all the important variables out of the function. Usually off.
-	if genDebug: return dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
+	if genDebug: return linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
 	return 0
 	
 
@@ -184,8 +182,7 @@ if __name__ == "__main__":
 	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 
-	if genDebug: dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
+	if genDebug: linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
 	else: loadConfigs()
 
-	updateInstalledSW(configd,lcgdict)
 	#os.chdir(base_path)
