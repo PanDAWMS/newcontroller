@@ -62,7 +62,7 @@ def updateInstalledSW(confd,lcgdict):
 	
 	for queue in siteid:
 		# Check for the gatekeeper value in the BDII:
-		if cache_tags.has_key[gatekeeper[queue]]:
+		if cache_tags.has_key(gatekeeper[queue]):
 			for cache in cache_tags[gatekeeper[queue]]:
 				# ASSUMPTION -- that base releases will always contain two periods as separators
 				release=baseReleaseSep.join(cache.split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
@@ -77,7 +77,7 @@ def updateInstalledSW(confd,lcgdict):
 				# Adding the Conditions meta-tag from the caches dictionary
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':Conditions,'cache':Conditions}
 
-		if release_tags.has_key[gatekeeper[queue]]:
+		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
 				# The unique name for this entry as a tuple
 				index = (site,release,None)
