@@ -81,6 +81,7 @@ def updateInstalledSWdb(addList, delList):
 		print i, sql
 		utils.dictcursor().execute(sql)
 	utils.commit
+	utils.endDB()
 
 def execUpdate(updateList):
 	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
