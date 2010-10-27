@@ -33,13 +33,12 @@ def updateInstalledSW(confd,lcgdict):
 	cloud = {}
 	# Make any translation necessary to the cache tags (see controllerSettings for more info)
 	translateTags(cache_tags)
-	print release_tags
-	print cache_tags
 
 	# We now have a full set of lookups. We need to build a list of siteids, gatekeepers and clouds from the config dict:
 	for queue in confd:
 		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 
 		if confd[queue].has_key('siteid') and confd[queue]['siteid']:
+			print queue
 			cloud[queue] = confd[queue]['cloud']
 			siteid[queue] = confd[queue]['siteid']
 			# If it's not an analysis queue and has a siteid, use gatekeeper as the BDII key
@@ -57,6 +56,12 @@ def updateInstalledSW(confd,lcgdict):
 	# completeness. This is why I just add EVERYTHING and let the keys sort it out.
 	
 	sw_bdii = {}
+	print siteid
+	raw_input()
+	print cloud
+	raw_input()
+	print gatekeeper
+	raw_input()
 	
 	for queue in siteid:
 		# Check for the gatekeeper value in the BDII:
