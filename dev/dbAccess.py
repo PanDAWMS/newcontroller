@@ -55,7 +55,7 @@ def loadInstalledSW():
 	unicodeConvert(rows)
 	return dict([((i['siteid'],i['release'],i['cache']),i) for i in rows])
 
-def updateInstalledSW(addList, delList):
+def updateInstalledSWdb(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
 	utils.initDB()
 	print "Init DB"
