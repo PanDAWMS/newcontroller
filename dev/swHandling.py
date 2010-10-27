@@ -37,7 +37,7 @@ def updateInstalledSW(confd,lcgdict):
 	# We now have a full set of lookups. We need to build a list of siteids, gatekeepers and clouds from the config dict:
 	for queue in confd:
 		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 
-		if confd[queue]['siteid']:
+		if confd[queue].has_key('siteid') and confd[queue]['siteid']:
 			cloud[queue] = confd[queue]['cloud']
 			siteid[queue] = confd[queue]['siteid']
 			# If it's not an analysis queue and has a siteid, use gatekeeper as the BDII key
