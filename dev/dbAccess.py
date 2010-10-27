@@ -64,6 +64,9 @@ def updateInstalledSWdb(addList, delList):
 
 	utils.setTestDB()
 	utils.initDB()
+	utils.dictcursor().execute('select * from installedsw')
+	print utils.dictcursor().fetchall()
+	raw_input()
 	print "Init DB"
 	for i in addList:
 		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
