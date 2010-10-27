@@ -30,7 +30,14 @@ from configFileHandling import *
 from jdlController import *
 from svnHandling import *
 from backupHandling import *
-					
+from swHandling import *
+
+try:
+	import lcgInfositeTool2 as lcgInfositeTool
+except:
+	print "Cannot import lcgInfositeTool, will exit"
+	sys.exit(-1)
+
 def loadJdl():
 	'''Runs the jdllist table updates'''
 	
@@ -68,14 +75,11 @@ def loadConfigs():
 	jdldb, jdldc = loadJdl()
 	
 	# Add the BDII information, and build a list of releases
-## 	old_rel_db = loadInstalledSW()
- 	new_rel_db = {}
-	if not bdiiOverride: bdiiIntegrator(configd, new_rel_db, dbd)
+	if not bdiiOverride:
+		linfotool = lcgInfositeTool.lcgInfositeTool()
+		bdiiIntegrator(configd, new_rel_db, dbd, linfotool)
+		updateInstalledSW(linfotool)
 	
-	# Check the old DB for releases to delete, and the new one for releases to insert.
-## 	delete_sw = [old_rel_db[i] for i in old_rel_db if i not in new_rel_db]
-## 	insert_sw = [new_rel_db[i] for i in new_rel_db if i not in old_rel_db]
-
 	# Now add ToA information
 	if not toaOverride: toaIntegrator(configd)
 	
@@ -139,31 +143,7 @@ def loadConfigs():
 		for i in up_d: print i, up_d[i]
 		print '\n\nDeletes:\n'
 		for i in del_d: print i, del_d[i]
-
-
 			
-		# Delete outdated installedsw entries
-## 		for i in delete_sw:
-## 			try:
-## 				sql = "DELETE FROM installedsw WHERE release = '%s' and cache = '%s' and siteid = '%s'" % (i['release'],i['cache'],i['siteid'])
-## 				utils.dictcursor().execute(sql)
-## 			except:
-## 				print 'Failed SQL Statement: ', sql, i
-
-## 		# Insert new installedsw entries. Not using replaceDB because of a lack of single DB key.
-## 		for i in insert_sw:
-## 			try:
-## 				sql = "INSERT INTO installedsw (release, cache, siteid, cloud) values ('%s','%s','%s','%s')" % (i['release'],i['cache'],i['siteid'],i['cloud'])
-## 				utils.dictcursor().execute(sql)
-## 			except:
-## 				print 'Failed SQL Statement: ', sql, i
-## 		# Commit installedsw changes
-## 		utils.commit()
-
-
-
-
-		
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
 	

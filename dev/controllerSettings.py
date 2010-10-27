@@ -72,6 +72,12 @@ tagsTranslation = {'production':'AtlasProduction','tier0':'AtlasTier0','topphys'
 # This list is global, and is populated (during initial DB import) by the list of columns that the schedconfig table contains. 
 standardkeys = []
 
+# Software release base assumptions:
+nBaseReleaseSep = 3 # The ASSUMED number of base release identifying fields (like 15.4.5). Longer (point release or cache) names are
+# permitted, but are considered "caches".
+baseReleaseSep = '.' # The separator used for release naming (like 15.4.5)
+virtualQueueGatekeeper = 'to.be.set' # The value that virtual queues have instead of gatekeeper
+
 # DB Override flag -- Default is False
 dbOverride = False
 
