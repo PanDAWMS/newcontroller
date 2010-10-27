@@ -67,25 +67,25 @@ def updateInstalledSW(confd,lcgdict):
 				# ASSUMPTION -- that base releases will always contain two periods as separators
 				release=baseReleaseSep.join(cache.split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
 				# The unique name for this entry as a tuple
-				index = (siteid,release,cache)
+				index = (siteid[queue],release,cache)
 				print index, 'siteid', siteid[queue],'cloud',cloud[queue],'release',release,'cache',cache
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache}
 			# If the Conditions meta-tag is present, create an entry for it in the dictionary
 			if Conditions in release_tags[gatekeeper[queue]]:
 				# The unique name for this entry as a tuple
-				index = (siteid,Conditions,Conditions)
+				index = (siteid[queue],Conditions,Conditions)
 				# Adding the Conditions meta-tag from the caches dictionary
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':Conditions,'cache':Conditions}
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
 				# The unique name for this entry as a tuple
-				index = (siteid,release,None)
+				index = (siteid[queue],release,None)
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':None}
 			# If the Conditions meta-tag is present, create an entry for it in the dictionary
 			if Conditions in release_tags[gatekeeper[queue]]:
 				# The unique name for this entry as a tuple
-				index = (siteid,Conditions,Conditions)
+				index = (siteid[queue],Conditions,Conditions)
 				# Adding the Conditions meta-tag from the releases dictionary (redundant, but that's fine)
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':Conditions,'cache':Conditions}
 	
