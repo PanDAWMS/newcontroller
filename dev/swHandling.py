@@ -11,7 +11,6 @@ from miscUtils import *
 from controllerSettings import *
 from dbAccess import *
 
-
 def translateTags(d):
 	'''Translate any legacy BDII tags and return new, clean lists. Assumes a dictionary of lists'''
 	for key in d:
@@ -56,12 +55,6 @@ def updateInstalledSW(confd,lcgdict):
 	# completeness. This is why I just add EVERYTHING and let the keys sort it out.
 	
 	sw_bdii = {}
-	print siteid
-	raw_input()
-	print cloud
-	raw_input()
-	print gatekeeper
-	raw_input()
 	
 	for queue in siteid:
 		# Check for the gatekeeper value in the BDII:
