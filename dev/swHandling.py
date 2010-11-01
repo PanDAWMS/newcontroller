@@ -41,7 +41,7 @@ def updateInstalledSW(confd,lcgdict):
 			cloud[queue] = confd[queue]['cloud']
 			siteid[queue] = confd[queue]['siteid']
 			# If it's not an analysis queue and has a siteid, use gatekeeper as the BDII key
-			if confd[queue]['gatekeeper'] is not virtualQueueGatekeeper:
+			if confd[queue]['gatekeeper'] != virtualQueueGatekeeper:
 				gatekeeper[queue] = confd[queue]['gatekeeper']
 				print 'Native Gatekeeper for %s is %s' % (queue,confd[queue]['gatekeeper'])
 			# If it's an analy queue, use the "queue" value instead
