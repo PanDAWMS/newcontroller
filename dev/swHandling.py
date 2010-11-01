@@ -37,16 +37,19 @@ def updateInstalledSW(confd,lcgdict):
 	for queue in confd:
 		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 
 		if confd[queue].has_key('siteid') and confd[queue]['siteid']:
+			print 'Siteid for %s is %s' % (queue,confd[queue]['siteid'])
 			cloud[queue] = confd[queue]['cloud']
 			siteid[queue] = confd[queue]['siteid']
 			# If it's not an analysis queue and has a siteid, use gatekeeper as the BDII key
 			if confd[queue]['gatekeeper'] is not virtualQueueGatekeeper:
 				gatekeeper[queue] = confd[queue]['gatekeeper']
+				print 'Native Gatekeeper for %s is %s' % (queue,confd[queue]['gatekeeper'])
 			# If it's an analy queue, use the "queue" value instead
 			elif confd[queue]['queue']:
 				# and make sure you split off the non-gatekeeper-name part at the end.
 				gatekeeper[queue] = confd[queue]['queue'].split('/')[0]
-
+				print 'Other Gatekeeper for %s is %s' % (queue,confd[queue]['queue'].split('/')[0])
+		else: print 'Skipping %s' % queue
 	# Time to build the master list from BDII:
 
 	# The values will be de-duplicated in a dictionary. Keys will be (siteid,release,queue) together in a tuple
