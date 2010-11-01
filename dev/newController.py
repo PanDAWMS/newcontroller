@@ -80,7 +80,6 @@ def loadConfigs():
 	
 	# Now add ToA information
 	if not toaOverride: toaIntegrator(configd)
-	if not bdiiOverride: updateInstalledSW(collapseDict(configd),linfotool)
 	
 	# Compose the "All" queues for each site
 	status = allMaker(configd, initial = False)
@@ -145,6 +144,7 @@ def loadConfigs():
 			
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
+	if not bdiiOverride: updateInstalledSW(newdb,linfotool)
 	
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
