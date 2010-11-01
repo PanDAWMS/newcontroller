@@ -80,5 +80,5 @@ def updateInstalledSW(confd,lcgdict):
 	print 'Length of deleteList: %d' % len(deleteList)
 	print 'Length of addList: %d' % len(addList)
 	
-	updateInstalledSWdb(addList,deleteList)
-
+	#updateInstalledSWdb(addList,deleteList)
+	return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper  
