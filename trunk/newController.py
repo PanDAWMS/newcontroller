@@ -141,9 +141,9 @@ def loadConfigs():
 
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
-	if not bdiiOverride:
-		if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
-		else: updateInstalledSW(collapseDict(newdb),linfotool)
+## 	if not bdiiOverride:
+## 		if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
+## 		else: updateInstalledSW(collapseDict(newdb),linfotool)
 		
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
