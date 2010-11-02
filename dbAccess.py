@@ -66,10 +66,14 @@ def updateInstalledSWdb(addList, delList):
 	print "Init DB"
 	for i in addList:
 		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
+		print sql
 		utils.dictcursor().execute(sql)
+		
 	for i in delList:
 		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s'" % (i['siteid'],i['release'],i['cache'])
+		print sql
 		utils.dictcursor().execute(sql)
+		
 	utils.commit
 	utils.endDB()
 
