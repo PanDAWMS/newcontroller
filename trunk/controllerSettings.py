@@ -11,7 +11,7 @@ import os
 unidef='utf-8'
 
 # Debug Flags
-genDebug = True
+genDebug = False
 toaDebug = False
 jdlDebug = False
 svnDebug = False
@@ -28,7 +28,7 @@ configWriteDebug = False
 confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf' 
 
 # If safety is on, nothing is written to the DB.
-safety = 'on'
+safety = 'off'
 
 # Widely used strings
 All = 'All' # Standard name for All files
