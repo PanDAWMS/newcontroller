@@ -1,3 +1,11 @@
+from dbAccess import *
+import pickle
+from newController import *
+
+f=file('pickledlinfotool.p')
+lcgdict=pickle.load(f)
+f.close()
+
 sw_db = loadInstalledSW()
 release_tags = lcgdict.CEtags
 cache_tags = lcgdict.CEctags
@@ -5,6 +13,8 @@ siteid = {}
 gatekeeper = {}
 cloud = {}
 translateTags(cache_tags)
+configd = buildDict()
+confd=configd
 
 for queue in confd:
 	if confd[queue].has_key('siteid') and confd[queue]['siteid']:
@@ -27,6 +37,8 @@ for queue in siteid:
 		for release in release_tags[gatekeeper[queue]]:
 			index = (siteid[queue],release,None)
 			sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':None}
+
+
 
 			
 print 'Length of DB list: %d' % len(sw_db)
