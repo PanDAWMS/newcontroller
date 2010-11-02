@@ -134,9 +134,10 @@ def loadConfigs():
 		utils.commit()
 		utils.endDB()
 		# FIX This string will eventually be filled with changed queue names and other info for the subversion checkin
-	svnstring=''
+		svnstring=''
 	# If the safety is on:
 	else:
+		svnstring=''
 		print '\n\nUpdates:\n'
 		for i in up_d: print i, up_d[i]
 		print '\n\nDeletes:\n'
