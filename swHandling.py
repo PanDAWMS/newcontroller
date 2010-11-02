@@ -71,7 +71,7 @@ def updateInstalledSW(confd,lcgdict):
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
 				# The unique name for this entry as a tuple
-				index = (siteid[queue],release,'',cloud[queue])
+				index = (siteid[queue],release,'None',cloud[queue])
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':None}
 	
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_bdii]
