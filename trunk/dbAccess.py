@@ -60,8 +60,7 @@ def updateInstalledSWdb(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
 	unicodeEncode(addList)
 	unicodeEncode(delList)
-
-	utils.setTestDB()
+	if safety is 'on': utils.setTestDB()
 	utils.initDB()
 	print "Init DB"
 	for i in addList:
