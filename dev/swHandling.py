@@ -37,18 +37,16 @@ def updateInstalledSW(confd,lcgdict):
 	for queue in confd:
 		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 
 		if confd[queue].has_key('siteid') and confd[queue]['siteid']:
-			print 'Siteid for %s is %s' % (queue,confd[queue]['siteid'])
 			cloud[queue] = confd[queue]['cloud']
 			siteid[queue] = confd[queue]['siteid']
 			# If it's not an analysis queue and has a siteid, use gatekeeper as the BDII key
 			if confd[queue]['gatekeeper'] != virtualQueueGatekeeper:
 				gatekeeper[queue] = confd[queue]['gatekeeper']
-				print 'Native Gatekeeper for %s is %s' % (queue,confd[queue]['gatekeeper'])
 			# If it's an analy queue, use the "queue" value instead
 			elif confd[queue]['queue']:
 				# and make sure you split off the non-gatekeeper-name part at the end.
 				gatekeeper[queue] = confd[queue]['queue'].split('/')[0]
-				print 'Other Gatekeeper for %s is %s' % (queue,confd[queue]['queue'].split('/')[0])
+			# If there's no good gatekeeper information, forget the queue
 			else:
 				cloud.pop(queue)
 				siteid.pop(queue)
@@ -76,14 +74,8 @@ def updateInstalledSW(confd,lcgdict):
 				index = (siteid[queue],release,None)
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':None}
 	
-				
-	print 'Length of DB list: %d' % len(sw_db)
-	print 'Length of BDII list: %d' % len(sw_bdii)
-	
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_bdii]
 	addList = [sw_bdii[i] for i in sw_bdii if i not in sw_db]
-	print 'Length of deleteList: %d' % len(deleteList)
-	print 'Length of addList: %d' % len(addList)
 	
 	updateInstalledSWdb(addList,deleteList)
-	return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper  
+	if genDebug: return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper  
