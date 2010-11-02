@@ -77,5 +77,8 @@ def updateInstalledSW(confd,lcgdict):
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_bdii]
 	addList = [sw_bdii[i] for i in sw_bdii if i not in sw_db]
 	
-	updateInstalledSWdb(addList,deleteList)
+	try:
+		updateInstalledSWdb(addList,deleteList)
+	except cx_Oracle.IntegrityError:
+		print 'DB Update Failed -- installedSW() (tried to add an existing row)'
 	if genDebug: return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper  
