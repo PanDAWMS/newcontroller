@@ -217,7 +217,7 @@ def toaIntegrator(confd):
 	print 'Finished ToA integrator'
 	return
 
-def bdiiIntegrator(confd,rellist,d):
+def bdiiIntegrator(confd,rellist,d,linfotool=None):
 	'''Adds BDII values to the configurations, overriding what was there. Must be run after downloading the DB
 	and parsing the config files.'''
 	print 'Running BDII Integrator'
@@ -226,7 +226,8 @@ def bdiiIntegrator(confd,rellist,d):
 	bdict = loadBDII()
 	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and releases available on the sites 
 	if bdiiDebug: print 'Running the LGC SiteInfo tool'
-	linfotool = lcgInfositeTool.lcgInfositeTool()
+	if not linfotool:
+		linfotool = lcgInfositeTool.lcgInfositeTool()
 	if bdiiDebug: print 'Completed the LGC SiteInfo tool run'
 
 	# Load the site information directly from BDII and hold it. In the previous software, this was the osgsites dict.

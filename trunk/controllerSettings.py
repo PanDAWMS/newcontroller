@@ -1,5 +1,5 @@
 ##########################################################################################
-# Global settings for the newController system                                           #
+# Global settings for the newController system #
 #                                                                                        #
 # Alden Stradling 5 Jan 2010                                                             #
 # Alden.Stradling@cern.ch                                                                #
@@ -25,13 +25,14 @@ configWriteDebug = False
 # Global strings and lists
 
 # SVN repositories
-confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf/trunk pandaconf' 
+confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf' 
 
 # If safety is on, nothing is written to the DB.
 safety = 'off'
 
 # Widely used strings
 All = 'All' # Standard name for All files
+Conditions = 'Conditions' # Standard meta-tag for the presence of Conditions data at a site
 ndef = 'Deactivated' # Standard name for cloud=NULL queues
 param = 'Parameters' # Name for the parameters dictionary in a queue spec
 over = 'Override' # Name for the override dictionary in a queue spec
@@ -64,8 +65,18 @@ nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0'
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
 excl = ['status','lastmod','dn','tspace','comment_','space','nqueue']
 
+# Standard mappings for legacy software tags in the BDII:
+
+tagsTranslation = {'production':'AtlasProduction','tier0':'AtlasTier0','topphys':'TopPhys','wzbenchmarks':'WZBenchmarks'}
+
 # This list is global, and is populated (during initial DB import) by the list of columns that the schedconfig table contains. 
 standardkeys = []
+
+# Software release base assumptions:
+nBaseReleaseSep = 3 # The ASSUMED number of base release identifying fields (like 15.4.5). Longer (point release or cache) names are
+# permitted, but are considered "caches".
+baseReleaseSep = '.' # The separator used for release naming (like 15.4.5)
+virtualQueueGatekeeper = 'to.be.set' # The value that virtual queues have instead of gatekeeper
 
 # DB Override flag -- Default is False
 dbOverride = False

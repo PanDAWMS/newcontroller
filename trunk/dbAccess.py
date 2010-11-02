@@ -41,6 +41,7 @@ def loadSchedConfig(db='pmeta', test='0'):
 
 def loadInstalledSW():
 	'''Load the values from the installedsw table into a dictionary keyed by release_site_cache'''
+	utils.setTestDB()
 	utils.initDB()
 	print "Init DB"
 	# Gets all rows from installedsw table
@@ -53,7 +54,24 @@ def loadInstalledSW():
 	utils.endDB()
 	# Return a dictionaried version of the DB contents, keyed release_site_cache
 	unicodeConvert(rows)
-	return dict([('%s_%s_%s' % (i['release'],i['siteid'],i['cache']),i) for i in rows])
+	return dict([((i['siteid'],i['release'],i['cache']),i) for i in rows])
+
+def updateInstalledSWdb(addList, delList):
+	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
+	unicodeEncode(addList)
+	unicodeEncode(delList)
+
+	utils.setTestDB()
+	utils.initDB()
+	print "Init DB"
+	for i in addList:
+		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
+		utils.dictcursor().execute(sql)
+	for i in delList:
+		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s'" % (i['siteid'],i['release'],i['cache'])
+		utils.dictcursor().execute(sql)
+	utils.commit
+	utils.endDB()
 
 def execUpdate(updateList):
 	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
