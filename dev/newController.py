@@ -144,7 +144,7 @@ def loadConfigs():
 			
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
-	if not bdiiOverride: updateInstalledSW(newdb,linfotool)
+	if not bdiiOverride: updateInstalledSW(collapseDict(newdb),linfotool)
 	
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
