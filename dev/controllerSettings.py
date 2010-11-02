@@ -1,5 +1,5 @@
 ##########################################################################################
-# Global settings for the newController system                                           #
+# Global settings for the newController system #
 #                                                                                        #
 # Alden Stradling 5 Jan 2010                                                             #
 # Alden.Stradling@cern.ch                                                                #
@@ -11,7 +11,7 @@ import os
 unidef='utf-8'
 
 # Debug Flags
-genDebug = True
+genDebug = False
 toaDebug = False
 jdlDebug = False
 svnDebug = False
