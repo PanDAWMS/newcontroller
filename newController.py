@@ -151,7 +151,7 @@ def loadConfigs():
 	# Make the necessary changes to the configuration files:
 	makeConfigs(configd)
 	# Check the changes just committed into Subversion, unless we're not updating from BDII/ToA
-	if not toaOverride and not bdiiOverride: svnCheckin(svnstring)
+	if not toaOverride and not bdiiOverride and safety is 'off': svnCheckin(svnstring)
 	# Create a backup pickle of the finalized DB as it stands.
 	backupCreate(newdb)
 
