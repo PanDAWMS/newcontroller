@@ -17,8 +17,8 @@ from controllerSettings import *
 def loadSchedConfig(db='pmeta', test='0'): 
 	'''Returns the values in the schedconfig db as a dictionary'''
 	# Initialize DB
-	utils.test=test
 	utils.dbname=db
+	if safety is 'on': utils.setTestDB()
 	utils.initDB()
 	print "Init DB"
 	# Gets all rows from schedconfig table
@@ -41,7 +41,7 @@ def loadSchedConfig(db='pmeta', test='0'):
 
 def loadInstalledSW():
 	'''Load the values from the installedsw table into a dictionary keyed by release_site_cache'''
-	utils.setTestDB()
+	if safety is 'on': utils.setTestDB()
 	utils.initDB()
 	print "Init DB"
 	# Gets all rows from installedsw table
@@ -75,9 +75,7 @@ def updateInstalledSWdb(addList, delList):
 
 def execUpdate(updateList):
 	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
-	if safety is "on":
-		print "Not touching the database! The safety's on ol' Bessie."
-		return 1
+	if safety is 'on': utils.setTestDB()
 	utils.initDB()
 	for query in updateList:
 		# Each update is pre-rolled -- just gets executed
