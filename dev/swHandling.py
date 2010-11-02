@@ -49,7 +49,8 @@ def updateInstalledSW(confd,lcgdict):
 				# and make sure you split off the non-gatekeeper-name part at the end.
 				gatekeeper[queue] = confd[queue]['queue'].split('/')[0]
 				print 'Other Gatekeeper for %s is %s' % (queue,confd[queue]['queue'].split('/')[0])
-		else: print confd[queue]
+			else:
+				confd.pop(queue)
 	# Time to build the master list from BDII:
 
 	# The values will be de-duplicated in a dictionary. Keys will be (siteid,release,queue) together in a tuple
