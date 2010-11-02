@@ -138,11 +138,7 @@ def loadConfigs():
 	# If the safety is on:
 	else:
 		svnstring=''
-		print '\n\nUpdates:\n'
-		for i in up_d: print i, up_d[i]
-		print '\n\nDeletes:\n'
-		for i in del_d: print i, del_d[i]
-			
+
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
 	if not bdiiOverride:
