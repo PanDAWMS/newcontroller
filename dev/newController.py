@@ -137,16 +137,13 @@ def loadConfigs():
 		svnstring=''
 	# If the safety is on:
 	else:
-		print '\n\nUpdates:\n'
-		for i in up_d: print i, up_d[i]
-		print '\n\nDeletes:\n'
-		for i in del_d: print i, del_d[i]
-			
+		svnstring=''
+
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
-	if not bdiiOverride:
-		if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
-		else: updateInstalledSW(collapseDict(newdb),linfotool)
+ 	if not bdiiOverride:
+ 		if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
+ 		else: updateInstalledSW(collapseDict(newdb),linfotool)
 		
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
@@ -154,7 +151,7 @@ def loadConfigs():
 	# Make the necessary changes to the configuration files:
 	makeConfigs(configd)
 	# Check the changes just committed into Subversion, unless we're not updating from BDII/ToA
-	if not toaOverride and not bdiiOverride: svnCheckin(svnstring)
+	if not toaOverride and not bdiiOverride and safety is 'off': svnCheckin(svnstring)
 	# Create a backup pickle of the finalized DB as it stands.
 	backupCreate(newdb)
 
@@ -184,7 +181,7 @@ if __name__ == "__main__":
 	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 
-	if genDebug: linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, newjdl, newdb, checkUp, checkDel = loadConfigs()
+	if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel = loadConfigs()
 	else: loadConfigs()
 
 	#os.chdir(base_path)
