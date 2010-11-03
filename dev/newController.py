@@ -142,7 +142,7 @@ def loadConfigs():
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
  	if not bdiiOverride:
- 		if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
+ 		if genDebug: sw_db, sw_bdii, delList, addList, delDB, addDB, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
  		else: updateInstalledSW(collapseDict(newdb),linfotool)
 		
 	# If the checks pass (no difference between the DB and the new configuration)
@@ -156,7 +156,7 @@ def loadConfigs():
 	backupCreate(newdb)
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
-	if genDebug: return sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
+	if genDebug: return sw_db, sw_bdii, delList, addList, delDB, addDB, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
 	return 0
 	
 
