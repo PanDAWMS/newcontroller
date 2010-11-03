@@ -74,6 +74,9 @@ def updateInstalledSW(confd,lcgdict):
 				index = (siteid[queue],release,'None',cloud[queue])
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':None}
 	
+	unicodeEncode(sw_bdii)
+	unicodeEncode(sw_db)
+
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_bdii]
 	addList = [sw_bdii[i] for i in sw_bdii if i not in sw_db]
 	deleteDB = dict([(i, sw_db[i]) for i in sw_db if i not in sw_bdii])
