@@ -77,6 +77,7 @@ def toaIntegrator(confd):
 	''' Adds ToA information to the confd (legacy from Rod, incomplete commenting. Will enhance later.) '''
 	print 'Running ToA Integrator'
 	if toaDebug: print len(confd)
+	ddmsites = ToA.getAllDestinationSites()
 	for cloud in confd:
 		if toaDebug: print len(confd[cloud])
 		for site in confd[cloud]:
@@ -88,7 +89,6 @@ def toaIntegrator(confd):
 					# Make ToA check the 'manual' sysconfig flag
 					if confd[cloud][site][queue][param]['sysconfig'] == 'manual': continue
 					if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm']))):
-						ddmsites = ToA.getAllDestinationSites()
 						for ds in ddmsites:
 							gocnames = ToA.getSiteProperty(ds,'alternateName')
 							if not gocnames: gocnames=[]
