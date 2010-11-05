@@ -65,15 +65,19 @@ def updateInstalledSW(confd,lcgdict):
 				# ASSUMPTION -- that base releases will always contain two periods as separators
 				release=baseReleaseSep.join(cache.split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
 				# The unique name for this entry as a tuple
-				index = (siteid[queue],release,cache,cloud[queue])
+				index = '%s_%s_%s' % (siteid[queue],release,cache)
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache}
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
+				cache = 'None'
 				# The unique name for this entry as a tuple
-				index = (siteid[queue],release,'None',cloud[queue])
+				index = '%s_%s_%s' % (siteid[queue],release,cache)
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':None}
 	
+	unicodeEncode(sw_bdii)
+	unicodeEncode(sw_db)
+
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_bdii]
 	addList = [sw_bdii[i] for i in sw_bdii if i not in sw_db]
 	
@@ -81,4 +85,4 @@ def updateInstalledSW(confd,lcgdict):
 		updateInstalledSWdb(addList,deleteList)
 	except:
 		print 'DB Update Failed -- installedSW() (tried to add an existing row)'
-	if genDebug: return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper  
+	if genDebug: return sw_db, sw_bdii, deleteList, addList, deleteDB, addDB, confd, cloud, siteid, gatekeeper  
