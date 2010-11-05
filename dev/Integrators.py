@@ -76,13 +76,19 @@ def keyCheckReplace(d,key,value):
 def toaIntegrator(confd):
 	''' Adds ToA information to the confd (legacy from Rod, incomplete commenting. Will enhance later.) '''
 	print 'Running ToA Integrator'
+	toaTime = True
 	if toaDebug: print len(confd)
 	ddmsites = ToA.getAllDestinationSites()
+	gocnames = dict([(i,ToA.getSiteProperty(i,'alternateName')) for i in ddmsites])
+	gocnames_up = dict([(i,[j.upper() for j in ToA.getSiteProperty(i,'alternateName')]) for i in ddmsites])
 	for cloud in confd:
+		if toaTime: print 'Cloud: %s, %s' % (cloud, time.asctime())
 		if toaDebug: print len(confd[cloud])
 		for site in confd[cloud]:
+			if toaTime: print 'Site: %s, %s' % (site, time.asctime())
 			if site is All: continue
 			for queue in confd[cloud][site]:
+				if toaTime: print 'Queue: %s, %s' % (queue, time.asctime())
 				if queue is All: continue
 				try:
 					if toaDebug and confd[cloud][site][queue][param]['sysconfig'] == 'manual': print 'Skipping %s as a manual queue (%s, %s)' % (queue, cloud, site) 
@@ -90,6 +96,7 @@ def toaIntegrator(confd):
 					if confd[cloud][site][queue][param]['sysconfig'] == 'manual': continue
 					if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm']))):
 						for ds in ddmsites:
+							if toaTime: print 'GOCnames queue: %s, %s' % (site, time.asctime())							
 							gocnames = ToA.getSiteProperty(ds,'alternateName')
 							if not gocnames: gocnames=[]
 							 # upper case for matching
@@ -99,6 +106,7 @@ def toaIntegrator(confd):
 							# If PRODDISK found use that
 							if confd[cloud][site][queue][param]['site'].upper() in gocnames_up and ds.endswith('PRODDISK'):
 								if toaDebug: print "Assign site %s to DDM %s" % ( confd[cloud][site][queue][param]['site'], ds )
+								if toaTime: print '1 queue: %s, %s' % (site, time.asctime())							
 								if keyCheckReplace(confd[cloud][site][queue][param], 'ddm', ds):
 									confd[cloud][site][queue][source]['ddm'] = 'ToA'
 								if keyCheckReplace(confd[cloud][site][queue][param], 'setokens', 'ATLASPRODDISK'):
@@ -107,6 +115,7 @@ def toaIntegrator(confd):
 								re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
 								if toaDebug: print "ds:",ds
 								try:
+									if toaTime: print '2 queue: %s, %s' % (site, time.asctime())							
 									relfc=re_lfc.search(ToA.getLocalCatalog(ds))
 									if relfc:
 										lfchost=relfc.group(1)
@@ -129,6 +138,7 @@ def toaIntegrator(confd):
 
 					# EGEE defaults
 					if confd[cloud][site][queue][param]['sysconfig'] == 'manual': print 'How did we get here?'
+					if toaTime: print '3 queue: %s, %s' % (site, time.asctime())
 					if confd[cloud][site][queue][param]['region'] not in ['US','OSG']:
 
 						# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
@@ -152,6 +162,7 @@ def toaIntegrator(confd):
 
 							if ToA:
 								loccat = ToA.getLocalCatalog(ddm1)
+								if toaTime: print 'Loccat queue: %s, %s' % (site, time.asctime())							
 								if loccat:
 									relfc = re_lfc.search(loccat)
 									if relfc:
@@ -162,6 +173,7 @@ def toaIntegrator(confd):
 									else:
 										if toaDebug: print "Cannot get lfc host for %s" % ddm1
 
+								if toaTime: print 'getSiteProperty queue: %s, %s' % (site, time.asctime())							
 								srm_ep = ToA.getSiteProperty(ddm1,'srm')
 								if toaDebug: print 'srm_ep: ',srm_ep
 								if not srm_ep:
