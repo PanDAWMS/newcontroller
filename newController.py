@@ -79,6 +79,7 @@ def loadConfigs():
 		linfotool = lcgInfositeTool.lcgInfositeTool()
 	
 	# Now add ToA information
+	# Tiers of Atlas has not been updating in a long time. Need to fix
 	if not toaOverride: toaIntegrator(configd)
 	
 	# Compose the "All" queues for each site
