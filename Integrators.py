@@ -70,19 +70,20 @@ def keyCheckReplace(d,key,value):
 		d[key] = value
 		return 1
 
-# Rewrite this to be more efficient -- it needs to parse the ddmsites once into a dictionary, then do matchmaking.
-# All kinds of modifications to keep this from clobbering perfectly good configurations at random.
-
 def toaIntegrator(confd):
 	''' Adds ToA information to the confd (legacy from Rod, incomplete commenting. Will enhance later.) '''
 	print 'Running ToA Integrator'
+	toaTime = False
 	if toaDebug: print len(confd)
 	ddmsites = ToA.getAllDestinationSites()
 	for cloud in confd:
+		if toaTime: print 'Cloud: %s, %s' % (cloud, time.asctime())
 		if toaDebug: print len(confd[cloud])
 		for site in confd[cloud]:
+			if toaTime: print 'Site: %s, %s' % (site, time.asctime())
 			if site is All: continue
 			for queue in confd[cloud][site]:
+				if toaTime: print 'Queue: %s, %s' % (queue, time.asctime())
 				if queue is All: continue
 				try:
 					if toaDebug and confd[cloud][site][queue][param]['sysconfig'] == 'manual': print 'Skipping %s as a manual queue (%s, %s)' % (queue, cloud, site) 
@@ -90,6 +91,7 @@ def toaIntegrator(confd):
 					if confd[cloud][site][queue][param]['sysconfig'] == 'manual': continue
 					if ToA and (not confd[cloud][site][queue][param].has_key('ddm') or (not utils.isFilled(confd[cloud][site][queue][param]['ddm']))):
 						for ds in ddmsites:
+							if toaTime: print 'GOCnames queue: %s, %s' % (site, time.asctime())							
 							gocnames = ToA.getSiteProperty(ds,'alternateName')
 							if not gocnames: gocnames=[]
 							 # upper case for matching
@@ -99,6 +101,7 @@ def toaIntegrator(confd):
 							# If PRODDISK found use that
 							if confd[cloud][site][queue][param]['site'].upper() in gocnames_up and ds.endswith('PRODDISK'):
 								if toaDebug: print "Assign site %s to DDM %s" % ( confd[cloud][site][queue][param]['site'], ds )
+								if toaTime: print '1 queue: %s, %s' % (site, time.asctime())							
 								if keyCheckReplace(confd[cloud][site][queue][param], 'ddm', ds):
 									confd[cloud][site][queue][source]['ddm'] = 'ToA'
 								if keyCheckReplace(confd[cloud][site][queue][param], 'setokens', 'ATLASPRODDISK'):
@@ -107,6 +110,7 @@ def toaIntegrator(confd):
 								re_lfc = re.compile('^lfc://([\w\d\-\.]+):([\w\-/]+$)')
 								if toaDebug: print "ds:",ds
 								try:
+									if toaTime: print '2 queue: %s, %s' % (site, time.asctime())							
 									relfc=re_lfc.search(ToA.getLocalCatalog(ds))
 									if relfc:
 										lfchost=relfc.group(1)
@@ -129,6 +133,7 @@ def toaIntegrator(confd):
 
 					# EGEE defaults
 					if confd[cloud][site][queue][param]['sysconfig'] == 'manual': print 'How did we get here?'
+					if toaTime: print '3 queue: %s, %s' % (site, time.asctime())
 					if confd[cloud][site][queue][param]['region'] not in ['US','OSG']:
 
 						# Use the pilot submitter proxy, not imported one (Nurcan non-prod) 
@@ -152,6 +157,7 @@ def toaIntegrator(confd):
 
 							if ToA:
 								loccat = ToA.getLocalCatalog(ddm1)
+								if toaTime: print 'Loccat queue: %s, %s' % (site, time.asctime())							
 								if loccat:
 									relfc = re_lfc.search(loccat)
 									if relfc:
@@ -162,6 +168,7 @@ def toaIntegrator(confd):
 									else:
 										if toaDebug: print "Cannot get lfc host for %s" % ddm1
 
+								if toaTime: print 'getSiteProperty queue: %s, %s' % (site, time.asctime())							
 								srm_ep = ToA.getSiteProperty(ddm1,'srm')
 								if toaDebug: print 'srm_ep: ',srm_ep
 								if not srm_ep:
@@ -307,58 +314,6 @@ def bdiiIntegrator(confd,rellist,d,linfotool=None):
 		for key in ['queue','jdl','nickname']:
 			confd[c][s][nickname][source][key] = 'BDII'
 		
-		# Tag code for installedSW. This is a raw inport from the other side -- needs a redo. FIX
-		# Need to get cloud into place, and really we just need to make this clean. No need for separate loops?
-		# Fix the indexing to match the loadInstalledSW() method
-
-		
-		
-
-
-
-		tags=linfotool.getSWtags(confd[c][s][nickname][param]['gatekeeper'])
-		etags=linfotool.getSWctags(confd[c][s][nickname][param]['gatekeeper'])
-		if len(etags) > 0:
-			for erelease in etags:
-				try:
-					cache=erelease.replace('production','AtlasProduction').replace('tier0','AtlasTier0') 
-					release='.'.join(erelease.split('-')[1].split('.')[:-1])
-					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],cache)
-					rellist[idx]={'site':confd[c][s][nickname][param]['site']}
-					rellist[idx]['release'] = release
-					rellist[idx]['cache'] = cache
-					rellist[idx]['siteid'] = '' # to fill later, when this is available
-					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
-					rellist[idx]['gatekeeper'] = confd[c][s][nickname][param]['gatekeeper']
-				except KeyError:
-					if bdiiDebug: print confd[c][s][nickname][param]
-		else:
-			if bdiiDebug: print("No eTags!")
-
-		if len(tags) > 0:
-			for release in tags:
-				try:
-					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],release)
-					rellist[idx]={'site':confd[c][s][nickname][param]['site']}
-					rellist[idx]['release'] = release
-					rellist[idx]['cache'] = ''
-					rellist[idx]['siteid'] = '' # to fill later, when this is available
-					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
-					rellist[idx]['gatekeeper'] = confd[c][s][nickname][param]['gatekeeper']
-				except KeyError:
-					if bdiiDebug: print release, idx, confd[c][s][nickname][param]
-		else:
-			if bdiiDebug: print("No Tags for %s!" % nickname)
-			pass
-			
-		if len(tags) > 0:
-			releases = '|'.join(tags)
-			confd[c][s][nickname][param]['releases']=releases
-			confd[c][s][nickname][source]['releases'] = 'BDII'
-		else:
-			if bdiiDebug: print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
-
-
 	unicodeConvert(confd)
 	# All changes to the dictionary happened live -- no need to return it.
 	print 'Finished BDII Integrator'
