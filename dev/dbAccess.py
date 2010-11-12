@@ -76,7 +76,7 @@ def updateInstalledSWdb(addList, delList):
 		
 	for i in delList:
 		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s'" % (i['siteid'],i['release'],i['cache'])
-		if i[cache] = 'None': sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
+		if i['cache'] is 'None': sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
 		utils.dictcursor().execute(sql)
 		
 	utils.commit
