@@ -60,6 +60,10 @@ def updateInstalledSWdb(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
 	unicodeEncode(addList)
 	unicodeEncode(delList)
+
+	delList=[i for i in delList]
+
+	
 	if safety is 'on': utils.setTestDB()
 	utils.initDB()
 	print "Init DB"
@@ -72,7 +76,7 @@ def updateInstalledSWdb(addList, delList):
 		
 	for i in delList:
 		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s'" % (i['siteid'],i['release'],i['cache'])
-		print sql
+		if i[cache] = 'None': sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
 		utils.dictcursor().execute(sql)
 		
 	utils.commit
