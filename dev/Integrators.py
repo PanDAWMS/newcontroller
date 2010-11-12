@@ -70,17 +70,12 @@ def keyCheckReplace(d,key,value):
 		d[key] = value
 		return 1
 
-# Rewrite this to be more efficient -- it needs to parse the ddmsites once into a dictionary, then do matchmaking.
-# All kinds of modifications to keep this from clobbering perfectly good configurations at random.
-
 def toaIntegrator(confd):
 	''' Adds ToA information to the confd (legacy from Rod, incomplete commenting. Will enhance later.) '''
 	print 'Running ToA Integrator'
-	toaTime = True
+	toaTime = False
 	if toaDebug: print len(confd)
 	ddmsites = ToA.getAllDestinationSites()
-	gocnames = dict([(i,ToA.getSiteProperty(i,'alternateName')) for i in ddmsites])
-	gocnames_up = dict([(i,[j.upper() for j in ToA.getSiteProperty(i,'alternateName')]) for i in ddmsites])
 	for cloud in confd:
 		if toaTime: print 'Cloud: %s, %s' % (cloud, time.asctime())
 		if toaDebug: print len(confd[cloud])
