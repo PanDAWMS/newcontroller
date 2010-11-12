@@ -314,58 +314,6 @@ def bdiiIntegrator(confd,rellist,d,linfotool=None):
 		for key in ['queue','jdl','nickname']:
 			confd[c][s][nickname][source][key] = 'BDII'
 		
-		# Tag code for installedSW. This is a raw inport from the other side -- needs a redo. FIX
-		# Need to get cloud into place, and really we just need to make this clean. No need for separate loops?
-		# Fix the indexing to match the loadInstalledSW() method
-
-		
-		
-
-
-
-		tags=linfotool.getSWtags(confd[c][s][nickname][param]['gatekeeper'])
-		etags=linfotool.getSWctags(confd[c][s][nickname][param]['gatekeeper'])
-		if len(etags) > 0:
-			for erelease in etags:
-				try:
-					cache=erelease.replace('production','AtlasProduction').replace('tier0','AtlasTier0') 
-					release='.'.join(erelease.split('-')[1].split('.')[:-1])
-					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],cache)
-					rellist[idx]={'site':confd[c][s][nickname][param]['site']}
-					rellist[idx]['release'] = release
-					rellist[idx]['cache'] = cache
-					rellist[idx]['siteid'] = '' # to fill later, when this is available
-					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
-					rellist[idx]['gatekeeper'] = confd[c][s][nickname][param]['gatekeeper']
-				except KeyError:
-					if bdiiDebug: print confd[c][s][nickname][param]
-		else:
-			if bdiiDebug: print("No eTags!")
-
-		if len(tags) > 0:
-			for release in tags:
-				try:
-					idx = '%s_%s' % (confd[c][s][nickname][param]['site'],release)
-					rellist[idx]={'site':confd[c][s][nickname][param]['site']}
-					rellist[idx]['release'] = release
-					rellist[idx]['cache'] = ''
-					rellist[idx]['siteid'] = '' # to fill later, when this is available
-					rellist[idx]['nickname'] = confd[c][s][nickname][param]['nickname'] # To reference later, when we need siteid
-					rellist[idx]['gatekeeper'] = confd[c][s][nickname][param]['gatekeeper']
-				except KeyError:
-					if bdiiDebug: print release, idx, confd[c][s][nickname][param]
-		else:
-			if bdiiDebug: print("No Tags for %s!" % nickname)
-			pass
-			
-		if len(tags) > 0:
-			releases = '|'.join(tags)
-			confd[c][s][nickname][param]['releases']=releases
-			confd[c][s][nickname][source]['releases'] = 'BDII'
-		else:
-			if bdiiDebug: print "No releases found for %s"% confd[c][s][nickname][param]['gatekeeper']
-
-
 	unicodeConvert(confd)
 	# All changes to the dictionary happened live -- no need to return it.
 	print 'Finished BDII Integrator'
