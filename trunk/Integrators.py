@@ -35,6 +35,19 @@ except:
 # Integrators
 #----------------------------------------------------------------------#
 	  
+def regionMap(confd):
+	'''Using existing regional correlations to clouds, create a cloud lookup table'''
+	region_map={}
+	c=collapseDict(confd)
+	for queue in c:
+		if c[queue].has_key('region') and c[queue]['region'] and c[queue].has_key('cloud') and c[queue]['cloud']:
+			if c[queue]['cloud'] in noAutoClouds: continue
+			if not region_map.has_key(c[queue]['region']): region_map[c[queue]['region']] = [c[queue]['cloud']]
+			else: region_map[c[queue]['region']].append(c[queue]['cloud'])
+	for region in region_map:
+		region_map[region] = reducer(region_map[region])
+	return region_map
+				
 def loadToA(queuedefs):
 	'''Acquires queue config information from ToA and updates the values we have. Should be run last. Overrides EVERYTHING else.'''
 	fillDDMpaths.fillDDMpaths(queuedefs)
@@ -237,6 +250,8 @@ def bdiiIntegrator(confd,rellist,d,linfotool=None):
 		linfotool = lcgInfositeTool.lcgInfositeTool()
 	if bdiiDebug: print 'Completed the LGC SiteInfo tool run'
 
+	region_map = regionMap(confd)
+
 	# Load the site information directly from BDII and hold it. In the previous software, this was the osgsites dict.
 	# This designation is obsolete -- this is strictly BDII information, and no separation is made.
 	for qn in bdict:
@@ -251,8 +266,12 @@ def bdiiIntegrator(confd,rellist,d,linfotool=None):
 			# If the queue is not in the DB, and is not inactive in the config files, then:
 			if not c and not s:
 				if bdiiDebug: print "Still couldn't find ", nickname
-				# If a site is specified, go ahead
-				if bdict[qn]['site']: c,s = ndef,bdict[qn]['site']
+				# If a site is specified, go ahead (check the region_map for a cloud guess)
+				try:
+					if bdict[qn]['site']: c,s = region_map[bdict[qn]['site']],bdict[qn]['site']
+				except KeyError:
+					# This shouldn't happen -- but just in case.
+					if bdict[qn]['site']: c,s = ndef,bdict[qn]['site']
 				# If not, time to give up. BDII is hopelessly misconfigured -- best not to contaminate
 				else: continue
 				# If cloud doesn't exist, create it:
