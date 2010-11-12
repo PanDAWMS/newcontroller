@@ -80,8 +80,6 @@ def updateInstalledSW(confd,lcgdict):
 
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_bdii]
 	addList = [sw_bdii[i] for i in sw_bdii if i not in sw_db]
-	deleteDB = dict([(i, sw_db[i]) for i in sw_db if i not in sw_bdii])
-	addDB = dict([(i, sw_bdii[i]) for i in sw_bdii if i not in sw_db])
 	
 	try:
 		updateInstalledSWdb(addList,deleteList)
