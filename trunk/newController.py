@@ -53,6 +53,8 @@ def loadConfigs():
 	'''Run the schedconfig table updates'''
 	# Load the database as it stands as a primary reference
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+	print dbd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['siteid']
+	print dbd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['copysetup']
 	# If the DB is overriding the config files, we need to recreate them now.
 	if dbOverride:
 		# Get the config dictionary directly from the DB, and process the config file update from it.
@@ -79,6 +81,8 @@ def loadConfigs():
 	if not bdiiOverride:
 		linfotool = lcgInfositeTool.lcgInfositeTool()
 		bdiiIntegrator(configd,dbd,linfotool)
+	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['siteid']
+	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['copysetup']
 		
 	# Now add ToA information
 	if not toaOverride: toaIntegrator(configd)
