@@ -70,19 +70,23 @@ def loadConfigs():
 	
 	# Load the present config files, based on the SVN update
 	configd = buildDict()
-	
+	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['siteid']
+	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['copysetup']
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
 	
 	# Add the BDII information, and build a list of releases
 	if not bdiiOverride:
 		linfotool = lcgInfositeTool.lcgInfositeTool()
-	
+		bdiiIntegrator(configd,dbd,linfotool)
+		
 	# Now add ToA information
 	if not toaOverride: toaIntegrator(configd)
 	
 	# Compose the "All" queues for each site
 	status = allMaker(configd, initial = False)
+	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['siteid']
+	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['copysetup']
 
 	# Compare the DB to the present built configuration to find the queues that are changed.
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd), dbOverride)
