@@ -96,6 +96,8 @@ def loadConfigs():
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd), dbOverride)
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc, dbOverride)
 	deletes = [del_d[i][dbkey] for i in del_d]
+	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['siteid']
+	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['copysetup']
 
 	# Delete queues that are not Enabled
 	del_d.update(disabledQueues(configd))
@@ -141,7 +143,6 @@ def loadConfigs():
 		# Changes committed after all is successful, to avoid partial updates
 		utils.commit()
 		utils.endDB()
-		# FIX This string will eventually be filled with changed queue names and other info for the subversion checkin
 		svnstring=''
 	# If the safety is on:
 	else:
