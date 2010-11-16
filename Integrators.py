@@ -261,7 +261,8 @@ def bdiiIntegrator(confd,d,linfotool=None):
 		c,s = findQueue(nickname,confd)
 		if not c and not s:
 			# If it's not there, try the dictionary from the DB dictionary
-			if bdiiDebug: print "Couldn't find ", nickname			c,s = findQueue(nickname,d)
+			if bdiiDebug: print "Couldn't find ", nickname
+			c,s = findQueue(nickname,d)
 			# If the queue is not in the DB, and is not inactive in the config files, then:
 			if not c and not s:
 				if bdiiDebug: print "Still couldn't find ", nickname
