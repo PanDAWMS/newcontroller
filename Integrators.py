@@ -237,7 +237,7 @@ def toaIntegrator(confd):
 	print 'Finished ToA integrator'
 	return
 
-def bdiiIntegrator(confd,rellist,d,linfotool=None):
+def bdiiIntegrator(confd,d,linfotool=None):
 	'''Adds BDII values to the configurations, overriding what was there. Must be run after downloading the DB
 	and parsing the config files.'''
 	print 'Running BDII Integrator'
@@ -261,8 +261,7 @@ def bdiiIntegrator(confd,rellist,d,linfotool=None):
 		c,s = findQueue(nickname,confd)
 		if not c and not s:
 			# If it's not there, try the dictionary from the DB dictionary
-			if bdiiDebug: print "Couldn't find ", nickname
-			c,s = findQueue(nickname,d)
+			if bdiiDebug: print "Couldn't find ", nickname			c,s = findQueue(nickname,d)
 			# If the queue is not in the DB, and is not inactive in the config files, then:
 			if not c and not s:
 				if bdiiDebug: print "Still couldn't find ", nickname
@@ -321,13 +320,11 @@ def bdiiIntegrator(confd,rellist,d,linfotool=None):
 			confd[c][s][nickname][source][key] = 'BDII'
 		# For the more complicated BDII derivatives, do some more complex work
 		confd[c][s][nickname][param]['queue'] = bdict[qn]['gatekeeper'] + '/'+ bdict[qn]['mgrprefix'] + '-' + bdict[qn]['jobmanager']
-		#confd[c][s][nickname][param]['queue'] = bdict[qn]['gatekeeper'] + '/jobmanager-' + bdict[qn]['jobmanager']
 		if not confd[c][s][nickname][param].has_key('jdl'): confd[c][s][nickname][param]['jdl'] = None
 		if bdict[qn]['gatekeeper'] + '/jobmanager-' + bdict[qn]['jobmanager'] != confd[c][s][nickname][param]['jdl']:
 			if bdiiDebug:
 				print 'jdl mismatch!\n', bdict[qn], key, confd[c][s][nickname][param]['jdl'], 
 		confd[c][s][nickname][param]['jdl'] = bdict[qn]['gatekeeper'] + '/'+ bdict[qn]['mgrprefix'] + '-' + bdict[qn]['jobmanager']
-		#confd[c][s][nickname][param]['jdl'] = bdict[qn]['gatekeeper'] + '/jobmanager-' + bdict[qn]['jobmanager']
 		confd[c][s][nickname][param]['nickname'] = nickname
 		# Fill in sourcing here as well for the last few fields
 		for key in ['queue','jdl','nickname']:
