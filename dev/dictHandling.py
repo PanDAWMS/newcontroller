@@ -224,6 +224,14 @@ def collapseDict(d):
 				# This is a symbolic link, not a duplication:
 				p = d[cloud][site][queue][param]
 				# So copy out the values into a new dictionary (except excluded ones)
+				# If the value already exists, you are clobbering something -- it needs
+				# to be reported
+				if out_d.has_key(queue):
+					print 'QUEUE NAME REDUNDANCY:'
+					print p
+					print 'Replacing'
+					print out_d[queue]
+
 				out_d[queue] = dict([(key,p[key]) for key in p if key not in excl])
 				# Make sure all the standard keys are present, even if not filled
 				for key in standardkeys:
