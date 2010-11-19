@@ -122,6 +122,7 @@ def loadConfigs():
 		# Since all inputs are unicode converted, all outputs need to be encoded.
 		unicodeEncode(up_l)
 		print up_l[0]
+		print up_d['JINR-LCG2-lcgce12-atlas-pbs']
 		utils.replaceDB('schedconfig',up_l,key=dbkey)
 
 		# Jdllist table gets updated all at once
