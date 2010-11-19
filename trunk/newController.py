@@ -53,8 +53,6 @@ def loadConfigs():
 	'''Run the schedconfig table updates'''
 	# Load the database as it stands as a primary reference
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
-	print dbd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['siteid']
-	print dbd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['copysetup']
 	# If the DB is overriding the config files, we need to recreate them now.
 	if dbOverride:
 		# Get the config dictionary directly from the DB, and process the config file update from it.
@@ -72,32 +70,24 @@ def loadConfigs():
 	
 	# Load the present config files, based on the SVN update
 	configd = buildDict()
-	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['siteid']
-	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['copysetup']
+	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
 	
 	# Add the BDII information, and build a list of releases
 	if not bdiiOverride:
 		linfotool = lcgInfositeTool.lcgInfositeTool()
-		bdiiIntegrator(configd,dbd,linfotool)
-	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['siteid']
-	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['copysetup']
-		
+	
 	# Now add ToA information
 	if not toaOverride: toaIntegrator(configd)
 	
 	# Compose the "All" queues for each site
 	status = allMaker(configd, initial = False)
-	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['siteid']
-	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['copysetup']
 
 	# Compare the DB to the present built configuration to find the queues that are changed.
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd), dbOverride)
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc, dbOverride)
 	deletes = [del_d[i][dbkey] for i in del_d]
-	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['siteid']
-	print configd['NL']['JINR-LCG2']['JINR-LCG2-lcgce12-atlas-pbs']['Parameters']['copysetup']
 
 	# Delete queues that are not Enabled
 	del_d.update(disabledQueues(configd))
@@ -143,6 +133,7 @@ def loadConfigs():
 		# Changes committed after all is successful, to avoid partial updates
 		utils.commit()
 		utils.endDB()
+		# FIX This string will eventually be filled with changed queue names and other info for the subversion checkin
 		svnstring=''
 	# If the safety is on:
 	else:
