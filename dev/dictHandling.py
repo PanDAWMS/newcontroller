@@ -189,7 +189,7 @@ def buildDict():
 		for site in sites:
 			# As does the queue list.
 			# Loop throught the queues in the present site folders
-			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.') and i is not '%s.py' % All]
+			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.') and All not in i]
 			for q in queues:
 				# Remove the '.py' 
 				queue=q[:-len(postfix)]
