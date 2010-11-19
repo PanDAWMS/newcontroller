@@ -162,6 +162,7 @@ def buildDict():
 				queue=q[:-len(postfix)]
 				# Add each queue to the site
 				confd[cloud][site][queue] = {}
+				if configReadDebug: print "Loaded %s %s %s" % (cloud,site,queue)
 				# Run the file to extract the appropriate dictionaries
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
 				fname = configs + os.sep + cloud + os.sep + site + os.sep + q
@@ -177,6 +178,7 @@ def buildDict():
 					if queue != All: confd[cloud][site][queue][enab] = locvars[enab]
 					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
 				except KeyError:
+					print cloud, site, queue, param, key
 					pass
 
 	# Now that we've seen all possible keys in stdkeys, make sure all queues have them:
@@ -187,7 +189,7 @@ def buildDict():
 		for site in sites:
 			# As does the queue list.
 			# Loop throught the queues in the present site folders
-			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.')]
+			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.') and All not in i]
 			for q in queues:
 				# Remove the '.py' 
 				queue=q[:-len(postfix)]
@@ -222,11 +224,22 @@ def collapseDict(d):
 				# This is a symbolic link, not a duplication:
 				p = d[cloud][site][queue][param]
 				# So copy out the values into a new dictionary (except excluded ones)
+				# If the value already exists, you are clobbering something -- it needs
+				# to be reported
+				if out_d.has_key(queue):
+					print 'QUEUE NAME REDUNDANCY:'
+					print p
+					print 'Replacing'
+					print out_d[queue]
 				out_d[queue] = dict([(key,p[key]) for key in p if key not in excl])
 				# Make sure all the standard keys are present, even if not filled
 				for key in standardkeys:
 					if key not in p.keys(): out_d[queue][key] = None
-					out_d[queue][key] = d[cloud][site][queue][over][key]
+					# If there's a missing standard key in the overrides, let it on by
+					try:
+						out_d[queue][key] = d[cloud][site][queue][over][key]
+					except KeyError:
+						pass
 			# Now process the All entry for the site, if it exists
 			if d[cloud][site].has_key(All):
 				for queue in d[cloud][site]:
@@ -256,7 +269,6 @@ def collapseDict(d):
 						for key in [i for i in alloverrides if i not in excl]: out_d[queue][key] = alloverrides[key]
 					except KeyError:
 						pass
-
 	# Return the flattened dictionary
 	for queue in out_d:
 		# Sanitization.
@@ -273,7 +285,6 @@ def collapseDict(d):
 						out_d[queue][key] = float(out_d[queue][key])
 					except ValueError:
 						pass
-		
 	return out_d
 
 def disabledQueues(d, key = param):
