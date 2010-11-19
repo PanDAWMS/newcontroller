@@ -177,6 +177,7 @@ def buildDict():
 					if queue != All: confd[cloud][site][queue][enab] = locvars[enab]
 					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
 				except KeyError:
+					print cloud site queue param key
 					pass
 
 	# Now that we've seen all possible keys in stdkeys, make sure all queues have them:
