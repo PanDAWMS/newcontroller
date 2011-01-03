@@ -9,13 +9,7 @@
 
 # TODO:
 
-
-# Add installedSW table support
-# Add a consistency checker
 # Add manual pickle restoration code
-# Add change detection to avoid DB change collisions
-# Add queue insertion scripts
-# Add checking of queue "on" and "off"
 
 # This code has been organized for easy transition into a class structure.
 
