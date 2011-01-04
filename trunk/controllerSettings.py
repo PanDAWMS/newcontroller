@@ -50,6 +50,9 @@ cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf' + os.sep
 backupPath = cfg_path + 'Backup' + os.sep
 backupName = 'schedConfigBackup.pickle'
 
+# Paths for run logs (email notification)
+logPath = '/tmp/runProd.log'
+
 # Config file path specifications
 configs = cfg_path + os.sep + 'SchedConfigs'
 jdlconfigs = cfg_path + os.sep + 'JDLConfigs'
