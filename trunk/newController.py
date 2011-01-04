@@ -26,6 +26,7 @@ from svnHandling import *
 from backupHandling import *
 from swHandling import *
 
+
 try:
 	import lcgInfositeTool2 as lcgInfositeTool
 except:
@@ -155,27 +156,29 @@ def loadConfigs():
 	
 
 if __name__ == "__main__":
-	args = sys.argv[1:]
-	# A better argument parser will be needed in the future
-	if '--dbOverride' in args:
-		print 'The DB will override existing config file settings.'
-		dbOverride = True
-	if '--bdiiOverride' in args:
-		print 'BDII updating disabled.'
-		bdiiOverride = True
-	if '--toaOverride' in args:
-		print 'ToA updating disabled.'
-		toaOverride = True
-	if '--safety' in args:
-		print 'Safety is ON! No writes to the DB.'
-		safety = 'on'
-	if '--debug' in args: genDebug = True
-	keydict={}
+	try:
+		args = sys.argv[1:]
+		# A better argument parser will be needed in the future
+		if '--dbOverride' in args:
+			print 'The DB will override existing config file settings.'
+			dbOverride = True
+		if '--bdiiOverride' in args:
+			print 'BDII updating disabled.'
+			bdiiOverride = True
+		if '--toaOverride' in args:
+			print 'ToA updating disabled.'
+			toaOverride = True
+		if '--safety' in args:
+			print 'Safety is ON! No writes to the DB.'
+			safety = 'on'
+		if '--debug' in args: genDebug = True
+		keydict={}
 
-	# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
-	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+		# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
+		dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 
-	if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel = loadConfigs()
-	else: loadConfigs()
-
+		if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel = loadConfigs()
+		else: loadConfigs()
+	except:
+		emailError(sys.exc_value)
 	#os.chdir(base_path)
