@@ -53,6 +53,11 @@ backupName = 'schedConfigBackup.pickle'
 # Paths for run logs (email notification)
 logPath = '/tmp/runProd.log'
 
+# Default email address for failure notifications
+
+errorEmail = 'schedconfig@gmail.com'
+sourceEmail = 'atlpan@mail.cern.ch'
+
 # Config file path specifications
 configs = cfg_path + os.sep + 'SchedConfigs'
 jdlconfigs = cfg_path + os.sep + 'JDLConfigs'
