@@ -5,13 +5,41 @@
 # Alden.Stradling@cern.ch                                                                #
 ##########################################################################################
 
-import pickle, os
+import pickle, os, smtplib
 
 from controllerSettings import *
+from email.mime.text import MIMEText
 
 #----------------------------------------------------------------------#
 # Utilities
 #----------------------------------------------------------------------#
+
+def emailError(errorstring):
+	'''Emails error messages to the appropriate address'''
+	# Not using email.smtp.text and smtplib because of a python2.5 error. Please feel free to use the example code below for a working python version
+	f = file(logPath)
+	logStr = f.read()
+	f.close()
+	f = file('msgtemp','w')
+	f.write('The schedconfig update code threw the following error: %s\n\n and update probably did not occur. Please check the error, or refer to the attached log file for further diagnostic help.\n\nThanks,\n\nSchedConfig\n\n%s' % (errorstring, logStr))
+	f.close()
+	os.system('cat msgtemp|mail -s "** Urgent -- Schedconfig Update Error **" %s' % errorEmail)
+
+## 	f=file(logPath)
+## 	logStr = f.read()
+## 	f.close()
+## 	logStr ='The schedconfig update code threw the following error: %s\n\n and update probably did not occur. Please check the error, or refer to the attached log file for further diagnostic help.\n\nThanks,\n\nSchedConfig\n\n%s' % (errorstring, logStr))
+## 	msg = MIMEText(logStr)
+## 	msg['Subject'] = '** Urgent -- Schedconfig Update Error **'
+## 	msg['From'] = sourceEmail
+## 	msg['To'] = errorEmail
+## 	s = smtplib.SMTP()
+## 	s.sendmail(sourceEmail, [errorEmail], msg.as_string())
+## 	s.quit()
+	return 0
+
+
+	
 
 def unPickler(fname):
 	os.chdir(base_path)
