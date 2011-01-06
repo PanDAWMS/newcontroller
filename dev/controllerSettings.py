@@ -11,7 +11,7 @@ import os
 unidef='utf-8'
 
 # Debug Flags
-genDebug = True
+genDebug = False
 toaDebug = False
 jdlDebug = False
 svnDebug = False
@@ -28,7 +28,7 @@ configWriteDebug = False
 confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf' 
 
 # If safety is on, nothing is written to the DB.
-safety = 'on'
+safety = 'off'
 
 # Widely used strings
 All = 'All' # Standard name for All files
@@ -50,6 +50,14 @@ cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf' + os.sep
 backupPath = cfg_path + 'Backup' + os.sep
 backupName = 'schedConfigBackup.pickle'
 
+# Paths for run logs (email notification)
+logPath = '/tmp/runProd.log'
+
+# Default email address for failure notifications
+
+errorEmail = 'schedconfig@gmail.com'
+sourceEmail = 'atlpan@mail.cern.ch'
+
 # Config file path specifications
 configs = cfg_path + os.sep + 'SchedConfigs'
 jdlconfigs = cfg_path + os.sep + 'JDLConfigs'
@@ -63,7 +71,7 @@ shared, unshared = 'shared','unshared'
 nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0'}
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
-excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','last_status']
+excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','nqueues','last_status'] # nqueues takes care of a typo
 
 # Standard mappings for legacy software tags in the BDII:
 

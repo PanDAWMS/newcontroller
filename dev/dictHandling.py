@@ -211,6 +211,9 @@ def collapseDict(d):
 	out_d = {}
 	# Rip through the clouds
 	for cloud in d:
+		# Exclude the queues in the NULL cloud, to prevent accidental collisions.
+		if cloud == 'Deactivated':
+			continue
 		# And for each site
 		for site in d[cloud]:
 			# And for each queue
