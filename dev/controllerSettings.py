@@ -77,6 +77,10 @@ excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','nqueues','
 
 tagsTranslation = {'production':'AtlasProduction','tier0':'AtlasTier0','topphys':'TopPhys','wzbenchmarks':'WZBenchmarks'}
 
+# Lesser tables and their primary keys:
+
+tableKeys = {'cloudconfig':'name','groups':'id','submithosts':'nickname','siteaccess':'id','jobclass':'id','pilottype':'name'}
+
 # Clouds that don't auto-populate from BDII
 
 noAutoClouds = ['NDGF','OSG','US']
