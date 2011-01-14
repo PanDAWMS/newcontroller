@@ -81,15 +81,13 @@ def allMaker(d,initial=True):
 				
 	return 0
 
-def composeFields(d,s,dname,allFlag=0):
+def composeFields(d,s,dname,primary_key=dbkey,allFlag=0):
 	''' Populate a list for file writing that prints parameter dictionaries cleanly,
 	allowing them to be written to human-modifiable config files for queues and sites.'''
 
 	# "dname" is one of three things -- "Parameters" and "Override", depending on what part of the  
 	# file we're writing. They're defined generally as param and over. A third, JDL, applies only to jdllist imports
 	# and replaces param
-	if dname == jdl: primary_key = 'name'
-	else: primary_key = dbkey
 	keylist = d[dname].keys()
 	try:
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
