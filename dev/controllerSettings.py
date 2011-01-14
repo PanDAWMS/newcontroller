@@ -61,6 +61,7 @@ sourceEmail = 'atlpan@mail.cern.ch'
 # Config file path specifications
 configs = cfg_path + os.sep + 'SchedConfigs'
 jdlconfigs = cfg_path + os.sep + 'JDLConfigs'
+lessertableconfigs = cfg_path + os.sep + 'LesserConfigs' + os.sep
 postfix = '.py'
 
 # jdlkey is the jdllist table primary key, and dbkey is the schedconfig table primary key.
@@ -79,7 +80,8 @@ tagsTranslation = {'production':'AtlasProduction','tier0':'AtlasTier0','topphys'
 
 # Lesser tables and their primary keys:
 
-tableKeys = {'cloudconfig':'name','groups':'id','submithosts':'nickname','siteaccess':'id','jobclass':'id','pilottype':'name'}
+#tableKeys = {'cloudconfig':'name','groups':'id','submithosts':'nickname','siteaccess':'id','jobclass':'id','pilottype':'name'}
+tableKeys = {'groups':'id','submithosts':'nickname','jobclass':'id','pilottype':'name'}
 
 # Clouds that don't auto-populate from BDII
 
