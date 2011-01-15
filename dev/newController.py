@@ -36,7 +36,7 @@ except:
 def loadLesserTables():
 	''' Load the smaller and less changed tables'''
 	tableDict={}
-	for table in tableKeys():
+	for table in tableKeys:
 		tableDict[table] = loadLesserTables(table,tableKeys[table])
 	return tableDict
 		
