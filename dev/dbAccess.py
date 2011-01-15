@@ -57,7 +57,7 @@ def loadInstalledSW():
 	return dict([('%s_%s_%s' % (i['siteid'],i['release'],i['cache']),i) for i in rows])
 
 def loadTable(tablename,primary_key):
-	'''Load the values from the table into a dictionary, then reurned'''
+	'''Load the values from the table into a dictionary, then return the dictionary'''
 	if safety is 'on': utils.setTestDB()
 	utils.initDB()
 	print "Init DB"
