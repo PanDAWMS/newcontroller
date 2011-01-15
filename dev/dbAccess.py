@@ -56,13 +56,13 @@ def loadInstalledSW():
 	unicodeConvert(rows)
 	return dict([('%s_%s_%s' % (i['siteid'],i['release'],i['cache']),i) for i in rows])
 
-def loadTable(tablename,primary_key):
+def loadTable(table_name,primary_key):
 	'''Load the values from the table into a dictionary, then return the dictionary'''
 	if safety is 'on': utils.setTestDB()
 	utils.initDB()
 	print "Init DB"
 	# Gets all rows from table
-	query = 'SELECT * from %s' % dbname
+	query = 'SELECT * from %s' % table_name
 	nrows = utils.dictcursor().execute(query)
 	if nrows > 0:
 		# Fetch all the rows
