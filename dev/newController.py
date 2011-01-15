@@ -33,7 +33,7 @@ except:
 	print "Cannot import lcgInfositeTool, will exit"
 	sys.exit(-1)
 
-def loadLesserTables():
+def loadTables():
 	''' Load the smaller and less changed tables'''
 	tableDict={}
 	for table in tableKeys:
