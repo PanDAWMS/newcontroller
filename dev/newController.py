@@ -33,6 +33,13 @@ except:
 	print "Cannot import lcgInfositeTool, will exit"
 	sys.exit(-1)
 
+def loadLesserTables():
+	''' Load the smaller and less changed tables'''
+	tableDict={}
+	for table in tableKeys():
+		tableDict[table] = loadLesserTables(table,tableKeys[table])
+	return tableDict
+		
 def loadJdl():
 	'''Runs the jdllist table updates'''
 	
@@ -68,6 +75,9 @@ def loadConfigs():
 	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
+
+	# Load the lesser tables (like cloudconfig, groups, submithosts, siteaccess, jobclass, pilotid)
+	tableDict = loadLesserTables()
 	
 	# Add the BDII information, and build a list of releases
 	if not bdiiOverride:
