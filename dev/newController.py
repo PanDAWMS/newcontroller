@@ -33,11 +33,11 @@ except:
 	print "Cannot import lcgInfositeTool, will exit"
 	sys.exit(-1)
 
-def loadTables():
+def loadLesserTables():
 	''' Load the smaller and less changed tables'''
 	tableDict={}
 	for table in tableKeys:
-		tableDict[table] = loadLesserTables(table,tableKeys[table])
+		tableDict[table] = loadTable(table,tableKeys[table])
 	return tableDict
 		
 def loadJdl():
