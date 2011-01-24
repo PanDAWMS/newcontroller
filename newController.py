@@ -102,7 +102,7 @@ def loadConfigs():
 	del_l = buildDeleteList(del_d,'schedconfig')
 	if delDebug:
 		print '******* Disables final list'
-		print del_l.keys()
+		print [i[dbkey] for i in del_l]
 		print len(del_l)
 		print
 
