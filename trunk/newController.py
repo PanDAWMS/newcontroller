@@ -92,7 +92,8 @@ def loadConfigs():
 	# Delete queues that are not Enabled
 	if delDebug:
 		print '******* Disabled queues list'
-		print disabledQueues(configd)
+		print disabledQueues(configd).keys()
+		print len(disabledQueues(configd).keys())
 		print
 	del_d.update(disabledQueues(configd))
 
@@ -101,7 +102,8 @@ def loadConfigs():
 	del_l = buildDeleteList(del_d,'schedconfig')
 	if delDebug:
 		print '******* Disables final list'
-		print del_l
+		print del_l.keys()
+		print len(del_l)
 		print
 
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
