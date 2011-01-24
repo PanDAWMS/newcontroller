@@ -17,6 +17,7 @@ jdlDebug = False
 svnDebug = False
 bdiiDebug = False
 pickleDebug = False
+delDebug = True
 dbReadDebug = False
 dbWriteDebug = False
 configReadDebug = False
