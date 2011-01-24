@@ -81,15 +81,28 @@ def loadConfigs():
 
 	# Compare the DB to the present built configuration to find the queues that are changed.
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd), dbOverride)
+	if delDebug:
+		print '******* Compare step'
+		print del_d, len(del_d)
+		print
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc, dbOverride)
 	deletes = [del_d[i][dbkey] for i in del_d]
-
+	if delDebug: print deletes
+	
 	# Delete queues that are not Enabled
+	if delDebug:
+		print '******* Disabled queues list'
+		print disabledQueues(configd)
+		print
 	del_d.update(disabledQueues(configd))
 
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
 	del_l = buildDeleteList(del_d,'schedconfig')
+	if delDebug:
+		print '******* Disables final list'
+		print del_l
+		print
 
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
 	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.
@@ -103,13 +116,16 @@ def loadConfigs():
 		utils.initDB()
 		unicodeEncode(del_l)
 		# Individual SQL statements to delete queues that need deleted
-		for i in del_l:
-			try:
-				status = utils.dictcursor().execute(i)
-			except:
-				print 'Failed SQL Statement: ', i
-				print status
-				print sys.exc_info()
+		if not delDebug:
+			for i in del_l:
+				try:
+					status = utils.dictcursor().execute(i)
+				except:
+					print 'Failed SQL Statement: ', i
+					print status
+					print sys.exc_info()
+		else:
+			print "********** Delete step has been DISABLED!"
 
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
