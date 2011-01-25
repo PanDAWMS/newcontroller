@@ -315,7 +315,7 @@ def bdiiIntegrator(confd,d,linfotool=None):
 		if not confd[c][s][nickname][param]['jdladd']: confd[c][s][nickname][param]['jdladd'] = bdict[qn]['jdladd']
 		if not confd[c][s][nickname][param]['jdladd'].find('Queue') > 0: confd[c][s][nickname][param]['jdladd'] += '\n\nQueue\n'
 		# For all the simple translations, copy them in directly.
-		for key in ['localqueue','system','status','gatekeeper','jobmanager','site','region','gstat']:
+		for key in ['localqueue','system','gatekeeper','jobmanager','site','region','gstat']:
 			confd[c][s][nickname][param][key] = bdict[qn][key]
 			# Complete the sourcing info
 			confd[c][s][nickname][source][key] = 'BDII'
