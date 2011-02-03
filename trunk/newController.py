@@ -89,18 +89,17 @@ def loadConfigs():
 	deletes = [del_d[i][dbkey] for i in del_d]
 	if delDebug: print deletes
 	
-	# Delete queues that are not Enabled
+	# Delete queues that are not Enabled and are in the DB
 	if delDebug:
 		print '******* Disabled queues list'
-		print disabledQueues(configd).keys()
-		print len(disabledQueues(configd).keys())
+		#print disabledQueues(dbd,configd).keys()
+		print len(disabledQueues(dbd,configd).keys())
 		print
-	del_d.update(disabledQueues(configd))
+	del_d.update(disabledQueues(dbd,configd))
 
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
 	del_l = buildDeleteList(del_d,'schedconfig')
-	print len(del_l)
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
 	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.
 	# The primary key is specified for the replaceDB method. For schedconfig, it's dbkey, and for the jdls it's jdlkey
