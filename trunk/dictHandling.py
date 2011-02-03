@@ -290,8 +290,9 @@ def collapseDict(d):
 						pass
 	return out_d
 
-def disabledQueues(d, key = param):
-	''' Creates a list of dictionaries to be deleted because their Enabled state is False. Defaults to returning the params dict in the list. ''' 
+def disabledQueues(d,dbd, key = param):
+	''' Creates a list of dictionaries to be deleted because their Enabled state is False. Defaults to returning the params dict in the list.
+	Check the db dictionary to see if the queue needs to be deleted.''' 
 	del_d = {}
 	# Run through the clouds, sites and queues
 	for cloud in d:
@@ -299,9 +300,9 @@ def disabledQueues(d, key = param):
 			for queue in d[cloud][site]:
 				# If the queue has the Enabled flag (excluding All files):
 				if enab in d[cloud][site][queue]:
-					# If the flag is Enabled = False:
-					if not d[cloud][site][queue][enab]:
+					# If the flag is Enabled = False and the queue is in the DB:
+					if not d[cloud][site][queue][enab] and dbd[cloud][site].has_key(queue):
 						# Append that dictionary to the list
-						del_d[queue] = d[cloud][site][queue][key]
+						del_d[queue] = d[cloud][site][queue][key]						
 	# And return the completed list to the main routine
 	return del_d
