@@ -83,11 +83,11 @@ def loadConfigs():
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd), dbOverride)
 	if delDebug:
 		print '******* Compare step'
-		print del_d, len(del_d)
+		print len(del_d)
 		print
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc, dbOverride)
 	deletes = [del_d[i][dbkey] for i in del_d]
-	if delDebug: print deletes
+	if delDebug: print len(deletes)
 	
 	# Delete queues that are not Enabled and are in the DB
 	if delDebug:
