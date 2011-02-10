@@ -92,7 +92,7 @@ def svnLock():
 	# Remember that this file has to be valid python to pass the other precommit filter
 	status = os.system('cp .locked.py .lock.py')
 	# If that went well, commit the change:
-	if not status and commands.getoutput('grep Locked .lock.py')::
+	if not status and commands.getoutput('grep Locked .lock.py'):
 		status = os.system('svn ci .lock.py -m "Locked"')
 		# If all is still OK, return clean finish
 		if not status:
@@ -115,7 +115,7 @@ def svnUnlock():
 	# Remember that this file has to be valid python to pass the other precommit filter
 	status = os.system('cp .unlocked.py .lock.py')
 	# If that went well, commit the change:
-	if not status and commands.getoutput('grep Unlocked .lock.py')::
+	if not status and commands.getoutput('grep Unlocked .lock.py'):
 		status = os.system('svn ci .lock.py -m "Unlocked"')
 		# If all is still OK, return clean finish
 		if not status:
