@@ -37,7 +37,8 @@ def updateInstalledSW(confd,lcgdict):
 	for queue in confd:
 		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 
 		if confd[queue].has_key('siteid') and confd[queue]['siteid']:
-			cloud[queue] = confd[queue]['cloud']
+			# Collect the cloud information. The primary cloud is the one we choose, and it's comma-delimited.
+			cloud[queue] = confd[queue]['cloud'].split(',')[0]
 			siteid[queue] = confd[queue]['siteid']
 			# If it's not an analysis queue and has a siteid, use gatekeeper as the BDII key
 			if confd[queue]['gatekeeper'] != virtualQueueGatekeeper:
@@ -65,15 +66,15 @@ def updateInstalledSW(confd,lcgdict):
 				# ASSUMPTION -- that base releases will always contain two periods as separators
 				release=baseReleaseSep.join(cache.split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
 				# The unique name for this entry as a tuple
-				index = '%s_%s_%s' % (siteid[queue],release,cache)
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache}
+				index = '%s_%s_%s_%s' % (siteid[queue],confd[queue]['cloud'],release,cache)
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':confd[queue]['cloud'],'release':release,'cache':cache}
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
 				cache = 'None'
 				# The unique name for this entry as a tuple
-				index = '%s_%s_%s' % (siteid[queue],release,cache)
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':None}
+				index = '%s_%s_%s_%s' % (siteid[queue],confd[queue]['cloud'],release,cache)
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':confd[queue]['cloud'],'release':release,'cache':None}
 	
 	unicodeEncode(sw_bdii)
 	unicodeEncode(sw_db)
