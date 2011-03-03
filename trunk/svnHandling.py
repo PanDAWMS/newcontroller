@@ -54,9 +54,7 @@ def svnCheckin(notestr = ''):
 	# Go back to original path
 	os.chdir(path)
 	if svnDebug: print 'Completing SVN checkin'
-		return 0
-	else:
-		return 1
+	return 0
 
 def svnUpdate():
 	''' Update from the SVN repo -- introduce changes from user configs. '''
