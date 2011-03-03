@@ -49,12 +49,11 @@ def svnCheckin(notestr = ''):
 	o=commands.getoutput('svn add %s/*/*/*' % p)
 	if svnDebug: print o
 	
-	if svnUnlock():
-		# Check in the subversion
-		os.system('svn ci -m "%s"' % (message))
-		# Go back to original path
-		os.chdir(path)
-		if svnDebug: print 'Completing SVN checkin'
+	# Check in the subversion
+	os.system('svn ci -m "%s"' % (message))
+	# Go back to original path
+	os.chdir(path)
+	if svnDebug: print 'Completing SVN checkin'
 		return 0
 	else:
 		return 1
@@ -75,67 +74,69 @@ def svnUpdate():
 		#svnCheckout()
 	# Update the whole subversion
 	os.system('svn up')
-	if svnLock():
 
-		# Back to where you were.
-		os.chdir(path)
-		if svnDebug: print 'Completing SVN update'
+	# Back to where you were.
+	os.chdir(path)
+	if svnDebug: 
+		print 'Completing SVN update'
 		return 0
 	else:
 		os.chdir(path)
 		return 1
 
-def svnLock(update=False):
-	'''Shuts a lock file to the SVN for detection by the precommit script'''
+# Did it with shell script checking of time of day. Really much simpler. So this all is obsolete and nonfunctional. In for purely historical/pack-rat reasons
 
-	# Go to the config files path
-	oldpath=os.getcwd()
-	os.chdir(cfg_path)
-	# Update the SVN before doing anything else, if required
-	if update: os.system('svn update')
-	# And check to be sure the lock file is not already locked
-	if commands.getoutput('grep Locked .lock.py'):
-		print 'Already locked'
-		os.chdir(oldpath)
-		return 1
-	# If all is well, copy the "Locked" version in as the lock.
-	# Echo wasn't working so well -- this was simple and efficient.
-	# Remember that this file has to be valid python to pass the other precommit filter
-	status = os.system('cp .locked.py .lock.py')
-	# If that went well, commit the change:
-	if not status and commands.getoutput('grep Locked .lock.py'):
-		status = os.system('svn ci .lock.py -m "Locked"')
-		# If all is still OK, return clean finish
-		if not status:
-			os.chdir(oldpath)
-			return 0
-	os.chdir(oldpath)
-	return 1
-
-def svnUnlock(commit=False):
-	'''Opens the lock file to the SVN for detection by the precommit script'''
-
-	# Go to the config files path
-	oldpath=os.getcwd()
-	os.chdir(cfg_path)
-	# Update the SVN before doing anything else
-	os.system('svn update')
-	# And check to be sure the lock file is not already locked
-	if commands.getoutput('grep Unlocked .lock.py'):
-		print 'Already unlocked'
-		os.chdir(oldpath)
-		return 1
-	# If all is well, copy the "Unlocked" version in as the lock.
-	# Echo wasn't working so well -- this was simple and efficient.
-	# Remember that this file has to be valid python to pass the other precommit filter
-	status = os.system('cp .unlocked.py .lock.py')
-	# If that went well, commit the change:
-	if not status and commands.getoutput('grep Unlocked .lock.py'):
-		# Reducing the commit time
-		if commit: status = os.system('svn ci .lock.py -m "Unlocked"')
-		# If all is still OK, return clean finish
-		if not status:
-			os.chdir(oldpath)
-			return 0
-	os.chdir(oldpath)
-	return 1
+#def svnLock(update=False):
+#	'''Shuts a lock file to the SVN for detection by the precommit script'''
+#
+#	# Go to the config files path
+#	oldpath=os.getcwd()
+#	os.chdir(cfg_path)
+#	# Update the SVN before doing anything else, if required
+#	if update: os.system('svn update')
+#	# And check to be sure the lock file is not already locked
+#	if commands.getoutput('grep Locked .lock.py'):
+#		print 'Already locked'
+#		os.chdir(oldpath)
+#		return 1
+#	# If all is well, copy the "Locked" version in as the lock.
+#	# Echo wasn't working so well -- this was simple and efficient.
+#	# Remember that this file has to be valid python to pass the other precommit filter
+#	status = os.system('cp .locked.py .lock.py')
+#	# If that went well, commit the change:
+#	if not status and commands.getoutput('grep Locked .lock.py'):
+#		status = os.system('svn ci .lock.py -m "Locked"')
+#		# If all is still OK, return clean finish
+#		if not status:
+#			os.chdir(oldpath)
+#			return 0
+#	os.chdir(oldpath)
+#	return 1
+#
+#def svnUnlock(commit=False):
+#	'''Opens the lock file to the SVN for detection by the precommit script'''
+#
+#	# Go to the config files path
+#	oldpath=os.getcwd()
+#	os.chdir(cfg_path)
+#	# Update the SVN before doing anything else
+#	os.system('svn update')
+#	# And check to be sure the lock file is not already locked
+#	if commands.getoutput('grep Unlocked .lock.py'):
+#		print 'Already unlocked'
+#		os.chdir(oldpath)
+#		return 1
+#	# If all is well, copy the "Unlocked" version in as the lock.
+#	# Echo wasn't working so well -- this was simple and efficient.
+#	# Remember that this file has to be valid python to pass the other precommit filter
+#	status = os.system('cp .unlocked.py .lock.py')
+#	# If that went well, commit the change:
+#	if not status and commands.getoutput('grep Unlocked .lock.py'):
+#		# Reducing the commit time
+#		if commit: status = os.system('svn ci .lock.py -m "Unlocked"')
+#		# If all is still OK, return clean finish
+#		if not status:
+#			os.chdir(oldpath)
+#			return 0
+#	os.chdir(oldpath)
+#	return 1
