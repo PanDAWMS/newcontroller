@@ -33,7 +33,7 @@ def buildDict():
 		#status = allMaker(configd)
 		makeConfigs(sqlDictUnpacker(loadSchedConfig())[0])
 		clouds = os.listdir(configs)
-	if clouds.count('.svn') > 0: clouds.remove('.svn')
+	if clouds.count(svn) > 0: clouds.remove(svn)
 		
 	for cloud in clouds:
 		# Add each cloud to the dictionary

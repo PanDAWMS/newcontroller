@@ -40,6 +40,7 @@ over = 'Override' # Name for the override dictionary in a queue spec
 jdl = 'JDL' # The parameters dictionary for a JDL specification (no need for override)
 source = 'Source' # The name for a sources dictionary (names the provenance of a setting in the parameters dictionary for a queue
 enab = 'Enabled' # Specifies that a queue has been enabled or disabled -- a variable set to true or false.
+svn = '.svn' # Allows for filtering of SVN directories
 
 # Sets the present path as the primary -- allows portability, but the script has to be run from its home directory.
 base_path = os.getcwd()
