@@ -13,6 +13,97 @@ from controllerSettings import *
 #----------------------------------------------------------------------#
 # Config File Handling
 #----------------------------------------------------------------------
+def buildDict():
+	'''Build a copy of the queue dictionary from the configuration files '''
+
+	confd={}
+	stdkeys={}
+	# In executing files for variables, one has to put the variables in a contained, local context.
+	locvars={}
+	base = os.getcwd()
+	# Loop throught the clouds in the base folder
+	try:
+		clouds = os.listdir(configs)
+	except OSError:
+		# If the configs folder is missing and this is the first thing run,
+		# Reload this from the DB.
+		# When SVN is in place, this should be replaced by a svn checkout.
+		# We choose element 0 to get the first result. This hack will go away.
+		#configd = buildDict()
+		#status = allMaker(configd)
+		makeConfigs(sqlDictUnpacker(loadSchedConfig())[0])
+		clouds = os.listdir(configs)
+	if clouds.count('.svn') > 0: clouds.remove('.svn')
+		
+	for cloud in clouds:
+		# Add each cloud to the dictionary
+		confd[cloud] = {}
+		# Loop throught the sites in the present cloud folder
+		sites = os.listdir(configs + os.sep + cloud)
+		for site in sites:
+			# If this is the All file, create another entry.
+			if site.endswith(postfix) and not site.startswith('.'):
+				# Get rid of the .py
+				s=site[:-len(postfix)]
+				# Run the file for the dictionaries
+				fname = configs + os.sep + cloud + os.sep + site
+				# The appropriate dictionaries are placed in locvars
+				execfile(fname,{},locvars)
+				confd[cloud][s][param] = locvars[param]
+				confd[cloud][s][over] = locvars[over]
+			# Add each site to the cloud
+ 			confd[cloud][site] = {}
+			# Loop throught the queues in the present site folders
+			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.')]
+			for q in queues:
+				# Remove the '.py' 
+				queue=q[:-len(postfix)]
+				# Add each queue to the site
+				confd[cloud][site][queue] = {}
+				if configReadDebug: print "Loaded %s %s %s" % (cloud,site,queue)
+				# Run the file to extract the appropriate dictionaries
+				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
+				fname = configs + os.sep + cloud + os.sep + site + os.sep + q
+				# The appropriate dictionaries are placed in locvars
+				execfile(fname,{},locvars)
+				# Add any new keys to the stdkeys dictionary (in case new keys are added to the DB)
+				stdkeys.update(dict([(i,0) for i in locvars[param]]))
+				stdkeys.update(dict([(i,0) for i in locvars[over]]))
+				# Feed in the configuration
+				confd[cloud][site][queue][param] = locvars[param]
+				confd[cloud][site][queue][over] = locvars[over] 
+				try:
+					if queue != All: confd[cloud][site][queue][enab] = locvars[enab]
+					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
+				except KeyError:
+					print cloud, site, queue, param, key
+					pass
+
+	# Now that we've seen all possible keys in stdkeys, make sure all queues have them:
+	# No need to reload the cloud list...
+	for cloud in clouds:
+		# But the site list needs to be redone per cloud
+		sites = os.listdir(configs + os.sep + cloud)
+		for site in sites:
+			# As does the queue list.
+			# Loop throught the queues in the present site folders
+			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.') and All not in i]
+			for q in queues:
+				# Remove the '.py' 
+				queue=q[:-len(postfix)]
+				# Add each queue to the site
+				try:
+					for key in (set(stdkeys) - set(excl)) - set(confd[cloud][site][queue][param]):
+						confd[cloud][site][queue][param][key] = None
+					if confd[cloud][site][queue][param]['name'] == None: confd[cloud][site][queue][param]['name'] = 'default'
+				except KeyError:
+					pass
+				
+	# Leaving the All parameters unincorporated
+	os.chdir(base)
+	unicodeConvert(confd)
+	return confd
+
 def allMaker(d,initial=True):
 	'''Extracts commonalities from sites for the All files.
 	Returns 0 for success. Adds "All" queues to sites. Updates the
