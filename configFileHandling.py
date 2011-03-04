@@ -42,7 +42,7 @@ def buildDict():
 		sites = os.listdir(configs + os.sep + cloud)
 		for site in sites:
 			# If this is the All file, create another entry.
-			if site.endswith(postfix) and not site.startswith('.'):
+			if site is All+postfix:
 				# Get rid of the .py
 				s=site[:-len(postfix)]
 				# Run the file for the dictionaries
@@ -54,7 +54,7 @@ def buildDict():
 			# Add each site to the cloud
  			confd[cloud][site] = {}
 			# Loop throught the queues in the present site folders
-			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.')]
+			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and i is not svn]
 			for q in queues:
 				# Remove the '.py' 
 				queue=q[:-len(postfix)]
@@ -87,7 +87,7 @@ def buildDict():
 		for site in sites:
 			# As does the queue list.
 			# Loop throught the queues in the present site folders
-			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and not i.startswith('.') and All not in i]
+			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and i is not svn and All not in i]
 			for q in queues:
 				# Remove the '.py' 
 				queue=q[:-len(postfix)]
