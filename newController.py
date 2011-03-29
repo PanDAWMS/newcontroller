@@ -94,7 +94,7 @@ def loadConfigs():
 		print '******* Disabled queues list'
 		#print disabledQueues(dbd,configd).keys()
 		print len(disabledQueues(dbd,configd).keys())
-		print
+		print disabledQueues(dbd,configd).keys()
 	del_d.update(disabledQueues(dbd,configd))
 
 	# Get the database updates prepared for insertion.
