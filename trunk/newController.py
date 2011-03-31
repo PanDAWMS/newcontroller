@@ -84,6 +84,7 @@ def loadConfigs():
 	if delDebug:
 		print '******* Compare step'
 		print len(del_d)
+		print del_d.keys()
 		print
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc, dbOverride)
 	deletes = [del_d[i][dbkey] for i in del_d]
@@ -94,7 +95,6 @@ def loadConfigs():
 		print '******* Disabled queues list'
 		#print disabledQueues(dbd,configd).keys()
 		print len(disabledQueues(dbd,configd).keys())
-		print disabledQueues(dbd,configd).keys()
 	del_d.update(disabledQueues(dbd,configd))
 
 	# Get the database updates prepared for insertion.
