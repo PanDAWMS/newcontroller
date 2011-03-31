@@ -1,0 +1,97 @@
+##########################################################################################
+# Tools for controlling the content of the jdllist table in the atlas_pandameta database #
+#                                                                                        #
+# Alden Stradling 13 Jan 2011                                                             #
+# Alden.Stradling@cern.ch                                                                #
+##########################################################################################
+
+import os
+
+from dbAccess import utils
+from configFileHandling import *
+from controllerSettings import *
+from svnHandling import *
+
+def buildLesserTableFiles(d,table_name,primary_key):
+	'''Build the lesser table configuration files'''
+	startstr = '''
+# This dictionary contains the parameters for one spec.
+# Changing this will update it in the %s table.
+# If you want to change the value temporarily, preserving the previous
+# value, please copy the new version into the Override
+# dictionary. Override will supersede the Parameters dictionary.
+
+''' % table_name
+	overridestr = '''
+# PLEASE USE FOR TEMPORARY CHANGES TO THE %s SPEC
+# This dictionary will override any value within its scope.
+
+''' % table_name
+	# Put this in the right path -- back out from the code dir, and place it in pandaconf
+	path = lessertableconfigs + table_name
+
+	try:
+		os.makedirs(path)
+	except OSError:
+		pass
+
+	# Go to the directory
+	os.chdir(path)
+	# In contrast to the primary buildFile() (which does one at a time), this is a simpler
+	# set of configs -- no clouds and sites to concern us. We'll do it all in one place, in
+	# one fell swoop.
+	for name in d:
+		# Initiate the file string
+		s=[startstr]
+		# Use the same composeFields machinery as in the buildFiles -- build the main dict
+		composeFields(d[name],s,primary_key)
+		# Prep the override fields
+		s.append(overridestr)
+		# If any overrides have been detected, add them here.
+		composeFields(d[name],s,primary_key,over)
+
+		# Write each file in its turn as part of the for loop. The slashes are replaced with underscores
+		# to keep the filesystem happy -- many of the lesser table names contain slashes. The double is to make
+		# re-replacement easy.
+		f=file(name.replace('/','__') + postfix,'w')
+		f.writelines(s)
+		f.close()
+
+	
+def buildLesserTableDict(table_name):
+	'''Build a copy of the lesser table dictionary from the configuration files '''
+
+	path = lessertableconfigs + table_name
+	lesser_db={}
+	lesser_d={}
+	# In executing files for variables, one has to put the variables in a contained, local context.
+	locvars={}
+	base = os.getcwd()
+	# Loop throught the clouds in the base folder
+	try:
+		lessers = [i for i in os.listdir(path) if i.endswith(postfix) and not i.startswith('.')]
+	except OSError:
+		# If the configs folder is missing and this is the first thing run,
+		# Reload this from the DB.
+		# When SVN is in place, this should be replaced by a svn checkout.
+		# We choose element 0 to get the first result. This hack will go away.
+		#svnCheckout()
+		buildLesserTableFiles(lesser_d,table_name,tableKeys[table_name])
+		lessers = os.listdir(path)
+
+	for j in lessers:
+		# Add each lesser_ to the dictionary and remove the .py
+		name = j.replace('__','/').rstrip(postfix)
+		lesser_d[name] = {}
+		# Run the file to extract the appropriate dictionaries
+		# As a clarification, the lesser table and Override variable are created when the config python file is executed
+		# The appropriate dictionaries are placed in locvars
+		execfile(lesser_configs+os.sep+j,{},locvars)
+		# Feed in the configuration
+		lesser_d[name][jdl] = locvars[jdl]
+		lesser_d[name][over] = locvars[over] 
+				
+	os.chdir(base)
+	return lesser_d
+
+
