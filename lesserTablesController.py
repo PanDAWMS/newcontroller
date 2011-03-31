@@ -33,8 +33,8 @@ def lesserTableAdder(d, tablename, primarykey):
 
 	# Sanitization
 	for i in d:
-		for key in d[i][tablename]:
-			d[i][tablename][key] = d[i][tablename][key].replace('\\n','\n')
+		for key in d[i]:
+			d[i][key] = d[i][key].replace('\\n','\n')
 	return 0
 
 def buildLesserTableFiles(d,table_name,primary_key):
