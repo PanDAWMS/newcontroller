@@ -200,7 +200,7 @@ def collapseDict(d):
 						pass
 	return out_d
 
-def disabledQueues(d,dbd, key = param):
+def disabledQueues(d,dbd,key = param):
 	''' Creates a list of dictionaries to be deleted because their Enabled state is False. Defaults to returning the params dict in the list.
 	Check the db dictionary to see if the queue needs to be deleted.''' 
 	del_d = {}
