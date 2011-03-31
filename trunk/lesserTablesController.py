@@ -30,7 +30,6 @@ def lesserTableAdder(d, tablename, primarykey):
 	for i in rows:
 		if lesserDebug: print i[primarykey]
 		d[i[primarykey]]={tablename:i,over:{}}
-	print d
 	# Sanitization
 	for i in d:
 		for key in d[i][tablename]:
