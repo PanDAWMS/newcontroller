@@ -32,9 +32,9 @@ def lesserTableAdder(d, tablename, primarykey):
 		d[i[primarykey]]={tablename:i,over:{}}
 	print d
 	# Sanitization
-## 	for i in d:
-## 		for key in d[i][tablename]:
-## 			d[i][tablename][key] = d[i][tablename][key].replace('\\n','\n')
+	for i in d:
+		for key in d[i][tablename]:
+			if type([i][tablename][key]) is str: d[i][tablename][key] = d[i][tablename][key].replace('\\n','\n')
 	return 0
 
 def buildLesserTableFiles(d,table_name,primary_key):
