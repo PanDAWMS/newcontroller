@@ -81,7 +81,7 @@ def loadConfigs():
 
 	# Compare the DB to the present built configuration to find the queues that are changed.
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd), dbOverride)
-	if not delDebug:
+	if delDebug:
 		print '******* Compare step'
 		print len(del_d)
 		print del_d.keys()
@@ -91,7 +91,7 @@ def loadConfigs():
 	if delDebug: print len(deletes)
 	
 	# Delete queues that are not Enabled and are in the DB
-	if not delDebug:
+	if delDebug:
 		print '******* Disabled queues list'
 		#print disabledQueues(dbd,configd).keys()
 		print len(disabledQueues(dbd,configd).keys())
