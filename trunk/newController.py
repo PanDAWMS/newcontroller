@@ -25,7 +25,7 @@ from jdlController import *
 from svnHandling import *
 from backupHandling import *
 from swHandling import *
-
+from lesserTablesController import *
 
 try:
 	import lcgInfositeTool2 as lcgInfositeTool
