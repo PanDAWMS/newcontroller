@@ -18,6 +18,7 @@ svnDebug = False
 bdiiDebug = False
 pickleDebug = False
 delDebug = False
+lesserDebug = True
 dbReadDebug = False
 dbWriteDebug = False
 configReadDebug = False
