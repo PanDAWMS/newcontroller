@@ -12,6 +12,31 @@ from configFileHandling import *
 from controllerSettings import *
 from svnHandling import *
 
+def lesserTableAdder(d, tablename, primarykey):
+	'''Returns the values in the schedconfig db as a dictionary'''
+	utils.initDB()
+	# Signal the different DB access
+	print "Init DB %s"
+	# Get all the fields
+	query = "select * from %s" % tablename
+	nrows = utils.dictcursor().execute(query)
+	if nrows > 0:
+		rows = utils.dictcursor().fetchall()
+	utils.endDB()
+	# Use the same dictionary form
+	if lesserDebug: print 'Dictionary Created'
+	# Populate this (much simpler) dictionary with the table's fields.
+	# primarykey is the table's primary key (!!)
+	for i in rows:
+		if lesserDebug: print i[primarykey]
+		d[i[primarykey]]={tablename:i,over:{}}
+
+	# Sanitization
+	for i in d:
+		for key in d[i][tablename]:
+			d[i][tablename][key] = d[i][tablename][key].replace('\\n','\n')
+	return 0
+
 def buildLesserTableFiles(d,table_name,primary_key):
 	'''Build the lesser table configuration files'''
 	startstr = '''
@@ -75,7 +100,6 @@ def buildLesserTableDict(table_name):
 		# Reload this from the DB.
 		# When SVN is in place, this should be replaced by a svn checkout.
 		# We choose element 0 to get the first result. This hack will go away.
-		#svnCheckout()
 		buildLesserTableFiles(lesser_d,table_name,tableKeys[table_name])
 		lessers = os.listdir(path)
 
