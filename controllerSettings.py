@@ -47,7 +47,7 @@ svn = '.svn' # Allows for filtering of SVN directories
 base_path = os.getcwd()
 
 # Step back a layer in the path for the configs, and put them in the config SVN directory
-cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf' + os.sep
+cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf'
 
 # Paths for backup files
 backupPath = cfg_path + 'Backup' + os.sep
@@ -64,6 +64,7 @@ sourceEmail = 'atlpan@mail.cern.ch'
 # Config file path specifications
 configs = cfg_path + os.sep + 'SchedConfigs'
 jdlconfigs = cfg_path + os.sep + 'JDLConfigs'
+lesserconfigs = cfg_path + os.sep + 'Others'
 postfix = '.py'
 
 # jdlkey is the jdllist table primary key, and dbkey is the schedconfig table primary key.
