@@ -172,36 +172,36 @@ def allMaker(d,initial=True):
 				
 	return 0
 
-def composeFields(d,s,dname,allFlag=0):
+def composeFields(d,s,subdictname,primary_key,allFlag=0):
 	''' Populate a list for file writing that prints parameter dictionaries cleanly,
 	allowing them to be written to human-modifiable config files for queues and sites.'''
 
-	# "dname" is one of three things -- "Parameters" and "Override", depending on what part of the  
+	# "subdictname" is one of two things -- "Parameters" and "Override", depending on what part of the  
 	# file we're writing. They're defined generally as param and over. A third, JDL, applies only to jdllist imports
 	# and replaces param
-	if dname == jdl: primary_key = 'name'
-	else: primary_key = dbkey
-	keylist = d[dname].keys()
+
+	# When writing one of the lesser tables, subdictname will just be the table name.
+	
+	keylist = d[subdictname].keys()
 	try:
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
 		keylist.remove(primary_key)
 		keylist.sort()
-		keylist.insert(0,primary_key)
 		
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
 		keylist.sort()
 		# No point in warning for override or All dictionaries
-		if dname == param and not allFlag:
+		if subdictname == param and not allFlag:
 			print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (primary_key, str(d))
 
-	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
-	s.append('%s = {' % dname + os.linesep )
+	# So we're writing a  "Parameters" or "Override" dictionary (subdictname)...
+	s.append('%s = {' % subdictname + os.linesep )
 	s_aside = []
 	for key in keylist:
 		if key not in excl:
 			comment = ''
-			value = str(d[dname][key])
+			value = str(d[subdictname][key])
 			# Sanitize the inputs (having some trouble with quotes being the contents of a field):
 			value = value.strip("'")
 			if value == None: value = ''
@@ -211,7 +211,7 @@ def composeFields(d,s,dname,allFlag=0):
 			else:
 				valsep = keysep
 			# If the value is being set somewhere other than the config files, comment it and send it to the bottom of the list
-			if dname == param and d.has_key(source) and d[source].has_key(key) and d[source][key] is not 'Config':
+			if subdictname == param and d.has_key(source) and d[source].has_key(key) and d[source][key] is not 'Config':
 				# Add a comment to the line with the provenance info 
 				comment = ' # Defined in %s' % d[source][key]
 				s_aside.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
@@ -291,9 +291,9 @@ def buildFile(name, d):
 	# composeFields is modifying the list itself rather than a copy.
 	# Since the params in the All files have no keys to find, we warn
 	# the composeFields code.
-	composeFields(d, s, param, allFlag)
+	composeFields(d, s, param, nickname, allFlag)
 	s.append(overridestr)
-	composeFields(d, s, over)
+	composeFields(d, s, over, nickname)
 	
 	f=file(name + postfix,'w')
 	f.writelines(s)
