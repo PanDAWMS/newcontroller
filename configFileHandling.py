@@ -291,9 +291,9 @@ def buildFile(name, d):
 	# composeFields is modifying the list itself rather than a copy.
 	# Since the params in the All files have no keys to find, we warn
 	# the composeFields code.
-	composeFields(d, s, param, nickname, allFlag)
+	composeFields(d, s, param, dbkey, allFlag)
 	s.append(overridestr)
-	composeFields(d, s, over, nickname)
+	composeFields(d, s, over, dbkey)
 	
 	f=file(name + postfix,'w')
 	f.writelines(s)
