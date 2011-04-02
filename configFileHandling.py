@@ -187,6 +187,7 @@ def composeFields(d,s,subdictname,primary_key,allFlag=0):
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
 		keylist.remove(primary_key)
 		keylist.sort()
+		keylist.insert(0, primary_key)
 		
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
