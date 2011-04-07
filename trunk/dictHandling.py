@@ -224,6 +224,6 @@ def nicknameChecker(d):
 	for cloud in d:
 		for site in d[cloud]:
 			for queue in d[cloud][site]:
-				if not d[cloud][site][params][queue].has_key(dbkey):
-					d[cloud][site][params][queue][dbkey] = queue
+				if not d[cloud][site][queue][param].has_key(dbkey):
+					d[cloud][site][queue][param][dbkey] = queue
 	return 0
