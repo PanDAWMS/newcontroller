@@ -81,7 +81,7 @@ def buildJdlDict():
 	for j in jdls:
 		# Add each jdl to the dictionary and remove the .py
 		name = j.replace('__','/').rstrip(postfix)
-		jdld[name] = {jdlkey,name}
+		jdld[name] = {jdlkey:name}
 		# Run the file to extract the appropriate dictionaries
 		# As a clarification, the JDL and Override variable are created when the config python file is executed
 		# The appropriate dictionaries are placed in locvars
