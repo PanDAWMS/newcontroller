@@ -59,7 +59,7 @@ def buildDict():
 				# Remove the '.py' 
 				queue=q[:-len(postfix)]
 				# Add each queue to the site
-				confd[cloud][site][queue] = {nickname:queue}
+				confd[cloud][site][queue] = {dbkey:queue}
 				if configReadDebug: print "Loaded %s %s %s" % (cloud,site,queue)
 				# Run the file to extract the appropriate dictionaries
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
