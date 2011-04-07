@@ -38,6 +38,8 @@ def sqlDictUnpacker(d):
 	# Run over the DB queues
 	for queue in d:
 		# If the present queue's cloud isn't in the out_d, create the cloud.
+		# Adapted to multi-cloud -- take the first as default.
+		c=d[queue][cloud].split(',')[0]
 		if d[queue][cloud] not in out_d:
 			out_d[d[queue][cloud]] = {}
 		# If the present queue's site isn't in the out_d cloud, create the site in the cloud.
