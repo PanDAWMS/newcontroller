@@ -219,4 +219,11 @@ def disabledQueues(d,dbd,key = param):
 	# And return the completed list to the main routine
 	return del_d
 
-	
+def nicknameChecker(d):
+	'''Checks through the DB to be sure that all queues have a nickname -- places the queue name in as nickname if not'''
+	for cloud in d:
+		for site in d[cloud]:
+			for queue in d[cloud][site]:
+				if not d[cloud][site][params][queue].has_key(dbkey):
+					d[cloud][site][params][queue][dbkey] = queue
+	return 0
