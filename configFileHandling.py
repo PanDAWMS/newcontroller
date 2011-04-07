@@ -59,7 +59,7 @@ def buildDict():
 				# Remove the '.py' 
 				queue=q[:-len(postfix)]
 				# Add each queue to the site
-				confd[cloud][site][queue] = {}
+				confd[cloud][site][queue] = {nickname:queue}
 				if configReadDebug: print "Loaded %s %s %s" % (cloud,site,queue)
 				# Run the file to extract the appropriate dictionaries
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
@@ -187,7 +187,7 @@ def composeFields(d,s,subdictname,primary_key,allFlag=0):
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
 		keylist.remove(primary_key)
 		keylist.sort()
-		keylist.insert(0, primary_key)
+		#keylist.insert(0, primary_key)
 		
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
