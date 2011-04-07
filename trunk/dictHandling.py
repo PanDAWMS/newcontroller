@@ -217,9 +217,4 @@ def disabledQueues(d,dbd,key = param):
 	# And return the completed list to the main routine
 	return del_d
 
-def checkRedundant(up_d,del_d):
-	'''Checks for any redundant queue names. If they exist, a log is created and an email is sent to the schedconfig supprot email'''
-
-	for i in del_d:
-		pass
 	
