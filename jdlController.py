@@ -44,11 +44,11 @@ def buildJdlFiles(d):
 		# Initiate the file string
 		s=[startstr]
 		# Use the same composeFields machinery as in the buildFiles -- build the main dict
-		composeFields(d[name],s,jdl)
+		composeFields(d[name],s,jdl,jdl)
 		# Prep the override fields
 		s.append(overridestr)
 		# If any overrides have been detected, add them here.
-		composeFields(d[name],s,over)
+		composeFields(d[name],s,jdl,over)
 
 		# Write each file in its turn as part of the for loop. The slashes are replaced with underscores
 		# to keep the filesystem happy -- many of the JDL names contain slashes. The double is to make
@@ -81,7 +81,7 @@ def buildJdlDict():
 	for j in jdls:
 		# Add each jdl to the dictionary and remove the .py
 		name = j.replace('__','/').rstrip(postfix)
-		jdld[name] = {}
+		jdld[name] = {jdlkey,name}
 		# Run the file to extract the appropriate dictionaries
 		# As a clarification, the JDL and Override variable are created when the config python file is executed
 		# The appropriate dictionaries are placed in locvars
