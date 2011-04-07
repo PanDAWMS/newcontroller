@@ -79,6 +79,10 @@ def loadConfigs():
 	# Compose the "All" queues for each site
 	status = allMaker(configd, initial = False)
 
+	# Make sure all nicknames are kosher
+	nicknameChecker(configd)
+	nicknameChecker(dbd)
+
 	# Compare the DB to the present built configuration to find the queues that are changed.
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd), dbOverride)
 	if delDebug:
