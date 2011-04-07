@@ -40,18 +40,18 @@ def sqlDictUnpacker(d):
 		# If the present queue's cloud isn't in the out_d, create the cloud.
 		# Adapted to multi-cloud -- take the first as default.
 		c=d[queue][cloud].split(',')[0]
-		if d[queue][cloud] not in out_d:
-			out_d[d[queue][cloud]] = {}
+		if c not in out_d:
+			out_d[c] = {}
 		# If the present queue's site isn't in the out_d cloud, create the site in the cloud.
-		if d[queue][site] not in  out_d[d[queue][cloud]]:
-			out_d[d[queue][cloud]][d[queue][site]] = {}
+		if d[queue][site] not in  out_d[c]:
+			out_d[c][d[queue][site]] = {}
 
 		# Once sure that we have all the cloud and site dictionaries created, we populate them with a parameter dictionary
 		# an empty (for now) override dictionary, and a source dict. The override dictionary will become useful when we are reading back from
 		# the config files we are creating. Each key is associated with a source tag -- Config, DB, BDII, ToA, Override, Site, or Cloud
 		# That list comprehension at the end of the previous line just creates an empty dictionary and fills it with the keys from the queue
 		# definition. The values are set to DB, and will be changed if another source modifies the value.
-		out_d[d[queue][cloud]][d[queue][site]][d[queue][dbkey]] = protoDict(queue,d)
+		out_d[c][d[queue][site]][d[queue][dbkey]] = protoDict(queue,d)
 	
 		# Model keyset for creation of queues from scratch
 		# Append these new keys to standardkeys
