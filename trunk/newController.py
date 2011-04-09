@@ -159,8 +159,7 @@ def loadConfigs():
  		#if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
 		if genDebug:
 			print 'Received debug info'
-			sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper = updateInstalledSW(collapseDict(newdb),linfotool)
-			return l
+			sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper = updateInstalledSW(collapseDict(newdb),linfotool)			
  		else: updateInstalledSW(collapseDict(newdb),linfotool)
 		
 	# If the checks pass (no difference between the DB and the new configuration)
@@ -176,15 +175,12 @@ def loadConfigs():
 	print 'Here 6'
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
-	print genDebug
 	print 'Here 7'
-	if True:
-		print 'Here 7'
-		print 'sw_db', 'sw_bdii', 'delList', 'addList', 'confd', 'cloud', 'siteid', 'gk', 'linfotool', 'dbd', 'configd', 'up_d', 'del_d', 'del_l', 'up_l', 'jdl_l', 'jdldc', 'newdb', 'checkUp', 'checkDel'
-		print type(sw_db), type(sw_bdii), type(delList), type(addList), type(confd), type(cloud), type(siteid), type(gk), type(linfotool), type(dbd), type(configd), type(up_d), type(del_d), type(del_l), type(up_l), type(jdl_l), type(jdldc), type(newdb), type(checkUp), type(checkDel)
-		print 'Here 8'
-		print len(sw_db), len(sw_bdii), len(delList), len(addList), len(confd), len(cloud), len(siteid), len(gk), len(linfotool), len(dbd), len(configd), len(up_d), len(del_d), len(del_l), len(up_l), len(jdl_l), len(jdldc), len(newdb), len(checkUp), len(checkDel)
-		return sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
+	print 'sw_db', 'sw_bdii', 'delList', 'addList', 'confd', 'cloud', 'siteid', 'gk', 'linfotool', 'dbd', 'configd', 'up_d', 'del_d', 'del_l', 'up_l', 'jdl_l', 'jdldc', 'newdb', 'checkUp', 'checkDel'
+	print type(sw_db), type(sw_bdii), type(delList), type(addList), type(confd), type(cloud), type(siteid), type(gk), type(linfotool), type(dbd), type(configd), type(up_d), type(del_d), type(del_l), type(up_l), type(jdl_l), type(jdldc), type(newdb), type(checkUp), type(checkDel)
+	print 'Here 8'
+	print len(sw_db), len(sw_bdii), len(delList), len(addList), len(confd), len(cloud), len(siteid), len(gk), len(linfotool), len(dbd), len(configd), len(up_d), len(del_d), len(del_l), len(up_l), len(jdl_l), len(jdldc), len(newdb), len(checkUp), len(checkDel)
+	return sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
 	return 0
 	
 
