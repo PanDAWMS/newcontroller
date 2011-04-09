@@ -100,7 +100,6 @@ def loadConfigs():
 		#print disabledQueues(dbd,configd).keys()
 		print len(disabledQueues(dbd,configd).keys())
 	del_d.update(disabledQueues(dbd,configd))
-	print 'Here 1'
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
 	del_l = buildDeleteList(del_d,'schedconfig')
@@ -110,11 +109,9 @@ def loadConfigs():
 	# (specified in controllerSettings
 	up_l = buildUpdateList(up_d,param)
 	jdl_l = buildUpdateList(jdl_up_d,jdl)
-	print 'Here 2'
 
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
-		print 'Here 3'
 		utils.initDB()
 		unicodeEncode(del_l)
 		# Individual SQL statements to delete queues that need deleted
@@ -154,7 +151,6 @@ def loadConfigs():
 
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
-	print 'Here 4'
  	if not bdiiOverride:
  		#if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
 		if genDebug:
@@ -176,11 +172,11 @@ def loadConfigs():
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	print 'Here 7'
-	print 'sw_db', 'sw_bdii', 'delList', 'addList', 'confd', 'cloud', 'siteid', 'gk', 'linfotool', 'dbd', 'configd', 'up_d', 'del_d', 'del_l', 'up_l', 'jdl_l', 'jdldc', 'newdb', 'checkUp', 'checkDel'
-	print type(sw_db), type(sw_bdii), type(delList), type(addList), type(confd), type(cloud), type(siteid), type(gk), type(linfotool), type(dbd), type(configd), type(up_d), type(del_d), type(del_l), type(up_l), type(jdl_l), type(jdldc), type(newdb), type(checkUp), type(checkDel)
+	print 'sw_db', 'sw_bdii', 'deleteList', 'addList', 'confd', 'cloud', 'siteid', 'gk', 'linfotool', 'dbd', 'configd', 'up_d', 'del_d', 'del_l', 'up_l', 'jdl_l', 'jdldc', 'newdb', 'checkUp', 'checkDel'
+	print type(sw_db), type(sw_bdii), type(deleteList), type(addList), type(confd), type(cloud), type(siteid), type(gk), type(linfotool), type(dbd), type(configd), type(up_d), type(del_d), type(del_l), type(up_l), type(jdl_l), type(jdldc), type(newdb), type(checkUp), type(checkDel)
 	print 'Here 8'
-	print len(sw_db), len(sw_bdii), len(delList), len(addList), len(confd), len(cloud), len(siteid), len(gk), len(linfotool), len(dbd), len(configd), len(up_d), len(del_d), len(del_l), len(up_l), len(jdl_l), len(jdldc), len(newdb), len(checkUp), len(checkDel)
-	return sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
+	print len(sw_db), len(sw_bdii), len(deleteList), len(addList), len(confd), len(cloud), len(siteid), len(gk), len(linfotool), len(dbd), len(configd), len(up_d), len(del_d), len(del_l), len(up_l), len(jdl_l), len(jdldc), len(newdb), len(checkUp), len(checkDel)
+	return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
 	return 0
 	
 
