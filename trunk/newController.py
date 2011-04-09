@@ -155,7 +155,8 @@ def loadConfigs():
  	if not bdiiOverride:
  		#if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
 		if genDebug:
-			l = updateInstalledSW(collapseDict(newdb),linfotool)
+			print 'Received debug info'
+			sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper = updateInstalledSW(collapseDict(newdb),linfotool)
 			return l
  		else: updateInstalledSW(collapseDict(newdb),linfotool)
 		
