@@ -205,6 +205,7 @@ if __name__ == "__main__":
 		except:
 			emailError(sys.exc_value)
 	else:
+		l=[]
 		# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 		dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		l = loadConfigs()
