@@ -160,7 +160,6 @@ def loadConfigs():
 		
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
-	print 'Here 5'
 	
 	# Make the necessary changes to the configuration files:
 	makeConfigs(configd)
@@ -168,15 +167,13 @@ def loadConfigs():
 	if not toaOverride and not bdiiOverride and safety is 'off': svnCheckin(svnstring)
 	# Create a backup pickle of the finalized DB as it stands.
 	backupCreate(newdb)
-	print 'Here 6'
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
-	print 'Here 7'
-	print 'sw_db', 'sw_bdii', 'deleteList', 'addList', 'confd', 'cloud', 'siteid', 'gk', 'linfotool', 'dbd', 'configd', 'up_d', 'del_d', 'del_l', 'up_l', 'jdl_l', 'jdldc', 'newdb', 'checkUp', 'checkDel'
-	print type(sw_db), type(sw_bdii), type(deleteList), type(addList), type(confd), type(cloud), type(siteid), type(gk), type(linfotool), type(dbd), type(configd), type(up_d), type(del_d), type(del_l), type(up_l), type(jdl_l), type(jdldc), type(newdb), type(checkUp), type(checkDel)
+	print 'sw_db', 'sw_bdii', 'deleteList', 'addList', 'confd', 'cloud', 'siteid', 'gatekeeper', 'linfotool', 'dbd', 'configd', 'up_d', 'del_d', 'del_l', 'up_l', 'jdl_l', 'jdldc', 'newdb', 'checkUp', 'checkDel'
+	print type(sw_db), type(sw_bdii), type(deleteList), type(addList), type(confd), type(cloud), type(siteid), type(gatekeeper), type(linfotool), type(dbd), type(configd), type(up_d), type(del_d), type(del_l), type(up_l), type(jdl_l), type(jdldc), type(newdb), type(checkUp), type(checkDel)
 	print 'Here 8'
-	print len(sw_db), len(sw_bdii), len(deleteList), len(addList), len(confd), len(cloud), len(siteid), len(gk), len(linfotool), len(dbd), len(configd), len(up_d), len(del_d), len(del_l), len(up_l), len(jdl_l), len(jdldc), len(newdb), len(checkUp), len(checkDel)
-	return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
+	print len(sw_db), len(sw_bdii), len(deleteList), len(addList), len(confd), len(cloud), len(siteid), len(gatekeeper), len(linfotool), len(dbd), len(configd), len(up_d), len(del_d), len(del_l), len(up_l), len(jdl_l), len(jdldc), len(newdb), len(checkUp), len(checkDel)
+	return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
 	return 0
 	
 
@@ -211,7 +208,7 @@ if __name__ == "__main__":
 		dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		print 'L is OK'
 		l = loadConfigs()
-		#sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel = loadConfigs()
+		#sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel = loadConfigs()
 
 
 		
