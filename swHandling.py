@@ -88,7 +88,7 @@ def updateInstalledSW(confd,lcgdict):
 	except:
 		print 'DB Update Failed -- installedSW() (tried to add an existing row)'
 	print genDebug
-	if genDebug:
+	if True:
 		print 'Debug info for SW'
 		return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper  
 	else:
