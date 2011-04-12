@@ -222,8 +222,8 @@ def disabledQueues(d,dbd,key = param):
 def nicknameChecker(d):
 	'''Checks through the DB to be sure that all queues have a nickname -- places the queue name in as nickname if not'''
 	for cloud in d:
-		for site in [i for i in d[cloud] if i is not All]:			
-			for queue in [i for i in d[cloud][site] if i is not All]:
+		for site in [i for i in d[cloud] if i != All]:			
+			for queue in [i for i in d[cloud][site] if i != All]:
 				if not d[cloud][site][queue][param].has_key(dbkey):
 					d[cloud][site][queue][param][dbkey] = queue
 	return 0
