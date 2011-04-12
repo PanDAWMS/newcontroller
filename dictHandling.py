@@ -111,6 +111,7 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 			if not dbOverride and cfgDict.has_key(i): updDict[i]=cfgDict[i]
 	# If the queue is brand new (created in a config file), it is added to update.
 	for i in cfgDict:
+		if i == All: continue
 		if not dbDict.has_key(i):
 			# In DB override, we aren't updating the DB.
 			if not dbOverride: updDict[i]=cfgDict[i]
