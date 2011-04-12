@@ -59,7 +59,7 @@ def buildDict():
 				# Remove the '.py' 
 				queue=q[:-len(postfix)]
 				# Add each queue to the site
-				confd[cloud][site][queue] = {dbkey:queue}
+				confd[cloud][site][queue] = {}
 				if configReadDebug: print "Loaded %s %s %s" % (cloud,site,queue)
 				# Run the file to extract the appropriate dictionaries
 				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
@@ -73,7 +73,9 @@ def buildDict():
 				confd[cloud][site][queue][param] = locvars[param]
 				confd[cloud][site][queue][over] = locvars[over] 
 				try:
-					if queue != All: confd[cloud][site][queue][enab] = locvars[enab]
+					if queue != All:
+						confd[cloud][site][queue][enab] = locvars[enab]
+						confd[cloud][site][queue][param][dbkey] = queue
 					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
 				except KeyError:
 					print cloud, site, queue, param, key
