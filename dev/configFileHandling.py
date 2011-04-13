@@ -13,6 +13,99 @@ from controllerSettings import *
 #----------------------------------------------------------------------#
 # Config File Handling
 #----------------------------------------------------------------------
+def buildDict():
+	'''Build a copy of the queue dictionary from the configuration files '''
+
+	confd={}
+	stdkeys={}
+	# In executing files for variables, one has to put the variables in a contained, local context.
+	locvars={}
+	base = os.getcwd()
+	# Loop throught the clouds in the base folder
+	try:
+		clouds = os.listdir(configs)
+	except OSError:
+		# If the configs folder is missing and this is the first thing run,
+		# Reload this from the DB.
+		# When SVN is in place, this should be replaced by a svn checkout.
+		# We choose element 0 to get the first result. This hack will go away.
+		#configd = buildDict()
+		#status = allMaker(configd)
+		makeConfigs(sqlDictUnpacker(loadSchedConfig())[0])
+		clouds = os.listdir(configs)
+	if clouds.count(svn) > 0: clouds.remove(svn)
+		
+	for cloud in clouds:
+		# Add each cloud to the dictionary
+		confd[cloud] = {}
+		# Loop throught the sites in the present cloud folder
+		sites = os.listdir(configs + os.sep + cloud)
+		for site in sites:
+			# If this is the All file, create another entry.
+			if site is All+postfix:
+				# Get rid of the .py
+				s=site[:-len(postfix)]
+				# Run the file for the dictionaries
+				fname = configs + os.sep + cloud + os.sep + site
+				# The appropriate dictionaries are placed in locvars
+				execfile(fname,{},locvars)
+				confd[cloud][s][param] = locvars[param]
+				confd[cloud][s][over] = locvars[over]
+			# Add each site to the cloud
+ 			confd[cloud][site] = {}
+			# Loop throught the queues in the present site folders
+			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and i is not svn]
+			for q in queues:
+				# Remove the '.py' 
+				queue=q[:-len(postfix)]
+				# Add each queue to the site
+				confd[cloud][site][queue] = {}
+				if configReadDebug: print "Loaded %s %s %s" % (cloud,site,queue)
+				# Run the file to extract the appropriate dictionaries
+				# As a clarification, the Parameters, Override and Enabled variable are created when the config python file is executed
+				fname = configs + os.sep + cloud + os.sep + site + os.sep + q
+				# The appropriate dictionaries are placed in locvars
+				execfile(fname,{},locvars)
+				# Add any new keys to the stdkeys dictionary (in case new keys are added to the DB)
+				stdkeys.update(dict([(i,0) for i in locvars[param]]))
+				stdkeys.update(dict([(i,0) for i in locvars[over]]))
+				# Feed in the configuration
+				confd[cloud][site][queue][param] = locvars[param]
+				confd[cloud][site][queue][over] = locvars[over] 
+				try:
+					if queue != All:
+						confd[cloud][site][queue][enab] = locvars[enab]
+						confd[cloud][site][queue][param][dbkey] = queue
+					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
+				except KeyError:
+					print cloud, site, queue, param, key
+					pass
+
+	# Now that we've seen all possible keys in stdkeys, make sure all queues have them:
+	# No need to reload the cloud list...
+	for cloud in clouds:
+		# But the site list needs to be redone per cloud
+		sites = os.listdir(configs + os.sep + cloud)
+		for site in sites:
+			# As does the queue list.
+			# Loop throught the queues in the present site folders
+			queues = [i for i in os.listdir(configs + os.sep + cloud + os.sep + site) if i.endswith(postfix) and i is not svn and All not in i]
+			for q in queues:
+				# Remove the '.py' 
+				queue=q[:-len(postfix)]
+				# Add each queue to the site
+				try:
+					for key in (set(stdkeys) - set(excl)) - set(confd[cloud][site][queue][param]):
+						confd[cloud][site][queue][param][key] = None
+					if confd[cloud][site][queue][param]['name'] == None: confd[cloud][site][queue][param]['name'] = 'default'
+				except KeyError:
+					pass
+				
+	# Leaving the All parameters unincorporated
+	os.chdir(base)
+	unicodeConvert(confd)
+	return confd
+
 def allMaker(d,initial=True):
 	'''Extracts commonalities from sites for the All files.
 	Returns 0 for success. Adds "All" queues to sites. Updates the
@@ -81,34 +174,37 @@ def allMaker(d,initial=True):
 				
 	return 0
 
-def composeFields(d,s,dname,primary_key=dbkey,allFlag=0):
+def composeFields(d,s,subdictname,primary_key,allFlag=0):
 	''' Populate a list for file writing that prints parameter dictionaries cleanly,
 	allowing them to be written to human-modifiable config files for queues and sites.'''
 
-	# "dname" is one of three things -- "Parameters" and "Override", depending on what part of the  
+	# "subdictname" is one of two things -- "Parameters" and "Override", depending on what part of the  
 	# file we're writing. They're defined generally as param and over. A third, JDL, applies only to jdllist imports
 	# and replaces param
-	keylist = d[dname].keys()
+
+	# When writing one of the lesser tables, subdictname will just be the table name.
+	
+	keylist = d[subdictname].keys()
 	try:
 		# Remove the DB key and put in as the first parameter -- this will be "nickname", usually.
 		keylist.remove(primary_key)
 		keylist.sort()
-		keylist.insert(0,primary_key)
+		#keylist.insert(0, primary_key)
 		
 	# Unless it's not present -- then we'll just throw a warning.	 
 	except ValueError:
 		keylist.sort()
 		# No point in warning for override or All dictionaries
-		if dname == param and not allFlag:
+		if subdictname == param and not allFlag:
 			print 'DB key %s not present in this dictionary. Going to be hard to insert. %s' % (primary_key, str(d))
 
-	# So we're writing a  "Parameters" or "Override" dictionary (dname)...
-	s.append('%s = {' % dname + os.linesep )
+	# So we're writing a  "Parameters" or "Override" dictionary (subdictname)...
+	s.append('%s = {' % subdictname + os.linesep )
 	s_aside = []
 	for key in keylist:
 		if key not in excl:
 			comment = ''
-			value = str(d[dname][key])
+			value = str(d[subdictname][key])
 			# Sanitize the inputs (having some trouble with quotes being the contents of a field):
 			value = value.strip("'")
 			if value == None: value = ''
@@ -118,7 +214,7 @@ def composeFields(d,s,dname,primary_key=dbkey,allFlag=0):
 			else:
 				valsep = keysep
 			# If the value is being set somewhere other than the config files, comment it and send it to the bottom of the list
-			if dname == param and d.has_key(source) and d[source].has_key(key) and d[source][key] is not 'Config':
+			if subdictname == param and d.has_key(source) and d[source].has_key(key) and d[source][key] is not 'Config':
 				# Add a comment to the line with the provenance info 
 				comment = ' # Defined in %s' % d[source][key]
 				s_aside.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
@@ -198,9 +294,9 @@ def buildFile(name, d):
 	# composeFields is modifying the list itself rather than a copy.
 	# Since the params in the All files have no keys to find, we warn
 	# the composeFields code.
-	composeFields(d, s, param, allFlag)
+	composeFields(d, s, param, dbkey, allFlag)
 	s.append(overridestr)
-	composeFields(d, s, over)
+	composeFields(d, s, over, dbkey)
 	
 	f=file(name + postfix,'w')
 	f.writelines(s)

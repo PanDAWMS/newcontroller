@@ -43,14 +43,12 @@ def buildJdlFiles(d):
 	for name in d:
 		# Initiate the file string
 		s=[startstr]
-		# Set the appropriate primary key for a JDL
-		primary_key='name'
 		# Use the same composeFields machinery as in the buildFiles -- build the main dict
-		composeFields(d[name],s,primary_key,jdl)
+		composeFields(d[name],s,jdl,jdlkey)
 		# Prep the override fields
 		s.append(overridestr)
 		# If any overrides have been detected, add them here.
-		composeFields(d[name],s,primary_key,over)
+		composeFields(d[name],s,over,jdlkey)
 
 		# Write each file in its turn as part of the for loop. The slashes are replaced with underscores
 		# to keep the filesystem happy -- many of the JDL names contain slashes. The double is to make
@@ -90,6 +88,8 @@ def buildJdlDict():
 		execfile(jdlconfigs+os.sep+j,{},locvars)
 		# Feed in the configuration
 		jdld[name][jdl] = locvars[jdl]
+		# Replace the name after having it removed (avoids user confusion)
+		jdld[name][jdl][jdlkey] = name
 		jdld[name][over] = locvars[over] 
 				
 	os.chdir(base)

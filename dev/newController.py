@@ -33,13 +33,6 @@ except:
 	print "Cannot import lcgInfositeTool, will exit"
 	sys.exit(-1)
 
-def loadLesserTables():
-	''' Load the smaller and less changed tables'''
-	tableDict={}
-	for table in tableKeys:
-		tableDict[table] = loadTable(table,tableKeys[table])
-	return tableDict
-		
 def loadJdl():
 	'''Runs the jdllist table updates'''
 	
@@ -75,9 +68,6 @@ def loadConfigs():
 	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
-
-	# Load the lesser tables (like cloudconfig, groups, submithosts, siteaccess, jobclass, pilotid)
-	tableDict = loadLesserTables()
 	
 	# Add the BDII information, and build a list of releases
 	if not bdiiOverride:
@@ -89,18 +79,30 @@ def loadConfigs():
 	# Compose the "All" queues for each site
 	status = allMaker(configd, initial = False)
 
+	# Make sure all nicknames are kosher
+	nicknameChecker(configd)
+	nicknameChecker(dbd)
+
 	# Compare the DB to the present built configuration to find the queues that are changed.
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd), dbOverride)
+	if delDebug:
+		print '******* Compare step'
+		print len(del_d)
+		print del_d.keys()
+		print
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc, dbOverride)
 	deletes = [del_d[i][dbkey] for i in del_d]
-
-	# Delete queues that are not Enabled
-	del_d.update(disabledQueues(configd))
-
+	if delDebug: print len(deletes)
+	
+	# Delete queues that are not Enabled and are in the DB
+	if delDebug:
+		print '******* Disabled queues list'
+		#print disabledQueues(dbd,configd).keys()
+		print len(disabledQueues(dbd,configd).keys())
+	del_d.update(disabledQueues(dbd,configd))
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
 	del_l = buildDeleteList(del_d,'schedconfig')
-
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
 	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.
 	# The primary key is specified for the replaceDB method. For schedconfig, it's dbkey, and for the jdls it's jdlkey
@@ -113,13 +115,16 @@ def loadConfigs():
 		utils.initDB()
 		unicodeEncode(del_l)
 		# Individual SQL statements to delete queues that need deleted
-		for i in del_l:
-			try:
-				status = utils.dictcursor().execute(i)
-			except:
-				print 'Failed SQL Statement: ', i
-				print status
-				print sys.exc_info()
+		if not delDebug:
+			for i in del_l:
+				try:
+					status = utils.dictcursor().execute(i)
+				except:
+					print 'Failed SQL Statement: ', i
+					print status
+					print sys.exc_info()
+		else:
+			print "********** Delete step has been DISABLED!"
 
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
@@ -147,7 +152,10 @@ def loadConfigs():
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
  	if not bdiiOverride:
- 		if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
+ 		#if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
+		if genDebug:
+			print 'Received debug info'
+			sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper = updateInstalledSW(collapseDict(newdb),linfotool)			
  		else: updateInstalledSW(collapseDict(newdb),linfotool)
 		
 	# If the checks pass (no difference between the DB and the new configuration)
@@ -161,59 +169,44 @@ def loadConfigs():
 	backupCreate(newdb)
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
-	if genDebug: return sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
-	return 0
+	if genDebug:
+		return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel
+	else:
+		return 0
 	
 
 if __name__ == "__main__":
+	args = sys.argv[1:]
+	# A better argument parser will be needed in the future
+	if '--dbOverride' in args:
+		print 'The DB will override existing config file settings.'
+		dbOverride = True
+	if '--bdiiOverride' in args:
+		print 'BDII updating disabled.'
+		bdiiOverride = True
+	if '--toaOverride' in args:
+		print 'ToA updating disabled.'
+		toaOverride = True
+	if '--safety' in args:
+		print 'Safety is ON! No writes to the DB.'
+		safety = 'on'
+	if '--debug' in args: genDebug = True
+	keydict={}
+
 	if not genDebug:
 		try:
-			args = sys.argv[1:]
-			# A better argument parser will be needed in the future
-			if '--dbOverride' in args:
-				print 'The DB will override existing config file settings.'
-				dbOverride = True
-			if '--bdiiOverride' in args:
-				print 'BDII updating disabled.'
-				bdiiOverride = True
-			if '--toaOverride' in args:
-				print 'ToA updating disabled.'
-				toaOverride = True
-			if '--safety' in args:
-				print 'Safety is ON! No writes to the DB.'
-				safety = 'on'
-			if '--debug' in args: genDebug = True
-			keydict={}
-
 			# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 			dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
-
-			if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel = loadConfigs()
-			else: loadConfigs()
+			loadConfigs()
 		except:
 			emailError(sys.exc_value)
 	else:
-		args = sys.argv[1:]
-		# A better argument parser will be needed in the future
-		if '--dbOverride' in args:
-			print 'The DB will override existing config file settings.'
-			dbOverride = True
-		if '--bdiiOverride' in args:
-			print 'BDII updating disabled.'
-			bdiiOverride = True
-		if '--toaOverride' in args:
-			print 'ToA updating disabled.'
-			toaOverride = True
-		if '--safety' in args:
-			print 'Safety is ON! No writes to the DB.'
-			safety = 'on'
-		if '--debug' in args: genDebug = True
-		keydict={}
-
+		l=[]
 		# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 		dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+		print 'L is OK'
+		sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel = loadConfigs()
 
-		sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldc, newdb, checkUp, checkDel = loadConfigs()
+
 		
-
 	#os.chdir(base_path)

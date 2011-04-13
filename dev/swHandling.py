@@ -37,8 +37,10 @@ def updateInstalledSW(confd,lcgdict):
 	for queue in confd:
 		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 
 		if confd[queue].has_key('siteid') and confd[queue]['siteid']:
-			cloud[queue] = confd[queue]['cloud']
+			# Collect the cloud information, choosing only principal cloud. Comma-delimited.
+			cloud[queue] = confd[queue]['cloud'].split(',')[0]
 			siteid[queue] = confd[queue]['siteid']
+			if len(cloud[queue]) > 8: print cloud[queue], queue, siteid[queue]
 			# If it's not an analysis queue and has a siteid, use gatekeeper as the BDII key
 			if confd[queue]['gatekeeper'] != virtualQueueGatekeeper:
 				gatekeeper[queue] = confd[queue]['gatekeeper']
@@ -52,7 +54,7 @@ def updateInstalledSW(confd,lcgdict):
 				siteid.pop(queue)
 	# Time to build the master list from BDII:
 
-	# The values will be de-duplicated in a dictionary. Keys will be (siteid,release,queue) together in a tuple
+	# The values will be de-duplicated in a dictionary. Keys will be (siteid,cloud,release,queue) together in a tuple
 	# I'm not worried about redundant additions (the dictionary will handle that), but I _am_ concerned about
 	# completeness. This is why I just add EVERYTHING and let the keys sort it out.
 	
@@ -64,14 +66,14 @@ def updateInstalledSW(confd,lcgdict):
 			for cache in cache_tags[gatekeeper[queue]]:
 				# ASSUMPTION -- that base releases will always contain two periods as separators
 				release=baseReleaseSep.join(cache.split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
-				# The unique name for this entry as a tuple
+				# The unique name for this entry
 				index = '%s_%s_%s' % (siteid[queue],release,cache)
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache}
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
 				cache = 'None'
-				# The unique name for this entry as a tuple
+				# The unique name for this entry
 				index = '%s_%s_%s' % (siteid[queue],release,cache)
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':None}
 	
@@ -85,4 +87,9 @@ def updateInstalledSW(confd,lcgdict):
 		updateInstalledSWdb(addList,deleteList)
 	except:
 		print 'DB Update Failed -- installedSW() (tried to add an existing row)'
-	if genDebug: return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper  
+	print genDebug
+	if True:
+		print 'Debug info for SW'
+		return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper  
+	else:
+		return 0

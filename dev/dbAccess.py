@@ -40,7 +40,7 @@ def loadSchedConfig(db='pmeta', test='0'):
 	return d
 
 def loadInstalledSW():
-	'''Load the values from the cloudconfig table into a dictionary keyed by release_site_cache'''
+	'''Load the values from the installedsw table into a dictionary keyed by release_site_cache'''
 	if safety is 'on': utils.setTestDB()
 	utils.initDB()
 	print "Init DB"
@@ -56,28 +56,13 @@ def loadInstalledSW():
 	unicodeConvert(rows)
 	return dict([('%s_%s_%s' % (i['siteid'],i['release'],i['cache']),i) for i in rows])
 
-def loadTable(table_name,primary_key):
-	'''Load the values from the table into a dictionary, then return the dictionary'''
-	if safety is 'on': utils.setTestDB()
-	utils.initDB()
-	print "Init DB"
-	# Gets all rows from table
-	query = 'SELECT * from %s' % table_name
-	nrows = utils.dictcursor().execute(query)
-	if nrows > 0:
-		# Fetch all the rows
-		rows = utils.dictcursor().fetchall()
-	# Close DB connection
-	utils.endDB()
-	# Return a dictionaried version of the DB contents
-	unicodeConvert(rows)
-	return dict([(i[primary_key],i) for i in rows])
-
 def updateInstalledSWdb(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
 	unicodeEncode(addList)
 	unicodeEncode(delList)
+
 	delList=[i for i in delList]
+
 	
 	if safety is 'on': utils.setTestDB()
 	utils.initDB()
@@ -114,7 +99,9 @@ def buildUpdateList(updDict,param):
 	l=[]
 	for i in updDict:
 		# Gets only the parameter dictionary part.
-		if param in updDict[i]: l.append(updDict[i][param])
+		if param in updDict[i]:
+			l.append(updDict[i][param])
+			l[-1][dbkey] = i
 		else: l.append(updDict[i])
 		# Fix any NULL values being sent to the DB. The last row added on each loop is checked.
 	for i in l:

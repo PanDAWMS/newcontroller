@@ -11,12 +11,14 @@ import os
 unidef='utf-8'
 
 # Debug Flags
-genDebug = True
+genDebug = False
 toaDebug = False
 jdlDebug = False
 svnDebug = False
 bdiiDebug = False
 pickleDebug = False
+delDebug = False
+lesserDebug = True
 dbReadDebug = False
 dbWriteDebug = False
 configReadDebug = False
@@ -28,7 +30,7 @@ configWriteDebug = False
 confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf' 
 
 # If safety is on, nothing is written to the DB.
-safety = 'on'
+safety = 'off'
 
 # Widely used strings
 All = 'All' # Standard name for All files
@@ -39,12 +41,13 @@ over = 'Override' # Name for the override dictionary in a queue spec
 jdl = 'JDL' # The parameters dictionary for a JDL specification (no need for override)
 source = 'Source' # The name for a sources dictionary (names the provenance of a setting in the parameters dictionary for a queue
 enab = 'Enabled' # Specifies that a queue has been enabled or disabled -- a variable set to true or false.
+svn = '.svn' # Allows for filtering of SVN directories
 
 # Sets the present path as the primary -- allows portability, but the script has to be run from its home directory.
 base_path = os.getcwd()
 
 # Step back a layer in the path for the configs, and put them in the config SVN directory
-cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf' + os.sep
+cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf'
 
 # Paths for backup files
 backupPath = cfg_path + 'Backup' + os.sep
@@ -61,7 +64,7 @@ sourceEmail = 'atlpan@mail.cern.ch'
 # Config file path specifications
 configs = cfg_path + os.sep + 'SchedConfigs'
 jdlconfigs = cfg_path + os.sep + 'JDLConfigs'
-lessertableconfigs = cfg_path + os.sep + 'LesserConfigs' + os.sep
+lesserconfigs = cfg_path + os.sep + 'Others'
 postfix = '.py'
 
 # jdlkey is the jdllist table primary key, and dbkey is the schedconfig table primary key.
@@ -72,16 +75,11 @@ shared, unshared = 'shared','unshared'
 nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0'}
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
-excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','nqueues','last_status'] # nqueues takes care of a typo
+excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','nqueues','last_status','sysconfig'] # nqueues takes care of a typo
 
 # Standard mappings for legacy software tags in the BDII:
 
 tagsTranslation = {'production':'AtlasProduction','tier0':'AtlasTier0','topphys':'TopPhys','wzbenchmarks':'WZBenchmarks'}
-
-# Lesser tables and their primary keys:
-
-#tableKeys = {'cloudconfig':'name','groups':'id','submithosts':'nickname','siteaccess':'id','jobclass':'id','pilottype':'name'}
-tableKeys = {'groups':'id','submithosts':'nickname','jobclass':'id','pilottype':'name'}
 
 # Clouds that don't auto-populate from BDII
 
