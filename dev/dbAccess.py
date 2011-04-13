@@ -14,13 +14,13 @@ from controllerSettings import *
 # DB Access Methods 
 #----------------------------------------------------------------------#
 
-def loadSchedConfig(db='pmeta', test='0'): 
+def loadSchedConfig(db='intr', test='0'): 
 	'''Returns the values in the schedconfig db as a dictionary'''
 	# Initialize DB
 	utils.dbname=db
 	if safety is 'on': utils.setTestDB()
 	utils.initDB()
-	print "Init DB"
+	print "Init DB %s " % utils.dbname
 	# Gets all rows from schedconfig table
 	query = "select * from schedconfig"
 	nrows = utils.dictcursor().execute(query)
@@ -42,8 +42,10 @@ def loadSchedConfig(db='pmeta', test='0'):
 def loadInstalledSW():
 	'''Load the values from the installedsw table into a dictionary keyed by release_site_cache'''
 	if safety is 'on': utils.setTestDB()
-	utils.initDB()
-	print "Init DB"
+	print "Init DB %s " % utils.dbname
+	utils.dbname='intr'
+	utils.initDB('intr')
+
 	# Gets all rows from installedsw table
 	query = 'SELECT * from installedsw'
 	nrows = utils.dictcursor().execute(query)
@@ -65,8 +67,8 @@ def updateInstalledSWdb(addList, delList):
 
 	
 	if safety is 'on': utils.setTestDB()
-	utils.initDB()
-	print "Init DB"
+	utils.initDB('intr')
+	print "Init DB %s " % utils.dbname
 	for i in addList:
 		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
 		try:
@@ -85,7 +87,8 @@ def updateInstalledSWdb(addList, delList):
 def execUpdate(updateList):
 	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
 	if safety is 'on': utils.setTestDB()
-	utils.initDB()
+	utils.initDB('intr')
+	print "Init DB %s " % utils.dbname
 	for query in updateList:
 		# Each update is pre-rolled -- just gets executed
 		utils.dictcursor().execute(query)

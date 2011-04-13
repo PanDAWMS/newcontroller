@@ -11,7 +11,7 @@ import os
 unidef='utf-8'
 
 # Debug Flags
-genDebug = False
+genDebug = True
 toaDebug = False
 jdlDebug = False
 svnDebug = False
