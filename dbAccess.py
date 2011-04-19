@@ -101,7 +101,7 @@ def buildUpdateList(updDict,param):
 		# Gets only the parameter dictionary part.
 		if param in updDict[i]:
 			l.append(updDict[i][param])
-			l[-1][dbkey] = i
+			l[-1][param] = i
 		else: l.append(updDict[i])
 		# Fix any NULL values being sent to the DB. The last row added on each loop is checked.
 	for i in l:
