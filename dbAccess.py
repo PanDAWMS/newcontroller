@@ -5,6 +5,7 @@
 # Alden.Stradling@cern.ch                                                                #
 ##########################################################################################
 
+import os
 from SchedulerUtils import utils
 
 from miscUtils import *
@@ -14,11 +15,17 @@ from controllerSettings import *
 # DB Access Methods 
 #----------------------------------------------------------------------#
 
+if os.environ.has_key('DBINTR'): setINTR = True
+else: setINTR = False
+
 def loadSchedConfig(db='pmeta', test='0'): 
 	'''Returns the values in the schedconfig db as a dictionary'''
 	# Initialize DB
 	utils.dbname=db
 	if safety is 'on': utils.setTestDB()
+	if setINTR:
+		utils.setTestDB()
+		print 'Using INTR Database'
 	utils.initDB()
 	print "Init DB"
 	# Gets all rows from schedconfig table
@@ -42,6 +49,9 @@ def loadSchedConfig(db='pmeta', test='0'):
 def loadInstalledSW():
 	'''Load the values from the installedsw table into a dictionary keyed by release_site_cache'''
 	if safety is 'on': utils.setTestDB()
+	if setINTR:
+		utils.setTestDB()
+		print 'Using INTR Database'
 	utils.initDB()
 	print "Init DB"
 	# Gets all rows from installedsw table
@@ -63,8 +73,10 @@ def updateInstalledSWdb(addList, delList):
 
 	delList=[i for i in delList]
 
-	
-	if safety is 'on': utils.setTestDB()
+   	if safety is 'on': utils.setTestDB()
+	if setINTR:
+		utils.setTestDB()
+		print 'Using INTR Database'
 	utils.initDB()
 	print "Init DB"
 	for i in addList:
@@ -85,6 +97,9 @@ def updateInstalledSWdb(addList, delList):
 def execUpdate(updateList):
 	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
 	if safety is 'on': utils.setTestDB()
+	if setINTR:
+		utils.setTestDB()
+		print 'Using INTR Database'
 	utils.initDB()
 	for query in updateList:
 		# Each update is pre-rolled -- just gets executed
