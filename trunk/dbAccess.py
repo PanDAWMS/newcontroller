@@ -94,14 +94,14 @@ def execUpdate(updateList):
 	utils.closeDB()
 	return 
 
-def buildUpdateList(updDict,param):
+def buildUpdateList(updDict,param,key=dbkey):
 	'''Build a list of dictionaries that define queues''' 
 	l=[]
 	for i in updDict:
 		# Gets only the parameter dictionary part.
 		if param in updDict[i]:
 			l.append(updDict[i][param])
-			l[-1][param] = i
+			l[-1][key] = i
 		else: l.append(updDict[i])
 		# Fix any NULL values being sent to the DB. The last row added on each loop is checked.
 	for i in l:
@@ -112,7 +112,7 @@ def buildUpdateList(updDict,param):
 	return l
 	
 
-def buildDeleteList(delDict, tableName, key = dbkey):
+def buildDeleteList(delDict, tableName, key=dbkey):
 	'''Build a list of SQL commands that deletes queues no longer in the definition files. Key defaults to dbkey'''
 	delstr='DELETE FROM %s WHERE %s = ' % (tableName,dbkey)
 	sql=[]
