@@ -5,6 +5,7 @@
 # Alden.Stradling@cern.ch                                                                #
 ##########################################################################################
 
+import os
 from SchedulerUtils import utils
 
 from miscUtils import *
@@ -14,13 +15,19 @@ from controllerSettings import *
 # DB Access Methods 
 #----------------------------------------------------------------------#
 
-def loadSchedConfig(db='intr', test='0'): 
+if os.environ.has_key('DBINTR'): setINTR = True
+else: setINTR = False
+
+def loadSchedConfig(db='pmeta', test='0'): 
 	'''Returns the values in the schedconfig db as a dictionary'''
 	# Initialize DB
 	utils.dbname=db
 	if safety is 'on': utils.setTestDB()
+	if setINTR:
+		utils.setTestDB()
+		print 'Using INTR Database'
 	utils.initDB()
-	print "Init DB %s " % utils.dbname
+	print "Init DB"
 	# Gets all rows from schedconfig table
 	query = "select * from schedconfig"
 	nrows = utils.dictcursor().execute(query)
@@ -42,10 +49,11 @@ def loadSchedConfig(db='intr', test='0'):
 def loadInstalledSW():
 	'''Load the values from the installedsw table into a dictionary keyed by release_site_cache'''
 	if safety is 'on': utils.setTestDB()
-	print "Init DB %s " % utils.dbname
-	utils.dbname='intr'
-	utils.initDB('intr')
-
+	if setINTR:
+		utils.setTestDB()
+		print 'Using INTR Database'
+	utils.initDB()
+	print "Init DB"
 	# Gets all rows from installedsw table
 	query = 'SELECT * from installedsw'
 	nrows = utils.dictcursor().execute(query)
@@ -65,10 +73,12 @@ def updateInstalledSWdb(addList, delList):
 
 	delList=[i for i in delList]
 
-	
-	if safety is 'on': utils.setTestDB()
-	utils.initDB('intr')
-	print "Init DB %s " % utils.dbname
+   	if safety is 'on': utils.setTestDB()
+	if setINTR:
+		utils.setTestDB()
+		print 'Using INTR Database'
+	utils.initDB()
+	print "Init DB"
 	for i in addList:
 		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
 		try:
@@ -87,8 +97,10 @@ def updateInstalledSWdb(addList, delList):
 def execUpdate(updateList):
 	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
 	if safety is 'on': utils.setTestDB()
-	utils.initDB('intr')
-	print "Init DB %s " % utils.dbname
+	if setINTR:
+		utils.setTestDB()
+		print 'Using INTR Database'
+	utils.initDB()
 	for query in updateList:
 		# Each update is pre-rolled -- just gets executed
 		utils.dictcursor().execute(query)
@@ -97,14 +109,14 @@ def execUpdate(updateList):
 	utils.closeDB()
 	return 
 
-def buildUpdateList(updDict,param):
+def buildUpdateList(updDict,param,key=dbkey):
 	'''Build a list of dictionaries that define queues''' 
 	l=[]
 	for i in updDict:
 		# Gets only the parameter dictionary part.
 		if param in updDict[i]:
 			l.append(updDict[i][param])
-			l[-1][dbkey] = i
+			l[-1][key] = i
 		else: l.append(updDict[i])
 		# Fix any NULL values being sent to the DB. The last row added on each loop is checked.
 	for i in l:
@@ -115,7 +127,7 @@ def buildUpdateList(updDict,param):
 	return l
 	
 
-def buildDeleteList(delDict, tableName, key = dbkey):
+def buildDeleteList(delDict, tableName, key=dbkey):
 	'''Build a list of SQL commands that deletes queues no longer in the definition files. Key defaults to dbkey'''
 	delstr='DELETE FROM %s WHERE %s = ' % (tableName,dbkey)
 	sql=[]
