@@ -61,8 +61,8 @@ class lcgInfositeTool:
 		rtags = dict([(i,sorted(dict([(j,1) for j in tags[i]]).keys())) for i in tags])
 
 		# Removing VO-atlas- and any trailing i686 or opt stuff, and remove all non-ATLAS material 
-		tags = dict([(i,sorted([TagSep.join(j.split(self.StartStr)[1].split(self.TagSep)[:2]) for j in rtags[i] if j.startswith(self.StartStr)])) for i in rtags])
-		rtags = dict([(i,sorted([TagSep.join(j.split(self.StartStr)[1].split(self.TagSep)[2:]) for j in rtags[i] if j.startswith(self.StartStr)])) for i in rtags])
+		tags = dict([(i,sorted([self.TagSep.join(j.split(self.StartStr)[1].split(self.TagSep)[:2]) for j in rtags[i] if j.startswith(self.StartStr)])) for i in rtags])
+		rtags = dict([(i,sorted([self.TagSep.join(j.split(self.StartStr)[1].split(self.TagSep)[2:]) for j in rtags[i] if j.startswith(self.StartStr)])) for i in rtags])
 
 		# Getting the release caches sorted into their own dictionary
 		ctags = dict([(i,sorted([j for j in tags[i] if j.count(self.CacheSep) >= self.CacheNum])) for i in tags if i.count(self.CacheSep) > 0])
