@@ -9,6 +9,7 @@ class lcgInfositeTool:
 		self.debug = False		
 		self.CEtags={}		# dict to hold ce:[list of tags]
 		self.CEctags={}		# keep prod and tier cache tags separate 
+		self.Rtags={}		# dict to hold ce:[list of cmt tags]
 		self.StartStr = 'VO-atlas-'	# Fiters ATLAS-specific tags	
 		self.CESep = '%'		# Standard separation between CE and tags
 		self.PortSep = ':'		# Separates CE and port
@@ -82,7 +83,7 @@ class lcgInfositeTool:
 		      and 'VO-atlas-poolcond' in origtags[ce]:
 		    tags[ce] += ['Conditions']	  
 		# Allow output
-		self.CEtags, self.CEctags = tags, ctags
+		self.CEtags, self.CEctags, self.Rtags = tags, ctags, rtags
 		
 		# Temporary hack until MWT2 gets their system consistent
 		try:
