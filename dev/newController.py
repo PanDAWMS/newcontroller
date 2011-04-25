@@ -53,7 +53,7 @@ def loadConfigs():
 		# Get the config dictionary directly from the DB, and process the config file update from it.
 		configd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		# Compose the "All" queues for each site
-		status = allMaker(configd, initial=True)
+		status = allMaker(configd, dbd, initial=True)
 		# Make the necessary changes to the configuration files:
 		makeConfigs(configd)
 		# Check the changes just committed into Subversion
@@ -64,7 +64,7 @@ def loadConfigs():
 		svnUpdate()
 	
 	# Load the present config files, based on the SVN update
-	configd = buildDict()
+	configd = buildDict(dbd)
 	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
@@ -77,7 +77,7 @@ def loadConfigs():
 	if not toaOverride: toaIntegrator(configd)
 	
 	# Compose the "All" queues for each site
-	status = allMaker(configd, initial = False)
+	status = allMaker(configd, dbd, initial = False)
 
 	# Make sure all nicknames are kosher
 	nicknameChecker(configd)
