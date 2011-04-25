@@ -13,9 +13,14 @@ from controllerSettings import *
 #----------------------------------------------------------------------#
 # Config File Handling
 #----------------------------------------------------------------------
-def buildDict():
+def buildDict(db):
 	'''Build a copy of the queue dictionary from the configuration files '''
 
+	# We need to work with the All.py Overrides as well
+	# We need to compare to the DB to establish precedence. If the All.py value in Parameters differs from the DB, it means that it was the All file that was modified --
+	# and that needs to take precedence. If the queue's .py file differs from the DB, the queue was the intended modification and will take precedence.
+
+	# This can be fragile if updates to the SVN are broken, but there is no other way to direct traffic between the two systems.
 	confd={}
 	stdkeys={}
 	# In executing files for variables, one has to put the variables in a contained, local context.
@@ -95,18 +100,30 @@ def buildDict():
 				queue=q[:-len(postfix)]
 				# Add each queue to the site
 				try:
+					# Populate the queue with any missing standard keys:
 					for key in (set(stdkeys) - set(excl)) - set(confd[cloud][site][queue][param]):
 						confd[cloud][site][queue][param][key] = None
 					if confd[cloud][site][queue][param]['name'] == None: confd[cloud][site][queue][param]['name'] = 'default'
+					# Now incorporate the All.py files:
+					# (As above) if the All value of the key differs from the DB value, then the All key has been changed and takes precedence
+					if db[cloud][site][queue][param][key] != confd[cloud][site][All][param][key]:
+						confd[cloud][site][queue][param][key] = confd[cloud][site][All][param][key]
+					# (As above) if the queue config value of the key differs from the DB value, then the value was changed at the queue level, and
+					# the All file is no longer valid. We can leave in all the All values, but we need to prioritize the queue.py value over All.
+					elif db[cloud][site][queue][param] != confd[cloud][site][queue][param]:
+						pass
 				except KeyError:
 					pass
 				
-	# Leaving the All parameters unincorporated
+	
+	
+
+	
 	os.chdir(base)
 	unicodeConvert(confd)
 	return confd
 
-def allMaker(d,initial=True):
+def allMaker(d,db={},initial=True):
 	'''Extracts commonalities from sites for the All files.
 	Returns 0 for success. Adds "All" queues to sites. Updates the
 	provenance info in the input dictionary. '''
@@ -115,14 +132,26 @@ def allMaker(d,initial=True):
 	# Presetting the All queue values from the Configs. These reign absolute -- to change individual queue
 	# settings, an override or deletion of the parameter from the All.py file is necessary.
 
+	# We need to work with the All.py Overrides as well
+	# We need to compare to the DB to establish precedence. If the All.py value in Parameters differs from the DB, it means that it was the All file that was modified --
+	# and that needs to take precedence. If the queue's .py file differs from the DB, the queue was the intended modification and will take precedence.
+
+	# This can be fragile if updates to the SVN are broken, but there is no other way to direct traffic between the two systems.
+
 	# This should not run after BDII updates and ToA updates, so "initial" allows it to be killed. 
-	if initial:
+	if initial and db:
 		for cloud in [i for i in d.keys() if i is not ndef]:
 			for site in [i for i in d[cloud].keys() if i is not ndef]:
 				if d[cloud][site].has_key(All):
 					for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
 						for key in d[cloud][site][All][param]:
-							d[cloud][site][queue][param][key] = d[cloud][site][All][param][key]
+							# (As above) if the All value of the key differs from the DB value, then the All key has been changed and takes precedence
+							if db[cloud][site][queue][param][key] != d[cloud][site][All][param][key]:
+								d[cloud][site][queue][param][key] = d[cloud][site][All][param][key]
+							# (As above) if the queue config value of the key differs from the DB value, then the value was changed at the queue level, and
+							# the All file is no longer valid. We can leave in all the All values, but we need to prioritize the queue.py value over All.
+							elif db[cloud][site][queue][param] != d[cloud][site][queue][param]:
+								pass
 
 
 	# This is where we'll put all verified keys that are common across sites/clouds
