@@ -104,18 +104,37 @@ def buildDict(db):
 					for key in (set(stdkeys) - set(excl)) - set(confd[cloud][site][queue][param]):
 						confd[cloud][site][queue][param][key] = None
 					if confd[cloud][site][queue][param]['name'] == None: confd[cloud][site][queue][param]['name'] = 'default'
-					# Now incorporate the All.py files:
-					# (As above) if the All value of the key differs from the DB value, then the All key has been changed and takes precedence
-					if db[cloud][site][queue][param][key] != confd[cloud][site][All][param][key]:
-						confd[cloud][site][queue][param][key] = confd[cloud][site][All][param][key]
-					# (As above) if the queue config value of the key differs from the DB value, then the value was changed at the queue level, and
-					# the All file is no longer valid. We can leave in all the All values, but we need to prioritize the queue.py value over All.
-					elif db[cloud][site][queue][param] != confd[cloud][site][queue][param]:
-						pass
 				except KeyError:
 					pass
 				
-	
+			# Now incorporate the All.py files:
+
+
+# NEEDS MORE WORK. We need to know whether the change came from the All file or the config. If ALL has the value consistent with all of the queues, no change. If all of the queues except one have the value: check the DB. If it's consistent with the configs, use the All on all queues. If it's consistent with the All, break the All and use the configs.
+			if confd[cloud][site].has_key(All):
+				for key in confd[cloud][site][All].keys():
+					# Set a flag to detect key changes
+					allKeyChange = False
+					confKeyChange = False
+					for q in queues:
+						queue=q[:-len(postfix)]
+						# (As above) if the All value of the key differs from the DB value, then the All key has been changed and takes precedence
+						if db[cloud][site][queue][param][key] != confd[cloud][site][All][param][key]:
+							allKeyChange = True
+					
+					for q in queues:
+						queue=q[:-len(postfix)]
+						# (As above) if the queue config value of the key differs from the DB value, then the value was changed at the queue level, and
+						
+
+
+						try:
+							if db[cloud][site][queue][param][key] != confd[cloud][site][All][param][key]:
+								confd[cloud][site][queue][param][key] = confd[cloud][site][All][param][key]
+							# (As above) if the queue config value of the key differs from the DB value, then the value was changed at the queue level, and
+							# the All file is no longer valid. We can leave in all the All values, but we need to prioritize the queue.py value over All.
+							elif db[cloud][site][queue][param] != confd[cloud][site][queue][param]:
+								pass
 	
 
 	
