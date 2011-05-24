@@ -121,7 +121,7 @@ def buildUpdateList(updDict,param,key=dbkey):
 		# Fix any NULL values being sent to the DB. The last row added on each loop is checked.
 	for i in l:
 		for key in nonNull:
-			if not i.has_key() or i[key] == None:
+			if not i.has_key(key) or i[key] == None:
 				i[key] = nonNull[key]
 				
 	return l
