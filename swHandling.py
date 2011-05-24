@@ -17,6 +17,7 @@ def translateTags(d):
 		# For each of the possible translations:
 		for t in tagsTranslation:
 			# For each gatekeeper, filter through the list and make any changes necessary. Release records are (release,cmt)
+			print d[key], tag, rel, t, tagsTranslation[t]
 			d[key] = [tag[rel].replace(t,tagsTranslation[t]) for tag in d[key]]
 	
 
