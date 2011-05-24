@@ -120,8 +120,8 @@ def buildUpdateList(updDict,param,key=dbkey):
 		else: l.append(updDict[i])
 		# Fix any NULL values being sent to the DB. The last row added on each loop is checked.
 	for i in l:
-		for key in i:
-			if i[key] == None and key in nonNull.keys():
+		for key in nonNull:
+			if not i.has_key() or i[key] == None:
 				i[key] = nonNull[key]
 				
 	return l
