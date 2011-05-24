@@ -9,7 +9,6 @@ class lcgInfositeTool:
 		self.debug = False		
 		self.CEtags={}		# dict to hold ce:[list of tags]
 		self.CEctags={}		# keep prod and tier cache tags separate 
-		self.Rtags={}		# dict to hold ce:[list of cmt tags]
 		self.StartStr = 'VO-atlas-'	# Fiters ATLAS-specific tags	
 		self.CESep = '%'		# Standard separation between CE and tags
 		self.PortSep = ':'		# Separates CE and port
@@ -55,15 +54,14 @@ class lcgInfositeTool:
 
 		# Build a dictionary with the CEs and the raw release string list as key and value pairs 
 		tags = dict([(i.split(self.PortSep)[0],i.split(self.CESep)[1].split(self.RelSep)) for i in lines if len(i.split(self.CESep)[1].split(self.RelSep)) > self.minlen])
-		origtags = tags
+		origtags = tags.copy()
 
 		# Removing redundant release listings: for each CE gatekeeper, pass the list into a dictionary and take the keys,
 		# guaranteeing that there are no repeats.
-		rtags = dict([(i,sorted(dict([(j,1) for j in tags[i]]).keys())) for i in tags])
-
+		tags = dict([(i,sorted(dict([(j,1) for j in tags[i]]).keys())) for i in tags])
+ 
 		# Removing VO-atlas- and any trailing i686 or opt stuff, and remove all non-ATLAS material 
 		tags = dict([(i,sorted([self.TagSep.join(j.split(self.StartStr)[1].split(self.TagSep)[:2]) for j in rtags[i] if j.startswith(self.StartStr)])) for i in rtags])
-		rtags = dict([(i,sorted([self.TagSep.join(j.split(self.StartStr)[1].split(self.TagSep)[2:]) for j in rtags[i] if j.startswith(self.StartStr)])) for i in rtags])
 
 		# Getting the release caches sorted into their own dictionary
 		ctags = dict([(i,sorted([j for j in tags[i] if j.count(self.CacheSep) >= self.CacheNum])) for i in tags if i.count(self.CacheSep) > 0])
