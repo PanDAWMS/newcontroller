@@ -16,8 +16,8 @@ def translateTags(d):
 	for key in d:
 		# For each of the possible translations:
 		for t in tagsTranslation:
-			# For each gatekeeper, filter through the list and make any changes necessary.
-			d[key] = [tag.replace(t,tagsTranslation[t]) for tag in d[key]]
+			# For each gatekeeper, filter through the list and make any changes necessary. Release records are (release,cmt)
+			d[key] = [tag[rel].replace(t,tagsTranslation[t]) for tag in d[key]]
 	
 
 def updateInstalledSW(confd,lcgdict):
@@ -64,18 +64,19 @@ def updateInstalledSW(confd,lcgdict):
 		# Check for the gatekeeper value in the BDII:
 		if cache_tags.has_key(gatekeeper[queue]):
 			for cache in cache_tags[gatekeeper[queue]]:
+				# Once again -- cache[rel] is cache[0], because the release and cache records are (release,cmt)
 				# ASSUMPTION -- that base releases will always contain two periods as separators
-				release=baseReleaseSep.join(cache.split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
+				release=baseReleaseSep.join(cache[rel].split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
 				# The unique name for this entry
-				index = '%s_%s_%s' % (siteid[queue],release,cache)
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache}
+				index = '%s_%s_%s' % (siteid[queue],release,cache[rel])
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache[rel]}
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
 				cache = 'None'
 				# The unique name for this entry
-				index = '%s_%s_%s' % (siteid[queue],release,cache)
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':None}
+				index = '%s_%s_%s' % (siteid[queue],release[rel],cache[rel])
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':None}
 	
 	unicodeEncode(sw_bdii)
 	unicodeEncode(sw_db)
