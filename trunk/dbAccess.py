@@ -124,7 +124,7 @@ def buildUpdateList(updDict,param,key=dbkey):
 			if not i.has_key(key) or i[key] == None:
 				i[key] = nonNull[key]
 		for key in excl:
-			if i.has_key(key): a=i.pop(k)
+			if i.has_key(key): a=i.pop(key)
 				
 	return l
 	
