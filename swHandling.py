@@ -17,7 +17,7 @@ def translateTags(d):
 		# For each of the possible translations:
 		for t in tagsTranslation:
 			# For each gatekeeper, filter through the list and make any changes necessary. Release records are (release,cmt)
-			d[key] = [(d[key][tag][rel].replace(t,tagsTranslation[t]),d[key][cmt]) for tag in range(len(d[key]))]
+			d[key] = [(d[key][tag][rel].replace(t,tagsTranslation[t]),d[key][tag][cmt]) for tag in range(len(d[key]))]
 	
 
 def updateInstalledSW(confd,lcgdict):
