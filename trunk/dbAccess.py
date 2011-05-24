@@ -123,6 +123,8 @@ def buildUpdateList(updDict,param,key=dbkey):
 		for key in nonNull:
 			if not i.has_key(key) or i[key] == None:
 				i[key] = nonNull[key]
+		for key in excl:
+			if i.has_key(key): a=i.pop(k)
 				
 	return l
 	
