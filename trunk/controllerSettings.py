@@ -42,6 +42,8 @@ jdl = 'JDL' # The parameters dictionary for a JDL specification (no need for ove
 source = 'Source' # The name for a sources dictionary (names the provenance of a setting in the parameters dictionary for a queue
 enab = 'Enabled' # Specifies that a queue has been enabled or disabled -- a variable set to true or false.
 svn = '.svn' # Allows for filtering of SVN directories
+rel = '0'  # rel is the first element of the rel/cmt block in swHandling
+cmt = '1'  # cmt is the second element of the rel/cmt block in swHandling
 
 # Sets the present path as the primary -- allows portability, but the script has to be run from its home directory.
 base_path = os.getcwd()
