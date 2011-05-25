@@ -69,16 +69,14 @@ def updateInstalledSW(confd,lcgdict):
 				release=baseReleaseSep.join(cache[rel].split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
 				# The unique name for this entry
 				index = '%s_%s_%s' % (siteid[queue],release,cache[rel])
-				print index
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache[rel]}
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
 				cache = 'None'
 				# The unique name for this entry
-				index = '%s_%s_%s' % (siteid[queue],release[rel],cache[rel])
-				print index
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':None}
+				index = '%s_%s_%s' % (siteid[queue],release[rel],cache)
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache}
 	
 	unicodeEncode(sw_bdii)
 	unicodeEncode(sw_db)
