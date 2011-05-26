@@ -141,7 +141,7 @@ def loadConfigs():
 			f=file(errorFile,'w')
 			f.write(str(errors))
 			f.close()
-			shortErrors = [')</b></font>'+err.split(')</b></font>')[1] for i in errors]
+			shortErrors = [')</b></font>'+err.split(')</b></font>')[1] for err in errors]
 			emailError(str(shortErrors))
 
 		# Jdllist table gets updated all at once
