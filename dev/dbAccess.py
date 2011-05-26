@@ -62,9 +62,9 @@ def loadInstalledSW():
 		rows = utils.dictcursor().fetchall()
 	# Close DB connection
 	utils.endDB()
-	# Return a dictionaried version of the DB contents, keyed release_site_cache_cmt
+	# Return a dictionaried version of the DB contents, keyed release_site_cache_cmtconfig
 	unicodeConvert(rows)
-	return dict([('%s_%s_%s_%s' % (i['siteid'],i['release'],i['cache'],i['cmt']),i) for i in rows])
+	return dict([('%s_%s_%s_%s' % (i['siteid'],i['release'],i['cache'],i['cmtconfig']),i) for i in rows])
 
 def updateInstalledSWdb(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
@@ -80,7 +80,7 @@ def updateInstalledSWdb(addList, delList):
 	utils.initDB()
 	print "Init DB"
 	for i in addList:
-		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMT) VALUES ('%s','%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmt'])
+		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMTCONFIG) VALUES ('%s','%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmtconfig'])
 		try:
 			utils.dictcursor().execute(sql)
 		except:
