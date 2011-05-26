@@ -55,7 +55,7 @@ def updateInstalledSW(confd,lcgdict):
 
 	# Time to build the master list from BDII:
 
-	# The values will be de-duplicated in a dictionary. Keys will be (siteid,cloud,release,queue) together in a tuple
+	# The values will be de-duplicated in a dictionary. Keys will be (siteid,cloud,release,cmtconfig) together in a tuple
 	# I'm not worried about redundant additions (the dictionary will handle that), but I _am_ concerned about
 	# completeness. This is why I just add EVERYTHING and let the keys sort it out.
 	
@@ -71,14 +71,14 @@ def updateInstalledSW(confd,lcgdict):
 				print release
 				# The unique name for this entry
 				index = '%s_%s_%s_%s' % (siteid[queue],release,cache[rel],cache[cmt])
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache[rel],'cmt':cache[cmt]}
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache[rel],'cmtconfig':cache[cmt]}
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
 				cache = 'None'
 				# The unique name for this entry
 				index = '%s_%s_%s_%s' % (siteid[queue],release[rel],cache,release[cmt])
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache,'cmt':release[cmt]}
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache,'cmtconfig':release[cmt]}
 	
 	unicodeEncode(sw_bdii)
 	unicodeEncode(sw_db)
