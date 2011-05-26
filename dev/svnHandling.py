@@ -27,7 +27,7 @@ def svnCheckout():
 		os.chdir('..')
 	print '####### Checking out the SVN repository anew -- this should be a RARE event! Is this really what you want to do? #############'
 	# Check out the whole repo
-	os.system('svn co %s' % confrepo)
+	os.system('svn co  %s' % confrepo)
 	os.chdir(path)
 	if svnDebug: print 'Completing SVN checkout'
 	return 0
@@ -71,7 +71,7 @@ def svnUpdate():
 		os.chdir('..')
 		#svnCheckout()
 	# Update the whole subversion
-	os.system('svn up')
+	os.system('svn update --accept theirs-full')
 
 	# Back to where you were.
 	os.chdir(path)
@@ -91,7 +91,7 @@ def svnUpdate():
 #	oldpath=os.getcwd()
 #	os.chdir(cfg_path)
 #	# Update the SVN before doing anything else, if required
-#	if update: os.system('svn update')
+#	if update: os.system('svn update --accept theirs-full')
 #	# And check to be sure the lock file is not already locked
 #	if commands.getoutput('grep Locked .lock.py'):
 #		print 'Already locked'
@@ -118,7 +118,7 @@ def svnUpdate():
 #	oldpath=os.getcwd()
 #	os.chdir(cfg_path)
 #	# Update the SVN before doing anything else
-#	os.system('svn update')
+#	os.system('svn update --accept theirs-full')
 #	# And check to be sure the lock file is not already locked
 #	if commands.getoutput('grep Unlocked .lock.py'):
 #		print 'Already unlocked'

@@ -53,7 +53,7 @@ def loadConfigs():
 		# Get the config dictionary directly from the DB, and process the config file update from it.
 		configd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		# Compose the "All" queues for each site
-		status = allMaker(configd, dbd, initial=True)
+		status = allMaker(configd, initial=True)
 		# Make the necessary changes to the configuration files:
 		makeConfigs(configd)
 		# Check the changes just committed into Subversion
@@ -64,7 +64,7 @@ def loadConfigs():
 		svnUpdate()
 	
 	# Load the present config files, based on the SVN update
-	configd = buildDict(dbd)
+	configd = buildDict()
 	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
@@ -77,7 +77,7 @@ def loadConfigs():
 	if not toaOverride: toaIntegrator(configd)
 	
 	# Compose the "All" queues for each site
-	status = allMaker(configd, dbd, initial = False)
+	status = allMaker(configd, initial = False)
 
 	# Make sure all nicknames are kosher
 	nicknameChecker(configd)
@@ -131,14 +131,26 @@ def loadConfigs():
 
 		# Since all inputs are unicode converted, all outputs need to be encoded.
 		unicodeEncode(up_l)
-		utils.replaceDB('schedconfig',up_l,key=dbkey)
+		status=utils.replaceDB('schedconfig',up_l,key=dbkey)
+		status=status.split('<br>')
+		if len(status) < len(up_l):
+			status=[]
+			for up in up_l:
+				status.append(utils.replaceDB('schedconfig',[up],key=dbkey))
+			errors = [stat for stat in status if 'Error' in stat]
+			f=file(errorFile,'w')
+			f.write(str(errors))
+			f.close()
+			shortErrors = [')</b></font>'+err.split(')</b></font>')[1] for i in errors]
+			emailError(str(shortErrors))
 
 		# Jdllist table gets updated all at once
 		print 'Updating JDLList'
 
 		# Since all inputs are unicode converted, all outputs need to be encoded.
 		unicodeEncode(jdl_l)
-		utils.replaceDB('jdllist',jdl_l,key=jdlkey)
+		status=utils.replaceDB('jdllist',jdl_l,key=jdlkey)
+		
 
 		# Changes committed after all is successful, to avoid partial updates
 		utils.commit()

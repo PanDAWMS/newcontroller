@@ -42,6 +42,8 @@ jdl = 'JDL' # The parameters dictionary for a JDL specification (no need for ove
 source = 'Source' # The name for a sources dictionary (names the provenance of a setting in the parameters dictionary for a queue
 enab = 'Enabled' # Specifies that a queue has been enabled or disabled -- a variable set to true or false.
 svn = '.svn' # Allows for filtering of SVN directories
+rel = 0  # rel is the first element of the rel/cmt block in swHandling
+cmt = 1  # cmt is the second element of the rel/cmt block in swHandling
 
 # Sets the present path as the primary -- allows portability, but the script has to be run from its home directory.
 base_path = os.getcwd()
@@ -55,6 +57,7 @@ backupName = 'schedConfigBackup.pickle'
 
 # Paths for run logs (email notification)
 logPath = '/tmp/runProd.log'
+errorFile = '/tmp/pandaUpdateErrors.log'
 
 # Default email address for failure notifications
 
@@ -72,7 +75,7 @@ jdlkey, dbkey, dsep, keysep, pairsep, spacing = 'name', 'nickname', ' : ', "'", 
 shared, unshared = 'shared','unshared'
 
 # These are the DB fields that are required not to be null, along with defaults. 
-nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0'}
+nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0', 'space':'0'}
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
 excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','nqueues','last_status','sysconfig'] # nqueues takes care of a typo
