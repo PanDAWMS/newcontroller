@@ -62,9 +62,9 @@ def loadInstalledSW():
 		rows = utils.dictcursor().fetchall()
 	# Close DB connection
 	utils.endDB()
-	# Return a dictionaried version of the DB contents, keyed release_site_cache
+	# Return a dictionaried version of the DB contents, keyed release_site_cache_cmt
 	unicodeConvert(rows)
-	return dict([('%s_%s_%s' % (i['siteid'],i['release'],i['cache']),i) for i in rows])
+	return dict([('%s_%s_%s_%s' % (i['siteid'],i['release'],i['cache'],i['cmt']),i) for i in rows])
 
 def updateInstalledSWdb(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
@@ -80,7 +80,7 @@ def updateInstalledSWdb(addList, delList):
 	utils.initDB()
 	print "Init DB"
 	for i in addList:
-		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
+		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMT) VALUES ('%s','%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmt'])
 		try:
 			utils.dictcursor().execute(sql)
 		except:
@@ -120,9 +120,11 @@ def buildUpdateList(updDict,param,key=dbkey):
 		else: l.append(updDict[i])
 		# Fix any NULL values being sent to the DB. The last row added on each loop is checked.
 	for i in l:
-		for key in i:
-			if i[key] == None and key in nonNull.keys():
+		for key in nonNull:
+			if not i.has_key(key) or i[key] == None:
 				i[key] = nonNull[key]
+		for key in excl:
+			if i.has_key(key): a=i.pop(key)
 				
 	return l
 	
