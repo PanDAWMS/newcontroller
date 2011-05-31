@@ -152,6 +152,7 @@ def loadConfigs():
 		status=utils.replaceDB('jdllist',jdl_l,key=jdlkey)
 		status=status.split('<br>')
 		if len(status) < len(jdl_l):
+			print "Failed JDL load"
 			status=[]
 			for up in jdl_l:
 				status.append(utils.replaceDB('jdllist',[up],key=jdlkey))
