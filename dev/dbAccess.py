@@ -79,7 +79,10 @@ def updateInstalledSWdb(addList, delList):
 		print 'Using INTR Database'
 	utils.initDB()
 	print "Init DB"
+	counter = 0
 	for i in addList:
+		if not counter % 1000: print counter
+		counter += 1
 		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMTCONFIG) VALUES ('%s','%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmtConfig'])
 		try:
 			utils.dictcursor().execute(sql)
