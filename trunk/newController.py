@@ -68,13 +68,14 @@ def loadConfigs():
 	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
-	
+	print jdldc["ANALY_IllinoisHEP-condor"]['JDL'].keys()	
 	# Add the BDII information, and build a list of releases
 	if not bdiiOverride:
 		linfotool = lcgInfositeTool.lcgInfositeTool()
 	
 	# Now add ToA information
 	if not toaOverride: toaIntegrator(configd)
+	print jdldc["ANALY_IllinoisHEP-condor"]['JDL'].keys()	
 	
 	# Compose the "All" queues for each site
 	status = allMaker(configd, initial = False)
@@ -91,6 +92,7 @@ def loadConfigs():
 		print del_d.keys()
 		print
 	jdl_up_d, jdl_del_d = compareQueues(jdldb, jdldc, dbOverride)
+	print jdldc["ANALY_IllinoisHEP-condor"]['JDL'].keys()	
 	deletes = [del_d[i][dbkey] for i in del_d]
 	if delDebug: print len(deletes)
 	
@@ -108,7 +110,9 @@ def loadConfigs():
 	# The primary key is specified for the replaceDB method. For schedconfig, it's dbkey, and for the jdls it's jdlkey
 	# (specified in controllerSettings
 	up_l = buildUpdateList(up_d,param,dbkey)
+	print jdldc["ANALY_IllinoisHEP-condor"]['JDL'].keys()	
 	jdl_l = buildUpdateList(jdl_up_d,jdl,jdlkey)
+	print jdldc["ANALY_IllinoisHEP-condor"]['JDL'].keys()	
 
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
@@ -146,10 +150,13 @@ def loadConfigs():
 
 		# Jdllist table gets updated all at once
 		print 'Updating JDLList'
+		print jdldc["ANALY_IllinoisHEP-condor"]['JDL'].keys()	
 
 		# Since all inputs are unicode converted, all outputs need to be encoded.
 		unicodeEncode(jdl_l)
+		print jdldc["ANALY_IllinoisHEP-condor"]['JDL'].keys()	
 		status=utils.replaceDB('jdllist',jdl_l,key=jdlkey)
+		
 		status=status.split('<br>')
 		if len(status) < len(jdl_l):
 			print "Failed JDL load"
