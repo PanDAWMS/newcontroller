@@ -150,6 +150,17 @@ def loadConfigs():
 		# Since all inputs are unicode converted, all outputs need to be encoded.
 		unicodeEncode(jdl_l)
 		status=utils.replaceDB('jdllist',jdl_l,key=jdlkey)
+		status=status.split('<br>')
+		if len(status) < len(jdl_l):
+			status=[]
+			for up in jdl_l:
+				status.append(utils.replaceDB('jdllist',[up],key=jdlkey))
+			errors = [stat for stat in status if 'Error' in stat]
+			f=file(errorFileJDL,'w')
+			f.write(str(errors))
+			f.close()
+			shortErrors = [')</b></font>'+err.split(')</b></font>')[1] for i in errors]
+			emailError(str(shortErrors))
 		
 
 		# Changes committed after all is successful, to avoid partial updates
