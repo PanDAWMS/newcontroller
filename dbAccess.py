@@ -80,7 +80,7 @@ def updateInstalledSWdb(addList, delList):
 	utils.initDB()
 	print "Init DB"
 	for i in addList:
-		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMT) VALUES ('%s','%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmt'])
+		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
 		try:
 			utils.dictcursor().execute(sql)
 		except:
