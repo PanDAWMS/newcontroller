@@ -85,6 +85,7 @@ def updateInstalledSWdb(addList, delList):
 			utils.dictcursor().execute(sql)
 		except:
 			print "SQL failed: %s" % sql 
+			print i['siteid'],i['cloud'],i['release'],i['cache'],i['cmt']
 		
 	for i in delList:
 		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s'" % (i['siteid'],i['release'],i['cache'])
