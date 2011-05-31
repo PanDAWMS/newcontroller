@@ -80,6 +80,7 @@ def updateInstalledSWdb(addList, delList):
 	utils.initDB()
 	print "Init DB"
 	counter = 0
+	print len(addList)
 	for i in addList:
 		if not counter % 1000: print counter
 		counter += 1
