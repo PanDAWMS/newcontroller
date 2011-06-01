@@ -108,7 +108,7 @@ def loadConfigs():
 	# (specified in controllerSettings
 	up_l = buildUpdateList(up_d,param,dbkey)
 	jdl_l = buildUpdateList(jdl_up_d,jdl,jdlkey)
-	print jdldc["ANALY_IllinoisHEP-condor"]['JDL'].keys()	
+
 
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
@@ -146,11 +146,9 @@ def loadConfigs():
 
 		# Jdllist table gets updated all at once
 		print 'Updating JDLList'
-		print jdldc["ANALY_IllinoisHEP-condor"]['JDL'].keys()	
 
 		# Since all inputs are unicode converted, all outputs need to be encoded.
 		unicodeEncode(jdl_l)
-		print jdldc["ANALY_IllinoisHEP-condor"]['JDL'].keys()	
 		status=utils.replaceDB('jdllist',jdl_l,key=jdlkey)
 		
 		status=status.split('<br>')
