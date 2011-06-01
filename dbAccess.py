@@ -64,7 +64,7 @@ def loadInstalledSW():
 	utils.endDB()
 	# Return a dictionaried version of the DB contents, keyed release_site_cache_cmt
 	unicodeConvert(rows)
-	return dict([('%s_%s_%s' % (i['siteid'],i['release'],i['cache']),i) for i in rows])
+	return dict([('%s_%s_%s_%s' % (i['siteid'],i['release'],str(i['cache']).replace('None',''),str(i['cmtConfig']).replace('None','')),i) for i in rows])
 
 def testLoad():
 	'''Load the values from the installedsw table into a dictionary keyed by release_site_cache'''
@@ -100,7 +100,7 @@ def updateInstalledSWdb(addList, delList):
 	utils.initDB()
 	print "Init DB"
 	for i in addList:
-		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
+		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMTCONFIG) VALUES ('%s','%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmtConfig'])
 		try:
 			utils.dictcursor().execute(sql)
 		except:
@@ -108,12 +108,13 @@ def updateInstalledSWdb(addList, delList):
 	utils.commit()
 		
 	for i in delList:
-		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s'" % (i['siteid'],i['release'],i['cache'])
-		if i['cache'] is None: sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
+		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s' and cmtconfig = '%s'" % (i['siteid'],i['release'],i['cache'],i['cmtConfig'])
+		if i['cache'] == 'None' or i['cache'] == '' or i['cmtConfig'] == None:
+			sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
+		if i['cmtConfig'] == 'None' or i['cmtConfig'] == '' or i['cmtConfig'] == None: sql += " and cmtconfig is NULL"
+		else: sql += " and cmtconfig = '%s'" % i['cmtConfig']
 		utils.dictcursor().execute(sql)
-		
 	utils.commit()
-	utils.endDB()
 
 def testUpdate(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
@@ -142,7 +143,6 @@ def testUpdate(addList, delList):
 			sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
 		if i['cmtConfig'] == 'None' or i['cmtConfig'] == '' or i['cmtConfig'] == None: sql += " and cmtconfig is NULL"
 		else: sql += " and cmtconfig = '%s'" % i['cmtConfig']
-		print sql
 		utils.dictcursor().execute(sql)
 	utils.commit()
 		
