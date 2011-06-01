@@ -52,6 +52,7 @@ def updateInstalledSW(confd,lcgdict):
 			else:
 				cloud.pop(queue)
 				siteid.pop(queue)
+
 	# Time to build the master list from BDII:
 
 	# The values will be de-duplicated in a dictionary. Keys will be (siteid,cloud,release,queue) together in a tuple
@@ -67,16 +68,17 @@ def updateInstalledSW(confd,lcgdict):
 				# Once again -- cache[rel] is cache[0], because the release and cache records are (release,cmt)
 				# ASSUMPTION -- that base releases will always contain two periods as separators
 				release=baseReleaseSep.join(cache[rel].split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
+				print release
 				# The unique name for this entry
-				index = '%s_%s_%s' % (siteid[queue],release,cache[rel])
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache[rel]}
+				index = '%s_%s_%s_%s' % (siteid[queue],release,cache[rel],'cmt':cache[cmt])
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache[rel],'cmt':cache[cmt]}
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
 				cache = 'None'
 				# The unique name for this entry
-				index = '%s_%s_%s' % (siteid[queue],release[rel],cache)
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache}
+				index = '%s_%s_%s_%s' % (siteid[queue],release,cache,release[cmt])
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache,'cmt':release[cmt]}
 	
 	unicodeEncode(sw_bdii)
 	unicodeEncode(sw_db)
