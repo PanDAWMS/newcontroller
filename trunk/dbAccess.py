@@ -128,15 +128,15 @@ def testUpdate(addList, delList):
 	utils.initDB()
 	print "Init DB"
 	for i in addList:
-		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
+		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMTCONFIG) VALUES ('%s','%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmtConfig'])
 		try:
 			utils.dictcursor().execute(sql)
 		except:
 			print "SQL failed: %s" % sql 
 		
 	for i in delList:
-		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s'" % (i['siteid'],i['release'],i['cache'])
-		if i['cache'] is None: sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
+		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s' and cmtconfig = '%s'" % (i['siteid'],i['release'],i['cache'],i['cmtConfig'])
+		if i['cache'] is None: sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL and cmtconfig = '%s'" % (i['siteid'],i['release'],i['cmtConfig'])
 		utils.dictcursor().execute(sql)
 		
 	utils.commit
