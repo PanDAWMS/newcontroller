@@ -149,36 +149,19 @@ def testUpdate(addList, delList):
 	utils.endDB()
 
 def execUpdate(updateList):
-	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
-	unicodeEncode(addList)
-	unicodeEncode(delList)
-
-	delList=[i for i in delList]
-
-   	if safety is 'on': utils.setTestDB()
+	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
+	if safety is 'on': utils.setTestDB()
 	if setINTR:
 		utils.setTestDB()
 		print 'Using INTR Database'
 	utils.initDB()
-	print "Init DB"
-	for i in addList:
-		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMTCONFIG) VALUES ('%s','%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmtConfig'])
-		try:
-			utils.dictcursor().execute(sql)
-		except:
-			print "SQL failed: %s" % sql 
+	for query in updateList:
+		# Each update is pre-rolled -- just gets executed
+		utils.dictcursor().execute(query)
+	# Commit all the updates
 	utils.commit()
-		
-	for i in delList:
-		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s' and cmtconfig = '%s'" % (i['siteid'],i['release'],i['cache'],i['cmtConfig'])
-		if i['cache'] == 'None' or i['cache'] == '' or i['cmtConfig'] == None:
-			sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
-		if i['cmtConfig'] == 'None' or i['cmtConfig'] == '' or i['cmtConfig'] == None: sql += " and cmtconfig is NULL"
-		else: sql += " and cmtconfig = '%s'" % i['cmtConfig']
-		utils.dictcursor().execute(sql)
-	utils.commit()
-		
-	utils.endDB()
+	utils.closeDB()
+	return 
 
 def buildUpdateList(updDict,param,key=dbkey):
 	'''Build a list of dictionaries that define queues''' 
