@@ -219,14 +219,14 @@ def unicodeDictEncode(d):
 def unicodeTupleEncode(t):
 	'''Encodes all strings in a tuple from unicode to UTF-8, or the default.'''
 	new_tuple_list=[]
-	for i in t:
-		if type(t[i]) == unicode: new_tuple_list.append(i.encode(unidef,'ignore'))
-		elif type(t[i]) == dict:
+	for n, i in enumerate(t):
+		if type(i) == unicode: new_tuple_list.append(i.encode(unidef,'ignore'))
+		elif type(i) == dict:
 			unicodeDictEncode(i)
 			new_tuple_list.append(i)
-		elif type(t[i]) == list:
+		elif type(i) == list:
 			unicodeListEncode(i)
 			new_tuple_list.append(i)
-		elif type(t[i]) == tuple: new_tuple_list.append(unicodeTupleEncode(i))
-		elif type(t[i]) == str: new_tuple_list.append(i.encode(unidef,'ignore'))
+		elif type(i) == tuple: new_tuple_list.append(unicodeTupleEncode(i))
+		elif type(i) == str: new_tuple_list.append(i.encode(unidef,'ignore'))
 	return t
