@@ -99,7 +99,7 @@ def updateInstalledSW(confd,lcgdict):
 def testSW(confd,lcgdict):
 	'''Checks for changes to the installedsw table, and add or delete releases as necessary by site'''
 	# Call on the DB to get the present installedsw version. From dbAccess
-	sw_db = loadInstalledSW()
+	sw_db = testLoad()
 	# Get the present BDII tags information from the (previously called) lcgInfositeTool2 
 	release_tags = lcgdict.CEtags
 	cache_tags = lcgdict.CEctags
