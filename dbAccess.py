@@ -140,7 +140,7 @@ def testUpdate(addList, delList):
 		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s' and cmtconfig = '%s'" % (i['siteid'],i['release'],i['cache'],i['cmtConfig'])
 		if i['cache'] is 'None':
 			sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
-		if i['cmtconfig'] is 'None': sql += " and cmtconfig is NULL"
+		if i['cmtConfig'] is 'None': sql += " and cmtconfig is NULL"
 		else: sql += " and cmtconfig = '%s'" % i['cmtConfig']
 		print sql
 		utils.dictcursor().execute(sql)
