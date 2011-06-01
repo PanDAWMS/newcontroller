@@ -138,9 +138,9 @@ def testUpdate(addList, delList):
 		
 	for i in delList:
 		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s' and cmtconfig = '%s'" % (i['siteid'],i['release'],i['cache'],i['cmtConfig'])
-		if i['cache'] == 'None' or i['cache'] == '':
+		if i['cache'] == 'None' or i['cache'] == '' or i['cmtConfig'] == None:
 			sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
-		if i['cmtConfig'] == 'None' or i['cmtConfig'] == '': sql += " and cmtconfig is NULL"
+		if i['cmtConfig'] == 'None' or i['cmtConfig'] == '' or i['cmtConfig'] == None: sql += " and cmtconfig is NULL"
 		else: sql += " and cmtconfig = '%s'" % i['cmtConfig']
 		print sql
 		utils.dictcursor().execute(sql)
