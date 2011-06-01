@@ -64,7 +64,7 @@ def loadInstalledSW():
 	utils.endDB()
 	# Return a dictionaried version of the DB contents, keyed release_site_cache_cmt
 	unicodeConvert(rows)
-	return dict([('%s_%s_%s' % (i['siteid'],i['release'],i['cache']),i) for i in rows])
+	return dict([('%s_%s_%s_%s' % (i['siteid'],i['release'],i['cache'],i['cmtConfig']),i) for i in rows])
 
 def updateInstalledSWdb(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
@@ -80,15 +80,15 @@ def updateInstalledSWdb(addList, delList):
 	utils.initDB()
 	print "Init DB"
 	for i in addList:
-		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE) VALUES ('%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'])
+		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMTCONFIG) VALUES ('%s','%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmtConfig'])
 		try:
 			utils.dictcursor().execute(sql)
 		except:
 			print "SQL failed: %s" % sql 
 		
 	for i in delList:
-		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s'" % (i['siteid'],i['release'],i['cache'])
-		if i['cache'] is None: sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
+		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s' and cmtconfig = '%s'" % (i['siteid'],i['release'],i['cache'],i['cmtConfig'])
+		if i['cache'] is None: sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL and cmtconfig = '%s'" % (i['siteid'],i['release'],i['cmtConfig'])
 		utils.dictcursor().execute(sql)
 		
 	utils.commit
