@@ -113,6 +113,7 @@ def updateInstalledSWdb(addList, delList):
 			sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
 		if i['cmtConfig'] == 'None' or i['cmtConfig'] == '' or i['cmtConfig'] == None: sql += " and cmtconfig is NULL"
 		else: sql += " and cmtconfig = '%s'" % i['cmtConfig']
+		print sql
 		utils.dictcursor().execute(sql)
 	utils.commit()
 
