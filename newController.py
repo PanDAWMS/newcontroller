@@ -33,16 +33,6 @@ except:
 	print "Cannot import lcgInfositeTool, will exit"
 	sys.exit(-1)
 
-def loadJdl():
-	'''Runs the jdllist table updates'''
-	
-	jdldb = {}
-	jdlListAdder(jdldb)
-	jdldc=buildJdlDict()
-	unicodeConvert(jdldb)
-	unicodeConvert(jdldc)
-	
-	return jdldb, jdldc
 
 def loadConfigs():
 	'''Run the schedconfig table updates'''

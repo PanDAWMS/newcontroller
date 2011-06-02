@@ -11,6 +11,18 @@ from dbAccess import utils
 from configFileHandling import *
 from controllerSettings import *
 from svnHandling import *
+from miscUtils import *
+
+def loadJdl():
+	'''Runs the jdllist table updates'''
+	
+	jdldb = {}
+	jdlListAdder(jdldb)
+	jdldc=buildJdlDict()
+	unicodeConvert(jdldb)
+	unicodeConvert(jdldc)
+	
+	return jdldb, jdldc
 
 def buildJdlFiles(d):
 	'''Build the JDL configuration files'''
