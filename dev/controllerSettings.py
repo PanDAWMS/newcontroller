@@ -58,6 +58,7 @@ backupName = 'schedConfigBackup.pickle'
 # Paths for run logs (email notification)
 logPath = '/tmp/runProd.log'
 errorFile = '/tmp/pandaUpdateErrors.log'
+errorFileJDL = '/tmp/pandaUpdateErrorsJDL.log'
 
 # Default email address for failure notifications
 

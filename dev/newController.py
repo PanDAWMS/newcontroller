@@ -33,16 +33,6 @@ except:
 	print "Cannot import lcgInfositeTool, will exit"
 	sys.exit(-1)
 
-def loadJdl():
-	'''Runs the jdllist table updates'''
-	
-	jdldb = {}
-	jdlListAdder(jdldb)
-	jdldc=buildJdlDict()
-	unicodeConvert(jdldb)
-	unicodeConvert(jdldc)
-	
-	return jdldb, jdldc
 
 def loadConfigs():
 	'''Run the schedconfig table updates'''
@@ -68,14 +58,13 @@ def loadConfigs():
 	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
-	
 	# Add the BDII information, and build a list of releases
 	if not bdiiOverride:
 		linfotool = lcgInfositeTool.lcgInfositeTool()
 	
 	# Now add ToA information
 	if not toaOverride: toaIntegrator(configd)
-	
+	#if not bdiiOverride: bdiiIntegrator(configd,dbd,linfotool)
 	# Compose the "All" queues for each site
 	status = allMaker(configd, initial = False)
 
@@ -110,6 +99,7 @@ def loadConfigs():
 	up_l = buildUpdateList(up_d,param,dbkey)
 	jdl_l = buildUpdateList(jdl_up_d,jdl,jdlkey)
 
+
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
 		utils.initDB()
@@ -141,7 +131,7 @@ def loadConfigs():
 			f=file(errorFile,'w')
 			f.write(str(errors))
 			f.close()
-			shortErrors = [')</b></font>'+err.split(')</b></font>')[1] for err in errors]
+			shortErrors = [')</b></font>'+err.split(')</b></font>')[1] for i in errors]
 			emailError(str(shortErrors))
 
 		# Jdllist table gets updated all at once
@@ -150,6 +140,19 @@ def loadConfigs():
 		# Since all inputs are unicode converted, all outputs need to be encoded.
 		unicodeEncode(jdl_l)
 		status=utils.replaceDB('jdllist',jdl_l,key=jdlkey)
+		
+		status=status.split('<br>')
+		if len(status) < len(jdl_l):
+			print "Failed JDL load"
+			status=[]
+			for up in jdl_l:
+				status.append(utils.replaceDB('jdllist',[up],key=jdlkey))
+			errors = [stat for stat in status if 'Error' in stat]
+			f=file(errorFileJDL,'w')
+			f.write(str(errors))
+			f.close()
+			shortErrors = [')</b></font>'+err.split(')</b></font>')[1] for i in errors]
+			emailError(str(shortErrors))
 		
 
 		# Changes committed after all is successful, to avoid partial updates

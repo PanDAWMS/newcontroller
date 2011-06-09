@@ -62,9 +62,9 @@ def loadInstalledSW():
 		rows = utils.dictcursor().fetchall()
 	# Close DB connection
 	utils.endDB()
-	# Return a dictionaried version of the DB contents, keyed release_site_cache_cmtconfig
+	# Return a dictionaried version of the DB contents, keyed release_site_cache_cmt
 	unicodeConvert(rows)
-	return dict([('%s_%s_%s_%s' % (i['siteid'],i['release'],i['cache'],i['cmtConfig']),i) for i in rows])
+	return dict([('%s_%s_%s_%s' % (i['siteid'],i['release'],str(i['cache']).replace('None',''),str(i['cmtConfig']).replace('None','')),i) for i in rows])
 
 def updateInstalledSWdb(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
@@ -79,24 +79,23 @@ def updateInstalledSWdb(addList, delList):
 		print 'Using INTR Database'
 	utils.initDB()
 	print "Init DB"
-	counter = 0
-	print len(addList)
 	for i in addList:
-		if not counter % 1000: print counter
-		counter += 1
 		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMTCONFIG) VALUES ('%s','%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmtConfig'])
 		try:
 			utils.dictcursor().execute(sql)
 		except:
 			print "SQL failed: %s" % sql 
-
-	for i in delList:
-		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s'" % (i['siteid'],i['release'],i['cache'])
-		if i['cache'] is None: sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache is NULL" % (i['siteid'],i['release'])
-		utils.dictcursor().execute(sql)
+	utils.commit()
 		
-	utils.commit
-	utils.endDB()
+	for i in delList:
+		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s' and cmtconfig = '%s'" % (i['siteid'],i['release'],i['cache'],i['cmtConfig'])
+		if i['cache'] == 'None' or i['cache'] == '' or i['cmtConfig'] == None:
+			sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and (cache is NULL or cache = 'None' or cache = '')" % (i['siteid'],i['release'])
+		if i['cmtConfig'] == 'None' or i['cmtConfig'] == '' or i['cmtConfig'] == None: sql += " and cmtconfig is NULL"
+		else: sql += " and cmtconfig = '%s'" % i['cmtConfig']
+		print sql
+		utils.dictcursor().execute(sql)
+	utils.commit()
 
 def execUpdate(updateList):
 	''' Run the updates into the schedconfig database -- does not use bind variables. Use replaceDB for large replace ops.'''
@@ -123,12 +122,13 @@ def buildUpdateList(updDict,param,key=dbkey):
 			l[-1][key] = i
 		else: l.append(updDict[i])
 		# Fix any NULL values being sent to the DB. The last row added on each loop is checked.
-	for i in l:
-		for key in nonNull:
-			if not i.has_key(key) or i[key] == None:
-				i[key] = nonNull[key]
-		for key in excl:
-			if i.has_key(key): a=i.pop(key)
+	if key == dbkey:
+		for i in l:
+			for key in nonNull:
+				if not i.has_key(key) or i[key] == None:
+					i[key] = nonNull[key]
+			for key in excl:
+				if i.has_key(key): a=i.pop(key)
 				
 	return l
 	
