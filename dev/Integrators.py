@@ -62,14 +62,15 @@ def loadBDII():
 	if os.path.exists('%s/lcgLoad.py' % base_path):
 		print 'Updating LCG sites from BDII'
 		try:
-			commands.getoutput('./lcgLoad.py > lcgload.log')
+			commands.getoutput('python2.5 %s/lcgLoad.py > lcgload.log' % base_path)
 		except Exception, e:
 			print 'Running lcgLoad.py failed:', e
 			print 'Reusing existing lcgQueueUpdate.py'
-		execfile('lcgQueueUpdate.py')
+		if os.path.exists('%s/lcgQueueUpdate.py' % base_path): execfile('lcgQueueUpdate.py')
 		print 'LCG Initial Load Complete'
 	else:
 		loadlcg = 0
+		print 'BDII Load Failed '
 	unicodeConvert(osgsites)
 	print len(osgsites)
 	return osgsites
