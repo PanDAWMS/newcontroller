@@ -64,6 +64,7 @@ def loadConfigs():
 	
 	# Now add ToA information
 	if not toaOverride: toaIntegrator(configd)
+	# and integrate the BDII information
 	#if not bdiiOverride: bdiiIntegrator(configd,dbd,linfotool)
 	# Compose the "All" queues for each site
 	status = allMaker(configd, initial = False)
