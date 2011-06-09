@@ -301,6 +301,14 @@ def bdiiIntegrator(confd,d,linfotool=None):
 			confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
 			print 'Creating queue %s in site %s and cloud %s as requested by BDII. This queue must be enabled by hand.' % (nickname, s, c)
 
+
+		# Putting the gstat population independent of the "manual" check
+		print 'Checking gstats'
+		print 'Bdict length: %d' % len(bdict)
+		confd[c][s][nickname][param]['gstat'] = bdict[qn]['gstat']
+		# Complete the sourcing info
+		confd[c][s][nickname][source]['gstat'] = 'BDII'
+
 		# Check for manual setting. If it's manual, DON'T TOUCH
 		if not confd[c][s][nickname].has_key(param): continue
 		if confd[c][s][nickname][param].has_key('sysconfig'):
@@ -316,8 +324,6 @@ def bdiiIntegrator(confd,d,linfotool=None):
 		if not confd[c][s][nickname][param]['jdladd']: confd[c][s][nickname][param]['jdladd'] = bdict[qn]['jdladd']
 		if not confd[c][s][nickname][param]['jdladd'].find('Queue') > 0: confd[c][s][nickname][param]['jdladd'] += '\n\nQueue\n'
 		# For all the simple translations, copy them in directly.
-		print 'Checking gstats'
-		print len(bdict)
 		for key in ['localqueue','system','gatekeeper','jobmanager','site','region','gstat']:
 			confd[c][s][nickname][param][key] = bdict[qn][key]
 			# Complete the sourcing info
