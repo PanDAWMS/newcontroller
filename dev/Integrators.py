@@ -58,7 +58,8 @@ def loadBDII():
 	This file is executed (even if generating it failed this time) and populated a dictionary of queue definitions, which is
 	returned.'''
 	osgsites={}
-	if os.path.exists('lcgLoad.py'):
+	print base_path
+	if os.path.exists('%s/lcgLoad.py' % base_path):
 		print 'Updating LCG sites from BDII'
 		try:
 			commands.getoutput('./lcgLoad.py > lcgload.log')
@@ -244,7 +245,9 @@ def bdiiIntegrator(confd,d,linfotool=None):
 	print 'Running BDII Integrator'
 	out = {}
 	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
+	print 'Loading BDII'
 	bdict = loadBDII()
+	len(bdict)
 	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and releases available on the sites 
 	if bdiiDebug: print 'Running the LGC SiteInfo tool'
 	if not linfotool:
@@ -300,6 +303,13 @@ def bdiiIntegrator(confd,d,linfotool=None):
 		if not confd[c][s].has_key(nickname):
 			confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
 			print 'Creating queue %s in site %s and cloud %s as requested by BDII. This queue must be enabled by hand.' % (nickname, s, c)
+
+		# Before a "manual" check, update less crucial BDII params
+		for key in ['localqueue','system','gatekeeper','jobmanager','site','region','gstat']:
+			print 'gstat'
+			confd[c][s][nickname][param][key] = bdict[qn][key]
+			# Complete the sourcing info
+			confd[c][s][nickname][source][key] = 'BDII'
 
 		# Check for manual setting. If it's manual, DON'T TOUCH
 		if not confd[c][s][nickname].has_key(param): continue
