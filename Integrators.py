@@ -70,6 +70,7 @@ def loadBDII():
 	else:
 		loadlcg = 0
 	unicodeConvert(osgsites)
+	print len(osgsites)
 	return osgsites
 
 def keyCheckReplace(d,key,value):
