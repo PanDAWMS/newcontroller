@@ -64,7 +64,7 @@ def loadConfigs():
 	
 	# Now add ToA information
 	if not toaOverride: toaIntegrator(configd)
-	if not bdiiOverride: bdiiIntegrator(configd,dbd,linfotool)
+	#if not bdiiOverride: bdiiIntegrator(configd,dbd,linfotool)
 	# Compose the "All" queues for each site
 	status = allMaker(configd, initial = False)
 
@@ -131,7 +131,7 @@ def loadConfigs():
 			f=file(errorFile,'w')
 			f.write(str(errors))
 			f.close()
-			shortErrors = [')</b></font>'+err.split(')</b></font>')[1] for i in errors]
+			shortErrors = [')</b></font>'+err.split(')</b></font>')[1] for err in errors]
 			emailError(str(shortErrors))
 
 		# Jdllist table gets updated all at once
