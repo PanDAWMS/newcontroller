@@ -58,7 +58,7 @@ def loadBDII():
 	This file is executed (even if generating it failed this time) and populated a dictionary of queue definitions, which is
 	returned.'''
 	osgsites={}
-	print base_path
+	os.chdir(base_path)
 	if os.path.exists('%s/lcgLoad.py' % base_path):
 		print 'Updating LCG sites from BDII'
 		try:
@@ -240,6 +240,21 @@ def toaIntegrator(confd):
 	print 'Finished ToA integrator'
 	return
 
+def newBDIIIntegrator(confd, d, linfotool=None):
+	print 'Running BDII Integrator'
+	out = {}
+	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
+	print 'Loading BDII'
+	bdict = loadBDII()
+	len(bdict)
+	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and releases available on the sites 
+	if bdiiDebug: print 'Running the LGC SiteInfo tool'
+	if not linfotool:
+		linfotool = lcgInfositeTool.lcgInfositeTool()
+	if bdiiDebug: print 'Completed the LGC SiteInfo tool run'
+	
+	pass
+
 def bdiiIntegrator(confd,d,linfotool=None):
 	'''Adds BDII values to the configurations, overriding what was there. Must be run after downloading the DB
 	and parsing the config files.'''
@@ -306,8 +321,7 @@ def bdiiIntegrator(confd,d,linfotool=None):
 			print 'Creating queue %s in site %s and cloud %s as requested by BDII. This queue must be enabled by hand.' % (nickname, s, c)
 
 		# Before a "manual" check, update less crucial BDII params
-		for key in ['localqueue','system','gatekeeper','jobmanager','site','region','gstat']:
-			print 'gstat'
+		for key in ['region','gstat']:
 			confd[c][s][nickname][param][key] = bdict[qn][key]
 			# Complete the sourcing info
 			confd[c][s][nickname][source][key] = 'BDII'
