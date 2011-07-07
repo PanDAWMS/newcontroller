@@ -26,7 +26,7 @@ from svnHandling import *
 from backupHandling import *
 from swHandling import *
 from lesserTablesController import *
-
+from accessControl import *
 try:
 	import lcgInfositeTool2 as lcgInfositeTool
 except:
@@ -183,6 +183,9 @@ def loadConfigs():
 	if not toaOverride and not bdiiOverride and safety is 'off': svnCheckin(svnstring)
 	# Create a backup pickle of the finalized DB as it stands.
 	backupCreate(newdb)
+
+	# Fix any needed sites/clouds on access control
+	readAccessControl()
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug:
