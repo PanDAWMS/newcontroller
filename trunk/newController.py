@@ -27,6 +27,7 @@ from backupHandling import *
 from swHandling import *
 from lesserTablesController import *
 from accessControl import *
+
 try:
 	import lcgInfositeTool2 as lcgInfositeTool
 except:
@@ -185,7 +186,7 @@ def loadConfigs():
 	backupCreate(newdb)
 
 	# Fix any needed sites/clouds on access control
-	readAccessControl()
+	# readAccessControl()
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug:
