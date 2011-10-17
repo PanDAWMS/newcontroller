@@ -83,7 +83,7 @@ excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','nqueues','
 
 # Standard mappings for legacy software tags in the BDII:
 
-tagsTranslation = {'offline':'AtlasOffline'',production':'AtlasProduction','tier0':'AtlasTier0','topphys':'TopPhys','wzbenchmarks':'WZBenchmarks'}
+tagsTranslation = {'offline':'AtlasOffline','production':'AtlasProduction','tier0':'AtlasTier0','topphys':'TopPhys','wzbenchmarks':'WZBenchmarks'}
 
 # Clouds that don't auto-populate from BDII
 
