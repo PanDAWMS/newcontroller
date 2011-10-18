@@ -23,7 +23,7 @@ def volatileSQLCreate():
 	bfile = backupPath + timestamp + volatileBackupName
 	f=file(bfile,'w')
 	for i in d:
-		'UPDATE atlas_pandameta.schedconfig set status = \'%s\', nqueue = %s, multicloud = \'%s\', sysconfig = \'%s\', dn = \'%s\', space = %s, comment_ = \'%s\' WHERE nickname = \'%s\';\n' % (d[i]['status'], d[i]['nqueue'],d[i]['multicloud'],d[i]['sysconfig'],d[i]['dn'],d[i]['space'],d[i]['comment_'], i)
+		f.write('UPDATE atlas_pandameta.schedconfig set status = \'%s\', nqueue = %s, multicloud = \'%s\', sysconfig = \'%s\', dn = \'%s\', space = %s, comment_ = \'%s\' WHERE nickname = \'%s\';\n' % (d[i]['status'], d[i]['nqueue'],d[i]['multicloud'],d[i]['sysconfig'],d[i]['dn'],d[i]['space'],d[i]['comment_'], i))
 	f.close()
 	os.system('tar czf %s.tgz %s; rm -rf %s' % (bfile,bfile,bfile))
 	return 0
