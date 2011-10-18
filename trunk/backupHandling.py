@@ -52,16 +52,16 @@ def backupRestore(fname):
 	''' Restore a DB backup pickle into the live database! Caution! If you err, you will hose the database! '''
 	try:
 		# Set up the file
-		os.system('tar xzf %s' % backupPath+fname)
-		f=file(backupPath+fname)
+		f=gzip.open(backupPath+fname+'.gz')
 	except IOError:
-		print 'File %s is not found at %s. Exiting.' % (fname, backupPath)
+		print 'File %s is not found at %s. Exiting.' % (fname+'.gz', backupPath)
 		return 1
 	try:
 		# And load the pickle inside, if possible
 		l=pickle.load(f)
+		f.close()
 	except:
-		print 'File %s%s not in backup/pickle format. Exiting.' % (fname, backupPath)
+		print 'File %s%s not in backup/pickle format. Exiting.' % (fname+'.gz', backupPath)
 		return 1
 	# Enable the DB
 	utils.initDB()
