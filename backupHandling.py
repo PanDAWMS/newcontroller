@@ -20,7 +20,7 @@ def volatileSQLCreate():
 		# And make one if not present
 		os.makedirs(backupPath)
 	timestamp = '_'.join([str(i) for i in time.gmtime()[:-3]])+'_'
-	bfile = backupPath + timestamp + backupName
+	bfile = backupPath + timestamp + volatileBackupName
 	f=file(bfile,'w')
 	for i in d:
 		'UPDATE atlas_pandameta.schedconfig set status = \'%s\', nqueue = %s, multicloud = \'%s\', sysconfig = \'%s\', dn = \'%s\', space = %s, comment_ = \'%s\' WHERE nickname = \'%s\';\n' % (d[i]['status'], d[i]['nqueue'],d[i]['multicloud'],d[i]['sysconfig'],d[i]['dn'],d[i]['space'],d[i]['comment_'], i)
