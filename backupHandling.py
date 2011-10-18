@@ -21,12 +21,11 @@ def volatileSQLCreate():
 		os.makedirs(backupPath)
 	timestamp = '_'.join([str(i) for i in time.gmtime()[:-3]])+'_'
 	bfile = backupPath + timestamp + backupName
-	bfilename = timestamp + backupName
 	f=file(bfile,'w')
 	for i in d:
 		'UPDATE atlas_pandameta.schedconfig set status = \'%s\', nqueue = %s, multicloud = \'%s\', sysconfig = \'%s\', dn = \'%s\', space = %s, comment_ = \'%s\' WHERE nickname = \'%s\';\n' % (d[i]['status'], d[i]['nqueue'],d[i]['multicloud'],d[i]['sysconfig'],d[i]['dn'],d[i]['space'],d[i]['comment_'], i)
 	f.close()
-	os.system('tar czf %s.tgz %s; rm -rf %s' % (bfile,bfilename,bfile))
+	os.system('tar czf %s.tgz %s; rm -rf %s' % (bfile,bfile,bfile))
 	return 0
 
 def backupCreate(d):
@@ -41,14 +40,13 @@ def backupCreate(d):
 		os.makedirs(backupPath)
 	# Opens the backup file and path
 	bfile = backupPath + timestamp + backupName
-	bfilename = timestamp + backupName
 	f=file(bfile,'w')
 	# Temporary dictionary collapsed from d
 	td = collapseDict(d)
 	# Creates a list from the collapsed queue def dictionary and pickles it into the file
 	pickle.dump([td[i] for i in td],f)
 	f.close()
-	os.system('tar czf %s.tgz %s; rm -rf %s' % (bfile,bfilename,bfile))
+	os.system('tar czf %s.tgz %s; rm -rf %s' % (bfile,bfile,bfile))
 	if pickleDebug: print 'Ending pickle creation'
 	return 0
 
