@@ -19,6 +19,7 @@ def volatileSQLCreate():
 	except:
 		# And make one if not present
 		os.makedirs(backupPath)
+	timestamp = '_'.join([str(i) for i in time.gmtime()[:-3]])+'_'
 	bfile = backupPath + timestamp + backupName
 	bfilename = timestamp + backupName
 	f=file(bfile,'w')
