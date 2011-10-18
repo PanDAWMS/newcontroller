@@ -215,6 +215,8 @@ if __name__ == "__main__":
 
 	if not genDebug:
 		try:
+			# Backup of all the volatile DB paramaters before the operation
+			volatileSQLCreator()
 			# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 			dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 			loadConfigs()
