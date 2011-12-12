@@ -47,7 +47,7 @@ def updateInstalledSW(confd,lcgdict):
 			# If it's an analy queue, use the "queue" value instead
 			elif confd[queue]['queue']:
 				# and make sure you split off the non-gatekeeper-name part at the end.
-				gatekeeper[queue] = confd[queue]['queue'].split('/')[0].split(':')[0]
+				gatekeeper[queue] = confd[queue]['queue'].split('/')[0]
 			# If there's no good gatekeeper information, forget the queue
 			else:
 				cloud.pop(queue)
