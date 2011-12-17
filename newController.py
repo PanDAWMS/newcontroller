@@ -174,7 +174,6 @@ def loadConfigs():
 			print 'Received debug info'
 			sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper = updateInstalledSW(collapseDict(newdb),linfotool)			
  		else: updateInstalledSW(collapseDict(newdb),linfotool)
-		print 'Disabled SW updating for now'
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
 	
