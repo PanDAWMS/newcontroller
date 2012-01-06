@@ -40,4 +40,4 @@ for i in l:
 	try:
 		r=a.add_panda_swrelease(panda_resource=kpanda_resource, project=kproject, release=krelease, cmtconfig=kcmtconfig, major_release=kmajor_release)
 	except:
-		pass
+		print kpanda_resource, kproject, krelease, kcmtconfig, kmajor_release, r
