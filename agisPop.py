@@ -29,5 +29,6 @@ for i in l:
 		elif not cmtconfig or not project:
 			continue
 		else:
-			r=a.add_swrelease(release, cmtconfig=i['cmtConfig'], major_release=i['release'], project)
-	r=a.add_panda_swrelease(panda_resource=i['siteid'], project, release, cmtconfig=i['cmtConfig'], major_release=i['release'])
+			pass
+			#r=a.add_swrelease(release, cmtconfig, major_release, project)
+	#r=a.add_panda_swrelease(panda_resource, project, release, cmtconfig, major_release)
