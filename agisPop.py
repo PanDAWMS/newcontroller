@@ -33,5 +33,5 @@ for i in l:
 			if not cmtconfig or not project:
 				continue
 
-			#r=a.add_swrelease(release, cmtconfig, major_release, project)
-	#r=a.add_panda_swrelease(panda_resource, project, release, cmtconfig, major_release)
+			r=a.add_swrelease(release, cmtconfig, major_release, project)
+	r=a.add_panda_swrelease(panda_resource, project, release, cmtconfig, major_release)
