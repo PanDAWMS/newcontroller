@@ -24,8 +24,8 @@ for i in l:
 	kmajor_release = i['release']
 
 	add_flag = True
-	if releases.has_key(release):
-		for r in releases[release]:
+	if releases.has_key(krelease):
+		for r in releases[krelease]:
 			d=r.get_data()
 			if d['cmtconfig'] == kcmtconfig and d['project'] == kproject:
 				add_flag = False
