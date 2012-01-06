@@ -12,7 +12,7 @@ for i in l:
 	if '-' in i['cache']:
 		release = i['cache'].split('-')[1]
 		project = i['cache'].split('-')[0]
-	elif cache == 'None':
+	elif i['cache'] == 'None':
 		release = i['cache']
 		project = i['cache']
 	else:
