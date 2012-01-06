@@ -22,13 +22,15 @@ for i in l:
 	panda_resource = i['siteid']
 	cmtconfig = i['cmtConfig']
 	major_release = i['release']
-	
+
+	add_flag = True
 	if releases.has_key(release):
-		if releases[release]['cmtConfig'] == cmtconfig and releases[release]['project'] == project:
-			pass
-		elif not cmtconfig or not project:
-			continue
-		else:
-			pass
+		for r in releases[release]:
+			if r['cmtConfig'] == cmtconfig and r['project'] == project:
+				add_flag = False
+		if add_flag:
+			if not cmtconfig or not project:
+				continue
+
 			#r=a.add_swrelease(release, cmtconfig, major_release, project)
 	#r=a.add_panda_swrelease(panda_resource, project, release, cmtconfig, major_release)
