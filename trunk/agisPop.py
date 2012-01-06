@@ -34,10 +34,12 @@ for i in l:
 				continue
 
 			try:
+				print 'Adding %s' % kproject+krelease
 				r=a.add_swrelease(release=krelease, cmtconfig=kcmtconfig, major_release=kmajor_release, project=kproject)
 			except:
 				pass
 	try:
+		print 'Adding site %s with release %s' % (krelease, kpanda_resource)
 		r=a.add_panda_swrelease(panda_resource=kpanda_resource, project=kproject, release=krelease, cmtconfig=kcmtconfig, major_release=kmajor_release)
 	except:
 		print kpanda_resource, kproject, krelease, kcmtconfig, kmajor_release, r
