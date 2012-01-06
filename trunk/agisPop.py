@@ -26,7 +26,8 @@ for i in l:
 	add_flag = True
 	if releases.has_key(release):
 		for r in releases[release]:
-			if r['cmtConfig'] == cmtconfig and r['project'] == project:
+			d=r.get_data()
+			if d['cmtConfig'] == cmtconfig and d['project'] == project:
 				add_flag = False
 		if add_flag:
 			if not cmtconfig or not project:
