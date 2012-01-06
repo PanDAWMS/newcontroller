@@ -10,28 +10,28 @@ releases=a.list_swreleases()
 
 for i in l:
 	if '-' in i['cache']:
-		release = i['cache'].split('-')[1]
-		project = i['cache'].split('-')[0]
+		krelease = i['cache'].split('-')[1]
+		kproject = i['cache'].split('-')[0]
 	elif i['cache'] == 'None':
-		release = i['cache']
-		project = i['cache']
+		krelease = i['cache']
+		kproject = i['cache']
 	else:
-		release = i['cache']
-		project = i['cache']
+		krelease = i['cache']
+		kproject = i['cache']
 
-	panda_resource = i['siteid']
-	cmtconfig = i['cmtConfig']
-	major_release = i['release']
+	kpanda_resource = i['siteid']
+	kcmtconfig = i['cmtConfig']
+	kmajor_release = i['release']
 
 	add_flag = True
 	if releases.has_key(release):
 		for r in releases[release]:
 			d=r.get_data()
-			if d['cmtconfig'] == cmtconfig and d['project'] == project:
+			if d['cmtconfig'] == kcmtconfig and d['project'] == kproject:
 				add_flag = False
 		if add_flag:
-			if not cmtconfig or not project:
+			if not kcmtconfig or not kproject:
 				continue
 
-			r=a.add_swrelease(release, cmtconfig, major_release, project)
-	r=a.add_panda_swrelease(panda_resource, project, release, cmtconfig, major_release)
+			r=a.add_swrelease(release=krelease, cmtconfig=kcmtconfig, major_release=kmajor_release, project=kproject)
+	r=a.add_panda_swrelease(panda_resource=kpanda_resource, project=kproject, release=krelease, cmtconfig=kcmtconfig, major_release=kmajor_release)
