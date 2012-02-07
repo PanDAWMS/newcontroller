@@ -31,7 +31,7 @@ print "Init DB"
 
 # Restore status line-by-line
 for i in f:
-	sql = i
+	sql = i.strip(';').replace('atlas_pandameta.schedconfig','schedconfig')
 	nrows = utils.dictcursor().execute(sql)
 
 f.close()
