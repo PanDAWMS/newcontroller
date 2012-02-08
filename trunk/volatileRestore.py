@@ -8,6 +8,8 @@
 import os, sys, commands, gzip
 from SchedulerUtils import utils
 
+safety = 'off'
+
 # Load the gzip file
 try:
 	inputFile = sys.argv[1]
