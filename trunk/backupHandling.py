@@ -44,7 +44,7 @@ def volatileBackupCreate():
 def backupCreate(d):
 	''' Create a backup pickle file of a list of queue spec dictionaries that can be fed to direct DB updates''' 
 	if pickleDebug: print 'Starting pickle creation'
-	timestamp = '_'.join([str(i) for i in time.gmtime()[:-3]])+'_'
+	timestamp = '_'.join([str(i).zfill(2) for i in time.gmtime()[:-3]])+'_'
 	# Check for an existing backup directory
 	try:
 		os.stat(backupPath)
