@@ -54,7 +54,8 @@ cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf'
 # Paths for backup files
 backupPath = cfg_path + 'Backup' + os.sep
 backupName = 'schedConfigBackup.pickle'
-volatileBackupName = 'schedConfigStatus.sql'
+volatileSQLName = 'schedConfigStatus.sql'
+volatileCSVName = 'schedConfigStatus.csv'
 
 # Paths for run logs (email notification)
 logPath = '/tmp/runProd.log'
