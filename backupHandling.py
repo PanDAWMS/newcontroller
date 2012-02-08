@@ -35,9 +35,9 @@ def volatileBackupCreate():
 	bfile = backupPath + timestamp + volatileCSVName + '.gz'
 	f = gzip.open(bfile,'w')
 	w = csv.writer(f)
-	w.write(['nickname','status','nqueue','multicloud','sysconfig','dn','space','comment_'])
+	w.writerow(['nickname','status','nqueue','multicloud','sysconfig','dn','space','comment_'])
 	for i in d:
-		w.write([d[i]['status'], d[i]['nqueue'],d[i]['multicloud'],d[i]['sysconfig'],d[i]['dn'],d[i]['space'],d[i]['comment_']])
+		w.writerow([d[i]['status'], d[i]['nqueue'],d[i]['multicloud'],d[i]['sysconfig'],d[i]['dn'],d[i]['space'],d[i]['comment_']])
 	f.close()
 	return 0
 
