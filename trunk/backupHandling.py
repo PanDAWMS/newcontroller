@@ -20,24 +20,39 @@ def checkPreviousVolatiles():
 
 def volatileBackupCreate():
 	'''Back up the volatile parts of the DB before every operation'''
+	# Get the present status of schedconfig
 	d=loadSchedConfig()
 	try:
 		os.stat(backupPath)
 	except:
 		# And make one if not present
 		os.makedirs(backupPath)
+	# Grab the backup's timestamp
 	timestamp = '_'.join([str(i).zfill(2) for i in time.gmtime()[:-3]])+'_'
+	# Create the backup file as a gzip file for space reasons
 	bfile = backupPath + timestamp + volatileSQLName + '.gz'
 	f=gzip.open(bfile,'w')
+	# The interesting fields are the ones specifically excluded from schedconfig backup
+	fields = ['nickname'] + excl_nonTimestamp
+	# For each of the queues, create a SQL restore command. The atlas_pandameta is unnecessary for restoration using the volatileRestore.py script, ans is stripped
+	# off there... but this format allows direct copy-paste into SQL Developer or another direct SQL tool as well. This can be handy for manual or custom restores.
+	# The Site and Cloud comments help filter the lines to allow manual restoration of specific sites and clouds using grep, avoiding a broad-brush approach.
 	for i in d:
-		f.write('UPDATE atlas_pandameta.schedconfig set status = \'%s\', nqueue = %s, multicloud = \'%s\', sysconfig = \'%s\', dn = \'%s\', space = %s, comment_ = \'%s\' WHERE nickname = \'%s\';\n' % (d[i]['status'], d[i]['nqueue'],d[i]['multicloud'],d[i]['sysconfig'],d[i]['dn'],d[i]['space'],d[i]['comment_'], i))
+		f.write('UPDATE atlas_pandameta.schedconfig set %s WHERE nickname = \'%s\'; -- Site is %s, Cloud is %s\n' % (', '.join(['%s = \'%s\'' % (key, d[i][key]) for key in excl_nonTimestamp]), i, d[i]['site'],d[i]['cloud']))
 	f.close()
+	# Here we create a CSV file that allows a history of the volatiles to be kept. When a queue is being created, we have to be sure it's not a recent delete.
+	# When a queue is reconstituted, this will allow a check for that queue nickname in the last few updates... and if it's present, we take the newest parameters
+	# and restore them.
 	bfile = backupPath + timestamp + volatileCSVName + '.gz'
+	# Open the file via gzip
 	f = gzip.open(bfile,'w')
+	# Attach a CSV writer to the file
 	w = csv.writer(f)
-	w.writerow(['nickname','status','nqueue','multicloud','sysconfig','dn','space','comment_'])
+	# Write the header row
+	w.writerow(fields)
+	# Write all relevant volatile data
 	for i in d:
-		w.writerow([d[i]['status'], d[i]['nqueue'],d[i]['multicloud'],d[i]['sysconfig'],d[i]['dn'],d[i]['space'],d[i]['comment_']])
+		w.writerow([d[i][key] for key in  fields])
 	f.close()
 	return 0
 
