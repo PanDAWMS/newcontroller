@@ -81,8 +81,8 @@ shared, unshared = 'shared','unshared'
 nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0', 'space':'0'}
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
-excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','nqueues','last_status','sysconfig','multicloud'] # nqueues takes care of a typo
-excl_nonTimestamp = ['status','dn','tspace','comment_','space','nqueue','last_status','sysconfig','multicloud'] # List of items to back up
+excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','nqueues','sysconfig','multicloud'] # nqueues takes care of a typo
+excl_nonTimestamp = ['status','dn','tspace','comment_','space','nqueue','sysconfig','multicloud'] # List of items to back up
 
 # Standard mappings for legacy software tags in the BDII:
 
