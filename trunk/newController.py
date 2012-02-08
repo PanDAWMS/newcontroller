@@ -213,7 +213,7 @@ if __name__ == "__main__":
 	keydict={}
 
 	# Backup of all the volatile DB paramaters before the operation
-	volatileSQLCreate()
+	volatileBackupCreate()
 	if not genDebug:
 		try:
 			# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.

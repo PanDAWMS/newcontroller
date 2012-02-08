@@ -5,13 +5,20 @@
 # Alden Stradling (Alden.Stradling@cern.ch) 18 Feb 10 #
 #######################################################
 
-import os, sys, commands, time, pickle, gzip
+import os, sys, commands, time, pickle, gzip, csv
 from controllerSettings import *
 from dictHandling import *
 from dbAccess import *
 
 
-def volatileSQLCreate():
+def checkPreviousVolatiles():
+	''' Tabulate information on previous volatile backups. Compare the recent trend to any present queues that will be created.
+	If the queue was in recent existence, restore the volatiles for it as well.'''
+	# Check for all the CSV files created recently, and select the most recent 10.
+	l = [i for i in sorted(os.listdir(backupPath)) if volatileCSVName in i][:10]
+	
+
+def volatileBackupCreate():
 	'''Back up the volatile parts of the DB before every operation'''
 	d=loadSchedConfig()
 	try:
@@ -19,11 +26,18 @@ def volatileSQLCreate():
 	except:
 		# And make one if not present
 		os.makedirs(backupPath)
-	timestamp = '_'.join([str(i) for i in time.gmtime()[:-3]])+'_'
-	bfile = backupPath + timestamp + volatileBackupName + '.gz'
+	timestamp = '_'.join([str(i).zfill(2) for i in time.gmtime()[:-3]])+'_'
+	bfile = backupPath + timestamp + volatileSQLName + '.gz'
 	f=gzip.open(bfile,'w')
 	for i in d:
 		f.write('UPDATE atlas_pandameta.schedconfig set status = \'%s\', nqueue = %s, multicloud = \'%s\', sysconfig = \'%s\', dn = \'%s\', space = %s, comment_ = \'%s\' WHERE nickname = \'%s\';\n' % (d[i]['status'], d[i]['nqueue'],d[i]['multicloud'],d[i]['sysconfig'],d[i]['dn'],d[i]['space'],d[i]['comment_'], i))
+	f.close()
+	bfile = backupPath + timestamp + volatileCSVName + '.gz'
+	f = gzip.open(bfile,'w')
+	w = csv.writer(f)
+	w.write(['nickname','status','nqueue','multicloud','sysconfig','dn','space','comment_'])
+	for i in d:
+		w.write([d[i]['status'], d[i]['nqueue'],d[i]['multicloud'],d[i]['sysconfig'],d[i]['dn'],d[i]['space'],d[i]['comment_']])
 	f.close()
 	return 0
 
