@@ -49,13 +49,17 @@ cmt = 1  # cmt is the second element of the rel/cmt block in swHandling
 base_path = os.getcwd()
 
 # Step back a layer in the path for the configs, and put them in the config SVN directory
-cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf'
+cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf/'
 
 # Paths for backup files
-backupPath = cfg_path + 'Backup' + os.sep
-backupName = 'schedConfigBackup.pickle'
+scratchPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/prod/'
+hotBackupPath = base_path[:base_path.rfind(os.sep)] + 'Backup' + os.sep
+longBackupPath = scratchPath + 'Backup' + os.sep
+backupSQLName = 'schedConfigBackup.sql'
+backupCSVName = 'schedConfigBackup.csv'
 volatileSQLName = 'schedConfigStatus.sql'
 volatileCSVName = 'schedConfigStatus.csv'
+lastVolatiles = 10
 
 # Paths for run logs (email notification)
 logPath = '/tmp/runProd.log'
@@ -82,7 +86,8 @@ nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0'
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
 excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','nqueues','sysconfig','multicloud'] # nqueues takes care of a typo
-excl_nonTimestamp = ['status','dn','comment_','space','nqueue','sysconfig','multicloud'] # List of items to back up
+timestamps = ['lastmod','tspace'] # Fields that are explicitly timestamps, and are as such harder to update in the DB
+excl_nonTimestamp = [i for i in excl if i not in timestamps] # List of items to back up
 
 # Standard mappings for legacy software tags in the BDII:
 
