@@ -16,8 +16,8 @@ def checkPreviousVolatiles():
 	If the queue was in recent existence, restore the volatiles for it as well.'''
 	# Check for all the CSV files created recently, and select the most recent lastVolatiles.
 	l = [i for i in sorted(os.listdir(hotBackupPath)) if volatileCSVName in i][:lastVolatiles]
-	files = dict([i,gzip.open(hotBackupPath+i) for i in l])
-	readers = dict([i,files[i] for i in l])
+	files = dict([(i,gzip.open(hotBackupPath+i)) for i in l])
+	readers = dict([(i,files[i]) for i in l])
 	master = {}
 	for r in readers:
 		headers = readers[r].next()
