@@ -108,6 +108,9 @@ def loadConfigs():
 		unicodeEncode(del_l)
 		# Individual SQL statements to delete queues that need deleted
 		if not delDebug:
+			print '\n\n Queues Being Deleted:\n'
+			for i in sorted(del_d): print del_d[i][dbkey],del_d[i]['cloud'] 
+			
 			for i in del_l:
 				try:
 					status = utils.dictcursor().execute(i)
@@ -122,6 +125,8 @@ def loadConfigs():
 		print 'Updating SchedConfig'
 
 		# Since all inputs are unicode converted, all outputs need to be encoded.
+		print '\n\n Queues Being Updated or Added:\n'
+		for i in sorted(up_d): print up_d[i][dbkey], up_d[i]['cloud']
 		unicodeEncode(up_l)
 		status=utils.replaceDB('schedconfig',up_l,key=dbkey)
 		status=status.split('<br>')
