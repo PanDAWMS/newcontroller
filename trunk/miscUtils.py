@@ -54,10 +54,10 @@ def unPickler(fname):
 def pickleBackup(d):
 	'''Pickle the schedconfigdb as a backup'''
 	try:
-		os.makedirs(backupPath)
+		os.makedirs(hotBackupPath)
 	except OSError:
 		pass
-	os.chdir(backupPath)
+	os.chdir(hotBackupPath)
 	f=file(backupName, 'w')
 	pickle.dump(d,f)
 	f.close()
