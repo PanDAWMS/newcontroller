@@ -41,7 +41,7 @@ def svnCheckin(notestr = ''):
 	message = 'Changes made: %s%s' % (time.asctime(time.gmtime()),notestr)
 	# Add all new files before checking in
 	# This needs to be made a lot smarter. FIX
-	for p in [backupPath.split(os.sep)[-1], jdlconfigs.split(os.sep)[-1], configs.split(os.sep)[-1]]:
+	for p in [hotBackupPath.split(os.sep)[-1], jdlconfigs.split(os.sep)[-1], configs.split(os.sep)[-1]]:
 		o=commands.getoutput('svn add %s/*' % p)
 	if svnDebug: print o
 	o=commands.getoutput('svn add %s/*/*' % p)
