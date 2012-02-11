@@ -88,7 +88,7 @@ def backupCreate(d):
 	bfile = hotBackupPath + timestamp + backupSQLName + '.gz'
 	f=gzip.open(bfile,'w')
 	# The interesting fields do not contain a timestamp, and are not the nickname. :)
-	fields = [i for i in d[d.keys[0]].keys() if i not in timestamps + [dbkey]]
+	fields = [i for i in d[d.keys()[0]].keys() if i not in timestamps + [dbkey]]
 	# For each of the queues, create a SQL restore command. The atlas_pandameta is unnecessary for restoration using the volatileRestore.py script, ans is stripped
 	# off there... but this format allows direct copy-paste into SQL Developer or another direct SQL tool as well. This can be handy for manual or custom restores.
 	# The Site and Cloud comments help filter the lines to allow manual restoration of specific sites and clouds using grep, avoiding a broad-brush approach.
