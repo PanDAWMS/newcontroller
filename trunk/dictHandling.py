@@ -3,6 +3,7 @@
 #                                                                                        #
 # Alden Stradling 10 Oct 2009                                                            #
 # Alden.Stradling@cern.ch                                                                #
+# 14 Feb 2012 - Queues deleted in the SVN are now not deleted in the DB                  #
 ##########################################################################################
 
 import os, pickle
@@ -86,9 +87,10 @@ def findQueue(q,d):
 	return '',''
 
 def compareQueues(dbDict,cfgDict,dbOverride=False):
-	'''Compares the queue dictionary that we got from the DB to the one in the config files. Any changed/deleted
+	'''Compares the queue dictionary that we got from the DB to the one in the config files. Any changed
 	queues are passed back. If dbOverride is set true, the DB is used to modify the config files rather than
-	the default. Queues deleted in the DB will not be deleted in the configs.'''
+	the default. Queues deleted in the DB will not be deleted in the configs. Deleted queues in the SVN will
+	not be deleted in the '''
 	updDict = {}
 	delDict = {}
 	unicodeConvert(dbDict)
@@ -102,7 +104,8 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 			# Queues must be deleted in the configs. The file has been removed, as long as we're not in DB override mode.
 			if not dbOverride:
 				# If the queue is not in the configs, delete it.
-				delDict[i]=dbDict[i]
+				# Changed! There is no auto-deletion anymore, to avoid inadvertent queue deletion when there are SVN issues
+				#delDict[i]=dbDict[i]
 				continue
 		# If the dictionaries don't match:
 		if dbDict[i] != cfgDict[i]:
