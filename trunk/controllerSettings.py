@@ -60,6 +60,8 @@ backupCSVName = 'schedConfigBackup.csv'
 volatileSQLName = 'schedConfigStatus.sql'
 volatileCSVName = 'schedConfigStatus.csv'
 lastVolatiles = 10
+hotBackups = 30
+keptBackups = 1500
 
 # Paths for run logs (email notification)
 logPath = '/tmp/runProd.log'
