@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #######################################################
-# Handles backups as pickle files and such            #
+# Handles backups as csv/sql files and such           #
 #                                                     #
 # Alden Stradling (Alden.Stradling@cern.ch) 18 Feb 10 #
 #######################################################
@@ -39,6 +39,7 @@ def volatileBackupCreate():
 	timestamp = '_'.join([str(i).zfill(2) for i in time.gmtime()[:-3]])+'_'
 	# Create the backup file as a gzip file for space reasons
 	bfile = hotBackupPath + timestamp + volatileSQLName + '.gz'
+	bfilecopy = longBackupPath + timestamp + volatileSQLName + '.gz'
 	f=gzip.open(bfile,'w')
 	# The interesting fields are the ones specifically excluded from schedconfig backup
 	fields = ['nickname'] + excl_nonTimestamp
@@ -48,10 +49,12 @@ def volatileBackupCreate():
 	for i in d:
 		f.write('UPDATE atlas_pandameta.schedconfig set %s WHERE nickname = \'%s\'; -- Site is %s, Cloud is %s\n' % (', '.join(['%s = \'%s\'' % (key, d[i][key]) for key in excl_nonTimestamp]), i, d[i]['site'],d[i]['cloud']))
 	f.close()
+	os.system('cp %s %s' % (bfile, bfilecopy))
 	# Here we create a CSV file that allows a history of the volatiles to be kept. When a queue is being created, we have to be sure it's not a recent delete.
 	# When a queue is reconstituted, this will allow a check for that queue nickname in the last few updates... and if it's present, we take the newest parameters
 	# and restore them.
 	bfile = hotBackupPath + timestamp + volatileCSVName + '.gz'
+	bfilecopy = longBackupPath + timestamp + volatileCSVName + '.gz'
 	# Open the file via gzip
 	f = gzip.open(bfile,'w')
 	# Attach a CSV writer to the file
@@ -62,6 +65,7 @@ def volatileBackupCreate():
 	for i in d:
 		w.writerow([d[i][key] for key in  fields])
 	f.close()
+	os.system('cp %s %s' % (bfile, bfilecopy))
 	return 0
 
 def backupCreate(d):
