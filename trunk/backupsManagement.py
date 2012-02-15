@@ -8,7 +8,7 @@
 import os, sys
 from controllerSettings import *
 
-hbList = [i for i in sorted(os.listdir(hotBackupPath)) if volatileCSVName in i or volatileSQLName in i][hotBackups:]
+hbList = [i for i in sorted(os.listdir(hotBackupPath)) if i.endswith('.gz')][hotBackups:]
 lbList = [i for i in sorted(os.listdir(longBackupPath)) if i.endswith('.gz')][keptBackups:]
 
 for i in hbList:
