@@ -42,7 +42,7 @@ def updateInstalledSW(confd,lcgdict):
 			siteid[queue] = confd[queue]['siteid']
 			if len(cloud[queue]) > 8: print cloud[queue], queue, siteid[queue]
 			# If it's not an analysis queue and has a siteid, use gatekeeper as the BDII key
-			if confd[queue]['gatekeeper'] != virtualQueueGatekeeper:
+			if confd[queue]['gatekeeper'] and confd[queue]['gatekeeper'] != virtualQueueGatekeeper:
 				gatekeeper[queue] = confd[queue]['gatekeeper']
 			# If it's an analy queue, use the "queue" value instead
 			elif confd[queue]['queue']:
