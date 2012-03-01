@@ -3,13 +3,12 @@
 import os, sys, time
 from controllerSettings import *
 
-runLogPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/logs/'
 fileStr = '_schedconfigUpdate.txt'
 
 # Check the files in the logging directory
 logList = os.listdir(runLogPath)
 # Get the uncompressed ones
-logList = [i for i in logList if fileStr in i and len(i) < 30]
+logList = [i for i in logList if fileStr in i and '.gz' not in i]
 for log in logList:
 	# Change their names to reflect their timestamp
 	# Keep the UTC
@@ -25,3 +24,10 @@ for log in logList:
 	# Fix the system timestamp
 	os.utime(runLogPath + date + fileStr + '.gz',(atime,atime))
 	
+# Check the files in the logging directory
+logList = os.listdir(runLogPath)
+# Get the uncompressed ones, sort them
+logList = sorted([i for i in logList if fileStr+'.gz' in i])
+for i in logList[:-keptRunLogs]:
+	# And remove the expired ones
+	os.remove(runLogPath + i)
