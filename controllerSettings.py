@@ -53,6 +53,7 @@ cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf/'
 
 # Paths for backup files
 scratchPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/prod/'
+runLogPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/logs/'
 hotBackupPath = base_path[:base_path.rfind(os.sep)] + os.sep + 'Backup' + os.sep
 longBackupPath = scratchPath + 'Backup' + os.sep
 backupSQLName = 'schedConfigBackup.sql'
