@@ -27,6 +27,7 @@ from backupHandling import *
 from swHandling import *
 from lesserTablesController import *
 from accessControl import *
+from svnConsistencyChecker import *
 
 try:
 	import lcgInfositeTool2 as lcgInfositeTool
@@ -51,8 +52,14 @@ def loadConfigs():
 		svnCheckin('Updated from DB')
 		
 	else:
-		# Update the local configuration files from SVN
-		svnUpdate()
+		# Update the local configuration files from SVN after checking to be sure there
+		# are no inconsistencies.
+		if checkConfigs() > -1:
+			svnUpdate()
+		else:
+			emailError('Persistent inconsistencies in config SVN')
+			sys.exit()
+		
 	
 	# Load the present config files, based on the SVN update
 	configd = buildDict()
