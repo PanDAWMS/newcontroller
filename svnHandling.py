@@ -72,6 +72,17 @@ def svnUpdate():
 		#svnCheckout()
 	# Update the whole subversion
 	os.system('svn update --accept theirs-full')
+	try:
+		# Go to the configs directory path, if possible
+		os.chdir(cmp_path)
+	except OSError:
+		# Or create it if it's not there
+		os.makedirs(cmp_path)
+		os.chdir(cmp_path)
+		os.chdir('..')
+		#svnCheckout()
+	# Update the whole subversion
+	os.system('svn update --accept theirs-full')
 
 	# Back to where you were.
 	os.chdir(path)
