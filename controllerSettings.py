@@ -50,6 +50,7 @@ base_path = os.getcwd()
 
 # Step back a layer in the path for the configs, and put them in the config SVN directory
 cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf/'
+cmp_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconfRef/'
 
 # Paths for backup files
 scratchPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/prod/'
