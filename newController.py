@@ -52,7 +52,7 @@ def loadConfigs():
 		svnCheckin('Updated from DB')
 		
 	else:
-		# Update the local configuration files from SVN after checking to be sure there
+		# Update the local configuration files from SVN and check that there
 		# are no inconsistencies.
 		svnUpdate()
 		if not checkConfigs() > -1:
