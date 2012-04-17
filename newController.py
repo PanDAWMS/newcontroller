@@ -97,7 +97,7 @@ def loadConfigs():
 		#print disabledQueues(dbd,configd).keys()
 		print len(disabledQueues(dbd,configd).keys())
 	#del_d.update(disabledQueues(dbd,configd))
-	del_d = disabledQueues(dbd,configd)
+	del_d = disabledQueues(configd,dbd)
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
 	del_l = buildDeleteList(del_d,'schedconfig')

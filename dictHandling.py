@@ -90,7 +90,7 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 	'''Compares the queue dictionary that we got from the DB to the one in the config files. Any changed
 	queues are passed back. If dbOverride is set true, the DB is used to modify the config files rather than
 	the default. Queues deleted in the DB will not be deleted in the configs. Deleted queues in the SVN will
-	not be deleted in the '''
+	not be deleted in the DB'''
 	updDict = {}
 	delDict = {}
 	unicodeConvert(dbDict)
@@ -124,7 +124,7 @@ def cmpQueues(dbDict,cfgDict):
 	'''Compares the queue dictionary that we got from the DB to the one in the config files. Any changed
 	queues are passed back. If dbOverride is set true, the DB is used to modify the config files rather than
 	the default. Queues deleted in the DB will not be deleted in the configs. Deleted queues in the SVN will
-	not be deleted in the '''
+	not be deleted in the DB'''
 	updDict = {}
 	delDict = {}
 	unicodeConvert(dbDict)
@@ -241,9 +241,12 @@ def disabledQueues(d,dbd,key = param):
 				# If the queue has the Enabled flag (excluding All files):
 				if enab in d[cloud][site][queue]:
 					# If the flag is Enabled = False and the queue is in the DB:
-					if not d[cloud][site][queue][enab] and dbd[cloud][site].has_key(queue):
-						# Append that dictionary to the list
-						del_d[queue] = d[cloud][site][queue][key]						
+					try:
+						if not d[cloud][site][queue][enab] and dbd[cloud][site].has_key(queue):
+							# Append that dictionary to the list
+							del_d[queue] = d[cloud][site][queue][key]
+					except KeyError: # If the site or the cloud have been removed from the DB already
+						pass
 	# And return the completed list to the main routine
 	return del_d
 
