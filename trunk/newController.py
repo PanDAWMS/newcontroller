@@ -72,7 +72,7 @@ def loadConfigs():
 	# If the configd needs new keys from the schedconfig DB, add them
 	if dbdKeys - configKeys:
 		skDict = dict([(i,0) for i in standardkeys])
-		#configd = buildDict(skdict)
+		configd = buildDict(skDict)
 	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
