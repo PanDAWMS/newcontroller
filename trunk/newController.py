@@ -40,11 +40,13 @@ def loadConfigs():
 	'''Run the schedconfig table updates'''
 	# Load the database as it stands as a primary reference
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+	# Get a set of the keys being used in the db
 	dbdKeys = keyCensus(dbd)
 	# If the DB is overriding the config files, we need to recreate them now.
 	if dbOverride:
 		# Get the config dictionary directly from the DB, and process the config file update from it.
 		configd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+		# Get a set of the keys being used in these configs
 		configKeys = keyCensus(configd)
 		# Compose the "All" queues for each site
 		status = allMaker(configd, initial=True)
@@ -64,6 +66,13 @@ def loadConfigs():
 	
 	# Load the present config files, based on the SVN update
 	configd = buildDict()
+	# Get a set of the keys being used in these configs
+	configKeys = keyCensus(configd)
+
+	# If the configd needs new keys from the schedconfig DB, add them
+	if dbdKeys - configKeys:
+		skDict = dict([(i,0) for i in standardkeys])
+		configd = buildDict(skdict)
 	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
