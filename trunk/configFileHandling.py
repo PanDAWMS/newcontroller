@@ -13,11 +13,10 @@ from controllerSettings import *
 #----------------------------------------------------------------------#
 # Config File Handling
 #----------------------------------------------------------------------
-def buildDict():
-	'''Build a copy of the queue dictionary from the configuration files '''
+def buildDict(stdkeys={}):
+	'''Build a copy of the queue dictionary from the configuration files. Standard key set can come in from the DB. '''
 
 	confd={}
-	stdkeys={}
 	# In executing files for variables, one has to put the variables in a contained, local context.
 	locvars={}
 	base = os.getcwd()
