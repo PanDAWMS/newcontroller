@@ -98,14 +98,6 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 	# Allow the reversal of master and subordinate dictionaries
 	if dbOverride: dbDict, cfgDict = cfgDict, dbDict
 	for i in dbDict:
-		# If the configDict doesn't have the key found in the DB:
-		if not cfgDict.has_key(i):
-			# Queues must be deleted in the configs. The file has been removed, as long as we're not in DB override mode.
-			if not dbOverride:
-				# If the queue is not in the configs, delete it.
-				# Changed! There is no auto-deletion anymore, to avoid inadvertent queue deletion when there are SVN issues
-				#delDict[i]=dbDict[i]
-				continue
 		# If the dictionaries don't match:
 		if dbDict[i] != cfgDict[i]:
 			cfgDict[i].update(dbDict[i].fromkeys([k for k in dbDict[i].keys() if not cfgDict.has_key(i)]))
@@ -119,32 +111,6 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 			if not dbOverride: updDict[i]=cfgDict[i]
 	# Return the appropriate queues to update and eliminate
 	return updDict, delDict
-
-def cmpQueues(dbDict,cfgDict):
-	'''Compares the queue dictionary that we got from the DB to the one in the config files. Any changed
-	queues are passed back. If dbOverride is set true, the DB is used to modify the config files rather than
-	the default. Queues deleted in the DB will not be deleted in the configs. Deleted queues in the SVN will
-	not be deleted in the DB'''
-	updDict = {}
-	delDict = {}
-	unicodeConvert(dbDict)
-	unicodeConvert(cfgDict)
-	# Allow the reversal of master and subordinate dictionaries
-	for i in dbDict:
-		# If the dictionaries don't match:
-		if dbDict[i] != cfgDict[i]:
-			cfgDict[i].update(dbDict[i].fromkeys([k for k in dbDict[i].keys() if not cfgDict.has_key(i)]))
-			# If the queue was changed in the configs, tag it for update. In DB override, we aren't updating the DB.
-			if not dbOverride and cfgDict.has_key(i): updDict[i]=cfgDict[i]
-	# If the queue is brand new (created in a config file), it is added to update.
-	for i in cfgDict:
-		if i == All: continue
-		if not dbDict.has_key(i):
-			# In DB override, we aren't updating the DB.
-			if not dbOverride: updDict[i]=cfgDict[i]
-	# Return the appropriate queues to update and eliminate
-	return updDict, delDict
-
 
 def collapseDict(d):
 	'''Collapses a nested dictionary into a flat set of queues '''
@@ -229,6 +195,13 @@ def collapseDict(d):
 					except ValueError:
 						pass
 	return out_d
+
+def keyCensus(d):
+	'''Check the total list of keys used in the queues the collapsed dictionary d contains'''
+	k = {}
+	for i in d:
+		k.update(dict(zip(d[i],[1 for i in range(len(d[i]))])))
+	return set(k.keys())
 
 def disabledQueues(d,dbd,key = param):
 	''' Creates a list of dictionaries to be deleted because their Enabled state is False. Defaults to returning the params dict in the list.

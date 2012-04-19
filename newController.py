@@ -40,10 +40,12 @@ def loadConfigs():
 	'''Run the schedconfig table updates'''
 	# Load the database as it stands as a primary reference
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+	dbdKeys = keyCensus(dbd)
 	# If the DB is overriding the config files, we need to recreate them now.
 	if dbOverride:
 		# Get the config dictionary directly from the DB, and process the config file update from it.
 		configd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+		configKeys = keyCensus(configd)
 		# Compose the "All" queues for each site
 		status = allMaker(configd, initial=True)
 		# Make the necessary changes to the configuration files:
@@ -189,7 +191,7 @@ def loadConfigs():
  		else: updateInstalledSW(collapseDict(newdb),linfotool)
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
-	
+
 	# Make the necessary changes to the configuration files:
 	makeConfigs(configd)
 	# Check the changes just committed into Subversion, unless we're not updating from BDII/ToA
