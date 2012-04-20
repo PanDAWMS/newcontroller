@@ -97,12 +97,16 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 	unicodeConvert(cfgDict)
 	# Allow the reversal of master and subordinate dictionaries
 	if dbOverride: dbDict, cfgDict = cfgDict, dbDict
-	for i in dbDict:
+	for key in dbDict:
 		# If the dictionaries don't match:
-		if cfgDict.has_key(i) and dbDict[i] != cfgDict[i]:
-			cfgDict[i].update(dbDict[i].fromkeys([k for k in dbDict[i].keys() if not cfgDict.has_key(i)]))
-			# If the queue was changed in the configs, tag it for update. In DB override, we aren't updating the DB.
-			if not dbOverride and cfgDict.has_key(i): updDict[i]=cfgDict[i]
+		if cfgDict.has_key(key):
+			# Stringify the dictionaries and remove any excluded fields
+			d = dict([(i,str(dbDict[key][i])) for i in dbDict[key] if i not in excl])
+			c = dict([(i,str(cfgDict[key][i])) for i in cfgDict[key] if i not in excl])
+			if c != d:
+				cfgDict[key].update(dbDict[key].fromkeys([k for k in dbDict[key].keys() if not cfgDict.has_key(key)]))
+				# If the queue was changed in the configs, tag it for update. In DB override, we aren't updating the DB.
+				if not dbOverride and cfgDict.has_key(key): updDict[key]=cfgDict[key]
 	# If the queue is brand new (created in a config file), it is added to update.
 	for i in cfgDict:
 		if i == All: continue
@@ -231,3 +235,26 @@ def nicknameChecker(d):
 				if not d[cloud][site][queue][param].has_key(dbkey):
 					d[cloud][site][queue][param][dbkey] = queue
 	return 0
+
+def dd(d1, d2, ctx=""):
+    print "Changes in " + ctx
+    for k in d1:
+        if k not in d2:
+            print k + " removed from d2"
+    for k in d2:
+        if k not in d1:
+            print k + " added in d2"
+            continue
+        if d2[k] != d1[k]:
+            if type(d2[k]) not in (dict, list):
+                print k + " changed in d2 to " + str(d2[k]) + ' from ' + str(d1[k])
+            else:
+                if type(d1[k]) != type(d2[k]):
+                    print k + " changed to " + str(d2[k])  + ' from ' + str(d1[k])
+                    continue
+                else:
+                    if type(d2[k]) == dict:
+                        dd(d1[k], d2[k], k)
+                        continue
+    print "Done with changes in " + ctx
+    return

@@ -86,7 +86,7 @@ jdlkey, dbkey, dsep, keysep, pairsep, spacing = 'name', 'nickname', ' : ', "'", 
 shared, unshared = 'shared','unshared'
 
 # These are the DB fields that are required not to be null, along with defaults. 
-nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0', 'space':'0'}
+nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0', 'space':'0','statusoverride':'offline'}
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
 excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','sysconfig','multicloud'] # nqueues takes care of a typo
