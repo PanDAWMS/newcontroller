@@ -106,7 +106,7 @@ def buildDict(stdkeys={}):
 	unicodeConvert(confd)
 	return confd
 
-def allMaker(configd,initial=True):
+def allMaker(configd,dbd,initial=True):
 	'''Extracts commonalities from sites for the All files.
 	Returns 0 for success. Adds "All" queues to sites. Updates the
 	provenance info in the input dictionary. '''
