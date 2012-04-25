@@ -106,7 +106,7 @@ def buildDict(stdkeys={}):
 	unicodeConvert(confd)
 	return confd
 
-def allMaker(d,initial=True):
+def allMaker(configd,initial=True):
 	'''Extracts commonalities from sites for the All files.
 	Returns 0 for success. Adds "All" queues to sites. Updates the
 	provenance info in the input dictionary. '''
@@ -117,36 +117,36 @@ def allMaker(d,initial=True):
 
 	# This should not run after BDII updates and ToA updates, so "initial" allows it to be killed. 
 	if initial:
-		for cloud in [i for i in d.keys() if i is not ndef]:
-			for site in [i for i in d[cloud].keys() if i is not ndef]:
-				if d[cloud][site].has_key(All):
-					for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
-						for key in d[cloud][site][All][param]:
-							d[cloud][site][queue][param][key] = d[cloud][site][All][param][key]
+		for cloud in [i for i in configd.keys() if i is not ndef]:
+			for site in [i for i in configd[cloud].keys() if i is not ndef]:
+				if configd[cloud][site].has_key(All):
+					for queue in [i for i in configd[cloud][site].keys() if (i is not All and i is not ndef)]:
+						for key in configd[cloud][site][All][param]:
+							configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
 
 
 	# This is where we'll put all verified keys that are common across sites/clouds
-	for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
+	for cloud in [i for i in configd.keys() if (i is not All and i is not ndef)]:
 		# Create a dictionary for each cloud 
 		all_d[cloud]={}
 		# For all regular sites:
-		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
+		for site in [i for i in configd[cloud].keys() if (i is not All and i is not ndef)]:
 			# Set up a site output dictionary
 			all_d[cloud][site]={}
 			# Recreate the site comparison queue
 			comp = {}
 			# Loop over all the queues in the site, where the queue is not empty or "All"
-			for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
+			for queue in [i for i in configd[cloud][site].keys() if (i is not All and i is not ndef)]:
 				# Create the key in the comparison dictionary for each parameter, if necessary, and assign a list that will hold the values from each queue 
-				if not len(comp): comp = dict([(i,[d[cloud][site][queue][param][i]]) for i in d[cloud][site][queue][param].keys() if i not in excl])
+				if not len(comp): comp = dict([(i,[configd[cloud][site][queue][param][i]]) for i in configd[cloud][site][queue][param].keys() if i not in excl])
 				else: 
 					# Fill the lists with the values for the keys from this queue
-					for key in d[cloud][site][queue][param]:
+					for key in configd[cloud][site][queue][param]:
 						if key not in excl:
 							try:
-								comp[key].append(d[cloud][site][queue][param][key])
+								comp[key].append(configd[cloud][site][queue][param][key])
 							except KeyError:
-								comp[key] = [d[cloud][site][queue][param][key]]
+								comp[key] = [configd[cloud][site][queue][param][key]]
 								
 			# Now, for the site, remove all duplicates in the lists. 
 			for key in comp:
@@ -156,21 +156,21 @@ def allMaker(d,initial=True):
 					all_d[cloud][site][key] = reducer(comp[key])[0]
 					
 	# Running across sites to update source information in the main dictionary
-	for cloud in [i for i in d.keys() if i is not ndef]:
-		for site in [i for i in d[cloud].keys() if i is not ndef]:
+	for cloud in [i for i in configd.keys() if i is not ndef]:
+		for site in [i for i in configd[cloud].keys() if i is not ndef]:
 			# No point in making an All file for one queue definition:
-			if len(d[cloud][site]) > 1:
+			if len(configd[cloud][site]) > 1:
 				# Extract all affected keys for the site
 				skeys = all_d[cloud][site].keys()
 				# Going queue by queue, update the provenance for both cloud and site general parameters.
-				for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
+				for queue in [i for i in configd[cloud][site].keys() if (i is not All and i is not ndef)]:
 					for key in skeys:
-						d[cloud][site][queue][source][key] = 'All.py: %s site' % site
+						configd[cloud][site][queue][source][key] = 'All.py: %s site' % site
 				# Adding the "All" queue to the site
-				if not d[cloud][site].has_key(All): d[cloud][site][All]={}
-				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over]={}
-				d[cloud][site][All][param] = all_d[cloud][site].copy()
-				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over] = {}
+				if not configd[cloud][site].has_key(All): configd[cloud][site][All]={}
+				if not configd[cloud][site][All].has_key(over): configd[cloud][site][All][over]={}
+				configd[cloud][site][All][param] = all_d[cloud][site].copy()
+				if not configd[cloud][site][All].has_key(over): configd[cloud][site][All][over] = {}
 				
 	return 0
 
