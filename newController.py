@@ -49,7 +49,7 @@ def loadConfigs():
 		# Get a set of the keys being used in these configs
 		configKeys = keyCensus(configd)
 		# Compose the "All" queues for each site
-		status = allMaker(configd, initial=True)
+		status = allMaker(configd, dbd, initial=True)
 		# Make the necessary changes to the configuration files:
 		makeConfigs(configd)
 		# Check the changes just committed into Subversion
@@ -85,7 +85,7 @@ def loadConfigs():
 	# and integrate the BDII information
 	#if not bdiiOverride: bdiiIntegrator(configd,dbd,linfotool)
 	# Compose the "All" queues for each site
-	status = allMaker(configd, initial = False)
+	status = allMaker(configd, dbd, initial = False)
 
 	# Make sure all nicknames are kosher
 	nicknameChecker(configd)
@@ -151,8 +151,11 @@ def loadConfigs():
 		status=status.split('<br>')
 		if len(status) < len(up_l):
 			status=[]
+			errors=[]
 			for up in up_l:
 				status.append(utils.replaceDB('schedconfig',[up],key=dbkey))
+				if 'Error' in status[-1]:
+					errors.append(status[-1] + str(up))
 			errors = [stat for stat in status if 'Error' in stat]
 			f=file(errorFile,'w')
 			f.write(str(errors))
