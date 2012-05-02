@@ -21,6 +21,7 @@ delDebug = False
 lesserDebug = True
 dbReadDebug = False
 dbWriteDebug = False
+allMakerDebug = False
 configReadDebug = False
 configWriteDebug = False
 
