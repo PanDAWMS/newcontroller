@@ -203,15 +203,6 @@ def allMaker(configd,dbd,initial=True):
 				if len(reducer(dbcomp[key])) == 1:
 					# So write it to the output for this cloud and site.
 					dbcomp_d[cloud][site][key] = reducer(dbcomp[key])[0]
-					
-
-## 	if initial:
-## 		for cloud in [i for i in configd.keys() if i is not ndef]:
-## 			for site in [i for i in configd[cloud].keys() if i is not ndef]:
-## 				if configd[cloud][site].has_key(All):
-## 					for queue in [i for i in configd[cloud][site].keys() if (i is not All and i is not ndef)]:
-## 						for key in configd[cloud][site][All][param]:
-## 							configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
 
 	# Rolling through the sites, checking the DB common parameters to see if they match the All.py values in the queue
 	# If the DB
@@ -221,7 +212,7 @@ def allMaker(configd,dbd,initial=True):
 			# If there are common keys at all:
 			if len(dbcomp_d[cloud][site]):
 				# If the cloud and site are in the config files and there exists an All.py file:
-				if configd.has_key(cloud) and configd[cloud].has_key[site] and configd[cloud][site].has_key(All):
+				if configd.has_key(cloud) and configd[cloud].has_key(site) and configd[cloud][site].has_key(All):
 					# Check each All key to see if the DB's 
 					for key in configd[cloud][site][All][param]:
 						# This key is the same across the whole site in the DB
