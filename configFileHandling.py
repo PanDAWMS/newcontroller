@@ -234,9 +234,9 @@ def allMaker(configd,dbd,initial=True):
 						# values via the config files, they will be reflected in the *lack* of a generated All key. Therefore, the All file needs
 						# an edit to remove the redundant key.
 						if dbcomp_d[cloud][site].has_key(key) and not all_d[cloud][site].has_key(key):
-							if site == 'Nebraska' and key == 'releases': print 'Eject All key', configd[cloud][site][queue][param][key]
+							if site == 'Nebraska' and key == 'releases': print 'Eject All key', configd[cloud][site][All][param][key]
 							status = configd[cloud][site][All][param].pop(key)
-							if site == 'Nebraska' and key == 'releases': print 'Post Eject All key', dbcomp_d[cloud][site][key], all_d[cloud][site][key], configd[cloud][site][queue][param]
+							if site == 'Nebraska' and key == 'releases': print 'Post Eject All key', dbcomp_d[cloud][site][key], all_d[cloud][site][key], configd[cloud][site][All][param]
 
 
 		
