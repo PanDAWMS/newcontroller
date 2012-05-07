@@ -218,10 +218,10 @@ def allMaker(configd,dbd,initial=True):
 					# Check each All key to see if the DB's 
 					for key in configd[cloud][site][All][param]:
 						# This key is the same across the whole site in the DB
-						if dbcomp_d[cloud][site].has_key(key) and dbcomp_d[cloud][site][key] == configd[cloud][site][All][param][key]:
+						if dbcomp_d[cloud][site].has_key(key) and str(dbcomp_d[cloud][site][key]) == str(configd[cloud][site][All][param][key]):
 							# If the key is consistent across a site in the DB, and it doesn't match the All.py file
 							# that means the All.py file has been modified, and it overrides the previous values in Config
-							if dbcomp_d[cloud][site][key] != configd[cloud][site][All][param][key]:
+							if str(dbcomp_d[cloud][site][key]) != str(configd[cloud][site][All][param][key]):
 								for queue in configd[cloud][site]:
 									configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
 						# If there's an All.py value for this key, and the DB doesn't have a consistent value of that key
