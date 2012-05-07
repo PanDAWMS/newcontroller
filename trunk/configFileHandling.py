@@ -168,9 +168,9 @@ def allMaker(configd,dbd,initial=True):
 					for key in skeys:
 						configd[cloud][site][queue][source][key] = 'All.py: %s site' % site
 				# Adding the "All" queue to the site
-				if not configd[cloud][site].has_key(All): configd[cloud][site][All]={}
-				if not configd[cloud][site][All].has_key(over): configd[cloud][site][All][over]={}
-				configd[cloud][site][All][param] = all_d[cloud][site].copy()
+				if not configd[cloud][site].has_key(All):
+					configd[cloud][site][All]={}
+					configd[cloud][site][All][param] = all_d[cloud][site].copy()
 				if not configd[cloud][site][All].has_key(over): configd[cloud][site][All][over] = {}
 
 
