@@ -209,10 +209,11 @@ def allMaker(configd,dbd,initial=True):
 	for cloud in dbcomp_d:
 		for site in dbcomp_d[cloud]:
 			# If there are common keys at all:
+			keyDeleteList = []
 			if len(dbcomp_d[cloud][site]):
 				# If the cloud and site are in the config files and there exists an All.py file:
 				if configd.has_key(cloud) and configd[cloud].has_key(site) and configd[cloud][site].has_key(All):
-					# Check each All key to see if the DB's 
+					# Check each All key to see if the DB's
 					for key in configd[cloud][site][All][param]:
 						# This key is the same across the whole site in the DB
 						if site == 'Nebraska' and key == 'releases': print '1', site, key, configd[cloud][site][All][param][key]
@@ -235,8 +236,10 @@ def allMaker(configd,dbd,initial=True):
 						# an edit to remove the redundant key.
 						if dbcomp_d[cloud][site].has_key(key) and not all_d[cloud][site].has_key(key):
 							if site == 'Nebraska' and key == 'releases': print 'Eject All key', configd[cloud][site][All][param][key]
-							status = configd[cloud][site][All][param].pop(key)
-							if site == 'Nebraska' and key == 'releases': print 'Post Eject All key', dbcomp_d[cloud][site][key], configd[cloud][site][All][param]
+							keyDeleteList.append(key)
+					for key in keyDeleteList:
+						status = configd[cloud][site][All][param].pop(key)
+						if site == 'Nebraska' and key == 'releases': print 'Post Eject All key', dbcomp_d[cloud][site][key], configd[cloud][site][All][param]
 
 
 		
