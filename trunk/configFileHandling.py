@@ -206,7 +206,6 @@ def allMaker(configd,dbd,initial=True):
 
 	# Rolling through the sites, checking the DB common parameters to see if they match the All.py values in the queue
 	# If the DB
-	if not genDebug: return 0
 	for cloud in dbcomp_d:
 		for site in dbcomp_d[cloud]:
 			# If there are common keys at all:
@@ -234,8 +233,8 @@ def allMaker(configd,dbd,initial=True):
 
 		
 				
-	if genDebug and allMakerDebug: return dbcomp_d, all_d
-	else: return 0
+	return dbcomp_d, all_d
+
 
 def composeFields(d,s,subdictname,primary_key,allFlag=0):
 	''' Populate a list for file writing that prints parameter dictionaries cleanly,
