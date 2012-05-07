@@ -128,7 +128,6 @@ def allMaker(configd,dbd,initial=True):
 		# Create a dictionary for each cloud 
 		all_d[cloud]={}
 		# For all regular sites:
-		print configd['US']['Nebraska'][All][param]['releases'], cloud
 		for site in [i for i in configd[cloud].keys() if (i is not All and i is not ndef)]:
 			# Set up a site output dictionary
 			all_d[cloud][site]={}
@@ -155,10 +154,10 @@ def allMaker(configd,dbd,initial=True):
 					all_d[cloud][site][key] = reducer(comp[key])[0]
 					
 	# Running across sites to update source information in the main dictionary
-	print 'Updating Sites'
 	for cloud in [i for i in configd.keys() if i is not ndef]:
 		for site in [i for i in configd[cloud].keys() if i is not ndef]:
-			print configd['US']['Nebraska'][All][param]['releases'], cloud, site
+			print configd['US']['Nebraska']['Nebraska-Omaha-ffgrid_Install'][param]['releases']
+			print configd['US']['Nebraska'][All][param]['releases']
 			# No point in making an All file for one queue definition:
 			if len(configd[cloud][site]) > 1:
 				# Extract all affected keys for the site
@@ -178,13 +177,11 @@ def allMaker(configd,dbd,initial=True):
 	### Repeating much the same thing, but for the DB version.
 	
 	# This is where we'll put all verified keys that are common across sites/clouds
-	print 'dbd check'
 	for cloud in dbd.keys():
 		# Create a dictionary for each cloud 
 		dbcomp_d[cloud]={}
 		# For all regular sites:
 		for site in dbd[cloud].keys():
-			print configd['US']['Nebraska'][All][param]['releases'], cloud, site
 			# Set up a site output dictionary
 			dbcomp_d[cloud][site]={}
 			# Recreate the site comparison queue
@@ -209,12 +206,10 @@ def allMaker(configd,dbd,initial=True):
 					# So write it to the output for this cloud and site.
 					dbcomp_d[cloud][site][key] = reducer(dbcomp[key])[0]
 
-	print 'Comparison Step'
 	# Rolling through the sites, checking the DB common parameters to see if they match the All.py values in the queue
 	# If the DB
 	for cloud in dbcomp_d:
 		for site in dbcomp_d[cloud]:
-			print configd['US']['Nebraska'][All][param]['releases'], cloud, site
 			# If there are common keys at all:
 			if len(dbcomp_d[cloud][site]):
 				# If the cloud and site are in the config files and there exists an All.py file:
@@ -222,7 +217,7 @@ def allMaker(configd,dbd,initial=True):
 					# Check each All key to see if the DB's 
 					for key in configd[cloud][site][All][param]:
 						# This key is the same across the whole site in the DB
-						if dbcomp_d[cloud][site].has_key(key):
+						if dbcomp_d[cloud][site].has_key(key) and dbcomp_d[cloud][site][key] == configd[cloud][site][All][param][key]:
 							# If the key is consistent across a site in the DB, and it doesn't match the All.py file
 							# that means the All.py file has been modified, and it overrides the previous values in Config
 							if dbcomp_d[cloud][site][key] != configd[cloud][site][All][param][key]:
