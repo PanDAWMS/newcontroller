@@ -215,7 +215,7 @@ def allMaker(configd,dbd,initial=True):
 					# Check each All key to see if the DB's 
 					for key in configd[cloud][site][All][param]:
 						# This key is the same across the whole site in the DB
-						if site == 'Nebraska' and key == 'releases': print site, key,  configd[cloud][site][All][param][key]
+						if site == 'Nebraska' and key == 'releases': print '1', site, key, configd[cloud][site][All][param][key]
 						if dbcomp_d[cloud][site].has_key(key) and str(dbcomp_d[cloud][site][key]) == str(configd[cloud][site][All][param][key]):
 							# If the key is consistent across a site in the DB, and it doesn't match the All.py file
 							# that means the All.py file has been modified, and it overrides the previous values in Config
@@ -225,7 +225,7 @@ def allMaker(configd,dbd,initial=True):
 									configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
 						# If there's an All.py value for this key, and the DB doesn't have a consistent value of that key
 						# for the site, then the All.py value needs to override as well
-						elif not dbcomp_d[cloud][site].has_key(key) and all_d[cloud][site].has_key(key):
+						if not dbcomp_d[cloud][site].has_key(key) and all_d[cloud][site].has_key(key):
 							for queue in configd[cloud][site]:
 								if site == 'Nebraska' and key == 'releases': print 'per queue 2', all_d[cloud][site][key], configd[cloud][site][queue][param][key]
 								configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
@@ -233,7 +233,7 @@ def allMaker(configd,dbd,initial=True):
 						# in a previous run and has been added to the All.py file at the same time. If there are changes in the individual queue
 						# values via the config files, they will be reflected in the *lack* of a generated All key. Therefore, the All file needs
 						# an edit to remove the redundant key.
-						elif not dbcomp_d[cloud][site].has_key(key) and not all_d[cloud][site].has_key(key):
+						if dbcomp_d[cloud][site].has_key(key) and not all_d[cloud][site].has_key(key):
 							if site == 'Nebraska' and key == 'releases': print 'Eject All key', configd[cloud][site][queue][param][key]
 							status = configd[cloud][site][All][param].pop(key)
 							if site == 'Nebraska' and key == 'releases': print 'Post Eject All key', dbcomp_d[cloud][site][key], all_d[cloud][site][key], configd[cloud][site][queue][param]
