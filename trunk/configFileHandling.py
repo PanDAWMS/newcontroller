@@ -215,7 +215,7 @@ def allMaker(configd,dbd,initial=True):
 					# Check each All key to see if the DB's 
 					for key in configd[cloud][site][All][param]:
 						# This key is the same across the whole site in the DB
-						if site == 'Nebraska' and key == 'releases': print site, key, dbcomp_d[cloud][site][key], all_d[cloud][site][key], configd[cloud][site][All][param][key]
+						if site == 'Nebraska' and key == 'releases': print site, key,  configd[cloud][site][All][param][key]
 						if dbcomp_d[cloud][site].has_key(key) and str(dbcomp_d[cloud][site][key]) == str(configd[cloud][site][All][param][key]):
 							# If the key is consistent across a site in the DB, and it doesn't match the All.py file
 							# that means the All.py file has been modified, and it overrides the previous values in Config
