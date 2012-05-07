@@ -156,8 +156,6 @@ def allMaker(configd,dbd,initial=True):
 	# Running across sites to update source information in the main dictionary
 	for cloud in [i for i in configd.keys() if i is not ndef]:
 		for site in [i for i in configd[cloud].keys() if i is not ndef]:
-			print configd['US']['Nebraska']['Nebraska-Omaha-ffgrid_Install'][param]['releases']
-			print configd['US']['Nebraska'][All][param]['releases']
 			# No point in making an All file for one queue definition:
 			if len(configd[cloud][site]) > 1:
 				# Extract all affected keys for the site
@@ -182,6 +180,9 @@ def allMaker(configd,dbd,initial=True):
 		dbcomp_d[cloud]={}
 		# For all regular sites:
 		for site in dbd[cloud].keys():
+			print cloud, site
+			print configd['US']['Nebraska']['Nebraska-Omaha-ffgrid_Install'][param]['releases']
+			print configd['US']['Nebraska'][All][param]['releases']
 			# Set up a site output dictionary
 			dbcomp_d[cloud][site]={}
 			# Recreate the site comparison queue
