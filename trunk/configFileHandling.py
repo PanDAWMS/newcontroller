@@ -226,12 +226,16 @@ def allMaker(configd,dbd,initial=True):
 									configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
 						# If there's an All.py value for this key, and the DB doesn't have a consistent value of that key
 						# for the site, then the All.py value needs to override as well
-						else:
+						elif not dbcomp_d[cloud][site].has_key(key) and all_d[cloud][site].has_key(key):
 							for queue in configd[cloud][site]:
 								configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
 						# If the DB has a consistent value for a site parameter, and it's the same as the All.py value, then it's already been set
 						# in a previous run and has been added to the All.py file at the same time. If there are changes in the individual queue
-						# values via the config files, they will be reflected in the *lack* of a generated All key, and it will never get this far.
+						# values via the config files, they will be reflected in the *lack* of a generated All key. Therefore, the All file needs
+						# an edit to remove the redundant key.
+						elif not dbcomp_d[cloud][site].has_key(key) and not all_d[cloud][site].has_key(key):
+							status = configd[cloud][site][All][param].pop(key)
+							
 
 
 		
