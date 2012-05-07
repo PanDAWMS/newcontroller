@@ -180,9 +180,6 @@ def allMaker(configd,dbd,initial=True):
 		dbcomp_d[cloud]={}
 		# For all regular sites:
 		for site in dbd[cloud].keys():
-			print cloud, site
-			print configd['US']['Nebraska']['Nebraska-Omaha-ffgrid_Install'][param]['releases']
-			print configd['US']['Nebraska'][All][param]['releases']
 			# Set up a site output dictionary
 			dbcomp_d[cloud][site]={}
 			# Recreate the site comparison queue
@@ -212,6 +209,9 @@ def allMaker(configd,dbd,initial=True):
 	for cloud in dbcomp_d:
 		for site in dbcomp_d[cloud]:
 			# If there are common keys at all:
+			print cloud, site
+			print configd['US']['Nebraska']['Nebraska-Omaha-ffgrid_Install'][param]['releases']
+			print configd['US']['Nebraska'][All][param]['releases']
 			if len(dbcomp_d[cloud][site]):
 				# If the cloud and site are in the config files and there exists an All.py file:
 				if configd.has_key(cloud) and configd[cloud].has_key(site) and configd[cloud][site].has_key(All):
