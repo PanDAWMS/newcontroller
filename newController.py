@@ -49,7 +49,7 @@ def loadConfigs():
 		# Get a set of the keys being used in these configs
 		configKeys = keyCensus(configd)
 		# Compose the "All" queues for each site
-		status = allMaker(configd, dbd, initial=True)
+		dbcomp_d, all_d = allMaker(configd, dbd, initial=True)
 		# Make the necessary changes to the configuration files:
 		makeConfigs(configd)
 		# Check the changes just committed into Subversion
@@ -85,7 +85,7 @@ def loadConfigs():
 	# and integrate the BDII information
 	#if not bdiiOverride: bdiiIntegrator(configd,dbd,linfotool)
 	# Compose the "All" queues for each site
-	status = allMaker(configd, dbd, initial = False)
+	dbcomp_d, all_d = allMaker(configd, dbd, initial = False)
 
 	# Make sure all nicknames are kosher
 	nicknameChecker(configd)
@@ -216,7 +216,7 @@ def loadConfigs():
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug:
-		return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel
+		return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, dbcomp_d, all_d
 	else:
 		return 0
 	
@@ -253,7 +253,7 @@ if __name__ == "__main__":
 		# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 		dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		print 'L is OK'
-		sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel = loadConfigs()
+		sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, dbcomp_d, all_d = loadConfigs()
 
 
 		
