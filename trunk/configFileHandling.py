@@ -128,6 +128,7 @@ def allMaker(configd,dbd,initial=True):
 		# Create a dictionary for each cloud 
 		all_d[cloud]={}
 		# For all regular sites:
+		print configd['US']['Nebraska'][All][param]['releases'], cloud
 		for site in [i for i in configd[cloud].keys() if (i is not All and i is not ndef)]:
 			# Set up a site output dictionary
 			all_d[cloud][site]={}
@@ -154,8 +155,10 @@ def allMaker(configd,dbd,initial=True):
 					all_d[cloud][site][key] = reducer(comp[key])[0]
 					
 	# Running across sites to update source information in the main dictionary
+	print 'Updating Sites'
 	for cloud in [i for i in configd.keys() if i is not ndef]:
 		for site in [i for i in configd[cloud].keys() if i is not ndef]:
+			print configd['US']['Nebraska'][All][param]['releases'], cloud, site
 			# No point in making an All file for one queue definition:
 			if len(configd[cloud][site]) > 1:
 				# Extract all affected keys for the site
@@ -175,11 +178,13 @@ def allMaker(configd,dbd,initial=True):
 	### Repeating much the same thing, but for the DB version.
 	
 	# This is where we'll put all verified keys that are common across sites/clouds
+	print 'dbd check'
 	for cloud in dbd.keys():
 		# Create a dictionary for each cloud 
 		dbcomp_d[cloud]={}
 		# For all regular sites:
 		for site in dbd[cloud].keys():
+			print configd['US']['Nebraska'][All][param]['releases'], cloud, site
 			# Set up a site output dictionary
 			dbcomp_d[cloud][site]={}
 			# Recreate the site comparison queue
@@ -204,10 +209,12 @@ def allMaker(configd,dbd,initial=True):
 					# So write it to the output for this cloud and site.
 					dbcomp_d[cloud][site][key] = reducer(dbcomp[key])[0]
 
+	print 'Comparison Step'
 	# Rolling through the sites, checking the DB common parameters to see if they match the All.py values in the queue
 	# If the DB
 	for cloud in dbcomp_d:
 		for site in dbcomp_d[cloud]:
+			print configd['US']['Nebraska'][All][param]['releases'], cloud, site
 			# If there are common keys at all:
 			if len(dbcomp_d[cloud][site]):
 				# If the cloud and site are in the config files and there exists an All.py file:
