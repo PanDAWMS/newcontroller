@@ -106,7 +106,7 @@ def buildDict(stdkeys={}):
 	unicodeConvert(confd)
 	return confd
 
-def allMaker(configd,dbd,initial=True):
+def allMaker(configd,dbd):
 	'''Extracts commonalities from sites for the All files.
 	Returns 0 for success. Adds "All" queues to sites. Updates the
 	provenance info in the input dictionary. '''
@@ -115,15 +115,9 @@ def allMaker(configd,dbd,initial=True):
 	
 	# Presetting the All queue values from the Configs. These reign absolute -- to change individual queue
 	# settings, an override or deletion of the parameter from the All.py file is necessary.
-
-	# FIXME This section is incorrect. If we populate with All here, and then repopulate with the queue configs, the All will be (and is) overridden. If we do it after,
-	# changes made in the queue configs will not be reflected.
-
-	# This needs to be changed to refer to the DB as an arbitration. "Initial" also becomes obsolete.
 	
-	# This should not run after BDII updates and ToA updates, so "initial" allows it to be killed. 
-
 	# This is where we'll put all verified keys that are common across sites/clouds
+
 	for cloud in [i for i in configd.keys() if (i is not All and i is not ndef)]:
 		# Create a dictionary for each cloud 
 		all_d[cloud]={}
@@ -224,6 +218,12 @@ def allMaker(configd,dbd,initial=True):
 								for queue in configd[cloud][site]:
 									if site == 'Nebraska' and key == 'releases': print 'per queue 1', dbcomp_d[cloud][site][key], all_d[cloud][site][key], configd[cloud][site][queue][param][key]
 									configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
+						# If there is an All value and the DB lacks a consistent value and so do the queue entries, the queues need to be updated
+						# to avoid flip-flops
+						if not dbcomp_d[cloud][site].has_key(key) and not all_d[cloud][site].has_key(key) and configd[cloud][site][All][param].has_key(key):
+							if site == 'Nebraska' and key == 'releases': print 'Eject All key 2', configd[cloud][site][All][param][key]
+							for queue in configd[cloud][site]:
+								configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
 						# If there's an All.py value for this key, and the DB doesn't have a consistent value of that key
 						# for the site, then the All.py value needs to override as well
 						if not dbcomp_d[cloud][site].has_key(key) and all_d[cloud][site].has_key(key):
@@ -235,7 +235,7 @@ def allMaker(configd,dbd,initial=True):
 						# values via the config files, they will be reflected in the *lack* of a generated All key. Therefore, the All file needs
 						# an edit to remove the redundant key.
 						if dbcomp_d[cloud][site].has_key(key) and not all_d[cloud][site].has_key(key):
-							if site == 'Nebraska' and key == 'releases': print 'Eject All key', configd[cloud][site][All][param][key]
+							if site == 'Nebraska' and key == 'releases': print 'Eject All key 1', configd[cloud][site][All][param][key]
 							keyDeleteList.append(key)
 					for key in keyDeleteList:
 						status = configd[cloud][site][All][param].pop(key)
