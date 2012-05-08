@@ -49,7 +49,7 @@ def loadConfigs():
 		# Get a set of the keys being used in these configs
 		configKeys = keyCensus(configd)
 		# Compose the "All" queues for each site
-		dbcomp_d, all_d = allMaker(configd, dbd)
+		status = allMaker(configd, dbd)
 		# Make the necessary changes to the configuration files:
 		makeConfigs(configd)
 		# Check the changes just committed into Subversion
@@ -85,7 +85,7 @@ def loadConfigs():
 	# and integrate the BDII information
 	#if not bdiiOverride: bdiiIntegrator(configd,dbd,linfotool)
 	# Compose the "All" queues for each site
-	dbcomp_d, all_d = allMaker(configd, dbd)
+	status = allMaker(configd, dbd)
 
 	# Make sure all nicknames are kosher
 	nicknameChecker(configd)

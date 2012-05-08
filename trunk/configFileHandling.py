@@ -164,8 +164,6 @@ def allMaker(configd,dbd):
 					configd[cloud][site][All][param] = all_d[cloud][site].copy()
 				if not configd[cloud][site][All].has_key(over): configd[cloud][site][All][over] = {}
 
-
-
 	### Repeating much the same thing, but for the DB version.
 	
 	# This is where we'll put all verified keys that are common across sites/clouds
@@ -210,41 +208,31 @@ def allMaker(configd,dbd):
 					# Check each All key to see if the DB's
 					for key in configd[cloud][site][All][param]:
 						# This key is the same across the whole site in the DB
-						if site == 'Nebraska' and key == 'releases': print '1', site, key, configd[cloud][site][All][param][key]
 						if dbcomp_d[cloud][site].has_key(key) and str(dbcomp_d[cloud][site][key]) == str(configd[cloud][site][All][param][key]):
 							# If the key is consistent across a site in the DB, and it doesn't match the All.py file
 							# that means the All.py file has been modified, and it overrides the previous values in Config
 							if str(dbcomp_d[cloud][site][key]) != str(configd[cloud][site][All][param][key]):
 								for queue in configd[cloud][site]:
-									if site == 'Nebraska' and key == 'releases': print 'per queue 1', dbcomp_d[cloud][site][key], all_d[cloud][site][key], configd[cloud][site][queue][param][key]
 									configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
 						# If there is an All value and the DB lacks a consistent value and so do the queue entries, the queues need to be updated
 						# to avoid flip-flops
 						if not dbcomp_d[cloud][site].has_key(key) and not all_d[cloud][site].has_key(key) and configd[cloud][site][All][param].has_key(key):
-							if site == 'Nebraska' and key == 'releases': print 'Eject All key 2', configd[cloud][site][All][param][key]
 							for queue in configd[cloud][site]:
 								configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
 						# If there's an All.py value for this key, and the DB doesn't have a consistent value of that key
 						# for the site, then the All.py value needs to override as well
 						if not dbcomp_d[cloud][site].has_key(key) and all_d[cloud][site].has_key(key):
 							for queue in configd[cloud][site]:
-								if site == 'Nebraska' and key == 'releases': print 'per queue 2', all_d[cloud][site][key], configd[cloud][site][queue][param][key]
 								configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
 						# If the DB has a consistent value for a site parameter, and it's the same as the All.py value, then it's already been set
 						# in a previous run and has been added to the All.py file at the same time. If there are changes in the individual queue
 						# values via the config files, they will be reflected in the *lack* of a generated All key. Therefore, the All file needs
 						# an edit to remove the redundant key.
 						if dbcomp_d[cloud][site].has_key(key) and not all_d[cloud][site].has_key(key):
-							if site == 'Nebraska' and key == 'releases': print 'Eject All key 1', configd[cloud][site][All][param][key]
 							keyDeleteList.append(key)
 					for key in keyDeleteList:
 						status = configd[cloud][site][All][param].pop(key)
-						if site == 'Nebraska' and key == 'releases': print 'Post Eject All key', dbcomp_d[cloud][site][key], configd[cloud][site][All][param]
-
-
-		
-				
-	return dbcomp_d, all_d
+	return 0
 
 
 def composeFields(d,s,subdictname,primary_key,allFlag=0):
