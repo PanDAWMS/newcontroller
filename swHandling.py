@@ -76,11 +76,11 @@ def updateInstalledSW(confd,lcgdict):
 
 				index = '%s_%s_%s_%s' % ('ANALY_HU_ATLAS_Tier2',release,cache[rel],cache[cmt]) # Harvard Kludge! Remove!
 				index = index.replace('None','') # Harvard Kludge! Remove!
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache[rel],'cmtConfig':cache[cmt]} # Harvard Kludge! Remove!
+				sw_bdii[index] = {'siteid':'ANALY_HU_ATLAS_Tier2','cloud':'US','release':release,'cache':cache[rel],'cmtConfig':cache[cmt]} # Harvard Kludge! Remove!
 
 				index = '%s_%s_%s_%s' % ('HU_ATLAS_Tier2',release,cache[rel],cache[cmt]) # Harvard Kludge! Remove!
 				index = index.replace('None','') # Harvard Kludge! Remove!
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache[rel],'cmtConfig':cache[cmt]} # Harvard Kludge! Remove!
+				sw_bdii[index] = {'siteid':'HU_ATLAS_Tier2','cloud':'US','release':release,'cache':cache[rel],'cmtConfig':cache[cmt]} # Harvard Kludge! Remove!
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
@@ -92,11 +92,11 @@ def updateInstalledSW(confd,lcgdict):
 	
 				index = '%s_%s_%s_%s' % ('ANALY_HU_ATLAS_Tier2',release[rel],cache,release[cmt]) # Harvard Kludge! Remove!
 				index = index.replace('None','') # Harvard Kludge! Remove!
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache,'cmtConfig':release[cmt]} # Harvard Kludge! Remove!
+				sw_bdii[index] = {'siteid':'ANALY_HU_ATLAS_Tier2','cloud':'US','release':release,'cache':cache,'cmtConfig':release[cmt]} # Harvard Kludge! Remove!
 
 				index = '%s_%s_%s_%s' % ('HU_ATLAS_Tier2',release[rel],cache,release[cmt]) # Harvard Kludge! Remove!
 				index = index.replace('None','') # Harvard Kludge! Remove!
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache,'cmtConfig':release[cmt]} # Harvard Kludge! Remove!
+				sw_bdii[index] = {'siteid':'HU_ATLAS_Tier2','cloud':'US','release':release,'cache':cache,'cmtConfig':release[cmt]} # Harvard Kludge! Remove!
 
 	unicodeEncode(sw_bdii)
 	unicodeEncode(sw_db)
