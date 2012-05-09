@@ -32,7 +32,8 @@ def updateInstalledSW(confd,lcgdict):
 	cloud = {}
 	# Make any translation necessary to the cache tags (see controllerSettings for more info)
 	translateTags(cache_tags)
-
+	rellist = [] # Harvard Kludge! Remove!
+	cachelist = []  # Harvard Kludge! Remove!
 	# We now have a full set of lookups. We need to build a list of siteids, gatekeepers and clouds from the config dict:
 	for queue in confd:
 		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 
@@ -60,8 +61,6 @@ def updateInstalledSW(confd,lcgdict):
 	# completeness. This is why I just add EVERYTHING and let the keys sort it out.
 	
 	sw_bdii = {}
-
-	
 	
 	for queue in siteid:
 		# Check for the gatekeeper value in the BDII:
@@ -70,10 +69,18 @@ def updateInstalledSW(confd,lcgdict):
 				# Once again -- cache[rel] is cache[0], because the release and cache records are (release,cmt)
 				# ASSUMPTION -- that base releases will always contain two periods as separators
 				release=baseReleaseSep.join(cache[rel].split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
-				# The unique name for this entry
+				# The unique name for this entry				
 				index = '%s_%s_%s_%s' % (siteid[queue],release,cache[rel],cache[cmt])
 				index = index.replace('None','')
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache[rel],'cmtConfig':cache[cmt]}
+
+				index = '%s_%s_%s_%s' % ('ANALY_HU_ATLAS_Tier2',release,cache[rel],cache[cmt]) # Harvard Kludge! Remove!
+				index = index.replace('None','') # Harvard Kludge! Remove!
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache[rel],'cmtConfig':cache[cmt]} # Harvard Kludge! Remove!
+
+				index = '%s_%s_%s_%s' % ('HU_ATLAS_Tier2',release,cache[rel],cache[cmt]) # Harvard Kludge! Remove!
+				index = index.replace('None','') # Harvard Kludge! Remove!
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache[rel],'cmtConfig':cache[cmt]} # Harvard Kludge! Remove!
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
@@ -83,6 +90,14 @@ def updateInstalledSW(confd,lcgdict):
 				index = index.replace('None','')
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache,'cmtConfig':release[cmt]}
 	
+				index = '%s_%s_%s_%s' % ('ANALY_HU_ATLAS_Tier2',release[rel],cache,release[cmt]) # Harvard Kludge! Remove!
+				index = index.replace('None','') # Harvard Kludge! Remove!
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache,'cmtConfig':release[cmt]} # Harvard Kludge! Remove!
+
+				index = '%s_%s_%s_%s' % ('HU_ATLAS_Tier2',release[rel],cache,release[cmt]) # Harvard Kludge! Remove!
+				index = index.replace('None','') # Harvard Kludge! Remove!
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache,'cmtConfig':release[cmt]} # Harvard Kludge! Remove!
+
 	unicodeEncode(sw_bdii)
 	unicodeEncode(sw_db)
 
