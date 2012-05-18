@@ -3,8 +3,7 @@ from miscUtils import reducer
 
 groupName = 'atlpan:updatetrigger'
 
-#configFile = '/afs/cern.ch/user/a/atlpan/admin/pandaconf/conf/authz'
-configFile = '/Users/stradlin/Code/SVNAdmin/pandaconf/conf/authz'
+configFile = '/afs/cern.ch/user/a/atlpan/admin/pandaconf/conf/authz'
 
 pickupLines = ['developers','adc-users','librarian','JDL']
 beginString = '# ACCESSLIST_START'
