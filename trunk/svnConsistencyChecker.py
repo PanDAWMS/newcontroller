@@ -4,7 +4,7 @@
 import os, sys, random
 from controllerSettings import *
 
-def checkConfigs(attempt = 0)
+def checkConfigs(attempt = 0):
 	cfg_list, cmp_list = [], []
 
 	# Get the file trees except the subversion stuff
@@ -27,4 +27,4 @@ def checkConfigs(attempt = 0)
 			status = checkConfigs(attempt + 1)
 		else:
 			return -1
-		
+	else: return attempt
