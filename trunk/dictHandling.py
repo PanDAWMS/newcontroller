@@ -236,6 +236,18 @@ def nicknameChecker(d):
 					d[cloud][site][queue][param][dbkey] = queue
 	return 0
 
+def BNL_ATLAS_1Deleter(d):
+	'''For historical reasons, BNL_ATLAS_1 needs to never show up as a siteid or nickname. Checks through the DB to be sure that it does not'''
+	deleteList=[]
+	for cloud in d:
+		for site in [i for i in d[cloud] if i != All]:			
+			for queue in [i for i in d[cloud][site] if i != All]:
+				if  d[cloud][site][queue][param]['siteid'].startswith('BNL_ATLAS_1') or d[cloud][site][queue][param][dbkey].startswith('BNL_ATLAS_1'):
+					deleteList.append((cloud,site,queue))
+	for cloud,site,queue in deleteList:
+		status=d[cloud][site].pop(queue)
+	return 0
+
 def dd(d1, d2, ctx=""):
     print "Changes in " + ctx
     for k in d1:
