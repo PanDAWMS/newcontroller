@@ -18,7 +18,9 @@ class lcgInfositeTool:
 		self.TagSep = '-'		# Get ATLAS SW tags per CE
 		self.minlen = 15        # Filter _UNDEF_ and other crap to avoid dictionary collisions
 		self.release = 0            # release is the first element of the release/cmt block 
-		self.cmt = 1            # cmt is the first element of the release/cmt block 
+		self.cmt = 1            # cmt is the first element of the release/cmt block
+		self.nightly = 'rel_'   # Detects nightlies and does some preprocessing
+		self.dev = 'dev'        # Detects development releases in general 
 		# Run the collection algorithms in init.
 		self.buildSWtags(test=False)
 		self.buildRAMlist(test=False)
@@ -52,6 +54,13 @@ class lcgInfositeTool:
    
 		# Split the string on line separations, and get rid of blanks
 		lines = [i for i in cedata.split(os.linesep) if i]
+
+		# Rework the new rel_ format
+		for n,i in enumerate(lines):
+			if self.nightly in i and self.dev in i:
+				lines[n].replace('-dev','')
+				tmp = i.split(self.nightly)
+				night = i[1][0] # Grab the 
 
 		# Build a dictionary with the CEs and the raw release string list as key and value pairs 
 		tags = dict([(l.split(self.PortSep)[0],l.split(self.CESep)[1].split(self.RelSep)) for l in lines if len(l.split(self.CESep)[1].split(self.RelSep)) > self.minlen])
