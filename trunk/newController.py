@@ -152,9 +152,11 @@ def loadConfigs():
 		status=utils.replaceDB('schedconfig',up_l,key=dbkey)
 		status=status.split('<br>')
 		if len(status) < len(up_l):
+			print 'Bulk Update Failed. Retrying queue-by-queue.'
 			status=[]
 			errors=[]
 			for up in up_l:
+				print up[dbkey]
 				status.append(utils.replaceDB('schedconfig',[up],key=dbkey))
 				if 'Error' in status[-1]:
 					errors.append(status[-1] + str(up))

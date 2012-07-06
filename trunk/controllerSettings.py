@@ -67,7 +67,7 @@ hotBackups = 90
 keptBackups = 1500
 keptRunLogs = 15000
 # Paths for run logs (email notification)
-logPath = '/tmp/runProd.log'
+logPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/logs/'
 errorFile = '/tmp/pandaUpdateErrors.log'
 errorFileJDL = '/tmp/pandaUpdateErrorsJDL.log'
 
