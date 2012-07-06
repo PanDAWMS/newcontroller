@@ -50,6 +50,10 @@ def buildDict(stdkeys={}):
 				execfile(fname,{},locvars)
 				confd[cloud][s][param] = locvars[param]
 				confd[cloud][s][over] = locvars[over]
+			# If the queue was misplaced, ignore it and mention it in the log:
+			elif site.endswith(postfix):
+				print '*** %s is not a site directory: this queue needs to be in a site. Ignoring.'
+				continue
 			# Add each site to the cloud
  			confd[cloud][site] = {}
 			# Loop throught the queues in the present site folders
