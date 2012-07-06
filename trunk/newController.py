@@ -9,8 +9,6 @@
 
 # TODO:
 
-# Add manual pickle restoration code
-
 # This code has been organized for easy transition into a class structure.
 
 import os, sys, commands, pickle
