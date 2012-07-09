@@ -90,7 +90,7 @@ shared, unshared = 'shared','unshared'
 nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0', 'space':'0','statusoverride':'offline'}
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
-excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','sysconfig','multicloud'] # nqueues takes care of a typo
+excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','sysconfig','multicloud','statusoverride'] # nqueues takes care of a typo
 nonexistent = ['nqueues']
 timestamps = ['lastmod','tspace'] # Fields that are explicitly timestamps, and are as such harder to update in the DB
 excl_nonTimestamp = [i for i in excl if i not in timestamps + nonexistent] # List of items to back up
