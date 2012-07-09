@@ -57,9 +57,9 @@ def loadConfigs():
 		# Update the local configuration files from SVN and check that there
 		# are no inconsistencies.
 		svnUpdate()
-		if not checkConfigs() > -1:
-			emailError('Persistent inconsistencies in config SVN')
-			sys.exit()
+		#if not checkConfigs() > -1:
+		#	emailError('Persistent inconsistencies in config SVN')
+		#	sys.exit()
 		
 	
 	# Load the present config files, based on the SVN update

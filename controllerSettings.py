@@ -28,7 +28,7 @@ configWriteDebug = False
 # Global strings and lists
 
 # SVN repositories
-confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf' 
+confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf/trunk' 
 
 # If safety is on, nothing is written to the DB.
 safety = 'off'

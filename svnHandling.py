@@ -27,7 +27,7 @@ def svnCheckout():
 		os.chdir('..')
 	print '####### Checking out the SVN repository anew -- this should be a RARE event! Is this really what you want to do? #############'
 	# Check out the whole repo
-	os.system('svn co  %s' % confrepo)
+	os.system('svn co  %s pandaconf' % confrepo)
 	os.chdir(path)
 	if svnDebug: print 'Completing SVN checkout'
 	return 0
