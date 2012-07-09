@@ -49,7 +49,13 @@ def volatileBackupCreate():
 	for i in d:
 		f.write('UPDATE atlas_pandameta.schedconfig set %s WHERE nickname = \'%s\'; -- Site is %s, Cloud is %s\n' % (', '.join(['%s = \'%s\'' % (key, d[i][key]) for key in excl_nonTimestamp]), i, d[i]['site'],d[i]['cloud']))
 	f.close()
+	print bfile, bfilecopy
+	print 'cp %s %s' % (bfile, bfilecopy)
+	print commands.getoutput('ls -alh %s' % bfile)
+	print commands.getoutput('ls -alh %s' % bfilecopy)
 	os.system('cp %s %s' % (bfile, bfilecopy))
+	print commands.getoutput('ls -alh %s' % bfile)
+	print commands.getoutput('ls -alh %s' % bfilecopy)
 	# Here we create a CSV file that allows a history of the volatiles to be kept. When a queue is being created, we have to be sure it's not a recent delete.
 	# When a queue is reconstituted, this will allow a check for that queue nickname in the last few updates... and if it's present, we take the newest parameters
 	# and restore them.
@@ -65,7 +71,13 @@ def volatileBackupCreate():
 	for i in d:
 		w.writerow([d[i][key] for key in  fields])
 	f.close()
+	print bfile, bfilecopy
+	print 'cp %s %s' % (bfile, bfilecopy)
+	print commands.getoutput('ls -alh %s' % bfile)
+	print commands.getoutput('ls -alh %s' % bfilecopy)
 	os.system('cp %s %s' % (bfile, bfilecopy))
+	print commands.getoutput('ls -alh %s' % bfile)
+	print commands.getoutput('ls -alh %s' % bfilecopy)
 	return 0
 
 def backupCreate(d):
