@@ -26,6 +26,7 @@ from swHandling import *
 from lesserTablesController import *
 from accessControl import *
 from svnConsistencyChecker import *
+from agisHandling import *
 
 try:
 	import lcgInfositeTool2 as lcgInfositeTool
@@ -88,10 +89,6 @@ def loadConfigs():
 	# Make sure all nicknames are kosher
 	nicknameChecker(configd)
 	nicknameChecker(dbd)
-
-	# For historical reasons, make sure BNL_ATLAS_1 never comes up.
-	#BNL_ATLAS_1Deleter(configd)
-	#BNL_ATLAS_1Deleter(dbd)
 
 	# Compare the DB to the present built configuration to find the queues that are changed.
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(configd), dbOverride)
