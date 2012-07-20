@@ -85,10 +85,23 @@ def loadConfigs():
 	#if not bdiiOverride: bdiiIntegrator(configd,dbd,linfotool)
 	# Compose the "All" queues for each site
 	status = allMaker(configd, dbd)
+	
+	try:
+		f=file('/afs/cern.ch/user/a/atlpan/2012_07_20_08_56_31_maxtime.p')
+		maxtimed=pickle.load(f)
+		f.close()
+		for i in maxtimed:
+			q,maxtime_v,c,s = i, maxtimed[i][0], maxtimed[i][1], maxtimed[i][2]
+			print q,maxtime_v,c,s
+			configd[c][s][q][param]['maxtime'] = maxtime_v
+			configd[c][s][q][source]['maxtime'] = ''			
+			raw_input('If this is OK...')
+	except:
+		pass
 
 	# Add information from AGIS
 	# Get the maxtimes for each site and update the queues
-	print 'AGIS Maxtime update' 
+	print 'AGIS Maxtime update'
 	updateMaxTime(configd)
 
 	# Make sure all nicknames are kosher
