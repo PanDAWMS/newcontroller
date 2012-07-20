@@ -91,14 +91,14 @@ def loadConfigs():
 		maxtimed=pickle.load(f)
 		f.close()
 		for i in maxtimed:
-			q,maxtime_v,c,s = i, maxtimed[i][0], maxtimed[i][1], maxtimed[i][2]
+			q,maxtime_v,c,s = i, maxtimed[i][0], maxtimed[i][1].split(',')[0], maxtimed[i][2]
 			print q,maxtime_v,c,s
 			configd[c][s][q][param]['maxtime'] = maxtime_v
 			configd[c][s][q][source]['maxtime'] = ''			
-			raw_input('If this is OK...')
 	except:
 		pass
-
+	raw_input('If this is OK...')
+			
 	# Add information from AGIS
 	# Get the maxtimes for each site and update the queues
 	print 'AGIS Maxtime update'
