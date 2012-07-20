@@ -72,6 +72,9 @@ logPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/logs/'
 errorFile = '/tmp/pandaUpdateErrors.log'
 errorFileJDL = '/tmp/pandaUpdateErrorsJDL.log'
 
+# Maximum value of site max cpu time
+maxMaxTime = 864000
+
 # Default email address for failure notifications
 
 errorEmail = 'schedconfig@gmail.com'
