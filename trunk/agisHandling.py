@@ -1,23 +1,37 @@
 # Put releases into AGIS
 
+from controllerSettings import *
+
 from agis.api.AGIS import AGIS
 import pickle
-
 a=AGIS(hostp='atlas-agis-api-dev.cern.ch:80')
 
 def agisSiteMaxTime(sitename):
 	'''Get the maxctime and maxcputime of the panda site and return the minimum of the two'''
+	# This is in the dev instance only for now - change it over when the prod is working.
 	try:
 		r=a.list_panda_queues(panda_site=sitename, extra_fields='queues')
 		try:
 			return min(int(r[sitename][0].queues[0]['ce_queue_maxwctime']),int(r[sitename][0].queues[0]['ce_queue_maxcputime']))
 		except KeyError:
-			print 'The AGIS instance lacks the maxtime values needed for this lookup for site %s' % sitename
+			if agisDebug: print 'The AGIS instance lacks the maxtime values needed for this lookup for site %s' % sitename
 	except:
-		print 'Returning 0. Failed AGIS maxtime lookup for ' + sitename
-		return 0
+		if agisDebug: print 'Returning 0. Failed AGIS maxtime lookup for ' + sitename
+		return -1
 
 
+def updateSiteMaxTime(configd):
+	'''Go through all the sites in a dictionary ordered by cloud and site, and update each queue with the appropriate maxtime value.'''
+	for cloud in [i for i in configd.keys() if (i != All and i != ndef and i not in ['TEST','OSG'])]:
+		# For all regular sites:
+		for site in [i for i in configd[cloud].keys() if (i != All and i != svn)]:
+			# Loop over all the queues in the site, where the queue is not empty or "All"
+			# Get the maxtime value for the site to pass to the queues.
+			t=agisSiteMaxTime(site)
+			# Filter failed maxtime updates, which return -1, and zero values for maxtime
+			if t > 0:
+				for queue in [i for i in configd[cloud][site].keys() if (i != All and i != svn)]:
+					configd[cloud][site][queue][param]['maxtime'] = str(t)
 
 
 
