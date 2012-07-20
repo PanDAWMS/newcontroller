@@ -7,8 +7,6 @@ try:
 except:
 	import simplejson as json
 
-
-
 def updateMaxTime(configd):
 	'''Go through all the sites in a dictionary ordered by cloud and site, and update each queue with the appropriate maxtime value.'''
 	agis_url = 'http://atlas-agis-api-dev.cern.ch/request/pandaqueue/query/list/?json&preset=full'
