@@ -12,7 +12,8 @@ def agisSiteMaxTime(sitename):
 	try:
 		r=a.list_panda_queues(panda_site=sitename, extra_fields='queues')
 		try:
-			return min(int(r[sitename][0].queues[0]['ce_queue_maxwctime']),int(r[sitename][0].queues[0]['ce_queue_maxcputime']))
+			# Convert to seconds!
+			return min(int(r[sitename][0].queues[0]['ce_queue_maxwctime']),int(r[sitename][0].queues[0]['ce_queue_maxcputime'])) * 60
 		except KeyError:
 			if agisDebug: print 'The AGIS instance lacks the maxtime values needed for this lookup for site %s' % sitename
 	except:
@@ -32,6 +33,7 @@ def updateSiteMaxTime(configd):
 			if t > 0:
 				for queue in [i for i in configd[cloud][site].keys() if (i != All and i != svn)]:
 					configd[cloud][site][queue][param]['maxtime'] = str(t)
+					configd[cloud][site][queue][source]['maxtime'] = 'AGIS'
 
 
 
