@@ -9,15 +9,17 @@ a=AGIS(hostp='atlas-agis-api-dev.cern.ch:80')
 def agisSiteMaxTime(sitename):
 	'''Get the maxctime and maxcputime of the panda site and return the minimum of the two'''
 	# This is in the dev instance only for now - change it over when the prod is working.
+	queue_dict={}
 	try:
 		r=a.list_panda_queues(panda_site=sitename, extra_fields='queues')
-		try:
-			# Convert to seconds!
-			return min(int(r[sitename][0].queues[0]['ce_queue_maxwctime']),int(r[sitename][0].queues[0]['ce_queue_maxcputime'])) * 60
-		except KeyError:
-			if agisDebug: print 'The AGIS instance lacks the maxtime values needed for this lookup for site %s' % sitename
+		for queue in r[sitename][0].queues:			
+			try:
+				# Convert to seconds! Respect the absolute max time.
+				queue_d[queue.name] = min(min(int(queue['ce_queue_maxwctime']),int(r[sitename][0].queues[0]['ce_queue_maxcputime']))*60,maxMaxTime)
+			except KeyError:
+				if agisDebug: print 'The AGIS instance lacks the maxtime values needed for this lookup for site %s and queue %s' % (sitename, queue)
 	except:
-		if agisDebug: print 'Returning 0. Failed AGIS maxtime lookup for ' + sitename
+		if agisDebug: print 'Failed AGIS maxtime lookup for ' + sitename
 		return -1
 
 
@@ -28,13 +30,12 @@ def updateSiteMaxTime(configd):
 		for site in [i for i in configd[cloud].keys() if (i != All and i != svn)]:
 			# Loop over all the queues in the site, where the queue is not empty or "All"
 			# Get the maxtime value for the site to pass to the queues.
-			t=min(agisSiteMaxTime(site), maxMaxTime)
-			# Filter failed maxtime updates, which return -1, and zero values for maxtime
-			if t > 0:
+			queue_d=agisSiteMaxTime(site)
+			if type(queue_d) == dict:
 				for queue in [i for i in configd[cloud][site].keys() if (i != All and i != svn)]:
-					configd[cloud][site][queue][param]['maxtime'] = str(t)
-					configd[cloud][site][queue][source]['maxtime'] = 'AGIS'
-
+					if queue_d.has_key(queue):
+						configd[cloud][site][queue][param]['maxtime'] = str(queue_d[queue])
+						configd[cloud][site][queue][source]['maxtime'] = 'AGIS'
 
 
 
