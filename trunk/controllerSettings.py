@@ -73,7 +73,7 @@ errorFile = '/tmp/pandaUpdateErrors.log'
 errorFileJDL = '/tmp/pandaUpdateErrorsJDL.log'
 
 # Maximum value of site max cpu time
-maxMaxTime = 864000
+maxMaxTime = 864000 # Corresponds to 10 days of run
 
 # Default email address for failure notifications
 
