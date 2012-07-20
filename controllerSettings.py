@@ -15,6 +15,7 @@ genDebug = False
 toaDebug = False
 jdlDebug = False
 svnDebug = False
+agisDebug = True
 bdiiDebug = False
 pickleDebug = False
 delDebug = False

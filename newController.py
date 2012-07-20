@@ -86,6 +86,11 @@ def loadConfigs():
 	# Compose the "All" queues for each site
 	status = allMaker(configd, dbd)
 
+	# Add information from AGIS
+	# Get the maxtimes for each site and update the queues
+	print 'AGIS Maxtime update' 
+	updateSiteMaxTime(configd)
+
 	# Make sure all nicknames are kosher
 	nicknameChecker(configd)
 	nicknameChecker(dbd)
