@@ -29,7 +29,6 @@ def updateSiteMaxTime(configd):
 			# Loop over all the queues in the site, where the queue is not empty or "All"
 			# Get the maxtime value for the site to pass to the queues.
 			t=min(agisSiteMaxTime(site), maxMaxTime)
-			print t
 			# Filter failed maxtime updates, which return -1, and zero values for maxtime
 			if t > 0:
 				for queue in [i for i in configd[cloud][site].keys() if (i != All and i != svn)]:
