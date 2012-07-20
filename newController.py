@@ -92,8 +92,11 @@ def loadConfigs():
 	for i in maxtimed:
 		q,maxtime_v,c,s = i, maxtimed[i][0], maxtimed[i][1].split(',')[0], maxtimed[i][2]
 		print q,maxtime_v,c,s
-		configd[c][s][q][param]['maxtime'] = maxtime_v
-		configd[c][s][q][source]['maxtime'] = ''			
+		try:
+			configd[c][s][q][param]['maxtime'] = maxtime_v
+			configd[c][s][q][source]['maxtime'] = ''
+		except KeyError:
+			print 'Failed on %s' % q
 
 	raw_input('If this is OK...')
 			
