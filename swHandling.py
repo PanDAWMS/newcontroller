@@ -35,7 +35,7 @@ def fixCMT(tags):
 				rel_spec = tag[rel] + '-' + '-'.join(tag[cmt].split('-')[tag[cmt].count('-')-cmtDashes:])
 				print rel_spec, cmt_spec
 				newSite.append((rel_spec, cmt_spec))
-			elif tag[cmt].count('-') < cmtDashes:
+			elif tag[cmt].count('-') < cmtDashes and len(tag[cmt]):
 				print 'Skipping ', str(tag)
 				pass
 			else: newSite.append(tag)
