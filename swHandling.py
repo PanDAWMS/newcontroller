@@ -42,8 +42,6 @@ def fixCMT(tags):
 		tags[site] = newSite
 	return 0
 
-def compareAGIS()
-
 def updateInstalledSW(confd,lcgdict):
 	'''Checks for changes to the installedsw table, and add or delete releases as necessary by site'''
 	# Call on the DB to get the present installedsw version. From dbAccess
