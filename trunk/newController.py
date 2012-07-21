@@ -205,7 +205,7 @@ def loadConfigs():
  		#if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
 		if genDebug:
 			print 'Received debug info'
-			sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper = updateInstalledSW(collapseDict(newdb),linfotool)			
+			sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, uniqueBDII, uniqueAGIS = updateInstalledSW(collapseDict(newdb),linfotool)			
  		else: updateInstalledSW(collapseDict(newdb),linfotool)
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
@@ -222,7 +222,7 @@ def loadConfigs():
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug:
-		return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel
+		return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, uniqueBDII, uniqueAGIS
 	else:
 		return 0
 	
@@ -259,7 +259,7 @@ if __name__ == "__main__":
 		# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 		dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		print 'L is OK'
-		sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel = loadConfigs()
+		sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, uniqueBDII, uniqueAGIS = loadConfigs()
 
 
 		

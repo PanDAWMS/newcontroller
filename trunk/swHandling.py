@@ -42,6 +42,8 @@ def fixCMT(tags):
 		tags[site] = newSite
 	return 0
 
+def compareAGIS()
+
 def updateInstalledSW(confd,lcgdict):
 	'''Checks for changes to the installedsw table, and add or delete releases as necessary by site'''
 	# Call on the DB to get the present installedsw version. From dbAccess
@@ -83,7 +85,14 @@ def updateInstalledSW(confd,lcgdict):
 	# completeness. This is why I just add EVERYTHING and let the keys sort it out.
 	
 	sw_bdii = {}
-	
+	sw_agis = {}
+
+	agislist = json.load(urllib.urlopen(agisurl))
+
+	for release in agislist:
+		index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],release['release'],release['cmtconfig'])
+		sw_agis[index] = {'siteid':release['panda_resource'],'cloud':'','release':release['major_release'],'cache':release['release'],'cmtConfig':release['cmtconfig']}
+		
 	for queue in siteid:
 		# Check for the gatekeeper value in the BDII:
 		if cache_tags.has_key(gatekeeper[queue]):
@@ -106,8 +115,12 @@ def updateInstalledSW(confd,lcgdict):
 	
 
 	unicodeEncode(sw_bdii)
+	unicodeEncode(sw_agis)
 	unicodeEncode(sw_db)
 
+	uniqueAGIS = set(sw_agis.keys()) - set(sw_bdii.keys())
+	uniqueBDII = set(sw_bdii.keys()) = set(sw_agis.keys())
+	
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_bdii]
 	addList = [sw_bdii[i] for i in sw_bdii if i not in sw_db]
 	
@@ -118,6 +131,6 @@ def updateInstalledSW(confd,lcgdict):
 	print genDebug
 	if True:
 		print 'Debug info for SW'
-		return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper  
+		return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, uniqueBDII, uniqueAGIS  
 	else:
 		return 0
