@@ -89,8 +89,13 @@ def updateInstalledSW(confd,lcgdict):
 	agislist = json.load(urllib.urlopen(agisurl))
 
 	for release in agislist:
-		index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],release['release'],release['cmtconfig'])
-		sw_agis[index] = {'siteid':release['panda_resource'],'cloud':'','release':release['major_release'],'cache':release['release'],'cmtConfig':release['cmtconfig']}
+		# For the caches
+		index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],release['project']+'-'+release['release'],release['cmtconfig'])
+		sw_agis[index] = {'siteid':release['panda_resource'],'cloud':'','release':release['major_release'],'cache':release['project']+'-'+release['release'],'cmtConfig':release['cmtconfig']}
+
+		# For the releases
+		index = '%s_%s_%s_%s' % (release['panda_resource'],release['project']+'-'+release['major_release'],'None',release['cmtconfig'])
+		sw_agis[index] = {'siteid':release['panda_resource'],'cloud':'','release':release['project']+'-'+release['major_release'],'cache':'None','cmtConfig':release['cmtconfig']}
 		
 	for queue in siteid:
 		# Check for the gatekeeper value in the BDII:
