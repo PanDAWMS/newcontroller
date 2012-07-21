@@ -46,6 +46,7 @@ enab = 'Enabled' # Specifies that a queue has been enabled or disabled -- a vari
 svn = '.svn' # Allows for filtering of SVN directories
 rel = 0  # rel is the first element of the rel/cmt block in swHandling
 cmt = 1  # cmt is the second element of the rel/cmt block in swHandling
+cmtDashes = 3 # The number of dashes that characterize a real CMT specification in installedsw
 
 # Sets the present path as the primary -- allows portability, but the script has to be run from its home directory.
 base_path = os.getcwd()

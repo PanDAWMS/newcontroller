@@ -10,6 +10,12 @@ from SchedulerUtils import utils
 from miscUtils import *
 from controllerSettings import *
 from dbAccess import *
+import urllib
+try:
+	import json
+except:
+	import simplejson as json
+
 
 def translateTags(d):
 	'''Translate any legacy BDII tags and return new, clean lists. Assumes a dictionary of lists'''
@@ -19,6 +25,18 @@ def translateTags(d):
 			# For each gatekeeper, filter through the list and make any changes necessary. Release records are (release,cmt)
 			d[key] = [(d[key][tag][rel].replace(t,tagsTranslation[t]),d[key][tag][cmt]) for tag in range(len(d[key]))]
 	
+def fixCMT(tags):
+	'''Fix any prepended stuff hanging off of the CE tags or ctags that was added by careless BDII population'''
+	for site in tags:
+		newSite = []
+		for tag in tags[site]:
+			if tag[cmt].count('-') > cmtDashes:
+				cmt_spec = '-'.join(tag[cmt].split('-')[-(cmtDashes + 1):])
+				rel_spec = tag[rel] + '-' + tag[cmt].split('-')[tag[cmt].count('-')-cmtDashes:]
+				newSite.append((rel_spec, cmt_spec))
+			else: newSite.append(tag)
+		tags[site] = newSite
+	return 0
 
 def updateInstalledSW(confd,lcgdict):
 	'''Checks for changes to the installedsw table, and add or delete releases as necessary by site'''
@@ -32,6 +50,8 @@ def updateInstalledSW(confd,lcgdict):
 	cloud = {}
 	# Make any translation necessary to the cache tags (see controllerSettings for more info)
 	translateTags(cache_tags)
+	fixCmt(release_tags)
+	fixCmt(cache_tags)
 	# We now have a full set of lookups. We need to build a list of siteids, gatekeepers and clouds from the config dict:
 	for queue in confd:
 		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 

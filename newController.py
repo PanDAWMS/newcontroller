@@ -84,21 +84,7 @@ def loadConfigs():
 	# and integrate the BDII information
 	#if not bdiiOverride: bdiiIntegrator(configd,dbd,linfotool)
 	# Compose the "All" queues for each site
-	status = allMaker(configd, dbd)
-	
-## 	f=file('/afs/cern.ch/user/a/atlpan/2012_07_20_08_56_31_maxtime.p')
-## 	maxtimed=pickle.load(f)
-## 	f.close()
-## 	for i in maxtimed:
-## 		q,maxtime_v,c,s = i, maxtimed[i][0], maxtimed[i][1].split(',')[0], maxtimed[i][2]
-## 		print q,maxtime_v,c,s
-## 		try:
-## 			configd[c][s][q][param]['maxtime'] = maxtime_v
-## 			configd[c][s][q][source]['maxtime'] = ''
-## 		except KeyError:
-## 			print 'Failed on %s' % q
-
-## 	raw_input('If this is OK...')
+	status = allMaker(configd, dbd)	
 			
 	# Add information from AGIS
 	# Get the maxtimes for each site and update the queues
@@ -278,3 +264,18 @@ if __name__ == "__main__":
 
 		
 	#os.chdir(base_path)
+
+
+## 	f=file('/afs/cern.ch/user/a/atlpan/2012_07_20_08_56_31_maxtime.p')
+## 	maxtimed=pickle.load(f)
+## 	f.close()
+## 	for i in maxtimed:
+## 		q,maxtime_v,c,s = i, maxtimed[i][0], maxtimed[i][1].split(',')[0], maxtimed[i][2]
+## 		print q,maxtime_v,c,s
+## 		try:
+## 			configd[c][s][q][param]['maxtime'] = maxtime_v
+## 			configd[c][s][q][source]['maxtime'] = ''
+## 		except KeyError:
+## 			print 'Failed on %s' % q
+
+## 	raw_input('If this is OK...')
