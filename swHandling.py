@@ -85,6 +85,7 @@ def updateInstalledSW(confd,lcgdict):
 	sw_bdii = {}
 	sw_agis = {}
 
+	print 'Loading AGIS SW'
 	agislist = json.load(urllib.urlopen(agisurl))
 
 	for release in agislist:
