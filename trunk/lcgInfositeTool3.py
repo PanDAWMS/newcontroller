@@ -1,4 +1,10 @@
 import commands, re, os
+import urllib
+
+try:
+	import json
+except:
+	import simplejson as json
 
 class lcgInfositeTool:
 
@@ -6,9 +12,13 @@ class lcgInfositeTool:
 	CEmaxcpu = {}
 
 	def __init__(self):
+
+		self.agisurl = 'http://atlas-agis-api.cern.ch/request/swrelease/query/list_presource_sw/?json&preset=full'
 		self.debug = False		
 		self.CEtags={}		# dict to hold ce:[list of tags]
 		self.CEctags={}		# keep prod and tier cache tags separate 
+		self.agisCEtags={}		# dict to hold ce:[list of tags]
+		self.agisCEctags={}		# keep prod and tier cache tags separate 
 		self.StartStr = 'VO-atlas-'	# Fiters ATLAS-specific tags	
 		self.CESep = '%'		# Standard separation between CE and tags
 		self.PortSep = ':'		# Separates CE and port
