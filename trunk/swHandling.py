@@ -32,7 +32,7 @@ def fixCMT(tags):
 		for tag in tags[site]:
 			if tag[cmt].count('-') > cmtDashes:
 				cmt_spec = '-'.join(tag[cmt].split('-')[-(cmtDashes + 1):])
-				rel_spec = tag[rel] + '-' + tag[cmt].split('-')[tag[cmt].count('-')-cmtDashes:]
+				rel_spec = tag[rel] + '-' + '-'.join(tag[cmt].split('-')[tag[cmt].count('-')-cmtDashes:])
 				newSite.append((rel_spec, cmt_spec))
 			else: newSite.append(tag)
 		tags[site] = newSite
