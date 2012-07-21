@@ -54,7 +54,7 @@ def updateInstalledSW(confd,lcgdict):
 	cloud = {}
 	# Make any translation necessary to the cache tags (see controllerSettings for more info)
 	translateTags(cache_tags)
-	#fixCMT(release_tags)
+	fixCMT(release_tags)
 	fixCMT(cache_tags)
 	# We now have a full set of lookups. We need to build a list of siteids, gatekeepers and clouds from the config dict:
 	for queue in confd:
