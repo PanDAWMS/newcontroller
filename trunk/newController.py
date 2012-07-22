@@ -88,8 +88,8 @@ def loadConfigs():
 			
 	# Add information from AGIS
 	# Get the maxtimes for each site and update the queues
-	print 'AGIS Maxtime update'
-	updateMaxTime(configd)
+	#print 'AGIS Maxtime update'
+	#updateMaxTime(configd)
 
 	# Make sure all nicknames are kosher
 	nicknameChecker(configd)
