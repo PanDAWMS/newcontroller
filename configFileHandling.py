@@ -13,9 +13,12 @@ from controllerSettings import *
 #----------------------------------------------------------------------#
 # Config File Handling
 #----------------------------------------------------------------------
-def buildDict(stdkeys={}):
+def buildDict(stdkeys):
 	'''Build a copy of the queue dictionary from the configuration files. Standard key set can come in from the DB. '''
 
+	if len(stdkeys) < 80 or type(stdkeys) is not list:
+		print "No appropriate variables passed as standard keys. Exiting to prevent damage to the SVN."
+		sys.exit()
 	confd={}
 	# In executing files for variables, one has to put the variables in a contained, local context.
 	locvars={}
@@ -48,6 +51,12 @@ def buildDict(stdkeys={}):
 				fname = configs + os.sep + cloud + os.sep + site
 				# The appropriate dictionaries are placed in locvars
 				execfile(fname,{},locvars)
+				# Delete any keys that aren't in the DB
+				for k in locvars[param].keys():
+					if k not in stdkeys: locvars[param].pop(k)
+				for k in locvars[over].keys():
+					if k not in stdkeys: locvars[over].pop(k)
+				# Locvars are then placed in the confd.
 				confd[cloud][s][param] = locvars[param]
 				confd[cloud][s][over] = locvars[over]
 			# If the queue was misplaced, ignore it and mention it in the log:
@@ -69,9 +78,12 @@ def buildDict(stdkeys={}):
 				fname = configs + os.sep + cloud + os.sep + site + os.sep + q
 				# The appropriate dictionaries are placed in locvars
 				execfile(fname,{},locvars)
-				# Add any new keys to the stdkeys dictionary (in case new keys are added to the DB)
-				stdkeys.update(dict([(i,0) for i in locvars[param]]))
-				stdkeys.update(dict([(i,0) for i in locvars[over]]))
+				# Delete any keys that aren't in the DB
+				for k in locvars[param].keys():
+					if k not in stdkeys: locvars[param].pop(k)
+				for k in locvars[over].keys():
+					if k not in stdkeys: locvars[over].pop(k)
+					
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
 				confd[cloud][site][queue][over] = locvars[over] 
@@ -79,7 +91,7 @@ def buildDict(stdkeys={}):
 					if queue != All:
 						confd[cloud][site][queue][enab] = locvars[enab]
 						confd[cloud][site][queue][param][dbkey] = queue
-					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
+					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl and key in stdkeys]) 				
 				except KeyError:
 					print cloud, site, queue, param, key
 					pass

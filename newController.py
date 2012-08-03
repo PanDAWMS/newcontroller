@@ -39,14 +39,10 @@ def loadConfigs():
 	'''Run the schedconfig table updates'''
 	# Load the database as it stands as a primary reference
 	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
-	# Get a set of the keys being used in the db
-	dbdKeys = keyCensus(dbd)
 	# If the DB is overriding the config files, we need to recreate them now.
 	if dbOverride:
 		# Get the config dictionary directly from the DB, and process the config file update from it.
 		configd, standardkeys = sqlDictUnpacker(loadSchedConfig())
-		# Get a set of the keys being used in these configs
-		configKeys = keyCensus(configd)
 		# Compose the "All" queues for each site
 		status = allMaker(configd, dbd)
 		# Make the necessary changes to the configuration files:
@@ -62,16 +58,8 @@ def loadConfigs():
 		#	emailError('Persistent inconsistencies in config SVN')
 		#	sys.exit()
 		
-	
 	# Load the present config files, based on the SVN update
-	configd = buildDict()
-	# Get a set of the keys being used in these configs
-	configKeys = keyCensus(configd)
-
-	# If the configd needs new keys from the schedconfig DB, add them
-	if dbdKeys - configKeys:
-		skDict = dict([(i,0) for i in standardkeys])
-		configd = buildDict(skDict)
+	configd = buildDict(standardkeys)
 	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
@@ -134,15 +122,11 @@ def loadConfigs():
 			print '\n\n Queues Being Deleted:\n'
 			for i in sorted(del_d): print del_d[i][dbkey],del_d[i]['cloud'] 
 			
-			for i in del_l:
-				try:
-					status = utils.dictcursor().execute(i)
-				except:
-					print 'Failed SQL Statement: ', i
-					print status
-					print sys.exc_info()
-		else:
-			print "********** Delete step has been DISABLED!"
+			for i in del_l: try: status =
+				utils.dictcursor().execute(i) except: print 'Failed
+				SQL Statement: ', i print status print sys.exc_info()
+				else: print "********** Delete step has been
+				DISABLED!"
 
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'

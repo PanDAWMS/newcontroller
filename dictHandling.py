@@ -205,7 +205,7 @@ def keyCensus(d):
 	k = {}
 	for i in d:
 		k.update(dict(zip(d[i],[1 for i in range(len(d[i]))])))
-	return set(k.keys())
+	return set([i for i in k.keys() if i not in excl])
 
 def disabledQueues(d,dbd,key = param):
 	''' Creates a list of dictionaries to be deleted because their Enabled state is False. Defaults to returning the params dict in the list.

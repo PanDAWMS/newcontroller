@@ -9,6 +9,7 @@ import os
 
 from controllerSettings import *
 from configFileHandling import *
+from dictHandling import *
 from miscUtils import *
 
 #----------------------------------------------------------------------#
@@ -73,7 +74,8 @@ def readAccessControl(filename='/data/atlpan/panda/prod/SVNAdmin/pandaconf/conf/
 	jdl_l = sorted(usernames.keys())
 
 	# Now we check the new config files, seeing if there are sites and clouds to add or remove
-	confd = buildDict()
+	dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
+	confd = buildDict(standardkeys)
 	for cloud in confd:
 		if cloud not in cloud_d: cloud_d[cloud] = {cloud:[]}
 		for site in confd[cloud]:
