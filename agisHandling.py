@@ -37,10 +37,10 @@ def updateMaxTime(configd):
 					configd[cloud][site][queue][param]['maxtime'] = str(min(min(queueDict[queue]['queues'][0]['ce_queue_maxcputime'],queueDict[queue]['queues'][0]['ce_queue_maxwctime'])*60,maxMaxTime))
 					configd[cloud][site][queue][source]['maxtime'] = 'AGIS'
 
-def resourceMap():
-	'''Map all the Panda resources to CE endpoints'''
-	tempList=[]
-	for i in queueList:
+## def resourceMap():
+## 	'''Map all the Panda resources to CE endpoints'''
+## 	tempList=[]
+## 	for i in queueList:
 		
 
 
