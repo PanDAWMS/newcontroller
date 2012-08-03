@@ -122,11 +122,13 @@ def loadConfigs():
 			print '\n\n Queues Being Deleted:\n'
 			for i in sorted(del_d): print del_d[i][dbkey],del_d[i]['cloud'] 
 			
-			for i in del_l: try: status =
-				utils.dictcursor().execute(i) except: print 'Failed
-				SQL Statement: ', i print status print sys.exc_info()
-				else: print "********** Delete step has been
-				DISABLED!"
+			for i in del_l:
+				try:
+					status = utils.dictcursor().execute(i)
+				except:
+					print 'Failed SQL Statement: ', i print status print sys.exc_info()
+				else:
+					print "********** Delete step has been DISABLED!"
 
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
