@@ -2,15 +2,28 @@
 
 from controllerSettings import *
 import urllib
+import cPickle, pickle
 try:
 	import json
 except:
 	import simplejson as json
 
+agis_queues_url = 'http://atlas-agis-api-dev.cern.ch/request/pandaqueue/query/list/?json&preset=full'
+agis_sw_url = 'http://atlas-agis-api-dev.cern.ch/jsoncache/list_presource_sw.schedconf.json'
+
+try:
+	queueList = json.load(urllib.urlopen(agis_queues_url))
+	softwareList = json.load(urllib.urlopen(agis_sw_url))
+except IOError:
+	f=file('queueList.p')
+	queueList = cPickle.load(f)
+	f.close()
+	f=file('softwareList.p')
+	queueList = cPickle.load(f)
+	f.close()
+
 def updateMaxTime(configd):
 	'''Go through all the sites in a dictionary ordered by cloud and site, and update each queue with the appropriate maxtime value.'''
-	agis_url = 'http://atlas-agis-api-dev.cern.ch/request/pandaqueue/query/list/?json&preset=full'
-	queueList = json.load(urllib.urlopen(agis_url))
 	queueDict = dict([(i['name'],i) for i in queueList])
 	for cloud in [i for i in configd.keys() if (i != All and i != ndef and i not in ['TEST','OSG'])]:
 		# For all regular sites:
@@ -23,6 +36,52 @@ def updateMaxTime(configd):
 					   and queueDict[queue]['queues'][0].has_key('ce_queue_maxwctime'):
 					configd[cloud][site][queue][param]['maxtime'] = str(min(min(queueDict[queue]['queues'][0]['ce_queue_maxcputime'],queueDict[queue]['queues'][0]['ce_queue_maxwctime'])*60,maxMaxTime))
 					configd[cloud][site][queue][source]['maxtime'] = 'AGIS'
+
+def resourceMap():
+	'''Map all the Panda resources to CE endpoints'''
+	tempList=[]
+	for i in queueList:
+		
+
+
+tmp=[]
+for i in queueList:
+	tmp.append({'siteid':i['panda_resource'],'ce_endpoints':[q['ce_endpoint'].split(':')[0] for q in i['queues']],'ce_name':[q['ce_name'].split(':')[0] for q in i['queues']]})
+
+def reducer(l):
+	''' Reduce the entries in a list by removing dupes'''
+	return dict([(i,1) for i in l]).keys()
+
+tmp_nopo = {}
+tmp_port = {}
+for i in queueList:
+	for q in i['queues']:
+		if tmp_nopo.has_key(q['ce_endpoint'].split(':')[0]): tmp_nopo[q['ce_endpoint'].split(':')[0]].append(i['panda_resource'])
+		else: tmp_nopo[q['ce_endpoint'].split(':')[0]] = [i['panda_resource']]
+
+		if tmp_port.has_key(q['ce_endpoint']): tmp_port[q['ce_endpoint']].append(i['panda_resource'])
+		else: tmp_port[q['ce_endpoint']] = [i['panda_resource']]
+
+tmp=tmp_port
+print len(tmp)
+## for i in tmp:
+## 	if len(reducer(tmp[i])) > 1:
+## 		   print i, tmp[i]
+
+tmp=tmp_nopo
+print len(tmp)
+## for i in tmp:
+## 	if len(reducer(tmp[i])) > 1:
+## 		   print i, tmp[i]
+
+
+
+
+
+
+
+
+
 
 
 ## def agisSiteMaxTime(sitename):
