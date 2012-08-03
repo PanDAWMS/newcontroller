@@ -126,7 +126,9 @@ def loadConfigs():
 				try:
 					status = utils.dictcursor().execute(i)
 				except:
-					print 'Failed SQL Statement: ', i print status print sys.exc_info()
+					print 'Failed SQL Statement: ', i
+					print status
+					print sys.exc_info()
 				else:
 					print "********** Delete step has been DISABLED!"
 
