@@ -92,11 +92,11 @@ def updateInstalledSW(confd,lcgdict):
 		# For the caches
 		if release['major_release'] != release['release']:
 			index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],release['project']+'-'+release['release'],release['cmtconfig'].replace('unset in BDII',''))
-			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':'','release':release['major_release'],'cache':release['project']+'-'+release['release'],'cmtConfig':release['cmtconfig'].replace('unset in BDII','')}
+			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':release['project']+'-'+release['release'],'cmtConfig':release['cmtconfig'].replace('unset in BDII','')}
 
 		# For the releases
 		index = '%s_%s_%s_%s' % (release['panda_resource'],release['project']+'-'+release['major_release'],'',release['cmtconfig'])
-		sw_agis[index] = {'siteid':release['panda_resource'],'cloud':'','release':release['project']+'-'+release['major_release'],'cache':'None','cmtConfig':release['cmtconfig']}
+		sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['project']+'-'+release['major_release'],'cache':'None','cmtConfig':release['cmtconfig']}
 		
 	for queue in siteid:
 		# Check for the gatekeeper value in the BDII:
