@@ -86,7 +86,7 @@ def updateInstalledSW(confd,lcgdict):
 	sw_agis = {}
 
 	print 'Loading AGIS SW'
-	agislist = []# json.load(urllib.urlopen(agisurl))
+	agislist = json.load(urllib.urlopen(agisurl))
 
 	for release in agislist:
 		# For the caches
@@ -115,8 +115,6 @@ def updateInstalledSW(confd,lcgdict):
 				cache = 'None'
 				# The unique name for this entry
 				index = '%s_%s_%s_%s' % (siteid[queue],release[rel],cache,release[cmt])
-				if '17-' in index: print release, index
-				
 				index = index.replace('None','')
 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache,'cmtConfig':release[cmt]}
 	
@@ -138,6 +136,6 @@ def updateInstalledSW(confd,lcgdict):
 	print genDebug
 	if True:
 		print 'Debug info for SW'
-		return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, uniqueBDII, uniqueAGIS  
+		return sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, uniqueBDII, uniqueAGIS  
 	else:
 		return 0
