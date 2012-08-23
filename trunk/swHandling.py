@@ -105,6 +105,7 @@ def updateInstalledSW(confd,lcgdict):
 				# Once again -- cache[rel] is cache[0], because the release and cache records are (release,cmt)
 				# ASSUMPTION -- that base releases will always contain two periods as separators
 				release=baseReleaseSep.join(cache[rel].split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
+				if '-' in release: print release, cache, cache[rel].split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep]
 				# The unique name for this entry				
 				index = '%s_%s_%s_%s' % (siteid[queue],release,cache[rel],cache[cmt])
 				index = index.replace('None','')
