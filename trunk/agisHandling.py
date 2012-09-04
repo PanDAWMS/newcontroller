@@ -8,8 +8,8 @@ try:
 except:
 	import simplejson as json
 
-agis_queues_url = 'http://atlas-agis-api-dev.cern.ch/request/pandaqueue/query/list/?json&preset=full'
-agis_sw_url = 'http://atlas-agis-api-dev.cern.ch/jsoncache/list_presource_sw.schedconf.json'
+agis_queues_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=full'
+agis_sw_url = 'http://atlas-agis-api.cern.ch/jsoncache/list_presource_sw.schedconf.json'
 
 try:
 	queueList = json.load(urllib.urlopen(agis_queues_url))
