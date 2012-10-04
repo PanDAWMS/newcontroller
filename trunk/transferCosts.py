@@ -15,11 +15,11 @@ from dbAccess import *
 #----------------------------------------------------------------------#
 #----------------------------------------------------------------------#
 
+# Format of the web input
+headers = ['timestamp','sourcesite','destsite','cost','status','type']
 
 def loadTransferCostsWeb():
 	'''Load the values extracted from Ilya Vukotic\'s web publication of site transfer costs'''
-	# Format of the web input
-	headers = ['timestamp','sourcesite','destsite','cost','status','type']
 	transferCostURL = 'http://ivukotic.web.cern.ch/ivukotic/costMatrix/index.asp'
 	# Defining the "type" that will be replaced
 	web='http://ivukotic.web.cern.ch/ivukotic/WAN/index.asp'
