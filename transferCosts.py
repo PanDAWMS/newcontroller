@@ -63,20 +63,23 @@ def updateTransferCosts():
 def updateTransferCostsDB(addList, deleteList):
 	'''Populate any changes into the DB. Items that might conflict go into the History table'''
 	#if safety is 'on': utils.setTestDB()
-	utils.setTestDB()
-	print 'Using INTR Database'
-	utils.initDB()
-	print "Init DB"
+	pass
 
-	for n,costDict in enumerate(addList):
-		keys = ','.join(headers)
-		values = [costDict[n] for i in headers]
-		values[headers['timestamp']] = "TO_TIMESTAMP(" + values[headers['timestamp']] + ", 'YYYY-MM-DD_HH24:MI:SS')"
-		values = ','.join(values)
-		sql = 'INSERT INTO atlas_pandameta.transfercosts (%s) VALUES (%s)'
 
-	# Close DB connection
-	utils.endDB()
+utils.setTestDB()
+print 'Using INTR Database'
+utils.initDB()
+print "Init DB"
+
+for n,costDict in enumerate(addList):
+	keys = ','.join(headers)
+	values = [costDict[n] for i in headers]
+	values[headers['timestamp']] = "TO_TIMESTAMP(" + values[headers['timestamp']] + ", 'YYYY-MM-DD_HH24:MI:SS')"
+	values = ','.join(values)
+	sql = 'INSERT INTO atlas_pandameta.transfercosts (%s) VALUES (%s)'
+
+# Close DB connection
+utils.endDB()
 
 	
 
