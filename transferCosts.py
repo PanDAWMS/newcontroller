@@ -68,9 +68,9 @@ def updateTransferCostsDB(addList, deleteList):
 	utils.initDB()
 	print "Init DB"
 
-	for i in addList:
+	for n,costDict in enumerate(addList):
 		keys = ','.join(headers)
-		values = [addList[i] for i in headers]
+		values = [costDict[n] for i in headers]
 		values[headers['timestamp']] = "TO_TIMESTAMP(" + values[headers['timestamp']] + ", 'YYYY-MM-DD_HH24:MI:SS')"
 		values = ','.join(values)
 		sql = 'INSERT INTO atlas_pandameta.transfercosts (%s) VALUES (%s)'
