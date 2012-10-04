@@ -77,7 +77,7 @@ for n,costDict in enumerate(addList):
 	values = [costDict[i] for i in headers]
 	values[headers.index('timestamp')] = "TO_TIMESTAMP(" + values[headers.index('timestamp')] + ", 'YYYY-MM-DD_HH24:MI:SS')"
 	# Add appropriate quotes. Remove the extraneous quotes for the timestamp.
-	values = "'" + "','".join(values) + "'".replace("'TO_TIMESTAMP","TO_TIMESTAMP").replace(")'",')')
+	values = "'" + "','".join(values) + "'".replace("'TO_TIMESTAMP","TO_TIMESTAMP").replace(")'",")")
 	sql = "INSERT INTO transfercosts (%s) VALUES (%s)" % (keys, values)
 	utils.dictcursor().execute(sql)
 utils.commit()
