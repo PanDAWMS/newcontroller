@@ -19,7 +19,7 @@ from dbAccess import *
 def loadTransferCostsWeb():
 	'''Load the values extracted from Ilya Vukotic\'s web publication of site transfer costs'''
 	# Format of the web input
-	headers = ['timestamp','from_site','to_site','cost','status','type']
+	headers = ['timestamp','sourcesite','destsite','cost','status','type']
 	transferCostURL = 'http://ivukotic.web.cern.ch/ivukotic/costMatrix/index.asp'
 	# Defining the "type" that will be replaced
 	web='http://ivukotic.web.cern.ch/ivukotic/WAN/index.asp'
@@ -28,7 +28,7 @@ def loadTransferCostsWeb():
 	# Fix the timestamp spacing
 	transferCosts = [i.replace(' ','_',1).replace('_to_',' ').replace(web,web_replacement).split() for i in urllib.urlopen(transferCostURL)]
 	# Create a dictionary that matches what will come from the DB
-	return dict(((i[headers.index('from_site')],i[headers.index('to_site')],i[headers.index('type')]),
+	return dict(((i[headers.index('sourcesite')],i[headers.index('destsite')],i[headers.index('type')]),
 				 dict(zip(headers,i))) for i in transferCosts)
 	
 
@@ -51,17 +51,36 @@ def loadTransferCostsDB():
 	unicodeConvert(rows)
 	return dict([((i['sourcesite'],i['destsite'],i['type']),i) for i in rows])
 
-def updateTransferCostsDB():
+def updateTransferCosts():
+	'''Get the information from all sources and combine them to find updates vs. the DB'''
+	# There may eventually be sources besides Web... and they can be added here when necessary.
 	costs_db = loadTransferCostsDB()
 	costs_web = loadTransferCostsWeb()
 	deleteList = [costs_db[i] for i in costs_db if i not in costs_web]
 	addList = [costs_web[i] for i in costs_web if i not in costs_db]
 	return addList, deleteList
 
-def updateHistory(entry):
-	pass
+def updateTransferCostsDB(addList, deleteList):
+	'''Populate any changes into the DB. Items that might conflict go into the History table'''
+	#if safety is 'on': utils.setTestDB()
+	utils.setTestDB()
+	print 'Using INTR Database'
+	utils.initDB()
+	print "Init DB"
 
-a,b = updateTransferCostsDB()
+	for i in addList:
+		keys = ','.join(headers)
+		values = [addList[i] for i in headers]
+		values[headers['timestamp']] = "TO_TIMESTAMP(" + values[headers['timestamp']] + ", 'YYYY-MM-DD_HH24:MI:SS')"
+		values = ','.join(values)
+		sql = 'INSERT INTO atlas_pandameta.transfercosts (%s) VALUES (%s)'
+
+	# Close DB connection
+	utils.endDB()
+
+	
+
+a,b = updateTransferCosts()
 
 ## CREATE TABLE ATLAS_PANDAMETA.TRANSFERCOSTS
 ## (
