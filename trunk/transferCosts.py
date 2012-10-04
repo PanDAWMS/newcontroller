@@ -79,6 +79,8 @@ for n,costDict in enumerate(addList):
 	values = ','.join(values)
 	sql = 'INSERT INTO atlas_pandameta.transfercosts (%s) VALUES (%s)'
 
+utils.commit()
+
 # Close DB connection
 utils.endDB()
 
