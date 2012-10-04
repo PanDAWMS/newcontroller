@@ -65,6 +65,7 @@ def updateTransferCostsDB(addList, deleteList):
 	#if safety is 'on': utils.setTestDB()
 	pass
 
+addList, deleteList = updateTransferCosts()
 
 utils.setTestDB()
 print 'Using INTR Database'
