@@ -75,7 +75,7 @@ print "Init DB"
 for n,costDict in enumerate(addList):
 	keys = ','.join(headers)
 	values = [costDict[i] for i in headers]
-	values[headers.index('timestamp')] = "TO_TIMESTAMP(" + values[headers.index('timestamp')] + ", 'YYYY-MM-DD_HH24:MI:SS')"
+	values[headers.index('timestamp')] = "TO_TIMESTAMP('" + values[headers.index('timestamp')] + "', 'YYYY-MM-DD_HH24:MI:SS')"
 	# Add appropriate quotes. Remove the extraneous quotes for the timestamp.
 	values = "'" + "','".join(values) + "'"
 	sql1 = "INSERT INTO transfercosts (%s) VALUES (%s)" % (keys, values)
