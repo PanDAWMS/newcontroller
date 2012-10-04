@@ -16,7 +16,7 @@ from dbAccess import *
 #----------------------------------------------------------------------#
 
 # Format of the web input
-headers = ['timestamp','sourcesite','destsite','cost','status','type']
+headers = ['last_update','sourcesite','destsite','cost','status','type']
 
 def loadTransferCostsWeb():
 	'''Load the values extracted from Ilya Vukotic\'s web publication of site transfer costs'''
@@ -75,7 +75,7 @@ print "Init DB"
 for n,costDict in enumerate(addList):
 	keys = ','.join(headers)
 	values = [costDict[i] for i in headers]
-	values[headers.index('timestamp')] = "TO_TIMESTAMP('" + values[headers.index('timestamp')] + "', 'YYYY-MM-DD_HH24:MI:SS')"
+	values[headers.index('last_update')] = "TO_TIMESTAMP('" + values[headers.index('last_update')] + "', 'YYYY-MM-DD_HH24:MI:SS')"
 	# Add appropriate quotes. Remove the extraneous quotes for the timestamp.
 	values = "'" + "','".join(values) + "'"
 	sql1 = "INSERT INTO transfercosts (%s) VALUES (%s)" % (keys, values)
