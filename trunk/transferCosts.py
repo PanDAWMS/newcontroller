@@ -65,6 +65,25 @@ def updateTransferCostsDB(addList, deleteList):
 	#if safety is 'on': utils.setTestDB()
 	pass
 
+a,b = updateTransferCosts()
+
+utils.setTestDB()
+print 'Using INTR Database'
+utils.initDB()
+print "Init DB"
+# Gets all rows from transfercosts table
+query = 'SELECT * from transfercosts'
+nrows = utils.dictcursor().execute(query)
+if nrows > 0:
+	# Fetch all the rows
+	rows = utils.dictcursor().fetchall()
+# Close DB connection
+utils.endDB()
+# Return a dictionaried version of the DB contents, keyed release_site_cache_cmt
+unicodeConvert(rows)
+
+c=dict([((i['sourcesite'],i['destsite'],i['type']),i) for i in rows])
+
 addList, deleteList = updateTransferCosts()
 
 utils.setTestDB()
@@ -89,23 +108,6 @@ utils.endDB()
 	
 
 a,b = updateTransferCosts()
-
-utils.setTestDB()
-print 'Using INTR Database'
-utils.initDB()
-print "Init DB"
-# Gets all rows from transfercosts table
-query = 'SELECT * from transfercosts'
-nrows = utils.dictcursor().execute(query)
-if nrows > 0:
-	# Fetch all the rows
-	rows = utils.dictcursor().fetchall()
-# Close DB connection
-utils.endDB()
-# Return a dictionaried version of the DB contents, keyed release_site_cache_cmt
-unicodeConvert(rows)
-
-c=dict([((i['sourcesite'],i['destsite'],i['type']),i) for i in rows])
 
 ## CREATE TABLE ATLAS_PANDAMETA.TRANSFERCOSTS
 ## (
