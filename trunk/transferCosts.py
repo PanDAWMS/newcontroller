@@ -109,6 +109,7 @@ utils.endDB()
 
 a,b = updateTransferCosts()
 
+
 ## CREATE TABLE ATLAS_PANDAMETA.TRANSFERCOSTS
 ## (
 ## sourcesite VARCHAR2(256) constraint sourcesite_NN NOT NULL,
