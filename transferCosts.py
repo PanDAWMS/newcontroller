@@ -48,7 +48,8 @@ def loadTransferCostsDB():
 	# Close DB connection
 	utils.endDB()
 	# Return a dictionaried version of the DB contents, keyed release_site_cache_cmt
-	unicodeConvert(rows)
+	# lowercase the field names
+	rows = [dict([(j.lower(),i[j]) for j in i]) for i in rows]
 	return dict([((i['sourcesite'],i['destsite'],i['type']),i) for i in rows])
 
 def updateTransferCosts():
