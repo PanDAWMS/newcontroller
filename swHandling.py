@@ -10,7 +10,7 @@ from SchedulerUtils import utils
 from miscUtils import *
 from controllerSettings import *
 from dbAccess import *
-import urllib
+import urllib, time
 try:
 	import json
 except:
@@ -86,9 +86,15 @@ def updateInstalledSW(confd,lcgdict):
 	sw_agis = {}
 
 	print 'Loading AGIS SW'
+	agisStart = time.time()
 	agislist = json.load(urllib.urlopen(agis_sw_url))
+	agisEnd = time.time()
+	print 'AGIS SW Load Time: %d' % agisEnd - agisStart
+	agisStart = time.time()
 	agissites = json.load(urllib.urlopen(agis_site_url))
-	
+	agisEnd = time.time()
+	print 'AGIS site info Load Time: %d' % agisEnd - agisStart
+
 	for release in agislist:
 		# For the caches
 		if release['major_release'] != release['release']:
