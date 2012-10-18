@@ -89,11 +89,11 @@ def updateInstalledSW(confd,lcgdict):
 	agisStart = time.time()
 	agislist = json.load(urllib.urlopen(agis_sw_url))
 	agisEnd = time.time()
-	print 'AGIS SW Load Time: %d' % agisEnd - agisStart
+	print 'AGIS SW Load Time: %d' % (agisEnd - agisStart)
 	agisStart = time.time()
 	agissites = json.load(urllib.urlopen(agis_site_url))
 	agisEnd = time.time()
-	print 'AGIS site info Load Time: %d' % agisEnd - agisStart
+	print 'AGIS site info Load Time: %d' % (agisEnd - agisStart)
 
 	for release in agislist:
 		# For the caches
