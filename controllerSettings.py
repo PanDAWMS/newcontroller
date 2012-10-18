@@ -33,7 +33,8 @@ configWriteDebug = False
 confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf/trunk' 
 
 # AGIS SW URL
-agisurl = 'http://atlas-agis-api.cern.ch/request/swrelease/query/list_presource_sw/?json&preset=full'
+agis_sw_url = 'http://atlas-agis-api.cern.ch/request/swrelease/query/list_presource_sw/?json&preset=full'
+agis_site_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf'
 
 # If safety is on, nothing is written to the DB.
 safety = 'off'
