@@ -86,18 +86,24 @@ def updateInstalledSW(confd,lcgdict):
 	sw_agis = {}
 
 	print 'Loading AGIS SW'
-	agislist = json.load(urllib.urlopen(agisurl))
-
+	agislist = json.load(urllib.urlopen(agis_sw_url))
+	agissites = json.load(urllib.urlopen(agis_site_url))
+	
 	for release in agislist:
 		# For the caches
 		if release['major_release'] != release['release']:
 			index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],release['project']+'-'+release['release'],release['cmtconfig'].replace('unset in BDII',''))
-			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':release['project']+'-'+release['release'],'cmtConfig':release['cmtconfig'].replace('unset in BDII','')}
+			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':release['project']+'-'+release['release'],'cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':'AGIS'}
 
 		# For the releases
 		index = '%s_%s_%s_%s' % (release['panda_resource'],release['project']+'-'+release['major_release'],'',release['cmtconfig'])
-		sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['project']+'-'+release['major_release'],'cache':'None','cmtConfig':release['cmtconfig']}
-		
+		sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['project']+'-'+release['major_release'],'cache':'None','cmtConfig':release['cmtconfig'],'validation':'AGIS'}
+
+	# For CVMFS
+	for site in agissites:
+		index = '%s_%s_%s_%s' % (site['panda_resource'],'CVMFS','','')
+		sw_agis[index] = {'siteid':site['panda_resource'],'cloud':site['cloud'],'release':'CVMFS','cache':'None','cmtConfig':'None','validation':'AGIS'}
+
 	for queue in siteid:
 		# Check for the gatekeeper value in the BDII:
 		if cache_tags.has_key(gatekeeper[queue]):
@@ -108,7 +114,7 @@ def updateInstalledSW(confd,lcgdict):
 				# The unique name for this entry				
 				index = '%s_%s_%s_%s' % (siteid[queue],release,cache[rel],cache[cmt])
 				index = index.replace('None','')
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache[rel],'cmtConfig':cache[cmt]}
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache[rel],'cmtConfig':cache[cmt],'validation':'BDII'}
 
 		if release_tags.has_key(gatekeeper[queue]):
 			for release in release_tags[gatekeeper[queue]]:
@@ -116,13 +122,16 @@ def updateInstalledSW(confd,lcgdict):
 				# The unique name for this entry
 				index = '%s_%s_%s_%s' % (siteid[queue],release[rel],cache,release[cmt])
 				index = index.replace('None','')
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache,'cmtConfig':release[cmt]}
+				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache,'cmtConfig':release[cmt],'validation':'BDII'}
 	
 
 	unicodeEncode(sw_bdii)
 	unicodeEncode(sw_agis)
 	unicodeEncode(sw_db)
 
+	sw_union = sw_bdii.copy()
+	for i in sw_agis: sw_union[i] = sw_agis[i].copy()
+	
 	uniqueAGIS = set(sw_agis.keys()) - set(sw_bdii.keys())
 	uniqueBDII = set(sw_bdii.keys()) - set(sw_agis.keys())
 	
@@ -136,6 +145,6 @@ def updateInstalledSW(confd,lcgdict):
 	print genDebug
 	if True:
 		print 'Debug info for SW'
-		return sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, uniqueBDII, uniqueAGIS  
+		return sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, uniqueBDII, uniqueAGIS, sw_union
 	else:
 		return 0
