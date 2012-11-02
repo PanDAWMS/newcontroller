@@ -96,15 +96,20 @@ def updateInstalledSW(confd,lcgdict):
 	print 'AGIS site info Load Time: %d' % (agisEnd - agisStart)
 
 	for release in agislist:
-		# For the caches
-		if release['major_release'] != release['release']:
-			index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],release['project']+'-'+release['release'],release['cmtconfig'].replace('unset in BDII',''))
+		if release['major_release'] != 'Conditions':
+			# For the caches
+			if release['major_release'] != release['release']:
+				index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],release['project']+'-'+release['release'],release['cmtconfig'].replace('unset in BDII',''))
+				sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':release['project']+'-'+release['release'],'cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':'AGIS'}
+
+			# For the releases
+			index = '%s_%s_%s_%s' % (release['panda_resource'],release['project']+'-'+release['major_release'],'',release['cmtconfig']..replace('unset in BDII',''))
+			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['project']+'-'+release['major_release'],'cache':'None','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':'AGIS'}
+		# Handling conditions correctly
+		else:
+			index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],release['release'],release['cmtconfig'].replace('unset in BDII',''))
 			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':release['project']+'-'+release['release'],'cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':'AGIS'}
-
-		# For the releases
-		index = '%s_%s_%s_%s' % (release['panda_resource'],release['project']+'-'+release['major_release'],'',release['cmtconfig'])
-		sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['project']+'-'+release['major_release'],'cache':'None','cmtConfig':release['cmtconfig'],'validation':'AGIS'}
-
+			
 	# For CVMFS
 	for site in agissites:
 		index = '%s_%s_%s_%s' % (site['panda_resource'],'CVMFS','','')
