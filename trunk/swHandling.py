@@ -147,7 +147,7 @@ def updateInstalledSW(confd,lcgdict):
 	uniqueBDII = set(sw_bdii.keys()) - set(sw_agis.keys())
 	
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_union]
-	addList = [sw_union[i] for i in sw_bdii if i not in sw_db]
+	addList = [sw_union[i] for i in sw_union if i not in sw_db]
 
 	# Moved over to union of BDII and AGIS: seeing how it goes.
 
