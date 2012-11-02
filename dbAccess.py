@@ -1,4 +1,4 @@
-##########################################################################################
+≈ƒ©©##########################################################################################
 # Tools for handling database operations in newController                                #
 #                                                                                        #
 # Alden Stradling 10 Oct 2009                                                            #
@@ -80,7 +80,7 @@ def updateInstalledSWdb(addList, delList):
 	utils.initDB()
 	print "Init DB"
 	for i in addList:
-		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMTCONFIG) VALUES ('%s','%s','%s','%s','%s')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmtConfig'])
+		sql="INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMTCONFIG,VALIDATION) VALUES ('%s','%s','%s','%s','%s,'%s'')" % (i['siteid'],i['cloud'],i['release'],i['cache'],i['cmtConfig'],i['validation'])
 		try:
 			utils.dictcursor().execute(sql)
 		except:
