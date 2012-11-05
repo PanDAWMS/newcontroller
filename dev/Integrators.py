@@ -58,19 +58,17 @@ def loadBDII():
 	This file is executed (even if generating it failed this time) and populated a dictionary of queue definitions, which is
 	returned.'''
 	osgsites={}
-	os.chdir(base_path)
-	if os.path.exists('%s/lcgLoad.py' % base_path):
+	if os.path.exists('lcgLoad.py'):
 		print 'Updating LCG sites from BDII'
 		try:
-			commands.getoutput('python2.5 %s/lcgLoad.py > lcgload.log' % base_path)
+			commands.getoutput('./lcgLoad.py > lcgload.log')
 		except Exception, e:
 			print 'Running lcgLoad.py failed:', e
 			print 'Reusing existing lcgQueueUpdate.py'
-		if os.path.exists('%s/lcgQueueUpdate.py' % base_path): execfile('lcgQueueUpdate.py')
+		execfile('lcgQueueUpdate.py')
 		print 'LCG Initial Load Complete'
 	else:
 		loadlcg = 0
-		print 'BDII Load Failed '
 	unicodeConvert(osgsites)
 	print len(osgsites)
 	return osgsites
@@ -240,30 +238,13 @@ def toaIntegrator(confd):
 	print 'Finished ToA integrator'
 	return
 
-def newBDIIIntegrator(confd, d, linfotool=None):
-	print 'Running BDII Integrator'
-	out = {}
-	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
-	print 'Loading BDII'
-	bdict = loadBDII()
-	len(bdict)
-	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and releases available on the sites 
-	if bdiiDebug: print 'Running the LGC SiteInfo tool'
-	if not linfotool:
-		linfotool = lcgInfositeTool.lcgInfositeTool()
-	if bdiiDebug: print 'Completed the LGC SiteInfo tool run'
-	
-	pass
-
 def bdiiIntegrator(confd,d,linfotool=None):
 	'''Adds BDII values to the configurations, overriding what was there. Must be run after downloading the DB
 	and parsing the config files.'''
 	print 'Running BDII Integrator'
 	out = {}
 	# Load the queue names, status, gatekeeper, gstat, region, jobmanager, site, system, jdladd 
-	print 'Loading BDII'
 	bdict = loadBDII()
-	len(bdict)
 	# Moving on from the lcgLoad sourcing, we extract the RAM, nodes and releases available on the sites 
 	if bdiiDebug: print 'Running the LGC SiteInfo tool'
 	if not linfotool:
@@ -319,12 +300,6 @@ def bdiiIntegrator(confd,d,linfotool=None):
 		if not confd[c][s].has_key(nickname):
 			confd[c][s][nickname] = protoDict(nickname,{},sourcestr='Queue created by BDII',keys=standardkeys)
 			print 'Creating queue %s in site %s and cloud %s as requested by BDII. This queue must be enabled by hand.' % (nickname, s, c)
-
-		# Before a "manual" check, update less crucial BDII params
-		for key in ['region','gstat']:
-			confd[c][s][nickname][param][key] = bdict[qn][key]
-			# Complete the sourcing info
-			confd[c][s][nickname][source][key] = 'BDII'
 
 		# Check for manual setting. If it's manual, DON'T TOUCH
 		if not confd[c][s][nickname].has_key(param): continue

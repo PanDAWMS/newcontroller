@@ -3,6 +3,7 @@
 #                                                                                        #
 # Alden Stradling 10 Oct 2009                                                            #
 # Alden.Stradling@cern.ch                                                                #
+# 14 Feb 2012 - Queues deleted in the SVN are now not deleted in the DB                  #
 ##########################################################################################
 
 import os, pickle
@@ -86,29 +87,26 @@ def findQueue(q,d):
 	return '',''
 
 def compareQueues(dbDict,cfgDict,dbOverride=False):
-	'''Compares the queue dictionary that we got from the DB to the one in the config files. Any changed/deleted
+	'''Compares the queue dictionary that we got from the DB to the one in the config files. Any changed
 	queues are passed back. If dbOverride is set true, the DB is used to modify the config files rather than
-	the default. Queues deleted in the DB will not be deleted in the configs.'''
+	the default. Queues deleted in the DB will not be deleted in the configs. Deleted queues in the SVN will
+	not be deleted in the DB'''
 	updDict = {}
 	delDict = {}
 	unicodeConvert(dbDict)
 	unicodeConvert(cfgDict)
 	# Allow the reversal of master and subordinate dictionaries
 	if dbOverride: dbDict, cfgDict = cfgDict, dbDict
-	if dbDict == cfgDict: return updDict, delDict
-	for i in dbDict:
-		# If the configDict doesn't have the key found in the DB:
-		if not cfgDict.has_key(i):
-			# Queues must be deleted in the configs. The file has been removed, as long as we're not in DB override mode.
-			if not dbOverride:
-				# If the queue is not in the configs, delete it.
-				delDict[i]=dbDict[i]
-				continue
+	for key in dbDict:
 		# If the dictionaries don't match:
-		if dbDict[i] != cfgDict[i]:
-			cfgDict[i].update(dbDict[i].fromkeys([k for k in dbDict[i].keys() if not cfgDict.has_key(i)]))
-			# If the queue was changed in the configs, tag it for update. In DB override, we aren't updating the DB.
-			if not dbOverride and cfgDict.has_key(i): updDict[i]=cfgDict[i]
+		if cfgDict.has_key(key):
+			# Stringify the dictionaries and remove any excluded fields
+			d = dict([(i,str(dbDict[key][i])) for i in dbDict[key] if i not in excl])
+			c = dict([(i,str(cfgDict[key][i])) for i in cfgDict[key] if i not in excl])
+			if c != d:
+				cfgDict[key].update(dbDict[key].fromkeys([k for k in dbDict[key].keys() if not cfgDict.has_key(key)]))
+				# If the queue was changed in the configs, tag it for update. In DB override, we aren't updating the DB.
+				if not dbOverride and cfgDict.has_key(key): updDict[key]=cfgDict[key]
 	# If the queue is brand new (created in a config file), it is added to update.
 	for i in cfgDict:
 		if i == All: continue
@@ -117,7 +115,6 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 			if not dbOverride: updDict[i]=cfgDict[i]
 	# Return the appropriate queues to update and eliminate
 	return updDict, delDict
-
 
 def collapseDict(d):
 	'''Collapses a nested dictionary into a flat set of queues '''
@@ -203,6 +200,13 @@ def collapseDict(d):
 						pass
 	return out_d
 
+def keyCensus(d):
+	'''Check the total list of keys used in the queues the collapsed dictionary d contains'''
+	k = {}
+	for i in d:
+		k.update(dict(zip(d[i],[1 for i in range(len(d[i]))])))
+	return set([i for i in k.keys() if i not in excl])
+
 def disabledQueues(d,dbd,key = param):
 	''' Creates a list of dictionaries to be deleted because their Enabled state is False. Defaults to returning the params dict in the list.
 	Check the db dictionary to see if the queue needs to be deleted.''' 
@@ -214,9 +218,12 @@ def disabledQueues(d,dbd,key = param):
 				# If the queue has the Enabled flag (excluding All files):
 				if enab in d[cloud][site][queue]:
 					# If the flag is Enabled = False and the queue is in the DB:
-					if not d[cloud][site][queue][enab] and dbd[cloud][site].has_key(queue):
-						# Append that dictionary to the list
-						del_d[queue] = d[cloud][site][queue][key]						
+					try:
+						if not d[cloud][site][queue][enab] and dbd[cloud][site].has_key(queue):
+							# Append that dictionary to the list
+							del_d[queue] = d[cloud][site][queue][key]
+					except KeyError: # If the site or the cloud have been removed from the DB already
+						pass
 	# And return the completed list to the main routine
 	return del_d
 
@@ -228,3 +235,38 @@ def nicknameChecker(d):
 				if not d[cloud][site][queue][param].has_key(dbkey):
 					d[cloud][site][queue][param][dbkey] = queue
 	return 0
+
+def BNL_ATLAS_1Deleter(d):
+	'''For historical reasons, BNL_ATLAS_1 needs to never show up as a siteid or nickname. Checks through the DB to be sure that it does not'''
+	deleteList=[]
+	for cloud in d:
+		for site in [i for i in d[cloud] if i != All]:			
+			for queue in [i for i in d[cloud][site] if i != All]:
+				if  d[cloud][site][queue][param]['siteid'].startswith('BNL_ATLAS_1') or d[cloud][site][queue][param][dbkey].startswith('BNL_ATLAS_1'):
+					deleteList.append((cloud,site,queue))
+	for cloud,site,queue in deleteList:
+		status=d[cloud][site].pop(queue)
+	return 0
+
+def dd(d1, d2, ctx=""):
+    print "Changes in " + ctx
+    for k in d1:
+        if k not in d2:
+            print k + " removed from d2"
+    for k in d2:
+        if k not in d1:
+            print k + " added in d2"
+            continue
+        if d2[k] != d1[k]:
+            if type(d2[k]) not in (dict, list):
+                print k + " changed in d2 to " + str(d2[k]) + ' from ' + str(d1[k])
+            else:
+                if type(d1[k]) != type(d2[k]):
+                    print k + " changed to " + str(d2[k])  + ' from ' + str(d1[k])
+                    continue
+                else:
+                    if type(d2[k]) == dict:
+                        dd(d1[k], d2[k], k)
+                        continue
+    print "Done with changes in " + ctx
+    return

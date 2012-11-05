@@ -9,8 +9,6 @@
 
 # TODO:
 
-# Add manual pickle restoration code
-
 # This code has been organized for easy transition into a class structure.
 
 import os, sys, commands, pickle
@@ -26,6 +24,9 @@ from svnHandling import *
 from backupHandling import *
 from swHandling import *
 from lesserTablesController import *
+from accessControl import *
+from svnConsistencyChecker import *
+from agisHandling import *
 
 try:
 	import lcgInfositeTool2 as lcgInfositeTool
@@ -43,18 +44,22 @@ def loadConfigs():
 		# Get the config dictionary directly from the DB, and process the config file update from it.
 		configd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		# Compose the "All" queues for each site
-		status = allMaker(configd, initial=True)
+		status = allMaker(configd, dbd)
 		# Make the necessary changes to the configuration files:
 		makeConfigs(configd)
 		# Check the changes just committed into Subversion
 		svnCheckin('Updated from DB')
 		
 	else:
-		# Update the local configuration files from SVN
+		# Update the local configuration files from SVN and check that there
+		# are no inconsistencies.
 		svnUpdate()
-	
+		#if not checkConfigs() > -1:
+		#	emailError('Persistent inconsistencies in config SVN')
+		#	sys.exit()
+		
 	# Load the present config files, based on the SVN update
-	configd = buildDict()
+	configd = buildDict(standardkeys)
 	
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
@@ -67,7 +72,12 @@ def loadConfigs():
 	# and integrate the BDII information
 	#if not bdiiOverride: bdiiIntegrator(configd,dbd,linfotool)
 	# Compose the "All" queues for each site
-	status = allMaker(configd, initial = False)
+	status = allMaker(configd, dbd)	
+			
+	# Add information from AGIS
+	# Get the maxtimes for each site and update the queues
+	#print 'AGIS Maxtime update'
+	#updateMaxTime(configd)
 
 	# Make sure all nicknames are kosher
 	nicknameChecker(configd)
@@ -89,17 +99,19 @@ def loadConfigs():
 		print '******* Disabled queues list'
 		#print disabledQueues(dbd,configd).keys()
 		print len(disabledQueues(dbd,configd).keys())
-	del_d.update(disabledQueues(dbd,configd))
+	#del_d.update(disabledQueues(dbd,configd))
+	del_d = disabledQueues(configd,dbd)
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
 	del_l = buildDeleteList(del_d,'schedconfig')
+	print del_l
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
 	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.
 	# The primary key is specified for the replaceDB method. For schedconfig, it's dbkey, and for the jdls it's jdlkey
 	# (specified in controllerSettings
 	up_l = buildUpdateList(up_d,param,dbkey)
 	jdl_l = buildUpdateList(jdl_up_d,jdl,jdlkey)
-
+	
 
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
@@ -107,6 +119,9 @@ def loadConfigs():
 		unicodeEncode(del_l)
 		# Individual SQL statements to delete queues that need deleted
 		if not delDebug:
+			print '\n\n Queues Being Deleted:\n'
+			for i in sorted(del_d): print del_d[i][dbkey],del_d[i]['cloud'] 
+			
 			for i in del_l:
 				try:
 					status = utils.dictcursor().execute(i)
@@ -114,20 +129,27 @@ def loadConfigs():
 					print 'Failed SQL Statement: ', i
 					print status
 					print sys.exc_info()
-		else:
-			print "********** Delete step has been DISABLED!"
+				else:
+					print "********** Delete step has been DISABLED!"
 
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
 
 		# Since all inputs are unicode converted, all outputs need to be encoded.
+		print '\n\n Queues Being Updated or Added:\n'
+		for i in sorted(up_d): print up_d[i][dbkey], up_d[i]['cloud']
 		unicodeEncode(up_l)
 		status=utils.replaceDB('schedconfig',up_l,key=dbkey)
 		status=status.split('<br>')
 		if len(status) < len(up_l):
+			print 'Bulk Update Failed. Retrying queue-by-queue.'
 			status=[]
+			errors=[]
 			for up in up_l:
+				print up[dbkey]
 				status.append(utils.replaceDB('schedconfig',[up],key=dbkey))
+				if 'Error' in status[-1]:
+					errors.append(status[-1] + str(up))
 			errors = [stat for stat in status if 'Error' in stat]
 			f=file(errorFile,'w')
 			f.write(str(errors))
@@ -171,12 +193,11 @@ def loadConfigs():
  		#if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
 		if genDebug:
 			print 'Received debug info'
-			sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper = updateInstalledSW(collapseDict(newdb),linfotool)			
+			sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, uniqueBDII, uniqueAGIS, sw_union = updateInstalledSW(collapseDict(newdb),linfotool)			
  		else: updateInstalledSW(collapseDict(newdb),linfotool)
-		
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
-	
+
 	# Make the necessary changes to the configuration files:
 	makeConfigs(configd)
 	# Check the changes just committed into Subversion, unless we're not updating from BDII/ToA
@@ -184,9 +205,12 @@ def loadConfigs():
 	# Create a backup pickle of the finalized DB as it stands.
 	backupCreate(newdb)
 
+	# Fix any needed sites/clouds on access control
+	# readAccessControl()
+
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug:
-		return sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel
+		return sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, uniqueBDII, uniqueAGIS, sw_union
 	else:
 		return 0
 	
@@ -209,6 +233,8 @@ if __name__ == "__main__":
 	if '--debug' in args: genDebug = True
 	keydict={}
 
+	# Backup of all the volatile DB paramaters before the operation
+	volatileBackupCreate()
 	if not genDebug:
 		try:
 			# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
@@ -221,8 +247,24 @@ if __name__ == "__main__":
 		# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 		dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		print 'L is OK'
-		sw_db, sw_bdii, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel = loadConfigs()
+		sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, uniqueBDII, uniqueAGIS, sw_union = loadConfigs()
+		uniqueBDII, uniqueAGIS = sorted(list(uniqueBDII)), sorted(list(uniqueAGIS)) 
 
 
 		
 	#os.chdir(base_path)
+
+
+# 	f=file('/afs/cern.ch/user/a/atlpan/2012_07_20_08_56_31_maxtime.p')
+## 	maxtimed=pickle.load(f)
+## 	f.close()
+## 	for i in maxtimed:
+## 		q,maxtime_v,c,s = i, maxtimed[i][0], maxtimed[i][1].split(',')[0], maxtimed[i][2]
+## 		print q,maxtime_v,c,s
+## 		try:
+## 			configd[c][s][q][param]['maxtime'] = maxtime_v
+## 			configd[c][s][q][source]['maxtime'] = ''
+## 		except KeyError:
+## 			print 'Failed on %s' % q
+
+## 	raw_input('If this is OK...')

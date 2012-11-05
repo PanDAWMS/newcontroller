@@ -13,11 +13,13 @@ from controllerSettings import *
 #----------------------------------------------------------------------#
 # Config File Handling
 #----------------------------------------------------------------------
-def buildDict():
-	'''Build a copy of the queue dictionary from the configuration files '''
+def buildDict(stdkeys):
+	'''Build a copy of the queue dictionary from the configuration files. Standard key set can come in from the DB. '''
 
+	if len(stdkeys) < 80 or type(stdkeys) is not list:
+		print "No appropriate variables passed as standard keys. Exiting to prevent damage to the SVN."
+		sys.exit()
 	confd={}
-	stdkeys={}
 	# In executing files for variables, one has to put the variables in a contained, local context.
 	locvars={}
 	base = os.getcwd()
@@ -49,8 +51,18 @@ def buildDict():
 				fname = configs + os.sep + cloud + os.sep + site
 				# The appropriate dictionaries are placed in locvars
 				execfile(fname,{},locvars)
+				# Delete any keys that aren't in the DB
+				for k in locvars[param].keys():
+					if k not in stdkeys: locvars[param].pop(k)
+				for k in locvars[over].keys():
+					if k not in stdkeys: locvars[over].pop(k)
+				# Locvars are then placed in the confd.
 				confd[cloud][s][param] = locvars[param]
 				confd[cloud][s][over] = locvars[over]
+			# If the queue was misplaced, ignore it and mention it in the log:
+			elif site.endswith(postfix):
+				print '*** %s is not a site directory: this queue needs to be in a site. Ignoring.'
+				continue
 			# Add each site to the cloud
  			confd[cloud][site] = {}
 			# Loop throught the queues in the present site folders
@@ -66,9 +78,12 @@ def buildDict():
 				fname = configs + os.sep + cloud + os.sep + site + os.sep + q
 				# The appropriate dictionaries are placed in locvars
 				execfile(fname,{},locvars)
-				# Add any new keys to the stdkeys dictionary (in case new keys are added to the DB)
-				stdkeys.update(dict([(i,0) for i in locvars[param]]))
-				stdkeys.update(dict([(i,0) for i in locvars[over]]))
+				# Delete any keys that aren't in the DB
+				for k in locvars[param].keys():
+					if k not in stdkeys: locvars[param].pop(k)
+				for k in locvars[over].keys():
+					if k not in stdkeys: locvars[over].pop(k)
+					
 				# Feed in the configuration
 				confd[cloud][site][queue][param] = locvars[param]
 				confd[cloud][site][queue][over] = locvars[over] 
@@ -76,7 +91,7 @@ def buildDict():
 					if queue != All:
 						confd[cloud][site][queue][enab] = locvars[enab]
 						confd[cloud][site][queue][param][dbkey] = queue
-					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl]) 				
+					confd[cloud][site][queue][source] = dict([(key,'Config') for key in locvars[param] if key not in excl and key in stdkeys]) 				
 				except KeyError:
 					print cloud, site, queue, param, key
 					pass
@@ -97,6 +112,7 @@ def buildDict():
 				try:
 					for key in (set(stdkeys) - set(excl)) - set(confd[cloud][site][queue][param]):
 						confd[cloud][site][queue][param][key] = None
+						if nonNull.has_key(key): confd[cloud][site][queue][param][key] = nonNull[key]
 					if confd[cloud][site][queue][param]['name'] == None: confd[cloud][site][queue][param]['name'] = 'default'
 				except KeyError:
 					pass
@@ -106,47 +122,39 @@ def buildDict():
 	unicodeConvert(confd)
 	return confd
 
-def allMaker(d,initial=True):
+def allMaker(configd,dbd):
 	'''Extracts commonalities from sites for the All files.
 	Returns 0 for success. Adds "All" queues to sites. Updates the
 	provenance info in the input dictionary. '''
 	all_d = {}
-
+	dbcomp_d = {}
+	
 	# Presetting the All queue values from the Configs. These reign absolute -- to change individual queue
 	# settings, an override or deletion of the parameter from the All.py file is necessary.
-
-	# This should not run after BDII updates and ToA updates, so "initial" allows it to be killed. 
-	if initial:
-		for cloud in [i for i in d.keys() if i is not ndef]:
-			for site in [i for i in d[cloud].keys() if i is not ndef]:
-				if d[cloud][site].has_key(All):
-					for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
-						for key in d[cloud][site][All][param]:
-							d[cloud][site][queue][param][key] = d[cloud][site][All][param][key]
-
-
+	
 	# This is where we'll put all verified keys that are common across sites/clouds
-	for cloud in [i for i in d.keys() if (i is not All and i is not ndef)]:
+
+	for cloud in [i for i in configd.keys() if (i is not All and i is not ndef)]:
 		# Create a dictionary for each cloud 
 		all_d[cloud]={}
 		# For all regular sites:
-		for site in [i for i in d[cloud].keys() if (i is not All and i is not ndef)]:
+		for site in [i for i in configd[cloud].keys() if (i is not All and i is not ndef)]:
 			# Set up a site output dictionary
 			all_d[cloud][site]={}
 			# Recreate the site comparison queue
 			comp = {}
 			# Loop over all the queues in the site, where the queue is not empty or "All"
-			for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
+			for queue in [i for i in configd[cloud][site].keys() if (i is not All and i is not ndef)]:
 				# Create the key in the comparison dictionary for each parameter, if necessary, and assign a list that will hold the values from each queue 
-				if not len(comp): comp = dict([(i,[d[cloud][site][queue][param][i]]) for i in d[cloud][site][queue][param].keys() if i not in excl])
-				else: 
+				if not len(comp): comp = dict([(i,[configd[cloud][site][queue][param][i]]) for i in configd[cloud][site][queue][param].keys() if i not in excl])
+ 				else: 
 					# Fill the lists with the values for the keys from this queue
-					for key in d[cloud][site][queue][param]:
+					for key in configd[cloud][site][queue][param]:
 						if key not in excl:
 							try:
-								comp[key].append(d[cloud][site][queue][param][key])
+								comp[key].append(configd[cloud][site][queue][param][key])
 							except KeyError:
-								comp[key] = [d[cloud][site][queue][param][key]]
+								comp[key] = [configd[cloud][site][queue][param][key]]
 								
 			# Now, for the site, remove all duplicates in the lists. 
 			for key in comp:
@@ -156,23 +164,92 @@ def allMaker(d,initial=True):
 					all_d[cloud][site][key] = reducer(comp[key])[0]
 					
 	# Running across sites to update source information in the main dictionary
-	for cloud in [i for i in d.keys() if i is not ndef]:
-		for site in [i for i in d[cloud].keys() if i is not ndef]:
+	for cloud in [i for i in configd.keys() if i is not ndef]:
+		for site in [i for i in configd[cloud].keys() if i is not ndef]:
 			# No point in making an All file for one queue definition:
-			if len(d[cloud][site]) > 1:
+			if len(configd[cloud][site]) > 1:
 				# Extract all affected keys for the site
 				skeys = all_d[cloud][site].keys()
 				# Going queue by queue, update the provenance for both cloud and site general parameters.
-				for queue in [i for i in d[cloud][site].keys() if (i is not All and i is not ndef)]:
+				for queue in [i for i in configd[cloud][site].keys() if (i is not All and i is not ndef)]:
 					for key in skeys:
-						d[cloud][site][queue][source][key] = 'All.py: %s site' % site
+						configd[cloud][site][queue][source][key] = 'All.py: %s site' % site
 				# Adding the "All" queue to the site
-				if not d[cloud][site].has_key(All): d[cloud][site][All]={}
-				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over]={}
-				d[cloud][site][All][param] = all_d[cloud][site].copy()
-				if not d[cloud][site][All].has_key(over): d[cloud][site][All][over] = {}
-				
+				if not configd[cloud][site].has_key(All):
+					configd[cloud][site][All]={}
+					configd[cloud][site][All][param] = all_d[cloud][site].copy()
+				if not configd[cloud][site][All].has_key(over): configd[cloud][site][All][over] = {}
+
+	### Repeating much the same thing, but for the DB version.
+	
+	# This is where we'll put all verified keys that are common across sites/clouds
+	for cloud in dbd.keys():
+		# Create a dictionary for each cloud 
+		dbcomp_d[cloud]={}
+		# For all regular sites:
+		for site in dbd[cloud].keys():
+			# Set up a site output dictionary
+			dbcomp_d[cloud][site]={}
+			# Recreate the site comparison queue
+			dbcomp = {}
+			# Loop over all the queues in the site
+			for queue in dbd[cloud][site].keys():
+				# Create the key in the comparison dictionary for each parameter, if necessary, and assign a list that will hold the values from each queue 
+				if not len(dbcomp): dbcomp = dict([(i,[dbd[cloud][site][queue][param][i]]) for i in dbd[cloud][site][queue][param].keys() if i not in excl])
+				else: 
+					# Fill the lists with the values for the keys from this queue
+					for key in dbd[cloud][site][queue][param]:
+						if key not in excl:
+							try:
+								dbcomp[key].append(dbd[cloud][site][queue][param][key])
+							except KeyError:
+								dbcomp[key] = [dbd[cloud][site][queue][param][key]]
+								
+			# Now, for the site, remove all duplicates in the lists. 
+			for key in dbcomp:
+				# If only one value is left, it is common to all queues in the site
+				if len(reducer(dbcomp[key])) == 1:
+					# So write it to the output for this cloud and site.
+					dbcomp_d[cloud][site][key] = reducer(dbcomp[key])[0]
+
+	# Rolling through the sites, checking the DB common parameters to see if they match the All.py values in the queue
+	# If the DB
+	for cloud in dbcomp_d:
+		for site in dbcomp_d[cloud]:
+			# If there are common keys at all:
+			keyDeleteList = []
+			if len(dbcomp_d[cloud][site]):
+				# If the cloud and site are in the config files and there exists an All.py file:
+				if configd.has_key(cloud) and configd[cloud].has_key(site) and configd[cloud][site].has_key(All):
+					# Check each All key to see if the DB's
+					for key in configd[cloud][site][All][param]:
+						# This key is the same across the whole site in the DB
+						if dbcomp_d[cloud][site].has_key(key) and str(dbcomp_d[cloud][site][key]) == str(configd[cloud][site][All][param][key]):
+							# If the key is consistent across a site in the DB, and it doesn't match the All.py file
+							# that means the All.py file has been modified, and it overrides the previous values in Config
+							if str(dbcomp_d[cloud][site][key]) != str(configd[cloud][site][All][param][key]):
+								for queue in configd[cloud][site]:
+									configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
+						# If there is an All value and the DB lacks a consistent value and so do the queue entries, the queues need to be updated
+						# to avoid flip-flops
+						if not dbcomp_d[cloud][site].has_key(key) and not all_d[cloud][site].has_key(key) and configd[cloud][site][All][param].has_key(key):
+							for queue in configd[cloud][site]:
+								configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
+						# If there's an All.py value for this key, and the DB doesn't have a consistent value of that key
+						# for the site, then the All.py value needs to override as well
+						if not dbcomp_d[cloud][site].has_key(key) and all_d[cloud][site].has_key(key):
+							for queue in configd[cloud][site]:
+								configd[cloud][site][queue][param][key] = configd[cloud][site][All][param][key]
+						# If the DB has a consistent value for a site parameter, and it's the same as the All.py value, then it's already been set
+						# in a previous run and has been added to the All.py file at the same time. If there are changes in the individual queue
+						# values via the config files, they will be reflected in the *lack* of a generated All key. Therefore, the All file needs
+						# an edit to remove the redundant key.
+						if dbcomp_d[cloud][site].has_key(key) and not all_d[cloud][site].has_key(key):
+							keyDeleteList.append(key)
+					for key in keyDeleteList:
+						status = configd[cloud][site][All][param].pop(key)
 	return 0
+
 
 def composeFields(d,s,subdictname,primary_key,allFlag=0):
 	''' Populate a list for file writing that prints parameter dictionaries cleanly,

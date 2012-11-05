@@ -11,23 +11,30 @@ import os
 unidef='utf-8'
 
 # Debug Flags
+swDebug = False
 genDebug = False
 toaDebug = False
 jdlDebug = False
 svnDebug = False
+agisDebug = True
 bdiiDebug = False
 pickleDebug = False
 delDebug = False
 lesserDebug = True
 dbReadDebug = False
 dbWriteDebug = False
+allMakerDebug = False
 configReadDebug = False
 configWriteDebug = False
 
 # Global strings and lists
 
 # SVN repositories
-confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf' 
+confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf/trunk' 
+
+# AGIS SW URL
+agis_sw_url = 'http://atlas-agis-api.cern.ch/jsoncache/list_presource_sw.schedconf.json'
+agis_site_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf'
 
 # If safety is on, nothing is written to the DB.
 safety = 'off'
@@ -44,21 +51,35 @@ enab = 'Enabled' # Specifies that a queue has been enabled or disabled -- a vari
 svn = '.svn' # Allows for filtering of SVN directories
 rel = 0  # rel is the first element of the rel/cmt block in swHandling
 cmt = 1  # cmt is the second element of the rel/cmt block in swHandling
+cmtDashes = 3 # The number of dashes that characterize a real CMT specification in installedsw
 
 # Sets the present path as the primary -- allows portability, but the script has to be run from its home directory.
 base_path = os.getcwd()
 
 # Step back a layer in the path for the configs, and put them in the config SVN directory
-cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf'
+cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf/'
+cmp_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconfRef/'
 
 # Paths for backup files
-backupPath = cfg_path + 'Backup' + os.sep
-backupName = 'schedConfigBackup.pickle'
-
+scratchPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/prod/'
+runLogPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/logs/'
+hotBackupPath = base_path[:base_path.rfind(os.sep)] + os.sep + 'Backup' + os.sep
+longBackupPath = scratchPath + 'Backup' + os.sep
+backupSQLName = 'schedConfigBackup.sql'
+backupCSVName = 'schedConfigBackup.csv'
+volatileSQLName = 'schedConfigStatus.sql'
+volatileCSVName = 'schedConfigStatus.csv'
+lastVolatiles = 10
+hotBackups = 90
+keptBackups = 1500
+keptRunLogs = 15000
 # Paths for run logs (email notification)
-logPath = '/tmp/runProd.log'
+logPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/logs/'
 errorFile = '/tmp/pandaUpdateErrors.log'
 errorFileJDL = '/tmp/pandaUpdateErrorsJDL.log'
+
+# Maximum value of site max cpu time
+maxMaxTime = 864000 # Corresponds to 10 days of run
 
 # Default email address for failure notifications
 
@@ -76,14 +97,20 @@ jdlkey, dbkey, dsep, keysep, pairsep, spacing = 'name', 'nickname', ' : ', "'", 
 shared, unshared = 'shared','unshared'
 
 # These are the DB fields that are required not to be null, along with defaults. 
-nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0', 'space':'0'}
+nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0', 'space':'0','statusoverride':'offline'}
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
-excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','nqueues','last_status','sysconfig'] # nqueues takes care of a typo
+excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','sysconfig','multicloud','statusoverride'] # nqueues takes care of a typo
+nonexistent = ['nqueues']
+timestamps = ['lastmod','tspace'] # Fields that are explicitly timestamps, and are as such harder to update in the DB
+excl_nonTimestamp = [i for i in excl if i not in timestamps + nonexistent] # List of items to back up
+
+# These fields are to be consistent across siteids
+siteid_consistent = ['cloud','ddm','lfchost','se','memory','maxtime','space','retry','cmtconfig','setokens','seprodpath','glexec','priorityoffset','allowedgroups','defaulttoken','queue','localqueue','validatedreleases','accesscontrol','copysetup','maxinputsize','cachedse','allowdirectaccess','lfcregister','countrygroup','availablecpu','pledgedcpu']
 
 # Standard mappings for legacy software tags in the BDII:
 
-tagsTranslation = {'production':'AtlasProduction','tier0':'AtlasTier0','topphys':'TopPhys','wzbenchmarks':'WZBenchmarks'}
+tagsTranslation = {'offline':'AtlasOffline','production':'AtlasProduction','tier0':'AtlasTier0','topphys':'TopPhys','wzbenchmarks':'WZBenchmarks'}
 
 # Clouds that don't auto-populate from BDII
 

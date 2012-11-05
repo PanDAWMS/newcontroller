@@ -27,7 +27,7 @@ def svnCheckout():
 		os.chdir('..')
 	print '####### Checking out the SVN repository anew -- this should be a RARE event! Is this really what you want to do? #############'
 	# Check out the whole repo
-	os.system('svn co  %s' % confrepo)
+	os.system('svn co  %s pandaconf' % confrepo)
 	os.chdir(path)
 	if svnDebug: print 'Completing SVN checkout'
 	return 0
@@ -41,7 +41,7 @@ def svnCheckin(notestr = ''):
 	message = 'Changes made: %s%s' % (time.asctime(time.gmtime()),notestr)
 	# Add all new files before checking in
 	# This needs to be made a lot smarter. FIX
-	for p in [backupPath.split(os.sep)[-1], jdlconfigs.split(os.sep)[-1], configs.split(os.sep)[-1]]:
+	for p in [hotBackupPath.split(os.sep)[-1], jdlconfigs.split(os.sep)[-1], configs.split(os.sep)[-1]]:
 		o=commands.getoutput('svn add %s/*' % p)
 	if svnDebug: print o
 	o=commands.getoutput('svn add %s/*/*' % p)
@@ -68,6 +68,17 @@ def svnUpdate():
 		# Or create it if it's not there
 		os.makedirs(cfg_path)
 		os.chdir(cfg_path)
+		os.chdir('..')
+		#svnCheckout()
+	# Update the whole subversion
+	os.system('svn update --accept theirs-full')
+	try:
+		# Go to the configs directory path, if possible
+		os.chdir(cmp_path)
+	except OSError:
+		# Or create it if it's not there
+		os.makedirs(cmp_path)
+		os.chdir(cmp_path)
 		os.chdir('..')
 		#svnCheckout()
 	# Update the whole subversion
