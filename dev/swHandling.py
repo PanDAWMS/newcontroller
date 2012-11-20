@@ -116,25 +116,25 @@ def updateInstalledSW(confd,lcgdict):
 		index = '%s_%s_%s_%s' % (site['panda_resource'],'CVMFS','','')
 		sw_agis[index] = {'siteid':site['panda_resource'],'cloud':site['cloud'],'release':'CVMFS','cache':'None','cmtConfig':'None','validation':'AGIS'}
 
-	for queue in siteid:
-		# Check for the gatekeeper value in the BDII:
-		if cache_tags.has_key(gatekeeper[queue]):
-			for cache in cache_tags[gatekeeper[queue]]:
-				# Once again -- cache[rel] is cache[0], because the release and cache records are (release,cmt)
-				# ASSUMPTION -- that base releases will always contain two periods as separators
-				release=baseReleaseSep.join(cache[rel].split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
-				# The unique name for this entry				
-				index = '%s_%s_%s_%s' % (siteid[queue],release,cache[rel],cache[cmt])
-				index = index.replace('None','')
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache[rel],'cmtConfig':cache[cmt],'validation':'BDII'}
+## 	for queue in siteid:
+## 		# Check for the gatekeeper value in the BDII:
+## 		if cache_tags.has_key(gatekeeper[queue]):
+## 			for cache in cache_tags[gatekeeper[queue]]:
+## 				# Once again -- cache[rel] is cache[0], because the release and cache records are (release,cmt)
+## 				# ASSUMPTION -- that base releases will always contain two periods as separators
+## 				release=baseReleaseSep.join(cache[rel].split('-')[1].split(baseReleaseSep)[:nBaseReleaseSep])
+## 				# The unique name for this entry				
+## 				index = '%s_%s_%s_%s' % (siteid[queue],release,cache[rel],cache[cmt])
+## 				index = index.replace('None','')
+## 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release,'cache':cache[rel],'cmtConfig':cache[cmt],'validation':'BDII'}
 
-		if release_tags.has_key(gatekeeper[queue]):
-			for release in release_tags[gatekeeper[queue]]:
-				cache = 'None'
-				# The unique name for this entry
-				index = '%s_%s_%s_%s' % (siteid[queue],release[rel],cache,release[cmt])
-				index = index.replace('None','')
-				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache,'cmtConfig':release[cmt],'validation':'BDII'}
+## 		if release_tags.has_key(gatekeeper[queue]):
+## 			for release in release_tags[gatekeeper[queue]]:
+## 				cache = 'None'
+## 				# The unique name for this entry
+## 				index = '%s_%s_%s_%s' % (siteid[queue],release[rel],cache,release[cmt])
+## 				index = index.replace('None','')
+## 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache,'cmtConfig':release[cmt],'validation':'BDII'}
 	
 
 	unicodeEncode(sw_bdii)
