@@ -141,8 +141,10 @@ def updateInstalledSW(confd,lcgdict):
 	unicodeEncode(sw_agis)
 	unicodeEncode(sw_db)
 
-	sw_union = sw_bdii.copy()
-	for i in sw_agis: sw_union[i] = sw_agis[i].copy()
+## 	sw_union = sw_bdii.copy()
+## 	for i in sw_agis: sw_union[i] = sw_agis[i].copy()
+	sw_union = sw_agis.copy()
+
 	
 	uniqueAGIS = set(sw_agis.keys()) - set(sw_bdii.keys())
 	uniqueBDII = set(sw_bdii.keys()) - set(sw_agis.keys())
