@@ -114,6 +114,9 @@ def backupCreate(d):
 		w.writerow([d[i][key] for key in  fields])
 	f.close()
 	return 0
+
+if os.environ.has_key('DBINTR'): setINTR = True
+else: setINTR = False
 	
 def backupRestore(fname):
 	''' Restore a DB backup pickle into the live database! Caution! If you err, you will hose the database! '''
@@ -131,6 +134,11 @@ def backupRestore(fname):
 		print 'File %s%s not in backup/pickle format. Exiting.' % (fname+'.gz', hotBackupPath)
 		return 1
 	# Enable the DB
+	
+	if safety is 'on': utils.setTestDB()
+	if setINTR:
+		utils.setTestDB()
+		print 'Using INTR Database'
 	utils.initDB()
 	# Clear the DB
 	#utils.dictcursor().execute('DELETE FROM schedconfig')

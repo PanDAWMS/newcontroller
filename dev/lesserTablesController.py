@@ -12,11 +12,17 @@ from configFileHandling import *
 from controllerSettings import *
 from svnHandling import *
 
+if os.environ.has_key('DBINTR'): setINTR = True
+else: setINTR = False
+
 def lesserTableAdder(d, tablename, primarykey):
 	'''Returns the values in the schedconfig db as a dictionary'''
+	if safety is 'on': utils.setTestDB()
+	if setINTR:
+		utils.setTestDB()
+		print 'Using INTR Database'
 	utils.initDB()
 	# Signal the different DB access
-	print "Init DB %s"
 	# Get all the fields
 	query = "select * from %s" % tablename
 	nrows = utils.dictcursor().execute(query)

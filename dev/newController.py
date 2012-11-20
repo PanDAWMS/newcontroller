@@ -34,6 +34,9 @@ except:
 	print "Cannot import lcgInfositeTool, will exit"
 	sys.exit(-1)
 
+if os.environ.has_key('DBINTR'): setINTR = True
+else: setINTR = False
+
 
 def loadConfigs():
 	'''Run the schedconfig table updates'''
@@ -115,6 +118,10 @@ def loadConfigs():
 
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
+		if safety is 'on': utils.setTestDB()
+		if setINTR:
+		utils.setTestDB()
+		print 'Using INTR Database'
 		utils.initDB()
 		unicodeEncode(del_l)
 		# Individual SQL statements to delete queues that need deleted
