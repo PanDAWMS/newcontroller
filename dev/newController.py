@@ -117,11 +117,11 @@ def loadConfigs():
 	
 
 	# If the safety is off, the DB update can continue
+	if safety is 'on': utils.setTestDB()
 	if safety is not 'on':
-		if safety is 'on': utils.setTestDB()
 		if setINTR:
-		utils.setTestDB()
-		print 'Using INTR Database'
+			utils.setTestDB()
+			print 'Using INTR Database'
 		utils.initDB()
 		unicodeEncode(del_l)
 		# Individual SQL statements to delete queues that need deleted
