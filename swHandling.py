@@ -142,11 +142,11 @@ def updateInstalledSW(confd,lcgdict):
 	unicodeEncode(sw_db)
 
 	sw_union = sw_bdii.copy()
+	for i in sw_agis: sw_union[i] = sw_agis[i].copy()
+
 	if os.environ.has_key('DBINTR'): setINTR = True
 	else: setINTR = False
 	# Debug mode for now on INTR
-	if setINTR:
-		for i in sw_agis: sw_union[i] = sw_agis[i].copy()
 	
 	uniqueAGIS = set(sw_agis.keys()) - set(sw_bdii.keys())
 	uniqueBDII = set(sw_bdii.keys()) - set(sw_agis.keys())
@@ -156,9 +156,6 @@ def updateInstalledSW(confd,lcgdict):
 
 	# Moved over to union of BDII and AGIS: seeing how it goes.
 
-## 	uniqueAGIS = set(sw_agis.keys()) - set(sw_bdii.keys())
-## 	uniqueBDII = set(sw_bdii.keys()) - set(sw_agis.keys())
-	
 ## 	deleteList = [sw_db[i] for i in sw_db if i not in sw_bdii]
 ## 	addList = [sw_bdii[i] for i in sw_bdii if i not in sw_db]
 	
