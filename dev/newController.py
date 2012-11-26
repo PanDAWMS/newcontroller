@@ -250,7 +250,7 @@ if __name__ == "__main__":
 		# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 		dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		print 'L is OK'
-		sw_db, sw_agis, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, sw_union = loadConfigs()
+		sw_db, sw_agis, deleteList, addList, confd, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, sw_union = loadConfigs()
 ## 		sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, uniqueBDII, uniqueAGIS, sw_union = loadConfigs()
 ## 		uniqueBDII, uniqueAGIS = sorted(list(uniqueBDII)), sorted(list(uniqueAGIS)) 
 
