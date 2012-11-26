@@ -13,10 +13,6 @@ from controllerSettings import *
 from svnHandling import *
 from miscUtils import *
 
-if os.environ.has_key('DBINTR'): setINTR = True
-else: setINTR = False
-
-
 def loadJdl():
 	'''Runs the jdllist table updates'''
 	
@@ -113,10 +109,6 @@ def buildJdlDict():
 
 def jdlListAdder(d):
 	'''Returns the values in the schedconfig db as a dictionary'''
-	if safety is 'on': utils.setTestDB()
-	if setINTR:
-		utils.setTestDB()
-		print 'Using INTR Database'
 	utils.initDB()
 	# Signal the different DB access
 	print "Init DB (JDLLIST)"

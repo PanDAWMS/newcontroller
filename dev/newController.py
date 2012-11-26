@@ -28,14 +28,11 @@ from accessControl import *
 from svnConsistencyChecker import *
 from agisHandling import *
 
-try:
-	import lcgInfositeTool2 as lcgInfositeTool
-except:
-	print "Cannot import lcgInfositeTool, will exit"
-	sys.exit(-1)
-
-if os.environ.has_key('DBINTR'): setINTR = True
-else: setINTR = False
+## try:
+## 	import lcgInfositeTool2 as lcgInfositeTool
+## except:
+## 	print "Cannot import lcgInfositeTool, will exit"
+## 	sys.exit(-1)
 
 
 def loadConfigs():
@@ -67,8 +64,8 @@ def loadConfigs():
 	# Load the JDL from the DB and from the config files, respectively
 	jdldb, jdldc = loadJdl()
 	# Add the BDII information, and build a list of releases
-	if not bdiiOverride:
-		linfotool = lcgInfositeTool.lcgInfositeTool()
+## 	if not bdiiOverride:
+## 		linfotool = lcgInfositeTool.lcgInfositeTool()
 	
 	# Now add ToA information
 	if not toaOverride: toaIntegrator(configd)
@@ -117,11 +114,7 @@ def loadConfigs():
 	
 
 	# If the safety is off, the DB update can continue
-	if safety is 'on': utils.setTestDB()
 	if safety is not 'on':
-		if setINTR:
-			utils.setTestDB()
-			print 'Using INTR Database'
 		utils.initDB()
 		unicodeEncode(del_l)
 		# Individual SQL statements to delete queues that need deleted
@@ -200,8 +193,10 @@ def loadConfigs():
  		#if genDebug: sw_db, sw_bdii, delList, addList, confd, cloud, siteid, gk=updateInstalledSW(collapseDict(newdb),linfotool)
 		if genDebug:
 			print 'Received debug info'
-			sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, uniqueBDII, uniqueAGIS, sw_union = updateInstalledSW(collapseDict(newdb),linfotool)			
- 		else: updateInstalledSW(collapseDict(newdb),linfotool)
+			sw_db, sw_agis, deleteList, addList, confd, sw_union = updateInstalledSW(collapseDict(newdb))			
+## 			sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, uniqueBDII, uniqueAGIS, sw_union = updateInstalledSW(collapseDict(newdb),linfotool)			
+ 		else: updateInstalledSW(collapseDict(newdb))
+##  		else: updateInstalledSW(collapseDict(newdb),linfotool)
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(configd))
 
@@ -217,7 +212,8 @@ def loadConfigs():
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug:
-		return sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, uniqueBDII, uniqueAGIS, sw_union
+		return sw_db, sw_agis, deleteList, addList, confd, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, sw_union
+## 		return sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, uniqueBDII, uniqueAGIS, sw_union
 	else:
 		return 0
 	
@@ -254,8 +250,9 @@ if __name__ == "__main__":
 		# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 		dbd, standardkeys = sqlDictUnpacker(loadSchedConfig())
 		print 'L is OK'
-		sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, uniqueBDII, uniqueAGIS, sw_union = loadConfigs()
-		uniqueBDII, uniqueAGIS = sorted(list(uniqueBDII)), sorted(list(uniqueAGIS)) 
+		sw_db, sw_agis, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, sw_union = loadConfigs()
+## 		sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, linfotool, dbd, configd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, uniqueBDII, uniqueAGIS, sw_union = loadConfigs()
+## 		uniqueBDII, uniqueAGIS = sorted(list(uniqueBDII)), sorted(list(uniqueAGIS)) 
 
 
 		

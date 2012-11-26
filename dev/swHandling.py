@@ -42,39 +42,40 @@ def fixCMT(tags):
 		tags[site] = newSite
 	return 0
 
-def updateInstalledSW(confd,lcgdict):
+def updateInstalledSW(confd):
+#def updateInstalledSW(confd,lcgdict):
 	'''Checks for changes to the installedsw table, and add or delete releases as necessary by site'''
 	# Call on the DB to get the present installedsw version. From dbAccess
 	sw_db = loadInstalledSW()
 	# Get the present BDII tags information from the (previously called) lcgInfositeTool2 
-	release_tags = lcgdict.CEtags
-	cache_tags = lcgdict.CEctags
-	siteid = {}
-	gatekeeper = {}
-	cloud = {}
+## 	release_tags = lcgdict.CEtags
+## 	cache_tags = lcgdict.CEctags
+## 	siteid = {}
+## 	gatekeeper = {}
+## 	cloud = {}
 	# Make any translation necessary to the cache tags (see controllerSettings for more info)
-	translateTags(cache_tags)
-	fixCMT(release_tags)
-	fixCMT(cache_tags)
+## 	translateTags(cache_tags)
+## 	fixCMT(release_tags)
+## 	fixCMT(cache_tags)
 	# We now have a full set of lookups. We need to build a list of siteids, gatekeepers and clouds from the config dict:
-	for queue in confd:
-		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 
-		if confd[queue].has_key('siteid') and confd[queue]['siteid']:
-			# Collect the cloud information, choosing only principal cloud. Comma-delimited.
-			cloud[queue] = confd[queue]['cloud'].split(',')[0]
-			siteid[queue] = confd[queue]['siteid']
-			if len(cloud[queue]) > 8: print cloud[queue], queue, siteid[queue]
-			# If it's not an analysis queue and has a siteid, use gatekeeper as the BDII key
-			if confd[queue]['gatekeeper'] and confd[queue]['gatekeeper'] != virtualQueueGatekeeper:
-				gatekeeper[queue] = confd[queue]['gatekeeper']
-			# If it's an analy queue, use the "queue" value instead
-			elif confd[queue]['queue']:
-				# and make sure you split off the non-gatekeeper-name part at the end.
-				gatekeeper[queue] = confd[queue]['queue'].split('/')[0]
-			# If there's no good gatekeeper information, forget the queue
-			else:
-				cloud.pop(queue)
-				siteid.pop(queue)
+## 	for queue in confd:
+## 		# If the queue has a siteid, assign it and a gatekeeper. If !siteid, it's deactivated. 
+## 		if confd[queue].has_key('siteid') and confd[queue]['siteid']:
+## 			# Collect the cloud information, choosing only principal cloud. Comma-delimited.
+## 			cloud[queue] = confd[queue]['cloud'].split(',')[0]
+## 			siteid[queue] = confd[queue]['siteid']
+## 			if len(cloud[queue]) > 8: print cloud[queue], queue, siteid[queue]
+## 			# If it's not an analysis queue and has a siteid, use gatekeeper as the BDII key
+## 			if confd[queue]['gatekeeper'] and confd[queue]['gatekeeper'] != virtualQueueGatekeeper:
+## 				gatekeeper[queue] = confd[queue]['gatekeeper']
+## 			# If it's an analy queue, use the "queue" value instead
+## 			elif confd[queue]['queue']:
+## 				# and make sure you split off the non-gatekeeper-name part at the end.
+## 				gatekeeper[queue] = confd[queue]['queue'].split('/')[0]
+## 			# If there's no good gatekeeper information, forget the queue
+## 			else:
+## 				cloud.pop(queue)
+## 				siteid.pop(queue)
 
 	# Time to build the master list from BDII:
 
@@ -82,7 +83,7 @@ def updateInstalledSW(confd,lcgdict):
 	# I'm not worried about redundant additions (the dictionary will handle that), but I _am_ concerned about
 	# completeness. This is why I just add EVERYTHING and let the keys sort it out.
 	
-	sw_bdii = {}
+## 	sw_bdii = {}
 	sw_agis = {}
 
 	print 'Loading AGIS SW'
@@ -137,26 +138,25 @@ def updateInstalledSW(confd,lcgdict):
 ## 				sw_bdii[index] = {'siteid':siteid[queue],'cloud':cloud[queue],'release':release[rel],'cache':cache,'cmtConfig':release[cmt],'validation':'BDII'}
 	
 
-	unicodeEncode(sw_bdii)
+## 	unicodeEncode(sw_bdii)
 	unicodeEncode(sw_agis)
 	unicodeEncode(sw_db)
 
 ## 	sw_union = sw_bdii.copy()
-## 	for i in sw_agis: sw_union[i] = sw_agis[i].copy()
-	sw_union = sw_agis.copy()
+	for i in sw_agis: sw_union[i] = sw_agis[i].copy()
 
+	if os.environ.has_key('DBINTR'): setINTR = True
+	else: setINTR = False
+	# Debug mode for now on INTR
 	
-	uniqueAGIS = set(sw_agis.keys()) - set(sw_bdii.keys())
-	uniqueBDII = set(sw_bdii.keys()) - set(sw_agis.keys())
+## 	uniqueAGIS = set(sw_agis.keys()) - set(sw_bdii.keys())
+## 	uniqueBDII = set(sw_bdii.keys()) - set(sw_agis.keys())
 	
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_union]
 	addList = [sw_union[i] for i in sw_union if i not in sw_db]
 
 	# Moved over to union of BDII and AGIS: seeing how it goes.
 
-## 	uniqueAGIS = set(sw_agis.keys()) - set(sw_bdii.keys())
-## 	uniqueBDII = set(sw_bdii.keys()) - set(sw_agis.keys())
-	
 ## 	deleteList = [sw_db[i] for i in sw_db if i not in sw_bdii]
 ## 	addList = [sw_bdii[i] for i in sw_bdii if i not in sw_db]
 	
@@ -167,6 +167,7 @@ def updateInstalledSW(confd,lcgdict):
 	print genDebug
 	if True:
 		print 'Debug info for SW'
-		return sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, uniqueBDII, uniqueAGIS, sw_union
+		return sw_db, sw_agis, deleteList, addList, confd, sw_union
+## 		return sw_db, sw_bdii, sw_agis, deleteList, addList, confd, cloud, siteid, gatekeeper, uniqueBDII, uniqueAGIS, sw_union
 	else:
 		return 0
