@@ -142,8 +142,9 @@ def updateInstalledSW(confd):
 	unicodeEncode(sw_agis)
 	unicodeEncode(sw_db)
 
-## 	sw_union = sw_bdii.copy()
-	for i in sw_agis: sw_union[i] = sw_agis[i].copy()
+	sw_union = sw_agis.copy()
+##  	sw_union = sw_bdii.copy()
+## 	for i in sw_agis: sw_union[i] = sw_agis[i].copy()
 
 	if os.environ.has_key('DBINTR'): setINTR = True
 	else: setINTR = False
