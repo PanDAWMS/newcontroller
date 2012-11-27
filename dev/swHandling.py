@@ -17,30 +17,30 @@ except:
 	import simplejson as json
 
 
-def translateTags(d):
-	'''Translate any legacy BDII tags and return new, clean lists. Assumes a dictionary of lists'''
-	for key in d:
-		# For each of the possible translations:
-		for t in tagsTranslation:
-			# For each gatekeeper, filter through the list and make any changes necessary. Release records are (release,cmt)
-			d[key] = [(d[key][tag][rel].replace(t,tagsTranslation[t]),d[key][tag][cmt]) for tag in range(len(d[key]))]
+## def translateTags(d):
+## 	'''Translate any legacy BDII tags and return new, clean lists. Assumes a dictionary of lists'''
+## 	for key in d:
+## 		# For each of the possible translations:
+## 		for t in tagsTranslation:
+## 			# For each gatekeeper, filter through the list and make any changes necessary. Release records are (release,cmt)
+## 			d[key] = [(d[key][tag][rel].replace(t,tagsTranslation[t]),d[key][tag][cmt]) for tag in range(len(d[key]))]
 	
-def fixCMT(tags):
-	'''Fix any prepended stuff hanging off of the CE tags or ctags that was added by careless BDII population'''
-	for site in tags:
-		newSite = []
-		for tag in tags[site]:
-			if tag[cmt].count('-') > cmtDashes:
-				cmt_spec = '-'.join(tag[cmt].split('-')[-(cmtDashes + 1):])
-				rel_spec = tag[rel] + '-' + '-'.join(tag[cmt].split('-')[:(tag[cmt].count('-')-cmtDashes)])
-				if swDebug: print rel_spec, cmt_spec
-				newSite.append((rel_spec, cmt_spec))
-			elif tag[cmt].count('-') < cmtDashes and len(tag[cmt]):
-				if swDebug: print 'Skipping ', str(tag)
-				pass
-			else: newSite.append(tag)
-		tags[site] = newSite
-	return 0
+## def fixCMT(tags):
+## 	'''Fix any prepended stuff hanging off of the CE tags or ctags that was added by careless BDII population'''
+## 	for site in tags:
+## 		newSite = []
+## 		for tag in tags[site]:
+## 			if tag[cmt].count('-') > cmtDashes:
+## 				cmt_spec = '-'.join(tag[cmt].split('-')[-(cmtDashes + 1):])
+## 				rel_spec = tag[rel] + '-' + '-'.join(tag[cmt].split('-')[:(tag[cmt].count('-')-cmtDashes)])
+## 				if swDebug: print rel_spec, cmt_spec
+## 				newSite.append((rel_spec, cmt_spec))
+## 			elif tag[cmt].count('-') < cmtDashes and len(tag[cmt]):
+## 				if swDebug: print 'Skipping ', str(tag)
+## 				pass
+## 			else: newSite.append(tag)
+## 		tags[site] = newSite
+## 	return 0
 
 def updateInstalledSW(confd):
 #def updateInstalledSW(confd,lcgdict):
@@ -97,6 +97,7 @@ def updateInstalledSW(confd):
 	print 'AGIS site info Load Time: %d' % (agisEnd - agisStart)
 
 	for release in agislist:
+		if not release['major_release']: continue
 		if release['major_release'] != 'Conditions':
 			# For the caches
 			if release['major_release'] != release['release']:
@@ -104,12 +105,13 @@ def updateInstalledSW(confd):
 				sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':release['project']+'-'+release['release'],'cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':'AGIS'}
 
 			# For the releases
-			index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'None',release['cmtconfig'].replace('unset in BDII',''))
-			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':'None','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':'AGIS'}
+			else:
+				index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'',release['cmtconfig'].replace('unset in BDII',''))
+				sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':'','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':'AGIS'}
 
 		# Handling conditions correctly
 		else:
-			index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'None',release['cmtconfig'].replace('unset in BDII',''))
+			index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'',release['cmtconfig'].replace('unset in BDII',''))
 			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':'','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':'AGIS'}
 			
 	# For CVMFS
