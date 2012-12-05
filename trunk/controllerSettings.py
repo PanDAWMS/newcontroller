@@ -100,7 +100,7 @@ shared, unshared = 'shared','unshared'
 nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0', 'space':'0','statusoverride':'offline'}
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
-excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','sysconfig','multicloud','statusoverride'] # nqueues takes care of a typo
+excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','sysconfig','multicloud','statusoverride','celist'] # nqueues takes care of a typo
 nonexistent = ['nqueues']
 timestamps = ['lastmod','tspace'] # Fields that are explicitly timestamps, and are as such harder to update in the DB
 excl_nonTimestamp = [i for i in excl if i not in timestamps + nonexistent] # List of items to back up
@@ -108,9 +108,9 @@ excl_nonTimestamp = [i for i in excl if i not in timestamps + nonexistent] # Lis
 # These fields are to be consistent across siteids
 siteid_consistent = ['cloud','ddm','lfchost','se','memory','maxtime','space','retry','cmtconfig','setokens','seprodpath','glexec','priorityoffset','allowedgroups','defaulttoken','queue','localqueue','validatedreleases','accesscontrol','copysetup','maxinputsize','cachedse','allowdirectaccess','lfcregister','countrygroup','availablecpu','pledgedcpu']
 
-# Standard mappings for legacy software tags in the BDII:
+## Standard mappings for legacy software tags in the BDII:
 
-tagsTranslation = {'offline':'AtlasOffline','production':'AtlasProduction','tier0':'AtlasTier0','topphys':'TopPhys','wzbenchmarks':'WZBenchmarks'}
+## tagsTranslation = {'offline':'AtlasOffline','production':'AtlasProduction','tier0':'AtlasTier0','topphys':'TopPhys','wzbenchmarks':'WZBenchmarks'}
 
 # Clouds that don't auto-populate from BDII
 
