@@ -65,7 +65,7 @@ def loadConfigs():
 	jdldb, jdldc = loadJdl()
 	
 	# Now add ToA information
-	if not toaOverride: toaIntegrator(configd)
+	#if not toaOverride: toaIntegrator(configd)
 	# Compose the "All" queues for each site
 	status = allMaker(configd, dbd)	
 			
