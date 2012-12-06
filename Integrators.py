@@ -347,22 +347,22 @@ def keyCheckReplace(d,key,value):
 ## 	return 0
 
 
-def agisLoader():
-	''' Loads queue info from AGIS and populates schedconfig '''
-	excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','sysconfig','multicloud','statusoverride']
-	agis_site_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf.all'
-	agissite = json.load(urllib.urlopen(agis_site_url))
+## def agisLoader():
+## 	''' Loads queue info from AGIS and populates schedconfig '''
+## 	excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','sysconfig','multicloud','statusoverride']
+## 	agis_site_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf.all'
+## 	agissite = json.load(urllib.urlopen(agis_site_url))
 
-	# Get the correct headers for AGIS 
-	import cx_Oracle
-	c=cx_Oracle.connect('ATLAS_PANDAMON_READER','LuzeMuru7','ADCR_PANDAMON')
-	cursor = c.cursor()
+## 	# Get the correct headers for AGIS 
+## 	import cx_Oracle
+## 	c=cx_Oracle.connect('ATLAS_PANDAMON_READER','LuzeMuru7','ADCR_PANDAMON')
+## 	cursor = c.cursor()
 	
-	status = cursor.execute('SELECT * FROM ATLAS_PANDAMETA.schedconfig WHERE nickname IS NOT NULL')
-	desc = cursor.description
-	fields = [i[0].lower() for i in desc]
-	for site in agissite:
+## 	status = cursor.execute('SELECT * FROM ATLAS_PANDAMETA.schedconfig WHERE nickname IS NOT NULL')
+## 	desc = cursor.description
+## 	fields = [i[0].lower() for i in desc]
+## 	for site in agissite:
 		
-		# Use cursor.description as a source for 
+## 		# Use cursor.description as a source for 
 			
 	
