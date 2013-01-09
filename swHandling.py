@@ -49,17 +49,17 @@ def updateInstalledSW(confd):
 
 			# For the releases
 			else:
-				index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'',release['cmtconfig'].replace('unset in BDII',''))
-				sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':'','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':''}
+				index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'None',release['cmtconfig'].replace('unset in BDII',''))
+				sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':'None','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':''}
 
 		# Handling conditions correctly
 		else:
-			index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'',release['cmtconfig'].replace('unset in BDII',''))
-			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':'','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':''}
+			index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'None',release['cmtconfig'].replace('unset in BDII',''))
+			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':'None','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':''}
 			
 	# For CVMFS
 	for site in agissites:
-		index = '%s_%s_%s_%s' % (site['panda_resource'],'CVMFS','','')
+		index = '%s_%s_%s_%s' % (site['panda_resource'],'CVMFS','None','')
 		sw_agis[index] = {'siteid':site['panda_resource'],'cloud':site['cloud'],'release':'CVMFS','cache':'None','cmtConfig':'None','validation':''}
 
 	unicodeEncode(sw_agis)
