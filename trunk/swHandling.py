@@ -59,7 +59,7 @@ def updateInstalledSW(confd):
 			
 	# For CVMFS
 	for site in agissites:
-		index = '%s_%s_%s_%s' % (site['panda_resource'],'CVMFS','None','')
+		index = '%s_%s_%s_%s' % (site['panda_resource'],'CVMFS','None','None')
 		sw_agis[index] = {'siteid':site['panda_resource'],'cloud':site['cloud'],'release':'CVMFS','cache':'None','cmtConfig':'None','validation':''}
 
 	unicodeEncode(sw_agis)
