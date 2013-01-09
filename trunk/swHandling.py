@@ -11,6 +11,7 @@ from miscUtils import *
 from controllerSettings import *
 from dbAccess import *
 import urllib, time
+
 try:
 	import json
 except:
@@ -20,9 +21,12 @@ def updateInstalledSW(confd):
 	'''Checks for changes to the installedsw table, and add or delete releases as necessary by site'''
 	# Call on the DB to get the present installedsw version. From dbAccess
 	sw_db = loadInstalledSW()
-	for i sw_db:
-		if not sw_db[i]['cmtConfig']: sw_db[i]['cmtConfig'] = 'None'
-		if not sw_db[i]['cache']: sw_db[i]['cache'] = 'None'
+	
+	for i in sw_db:
+		if not sw_db[i]['cmtConfig']:
+			sw_db[i]['cmtConfig'] = 'None'
+		if not sw_db[i]['cache']:
+			sw_db[i]['cache'] = 'None'
 
 	# Time to build the master list from AGIS:
 
