@@ -20,6 +20,9 @@ def updateInstalledSW(confd):
 	'''Checks for changes to the installedsw table, and add or delete releases as necessary by site'''
 	# Call on the DB to get the present installedsw version. From dbAccess
 	sw_db = loadInstalledSW()
+	for i sw_db:
+		if not sw_db[i]['cmtConfig']: sw_db[i]['cmtConfig'] = 'None'
+		if not sw_db[i]['cache']: sw_db[i]['cache'] = 'None'
 
 	# Time to build the master list from AGIS:
 
@@ -59,8 +62,9 @@ def updateInstalledSW(confd):
 			
 	# For CVMFS
 	for site in agissites:
-		index = '%s_%s_%s_%s' % (site['panda_resource'],'CVMFS','None','None')
-		sw_agis[index] = {'siteid':site['panda_resource'],'cloud':site['cloud'],'release':'CVMFS','cache':'None','cmtConfig':'None','validation':''}
+		if site['is_cvmfs']:
+			index = '%s_%s_%s_%s' % (site['panda_resource'],'CVMFS','None','None')
+			sw_agis[index] = {'siteid':site['panda_resource'],'cloud':site['cloud'],'release':'CVMFS','cache':'None','cmtConfig':'None','validation':''}
 
 	unicodeEncode(sw_agis)
 	unicodeEncode(sw_db)
@@ -73,6 +77,14 @@ def updateInstalledSW(confd):
 	
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_union]
 	addList = [sw_union[i] for i in sw_union if i not in sw_db]
+
+	for i in range(len(addList)):
+		if not addList[i]['cmtConfig']: addList[i]['cmtConfig'] = 'None'
+		if not addList[i]['cache']: addList[i]['cache'] = 'None'
+
+	for i in range(len(deleteList)):
+		if not deleteList[i]['cmtConfig']: deleteList[i]['cmtConfig'] = 'None'
+		if not deleteList[i]['cache']: deleteList[i]['cache'] = 'None'
 
 	# Moved over to union of BDII and AGIS: seeing how it goes.
 	try:
