@@ -64,7 +64,7 @@ def loadInstalledSW():
 	utils.endDB()
 	# Return a dictionaried version of the DB contents, keyed release_site_cache_cmt
 	unicodeConvert(rows)
-	return dict([('%s_%s_%s_%s' % (i['siteid'],i['release'],str(i['cache']).replace('None',''),str(i['cmtConfig']).replace('None','')),i) for i in rows])
+	return dict([('%s_%s_%s_%s' % (i['siteid'],i['release'],str(i['cache']),str(i['cmtConfig'])),i) for i in rows])
 
 def updateInstalledSWdb(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
