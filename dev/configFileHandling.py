@@ -5,7 +5,7 @@
 # Alden.Stradling@cern.ch                                                                #
 ##########################################################################################
 
-import os
+import os, sys
 
 from miscUtils import *
 from controllerSettings import *
