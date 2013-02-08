@@ -64,7 +64,7 @@ def loadInstalledSW():
 	utils.endDB()
 	# Return a dictionaried version of the DB contents, keyed release_site_cache_cmt
 	unicodeConvert(rows)
-	return dict([('%s_%s_%s_%s' % (i['siteid'],i['release'],str(i['cache']).replace('None',''),str(i['cmtConfig']).replace('None','')),i) for i in rows])
+	return dict([('%s_%s_%s_%s' % (i['siteid'],i['release'],str(i['cache']),str(i['cmtConfig'])),i) for i in rows])
 
 def updateInstalledSWdb(addList, delList):
 	'''Update the installedsw table of pandameta by deleting obsolete releases and adding new ones'''
@@ -89,10 +89,6 @@ def updateInstalledSWdb(addList, delList):
 		
 	for i in delList:
 		sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s' and cmtconfig = '%s'" % (i['siteid'],i['release'],i['cache'],i['cmtConfig'])
-		if i['cache'] == 'None' or i['cache'] == '' or i['cmtConfig'] == None:
-			sql="DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and (cache is NULL or cache = 'None' or cache = '')" % (i['siteid'],i['release'])
-		if i['cmtConfig'] == 'None' or i['cmtConfig'] == '' or i['cmtConfig'] == None: sql += " and cmtconfig is NULL"
-		else: sql += " and cmtconfig = '%s'" % i['cmtConfig']
 		utils.dictcursor().execute(sql)
 	utils.commit()
 

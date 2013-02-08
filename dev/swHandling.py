@@ -11,6 +11,7 @@ from miscUtils import *
 from controllerSettings import *
 from dbAccess import *
 import urllib, time
+
 try:
 	import json
 except:
@@ -20,6 +21,12 @@ def updateInstalledSW(confd):
 	'''Checks for changes to the installedsw table, and add or delete releases as necessary by site'''
 	# Call on the DB to get the present installedsw version. From dbAccess
 	sw_db = loadInstalledSW()
+	
+	for i in sw_db:
+		if not sw_db[i]['cmtConfig']:
+			sw_db[i]['cmtConfig'] = 'None'
+		if not sw_db[i]['cache']:
+			sw_db[i]['cache'] = 'None'
 
 	# Time to build the master list from AGIS:
 
@@ -45,22 +52,23 @@ def updateInstalledSW(confd):
 			# For the caches
 			if release['major_release'] != release['release']:
 				index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],release['project']+'-'+release['release'],release['cmtconfig'].replace('unset in BDII',''))
-				sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':release['project']+'-'+release['release'],'cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':'AGIS'}
+				sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':release['project']+'-'+release['release'],'cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':''}
 
 			# For the releases
 			else:
-				index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'',release['cmtconfig'].replace('unset in BDII',''))
-				sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':'','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':'AGIS'}
+				index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'None',release['cmtconfig'].replace('unset in BDII',''))
+				sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':'None','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':''}
 
 		# Handling conditions correctly
 		else:
-			index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'',release['cmtconfig'].replace('unset in BDII',''))
-			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':'','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':'AGIS'}
+			index = '%s_%s_%s_%s' % (release['panda_resource'],release['major_release'],'None',release['cmtconfig'].replace('unset in BDII',''))
+			sw_agis[index] = {'siteid':release['panda_resource'],'cloud':release['cloud'],'release':release['major_release'],'cache':'None','cmtConfig':release['cmtconfig'].replace('unset in BDII',''),'validation':''}
 			
 	# For CVMFS
 	for site in agissites:
-		index = '%s_%s_%s_%s' % (site['panda_resource'],'CVMFS','','')
-		sw_agis[index] = {'siteid':site['panda_resource'],'cloud':site['cloud'],'release':'CVMFS','cache':'None','cmtConfig':'None','validation':'AGIS'}
+		if site['is_cvmfs']:
+			index = '%s_%s_%s_%s' % (site['panda_resource'],'CVMFS','None','None')
+			sw_agis[index] = {'siteid':site['panda_resource'],'cloud':site['cloud'],'release':'CVMFS','cache':'None','cmtConfig':'None','validation':''}
 
 	unicodeEncode(sw_agis)
 	unicodeEncode(sw_db)
@@ -73,6 +81,14 @@ def updateInstalledSW(confd):
 	
 	deleteList = [sw_db[i] for i in sw_db if i not in sw_union]
 	addList = [sw_union[i] for i in sw_union if i not in sw_db]
+
+	for i in range(len(addList)):
+		if not addList[i]['cmtConfig']: addList[i]['cmtConfig'] = 'None'
+		if not addList[i]['cache']: addList[i]['cache'] = 'None'
+
+	for i in range(len(deleteList)):
+		if not deleteList[i]['cmtConfig']: deleteList[i]['cmtConfig'] = 'None'
+		if not deleteList[i]['cache']: deleteList[i]['cache'] = 'None'
 
 	# Moved over to union of BDII and AGIS: seeing how it goes.
 	try:
