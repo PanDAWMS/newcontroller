@@ -6,27 +6,81 @@
 # 14 Feb 2012 - Queues deleted in the SVN are now not deleted in the DB                  #
 ##########################################################################################
 
-import os, pickle
+import os, pickle, cPickle
 
 from miscUtils import *
 from controllerSettings import *
 from configFileHandling import *
-from dbAccess import *
+#from dbAccess import *
 from svnHandling import *
+
+import urllib
+
+try:
+	import json
+except:
+	import simplejson as json
+
 
 #----------------------------------------------------------------------#
 # Dictionary Handling
 #----------------------------------------------------------------------#
+
 def protoDict(queue,d,sourcestr='DB',keys=[]):
 	'''Create a dictionary with params, overrides and sources for either an existing definition from the DB, or to add the dictionaries
 	for a new queue. Used in sqlDictUnpacker for extraction of DB values (default) and in bdiiIntegrator for new queue addition from the BDII.'''
 	en_val = 'True'
 	if not len(d):
 		en_val = 'False'
-		d = {queue:dict([(key,None) for key in keys])}
-	# Create a baseline queue definition to pass back, using list comprehensions, and with Source and Override empty dicts.
-	return {param:d[queue].copy(),over:{},source:dict([(key,sourcestr) for key in d[queue].keys() if key not in excl]),enab:en_val}
+		d = {queue:dict([(key,None) for key in keys if key not in excl])}
+	# Create a baseline queue definition to pass back, using list comprehensions, and with Source (default) and Override (empty) dicts.
+	return {param:dict([(key,d[queue][key]) for key in keys if key not in excl and key in d[queue].keys()]),over:{},source:dict([(key,sourcestr) for key in keys if key not in excl and key in d[queue].keys()]),enab:en_val}
 	
+def agisDictUnpacker(standard_keys):
+	'''Unpack the dictionary returned by AGIS for the sites''' 
+	# Organize by cloud, then site, then queue. Reading necessary data by key.
+	# Remember that these vars are limited in scope.
+	# Take the standard keys from a census of the keys in the DB dictionary (dbd) in the main loop.
+	print 'Starting agisDictUnpacker'
+
+	try:
+		d = json.load(urllib.urlopen(agis_queue_url))
+	except IOError:
+		f=file('queueList.p')
+		d = cPickle.load(f)
+		f.close()
+
+	pcloud = 'cloud_for_panda'
+	cloud = 'cloud'
+	# This allows AGIS consistency, putting OSG and such in a different cloud field.
+	site = 'site'
+	out_d={}
+	stdkeys = []
+	# Run over the DB queues
+	for queue in d:
+		# If the present queue's cloud isn't in the out_d, create the cloud.
+		# Adapted to multi-cloud -- take the first as default.
+		# This is probably obsolete, but left in because it's harmless and who knows what people might try.
+		c=d[queue][pcloud].split(',')[0]
+		if c not in out_d:
+			out_d[c] = {}
+		# If the present queue's site isn't in the out_d cloud, create the site in the cloud.
+		if d[queue][site] not in  out_d[c]:
+			out_d[c][d[queue][site]] = {}
+
+		# Once sure that we have all the cloud and site dictionaries created, we populate them with a parameter dictionary
+		# an empty (for now) override dictionary, and a source dict. The override dictionary will become useful when we are reading back from
+		# the config files we are creating. (UPDATE: the oevrride is now obsolete as we move to AGIS) Each key is associated with a source tag
+		##-- Config, DB, BDII, ToA, Override, Site, or Cloud (ALL NOW OBSOLETE. LEFT IN TO AVOID FRAGILE CODE)
+		# That list comprehension at the end of the previous line just creates an empty dictionary and fills it with the keys from the queue
+		# definition. The values are set to DB, and will be changed if another source modifies the value.
+		out_d[c][d[queue][site]][d[queue][dbkey]] = protoDict(queue,d,'AGIS',standard_keys)
+		# Fixing the "cloud_for_panda" to "cloud" disparity
+		out_d[c][d[queue][site]][d[queue][dbkey]][param]['cloud'] = d[queue][cloud]
+	
+	print 'Finishing agisDictUnpacker'
+	return out_d
+
 def sqlDictUnpacker(d):
 	'''Unpack the dictionary returned by Oracle or MySQL''' 
 	# Organize by cloud, then site, then queue. Reading necessary data by key.
@@ -59,9 +113,7 @@ def sqlDictUnpacker(d):
 		stdkeys.extend([key for key in d[queue].keys() if key not in excl])
 	# Then remove all duplicates
 	stdkeys=reducer(stdkeys)
-	# Parse the dictionary to create an All queue for each site
 
-	#status = allMaker(out_d)
 	# Take care of empty clouds (which are used to disable queues in schedconfig, for now) 
 	# allMaker has to run before this to avoid causing KeyErrors with the new "empty cloud" values 
 	if out_d.has_key(''):
@@ -270,3 +322,6 @@ def dd(d1, d2, ctx=""):
                         continue
     print "Done with changes in " + ctx
     return
+
+# Working version
+
