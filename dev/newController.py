@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 #######################################################
 # Handles storage and modification of queue data      #
-# in the ATLAS PanDA schedconfig and jdllist tables   #
+# in the ATLAS PanDA schedconfig table                #
 # for ATLAS production and analysis queues.           #
 #                                                     #
 # Alden Stradling (Alden.Stradling@cern.ch) 23 Jun 09 #
@@ -19,7 +19,6 @@ from dbAccess import *
 from dictHandling import *
 from Integrators import *
 from configFileHandling import *
-from jdlController import *
 from svnHandling import *
 from backupHandling import *
 from swHandling import *
@@ -71,10 +70,9 @@ def loadConfigs():
 	print del_l
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
 	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.
-	# The primary key is specified for the replaceDB method. For schedconfig, it's dbkey, and for the jdls it's jdlkey
+	# The primary key is specified for the replaceDB method. For schedconfig, it's dbkey.
 	# (specified in controllerSettings
 	up_l = buildUpdateList(up_d,param,dbkey)
-	jdl_l = buildUpdateList(jdl_up_d,jdl,jdlkey)
 	
 
 	# If the safety is off, the DB update can continue
@@ -153,7 +151,7 @@ def loadConfigs():
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug:
-		return sw_db, sw_agis, deleteList, addList, dbd, agisd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, sw_union
+		return sw_db, sw_agis, deleteList, addList, dbd, agisd, up_d, del_d, del_l, up_l, newdb, checkUp, checkDel, sw_union
 	else:
 		return 0
 	
@@ -181,7 +179,7 @@ if __name__ == "__main__":
 		# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 		dbd, database_queue_keys = sqlDictUnpacker(loadSchedConfig())
 		print 'L is OK'
-		sw_db, sw_agis, deleteList, addList, dbd, agisd, up_d, del_d, del_l, up_l, jdl_l, jdldb, jdldc, newdb, checkUp, checkDel, sw_union = loadConfigs()
+		sw_db, sw_agis, deleteList, addList, dbd, agisd, up_d, del_d, del_l, up_l, newdb, checkUp, checkDel, sw_union = loadConfigs()
 
 
 
