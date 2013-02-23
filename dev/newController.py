@@ -27,11 +27,11 @@ from accessControl import *
 from svnConsistencyChecker import *
 from agisHandling import *
 
-try:
-	import lcgInfositeTool2 as lcgInfositeTool
-except:
-	print "Cannot import lcgInfositeTool, will exit"
-	sys.exit(-1)
+## try:
+## 	import lcgInfositeTool2 as lcgInfositeTool
+## except:
+## 	print "Cannot import lcgInfositeTool, will exit"
+## 	sys.exit(-1)
 
 
 def loadConfigs():
