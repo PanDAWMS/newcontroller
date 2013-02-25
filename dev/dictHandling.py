@@ -30,9 +30,8 @@ def protoDict(queue,d,sourcestr='DB',keys=[]):
 	for a new queue. Used in sqlDictUnpacker for extraction of DB values (default) and in bdiiIntegrator for new queue addition from the BDII.'''
 	en_val = 'True'
 	if not len(keys):
-		if len(standard_keys):
-			keys = standard_keys
-		else: keys = d[queue].keys()
+		# Be sure there are only allowed keys
+		keys = list(set(d[queue].keys()).difference(excl))
 	if not len(d):
 		en_val = 'False'
 		d = {queue:dict([(key,None) for key in keys if key not in excl])}

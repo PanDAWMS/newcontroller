@@ -40,7 +40,6 @@ def svnCheckin(notestr = ''):
 	# Timestamp in GMT
 	message = 'Changes made: %s%s' % (time.asctime(time.gmtime()),notestr)
 	# Add all new files before checking in
-	# This needs to be made a lot smarter. FIX
 	for p in [hotBackupPath.split(os.sep)[-1], jdlconfigs.split(os.sep)[-1], configs.split(os.sep)[-1]]:
 		o=commands.getoutput('rm -f  %s/msgtmp' % p)
 		o=commands.getoutput('svn add %s/*' % p)
