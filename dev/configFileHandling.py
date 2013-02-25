@@ -157,9 +157,10 @@ def allMaker(configd,dbd):
 								comp[key] = [configd[cloud][site][queue][param][key]]
 								
 			# Now, for the site, remove all duplicates in the lists. 
+			print comp, type(comp)
 			for key in comp:
 				# If only one value is left, it is common to all queues in the site
-				print comp, type(comp)
+				print key
 				if len(reducer(comp[key])) == 1:
 					# So write it to the output for this cloud and site.
 					all_d[cloud][site][key] = reducer(comp[key])[0]
