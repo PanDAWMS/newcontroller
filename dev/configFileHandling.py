@@ -157,30 +157,28 @@ def allMaker(configd,dbd):
 								comp[key] = [configd[cloud][site][queue][param][key]]
 								
 			# Now, for the site, remove all duplicates in the lists. 
-			print comp, type(comp)
 			for key in comp:
 				# If only one value is left, it is common to all queues in the site
-				print key
 				if len(reducer(comp[key])) == 1:
 					# So write it to the output for this cloud and site.
 					all_d[cloud][site][key] = reducer(comp[key])[0]
 					
 	# Running across sites to update source information in the main dictionary
-	for cloud in [i for i in configd.keys() if i is not ndef]:
-		for site in [i for i in configd[cloud].keys() if i is not ndef]:
-			# No point in making an All file for one queue definition:
-			if len(configd[cloud][site]) > 1:
-				# Extract all affected keys for the site
-				skeys = all_d[cloud][site].keys()
-				# Going queue by queue, update the provenance for both cloud and site general parameters.
-				for queue in [i for i in configd[cloud][site].keys() if (i is not All and i is not ndef)]:
-					for key in skeys:
-						configd[cloud][site][queue][source][key] = 'All.py: %s site' % site
-				# Adding the "All" queue to the site
-				if not configd[cloud][site].has_key(All):
-					configd[cloud][site][All]={}
-					configd[cloud][site][All][param] = all_d[cloud][site].copy()
-				if not configd[cloud][site][All].has_key(over): configd[cloud][site][All][over] = {}
+## 	for cloud in [i for i in configd.keys() if i is not ndef]:
+## 		for site in [i for i in configd[cloud].keys() if i is not ndef]:
+## 			# No point in making an All file for one queue definition:
+## 			if len(configd[cloud][site]) > 1:
+## 				# Extract all affected keys for the site
+## 				skeys = all_d[cloud][site].keys()
+## 				# Going queue by queue, update the provenance for both cloud and site general parameters.
+## 				for queue in [i for i in configd[cloud][site].keys() if (i is not All and i is not ndef)]:
+## 					for key in skeys:
+## 						configd[cloud][site][queue][source][key] = 'All.py: %s site' % site
+## 				# Adding the "All" queue to the site
+## 				if not configd[cloud][site].has_key(All):
+## 					configd[cloud][site][All]={}
+## 					configd[cloud][site][All][param] = all_d[cloud][site].copy()
+## 				if not configd[cloud][site][All].has_key(over): configd[cloud][site][All][over] = {}
 
 	### Repeating much the same thing, but for the DB version.
 	
