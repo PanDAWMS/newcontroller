@@ -50,7 +50,7 @@ def loadConfigs():
 	nicknameChecker(dbd)
 
 	# Compare the DB to the present built configuration to find the queues that are changed.
-	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(agisd), dbOverride)
+	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(agisd))
 	if delDebug:
 		print '******* Compare step'
 		print len(del_d)
