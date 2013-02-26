@@ -144,17 +144,13 @@ def findQueue(q,d):
 	# If nothing comes up, return empties.
 	return '',''
 
-def compareQueues(dbDict,cfgDict,dbOverride=False):
+def compareQueues(dbDict,cfgDict):
 	'''Compares the queue dictionary that we got from the DB to the one in the config files. Any changed
-	queues are passed back. If dbOverride is set true, the DB is used to modify the config files rather than
-	the default. Queues deleted in the DB will not be deleted in the configs. Deleted queues in the SVN will
-	not be deleted in the DB'''
+	queues are passed back.'''
 	updDict = {}
 	delDict = {}
 	unicodeConvert(dbDict)
 	unicodeConvert(cfgDict)
-	# Allow the reversal of master and subordinate dictionaries
-	if dbOverride: dbDict, cfgDict = cfgDict, dbDict
 	for key in dbDict:
 		# If the dictionaries don't match:
 		if cfgDict.has_key(key):
@@ -164,13 +160,16 @@ def compareQueues(dbDict,cfgDict,dbOverride=False):
 			if c != d:
 				cfgDict[key].update(dbDict[key].fromkeys([k for k in dbDict[key].keys() if not cfgDict.has_key(key)]))
 				# If the queue was changed in the configs, tag it for update. In DB override, we aren't updating the DB.
-				if not dbOverride and cfgDict.has_key(key): updDict[key]=cfgDict[key]
+				if cfgDict.has_key(key): updDict[key]=cfgDict[key]
 	# If the queue is brand new (created in a config file), it is added to update.
 	for i in cfgDict:
 		if i == All: continue
 		if not dbDict.has_key(i):
-			# In DB override, we aren't updating the DB.
-			if not dbOverride: updDict[i]=cfgDict[i]
+			updDict[i]=cfgDict[i]
+	for i in dbDict:
+		if i == All: continue
+		if not cfgDict.has_key(i):
+			delDict[i]=dbDict[i]
 	# Return the appropriate queues to update and eliminate
 	return updDict, delDict
 
