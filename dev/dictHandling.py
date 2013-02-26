@@ -77,6 +77,10 @@ def agisDictUnpacker(standard_keys):
 		# That list comprehension at the end of the previous line just creates an empty dictionary and fills it with the keys from the queue
 		# definition. The values are set to DB, and will be changed if another source modifies the value.
 		out_d[c][d[queue][site]][d[queue][dbkey]] = protoDict(queue,d,'AGIS',standard_keys)
+		# Filtering lists (unhashable and not DB compatible) and making them strings
+		for key in out_d[c][d[queue][site]][d[queue][dbkey]][param]:
+			if type(out_d[c][d[queue][site]][d[queue][dbkey]][param][key]) == list:
+				out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = '|'.join(out_d[c][d[queue][site]][d[queue][dbkey]][param][key])
 		# Fixing the "cloud_for_panda" to "cloud" disparity
 		out_d[c][d[queue][site]][d[queue][dbkey]][param]['cloud'] = d[queue][cloud]
 	
