@@ -25,14 +25,6 @@ from swHandling import *
 from lesserTablesController import *
 from accessControl import *
 from svnConsistencyChecker import *
-from agisHandling import *
-
-## try:
-## 	import lcgInfositeTool2 as lcgInfositeTool
-## except:
-## 	print "Cannot import lcgInfositeTool, will exit"
-## 	sys.exit(-1)
-
 
 def loadConfigs():
 	'''Run the schedconfig table updates'''
@@ -51,19 +43,7 @@ def loadConfigs():
 
 	# Compare the DB to the present built configuration to find the queues that are changed.
 	up_d, del_d = compareQueues(collapseDict(dbd), collapseDict(agisd))
-	if delDebug:
-		print '******* Compare step'
-		print len(del_d)
-		print del_d.keys()
-		print
-	deletes = [del_d[i][dbkey] for i in del_d]
-	if delDebug: print len(deletes)
 	
-	# Delete queues that are not Enabled and are in the DB
-	if delDebug:
-		print '******* Disabled queues list'
-		print len(disabledQueues(dbd,agisd).keys())
-	del_d = disabledQueues(agisd,dbd)
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
 	del_l = buildDeleteList(del_d,'schedconfig')

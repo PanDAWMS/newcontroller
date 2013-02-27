@@ -252,8 +252,7 @@ def allMaker(configd,dbd):
 
 
 def composeFields(d,s,subdictname,primary_key,allFlag=0):
-	''' Populate a list for file writing that prints parameter dictionaries cleanly,
-	allowing them to be written to human-modifiable config files for queues and sites.'''
+	''' Populate a list for file writing that prints parameter dictionaries cleanly'''
 
 	# "subdictname" is one of two things -- "Parameters" and "Override", depending on what part of the  
 	# file we're writing. They're defined generally as param and over. A third, JDL, applies only to jdllist imports
@@ -290,12 +289,7 @@ def composeFields(d,s,subdictname,primary_key,allFlag=0):
 				valsep = "'''"
 			else:
 				valsep = keysep
-			# If the value is being set somewhere other than the config files, comment it and send it to the bottom of the list
-			if subdictname == param and d.has_key(source) and d[source].has_key(key) and d[source][key] is not 'Config':
-				# Add a comment to the line with the provenance info 
-				comment = ' # Defined in %s' % d[source][key]
-				s_aside.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
-			else: s.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + comment + os.linesep)
+			s.append(spacing + keysep + key + keysep + dsep + valsep + value + valsep + pairsep + os.linesep)
 	# Add in all the commented fields
 	s.insert(0,'\n')
 	s.extend(s_aside)
@@ -333,28 +327,8 @@ def buildFile(name, d):
 	'''Consolidate the composition and writing of the files'''
 	startstr = '''
 # This dictionary contains the parameters for one queue.
-# Changing any parameter will update it in the schedconfig database.
-# If you want to change a value temporarily, preserving the previous
-# value, please put that parameter (key and new value) in the Override
-# dictionary. Any value in Override will supersede any value in the
-# Parameters dictionary.
-
-# Parameter comments tell you if the parameter is being set elsewhere.
-# You can try to change them here, but it will FAIL if they are being set elsewhere!
-# If you want to override one of these values, use the Override dictionary.
-
-# Global values for entire sites can also be set
-# (and overriden) in the "All" files within these directories.
-
 '''
 	overridestr = '''
-# PLEASE USE FOR TEMPORARY CHANGES TO A QUEUE OR SITE
-# This dictionary will override any queue value within its scope.
-# If this override dictionary is part of an "All" file,
-# key:value pairs included in it will override all other
-# "Parameter" values. "Override" values in individual queues
-# will supersede values specified here.
-
 '''
 
 	switchstr = 'Enabled = '
@@ -363,18 +337,14 @@ def buildFile(name, d):
 	# Put the queue on/off switch in place if not an All file
 	if name == All: allFlag = 1
 	else: allFlag = 0
-	try:
-		if not allFlag: s.append(switchstr + str(d[enab]) + '\n\n')
-	except KeyError:
-		s.append(switchstr + 'True' + '\n\n')
+	# All queues are enabled by default, because they came from AGIS
+	s.append(switchstr + 'True' + '\n\n')
 	# I'm taking advantage of the universality of lists.
 	# composeFields is modifying the list itself rather than a copy.
 	# Since the params in the All files have no keys to find, we warn
 	# the composeFields code.
 	composeFields(d, s, param, dbkey, allFlag)
-	s.append(overridestr)
-	composeFields(d, s, over, dbkey)
-	
+	# No more overrides or other text.
 	f=file(name + postfix,'w')
 	f.writelines(s)
 	f.close()

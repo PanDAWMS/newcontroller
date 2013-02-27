@@ -164,15 +164,19 @@ def compareQueues(dbDict,cfgDict):
 				cfgDict[key].update(dbDict[key].fromkeys([k for k in dbDict[key].keys() if not cfgDict.has_key(key)]))
 				# If the queue was changed in the configs, tag it for update. In DB override, we aren't updating the DB.
 				if cfgDict.has_key(key): updDict[key]=cfgDict[key]
-	# If the queue is brand new (created in a config file), it is added to update.
+
+	# If the queue is brand new in AGIS, it is added to update.
 	for i in cfgDict:
 		if i == All: continue
 		if not dbDict.has_key(i):
-			updDict[i]=cfgDict[i]
+			updDict[i] = cfgDict[i]
+
+	# If the queue is gone from AGIS, put it in the deletes dictionary.
 	for i in dbDict:
 		if i == All: continue
 		if not cfgDict.has_key(i):
-			delDict[i]=dbDict[i]
+			delDict[i] = dbDict[i].copy()
+
 	# Return the appropriate queues to update and eliminate
 	return updDict, delDict
 
