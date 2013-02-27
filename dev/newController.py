@@ -54,7 +54,7 @@ def loadConfigs():
 	up_l = buildUpdateList(up_d,param,dbkey)
 	
 	# Information regarding 
-	if len(del_d): emailError('Deleting queues: %s' % ','.join(del_d.keys()))
+	if len(del_d): emailDeletions('%s' % ','.join(del_d.keys()))
 	if float(len(del_d))/float(len(collapseDict(agisd))) >= float(maxDeletedQueuePercentage)/100:
 		msg = 'Deleting too many queues: %d percent is higher than the maximum allowed of %d percent' % (int(float(len(del_d))/float(len(collapseDict(agisd)))*100),maxDeletedQueuePercentage)
 		emailError(msg)
@@ -77,7 +77,7 @@ def loadConfigs():
 				try:
 					print i
 					status = utils.dictcursor().execute(i)
-
+					
 				except:
 					print 'Failed SQL Statement: ', i
 					print status
