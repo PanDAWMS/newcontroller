@@ -71,9 +71,10 @@ backupCSVName = 'schedConfigBackup.csv'
 volatileSQLName = 'schedConfigStatus.sql'
 volatileCSVName = 'schedConfigStatus.csv'
 lastVolatiles = 10
-hotBackups = 90
-keptBackups = 1500
-keptRunLogs = 15000
+hotBackups = 30
+keptBackups = 150
+keptRunLogs = 1500
+maxDeletedQueuePercentage = 10
 # Paths for run logs (email notification)
 logPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/logs/'
 errorFile = '/tmp/pandaUpdateErrors.log'

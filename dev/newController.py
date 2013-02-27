@@ -47,7 +47,12 @@ def loadConfigs():
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
 	del_l = buildDeleteList(del_d,'schedconfig')
-	print del_l
+	# Information regarding 
+	if len(del_d): emailError('Deleting queues: %s' % ','.join(del_d.keys()))
+	if len(del_d)/len(collapseDict(agisd)) >= maxDeletedQueuePercentage/100:
+		emailError('Deleting too many queues: %d\% is higher than the maximum allowed of %d\%' % (int(len(del_d)/len(collapseDict(agisd))*100),maxDeletedQueuePercentage))
+		print 'Deleting too many queues: %d\% is higher than the maximum allowed of %d\%' % (int(len(del_d)/len(collapseDict(agisd))*100),maxDeletedQueuePercentage)
+		return 1
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
 	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.
 	# The primary key is specified for the replaceDB method. For schedconfig, it's dbkey.
@@ -66,14 +71,14 @@ def loadConfigs():
 			
 			for i in del_l:
 				try:
+					print i
 					status = utils.dictcursor().execute(i)
+
 				except:
 					print 'Failed SQL Statement: ', i
 					print status
 					print sys.exc_info()
-				else:
-					print "********** Delete step has been DISABLED!"
-
+			
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
 
@@ -151,7 +156,7 @@ if __name__ == "__main__":
 		try:
 			# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 			dbd, database_queue_keys = sqlDictUnpacker(loadSchedConfig())
-			loadConfigs()
+			status = loadConfigs()
 		except:
 			emailError(sys.exc_value)
 	else:
