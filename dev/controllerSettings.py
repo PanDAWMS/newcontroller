@@ -106,6 +106,10 @@ nonexistent = ['nqueues']
 timestamps = ['lastmod','tspace'] # Fields that are explicitly timestamps, and are as such harder to update in the DB
 excl_nonTimestamp = [i for i in excl if i not in timestamps + nonexistent] # List of items to back up
 
+# These are fields expressed in AGIS as 0 and 1, which are in Schedconfig as True and False
+booleanStringFields = ['allowdirectaccess','allowfax','retry']
+booleanStrings = {0:str(False),1:str(True)}
+
 # These fields are to be consistent across siteids
 siteid_consistent = ['cloud','ddm','lfchost','se','memory','maxtime','space','retry','cmtconfig','setokens','seprodpath','glexec','priorityoffset','allowedgroups','defaulttoken','queue','localqueue','validatedreleases','accesscontrol','copysetup','maxinputsize','cachedse','allowdirectaccess','lfcregister','countrygroup','availablecpu','pledgedcpu']
 

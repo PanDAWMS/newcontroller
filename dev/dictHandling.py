@@ -78,9 +78,12 @@ def agisDictUnpacker(standard_keys):
 		# definition. The values are set to DB, and will be changed if another source modifies the value.
 		out_d[c][d[queue][site]][d[queue][dbkey]] = protoDict(queue,d,'AGIS',standard_keys)
 		# Filtering lists (unhashable and not DB compatible) and making them strings
+		# Checking for booleans that we need to convert to strings
 		for key in out_d[c][d[queue][site]][d[queue][dbkey]][param]:
 			if type(out_d[c][d[queue][site]][d[queue][dbkey]][param][key]) == list:
 				out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = '|'.join(out_d[c][d[queue][site]][d[queue][dbkey]][param][key])
+			if key in booleanStringFields:
+				out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = booleanStrings[out_d[c][d[queue][site]][d[queue][dbkey]][param][key]]
 		# Fixing the "cloud_for_panda" to "cloud" disparity
 		out_d[c][d[queue][site]][d[queue][dbkey]][param]['cloud'] = d[queue][cloud]
 	
