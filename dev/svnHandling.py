@@ -103,8 +103,8 @@ def svnRemoveFiles(d):
 	path = os.getcwd()
 	os.chdir(configs)
 	for i in d:
-		c=d[cloud]
-		s=d[site]
+		c=d['cloud']
+		s=d['site']
 		q=d[dbkey]
 		if svnDebug: print 'Removing queue file %s.py' % q
 		# Add all new files before checking in
