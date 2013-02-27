@@ -47,6 +47,12 @@ def loadConfigs():
 	# Get the database updates prepared for insertion.
 	# The Delete list is just a list of SQL commands (don't add semicolons!)
 	del_l = buildDeleteList(del_d,'schedconfig')
+	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
+	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.
+	# The primary key is specified for the replaceDB method. For schedconfig, it's dbkey.
+	# (specified in controllerSettings
+	up_l = buildUpdateList(up_d,param,dbkey)
+	
 	# Information regarding 
 	if len(del_d): emailError('Deleting queues: %s' % ','.join(del_d.keys()))
 	if float(len(del_d))/float(len(collapseDict(agisd))) >= float(maxDeletedQueuePercentage/100):
@@ -54,15 +60,9 @@ def loadConfigs():
 		emailError(msg)
 		print msg
 		if genDebug:
-			return sw_db, sw_agis, deleteList, addList, dbd, agisd, up_d, del_d, del_l, up_l, newdb, checkUp, checkDel, sw_union
+			return [], [], [], [], dbd, agisd, up_d, del_d, del_l, up_l, [], [], [], []
 		else:
 			return 1
-	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
-	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.
-	# The primary key is specified for the replaceDB method. For schedconfig, it's dbkey.
-	# (specified in controllerSettings
-	up_l = buildUpdateList(up_d,param,dbkey)
-	
 
 	# If the safety is off, the DB update can continue
 	if safety is not 'on':
