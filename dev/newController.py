@@ -84,7 +84,7 @@ def loadConfigs():
 					print sys.exc_info()
 			
 		for i in del_d:
-			svnRemoveFile(del_d)
+			svnRemoveFiles(del_d)
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
 
