@@ -50,8 +50,8 @@ def loadConfigs():
 	# Information regarding 
 	if len(del_d): emailError('Deleting queues: %s' % ','.join(del_d.keys()))
 	if len(del_d)/len(collapseDict(agisd)) >= maxDeletedQueuePercentage/100:
-		emailError('Deleting too many queues: %d\% is higher than the maximum allowed of %d\%' % (int(len(del_d)/len(collapseDict(agisd))*100),maxDeletedQueuePercentage))
-		print 'Deleting too many queues: %d\% is higher than the maximum allowed of %d\%' % (int(len(del_d)/len(collapseDict(agisd))*100),maxDeletedQueuePercentage)
+		emailError('Deleting too many queues: %d percent is higher than the maximum allowed of percent' % (int(len(del_d)/len(collapseDict(agisd))*100),maxDeletedQueuePercentage))
+		print 'Deleting too many queues: %d percent is higher than the maximum allowed of percent' % (int(len(del_d)/len(collapseDict(agisd))*100),maxDeletedQueuePercentage)
 		return 1
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
 	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.

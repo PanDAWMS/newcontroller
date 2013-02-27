@@ -74,7 +74,7 @@ lastVolatiles = 10
 hotBackups = 30
 keptBackups = 150
 keptRunLogs = 1500
-maxDeletedQueuePercentage = 10
+maxDeletedQueuePercentage = 2
 # Paths for run logs (email notification)
 logPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/logs/'
 errorFile = '/tmp/pandaUpdateErrors.log'
