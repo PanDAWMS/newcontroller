@@ -53,7 +53,10 @@ def loadConfigs():
 		msg = 'Deleting too many queues: %d percent is higher than the maximum allowed of %d percent' % (int(float(len(del_d))/float(len(collapseDict(agisd)))*100),maxDeletedQueuePercentage)
 		emailError(msg)
 		print msg
-		return 1
+		if genDebug:
+			return sw_db, sw_agis, deleteList, addList, dbd, agisd, up_d, del_d, del_l, up_l, newdb, checkUp, checkDel, sw_union
+		else:
+			return 1
 	# The other updates are done using the standard replaceDB method from the SchedulerUtils package.
 	# The structure of the list is a list of dictionaries containing column/value as the key/value pairs.
 	# The primary key is specified for the replaceDB method. For schedconfig, it's dbkey.
