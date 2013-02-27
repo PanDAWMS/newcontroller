@@ -54,7 +54,7 @@ def loadConfigs():
 	up_l = buildUpdateList(up_d,param,dbkey)
 	
 	# Information regarding 
-	if len(del_d): emailDeletions('%s' % ','.join(del_d.keys()))
+	if len(del_d): emailDeletions('%s' % ', '.join(del_d.keys()))
 	if float(len(del_d))/float(len(collapseDict(agisd))) >= float(maxDeletedQueuePercentage)/100:
 		msg = 'Deleting too many queues: %d percent is higher than the maximum allowed of %d percent' % (int(float(len(del_d))/float(len(collapseDict(agisd)))*100),maxDeletedQueuePercentage)
 		emailError(msg)
@@ -72,7 +72,7 @@ def loadConfigs():
 		if not delDebug:
 			print '\n\n Queues Being Deleted:\n'
 			for i in sorted(del_d): print del_d[i][dbkey],del_d[i]['cloud'] 
-			
+			print
 			for i in del_l:
 				try:
 					print i
@@ -83,12 +83,15 @@ def loadConfigs():
 					print status
 					print sys.exc_info()
 			
+		for i in del_d:
+			svnRemoveFile(del_d)
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
 
 		# Since all inputs are unicode converted, all outputs need to be encoded.
 		print '\n\n Queues Being Updated or Added:\n'
 		for i in sorted(up_d): print up_d[i][dbkey], up_d[i]['cloud']
+		print
 		unicodeEncode(up_l)
 		status=utils.replaceDB('schedconfig',up_l,key=dbkey)
 		status=status.split('<br>')
