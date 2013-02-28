@@ -78,9 +78,11 @@ def loadConfigs():
 					print 'Failed SQL Statement: ', i
 					print status
 					print sys.exc_info()
-			
+
+		# Remove any files from the SVN that were deleted	
 		for i in del_d:
 			svnRemoveFiles(del_d)
+
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
 
@@ -111,33 +113,23 @@ def loadConfigs():
 			f.write(str(errors))
 			f.close()
 			shortErrors = [')</b></font>'+err.split(')</b></font>')[1] for err in errors]
-			emailError(str(shortErrors))
-
-		
+			if not genDebug: emailError(str(shortErrors))
 
 		# Changes committed after all is successful, to avoid partial updates
 		utils.commit()
 		utils.endDB()
-		# FIX This string will eventually be filled with changed queue names and other info for the subversion checkin
-		svnstring=''
-	# If the safety is on:
-	else:
-		svnstring=''
 
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(agisd))
-
-	# Make the necessary changes to the configuration files:
-	makeConfigs(agisd)
-	# Check the changes just committed into Subversion, unless we're not updating.
-	if safety is 'off': svnCheckin(svnstring)
-	# Create a backup pickle of the finalized DB as it stands.
-	backupCreate(newdb)
-
-	# Fix any needed sites/clouds on access control
-	# readAccessControl()
+	if len(del_d) or len(up_d):
+		# Make the necessary changes to the configuration files
+		makeConfigs(agisd)
+		# Check the changes just committed into Subversion
+		svnCheckin('')
+		# Create a backup pickle of the finalized DB as it stands.
+		backupCreate(newdb)
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug:
@@ -158,6 +150,7 @@ if __name__ == "__main__":
 
 	# Running in schedconfig update mode.
 	if not runSW:
+		print "\n\n                    *** Running Schedconfig Update ***\n\n"
 		# Backup of all the volatile DB paramaters before the operation
 		volatileBackupCreate()
 		if not genDebug:
@@ -175,6 +168,7 @@ if __name__ == "__main__":
 
 	# Running in SW mode
 	if runSW:
+		print "\n\n                    *** Running Installed SW Update ***\n\n"
 		dbd, database_queue_keys = sqlDictUnpacker(loadSchedConfig())
 		if genDebug:
 			print 'Received debug info'			
