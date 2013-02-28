@@ -135,7 +135,7 @@ def loadConfigs():
 	# Make the necessary changes to the configuration files:
 	makeConfigs(agisd)
 	# Check the changes just committed into Subversion, unless we're not updating.
-	if not toaOverride and safety is 'off': svnCheckin(svnstring)
+	if safety is 'off': svnCheckin(svnstring)
 	# Create a backup pickle of the finalized DB as it stands.
 	backupCreate(newdb)
 
