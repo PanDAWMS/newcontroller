@@ -35,6 +35,7 @@ confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf/trunk'
 # AGIS SW URL
 agis_sw_url = 'http://atlas-agis-api.cern.ch/jsoncache/list_presource_sw.schedconf.json'
 agis_site_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf'
+agis_queue_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf.all'
 
 # If safety is on, nothing is written to the DB.
 safety = 'off'
@@ -70,9 +71,10 @@ backupCSVName = 'schedConfigBackup.csv'
 volatileSQLName = 'schedConfigStatus.sql'
 volatileCSVName = 'schedConfigStatus.csv'
 lastVolatiles = 10
-hotBackups = 90
-keptBackups = 1500
-keptRunLogs = 15000
+hotBackups = 30
+keptBackups = 150
+keptRunLogs = 1500
+maxDeletedQueuePercentage = 15
 # Paths for run logs (email notification)
 logPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/logs/'
 errorFile = '/tmp/pandaUpdateErrors.log'
@@ -104,6 +106,10 @@ excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','sysconfig'
 nonexistent = ['nqueues']
 timestamps = ['lastmod','tspace'] # Fields that are explicitly timestamps, and are as such harder to update in the DB
 excl_nonTimestamp = [i for i in excl if i not in timestamps + nonexistent] # List of items to back up
+
+# These are fields expressed in AGIS as 0 and 1, which are in Schedconfig as True and False
+booleanStringFields = ['allowdirectaccess','allowfax','retry']
+booleanStrings = {0:str(False),1:str(True)}
 
 # These fields are to be consistent across siteids
 siteid_consistent = ['cloud','ddm','lfchost','se','memory','maxtime','space','retry','cmtconfig','setokens','seprodpath','glexec','priorityoffset','allowedgroups','defaulttoken','queue','localqueue','validatedreleases','accesscontrol','copysetup','maxinputsize','cachedse','allowdirectaccess','lfcregister','countrygroup','availablecpu','pledgedcpu']
