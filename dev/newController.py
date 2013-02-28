@@ -17,14 +17,10 @@ from controllerSettings import *
 from miscUtils import *
 from dbAccess import *
 from dictHandling import *
-from Integrators import *
 from configFileHandling import *
 from svnHandling import *
 from backupHandling import *
 from swHandling import *
-from lesserTablesController import *
-from accessControl import *
-from svnConsistencyChecker import *
 
 def loadConfigs():
 	'''Run the schedconfig table updates'''
@@ -60,7 +56,7 @@ def loadConfigs():
 		emailError(msg)
 		print msg
 		if genDebug:
-			return [], [], [], [], dbd, agisd, up_d, del_d, del_l, up_l, [], [], [], []
+			return dbd, agisd, up_d, del_d, del_l, up_l, [], [], []
 		else:
 			return 1
 
@@ -93,14 +89,20 @@ def loadConfigs():
 		for i in sorted(up_d): print up_d[i][dbkey], up_d[i]['cloud']
 		print
 		unicodeEncode(up_l)
+		
+		#### Here's the main update.
 		status=utils.replaceDB('schedconfig',up_l,key=dbkey)
+
+		# Error Reporting and recovery
 		status=status.split('<br>')
 		if len(status) < len(up_l):
+			# If we have to go queue-by-queue, here's how it's done.
 			print 'Bulk Update Failed. Retrying queue-by-queue.'
 			status=[]
 			errors=[]
 			for up in up_l:
 				print up[dbkey]
+				# Going with each key.
 				status.append(utils.replaceDB('schedconfig',[up],key=dbkey))
 				if 'Error' in status[-1]:
 					errors.append(status[-1] + str(up))
@@ -124,17 +126,13 @@ def loadConfigs():
 
 	# Check out the db as a new dictionary
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
-	if genDebug:
-		print 'Received debug info'
-		sw_db, sw_agis, deleteList, addList, sw_union = updateInstalledSW(collapseDict(newdb))			
-	else: updateInstalledSW(collapseDict(newdb))
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(agisd))
 
 	# Make the necessary changes to the configuration files:
 	makeConfigs(agisd)
 	# Check the changes just committed into Subversion, unless we're not updating.
-	if not toaOverride and safety is 'off': svnCheckin(svnstring)
+	if safety is 'off': svnCheckin(svnstring)
 	# Create a backup pickle of the finalized DB as it stands.
 	backupCreate(newdb)
 
@@ -143,7 +141,7 @@ def loadConfigs():
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
 	if genDebug:
-		return sw_db, sw_agis, deleteList, addList, dbd, agisd, up_d, del_d, del_l, up_l, newdb, checkUp, checkDel, sw_union
+		return dbd, agisd, up_d, del_d, del_l, up_l, newdb, checkUp, checkDel
 	else:
 		return 0
 	
@@ -155,23 +153,33 @@ if __name__ == "__main__":
 		print 'Safety is ON! No writes to the DB.'
 		safety = 'on'
 	if '--debug' in args: genDebug = True
+	if '--sw' in args: runSW = True
 	keydict={}
 
-	# Backup of all the volatile DB paramaters before the operation
-	volatileBackupCreate()
-	if not genDebug:
-		try:
+	# Running in schedconfig update mode.
+	if not runSW:
+		# Backup of all the volatile DB paramaters before the operation
+		volatileBackupCreate()
+		if not genDebug:
+			try:
+				# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
+				dbd, database_queue_keys = sqlDictUnpacker(loadSchedConfig())
+				status = loadConfigs()
+			except:
+				emailError(sys.exc_value)
+		else:
+			l=[]
 			# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 			dbd, database_queue_keys = sqlDictUnpacker(loadSchedConfig())
-			status = loadConfigs()
-		except:
-			emailError(sys.exc_value)
-	else:
-		l=[]
-		# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
+			dbd, agisd, up_d, del_d, del_l, up_l, newdb, checkUp, checkDel = loadConfigs()
+
+	# Running in SW mode
+	if runSW:
 		dbd, database_queue_keys = sqlDictUnpacker(loadSchedConfig())
-		print 'L is OK'
-		sw_db, sw_agis, deleteList, addList, dbd, agisd, up_d, del_d, del_l, up_l, newdb, checkUp, checkDel, sw_union = loadConfigs()
+		if genDebug:
+			print 'Received debug info'			
+			sw_db, sw_agis, deleteList, addList, sw_union = updateInstalledSW(collapseDict(dbd))			
+		else: updateInstalledSW(collapseDict(dbd))
 
 
 

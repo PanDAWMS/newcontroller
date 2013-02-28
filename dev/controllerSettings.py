@@ -11,6 +11,7 @@ import os
 unidef='utf-8'
 
 # Debug Flags
+runSW = False
 swDebug = False
 genDebug = False
 toaDebug = False
