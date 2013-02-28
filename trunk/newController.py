@@ -22,7 +22,6 @@ from configFileHandling import *
 from svnHandling import *
 from backupHandling import *
 from swHandling import *
-from lesserTablesController import *
 from accessControl import *
 from svnConsistencyChecker import *
 
