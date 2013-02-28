@@ -123,7 +123,7 @@ def loadConfigs():
 	newdb, sk = sqlDictUnpacker(loadSchedConfig())
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(agisd))
-	if len(del_d) or len(up_d)
+	if len(del_d) or len(up_d):
 		# Make the necessary changes to the configuration files
 		makeConfigs(agisd)
 		# Check the changes just committed into Subversion
