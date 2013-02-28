@@ -178,10 +178,11 @@ if __name__ == "__main__":
 
 	# Running in SW mode
 	if runSW:
+		dbd, database_queue_keys = sqlDictUnpacker(loadSchedConfig())
 		if genDebug:
-			print 'Received debug info'
-			sw_db, sw_agis, deleteList, addList, sw_union = updateInstalledSW(collapseDict(newdb))			
-		else: updateInstalledSW(collapseDict(newdb))
+			print 'Received debug info'			
+			sw_db, sw_agis, deleteList, addList, sw_union = updateInstalledSW(collapseDict(dbd))			
+		else: updateInstalledSW(collapseDict(dbd))
 
 
 
