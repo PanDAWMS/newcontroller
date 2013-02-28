@@ -17,13 +17,10 @@ from controllerSettings import *
 from miscUtils import *
 from dbAccess import *
 from dictHandling import *
-from Integrators import *
 from configFileHandling import *
 from svnHandling import *
 from backupHandling import *
 from swHandling import *
-from accessControl import *
-from svnConsistencyChecker import *
 
 def loadConfigs():
 	'''Run the schedconfig table updates'''
