@@ -98,6 +98,6 @@ def updateInstalledSW(confd):
 	print genDebug
 	if True:
 		print 'Debug info for SW'
-		return sw_db, sw_agis, deleteList, addList, confd, sw_union
+		return sw_db, sw_agis, deleteList, addList, sw_union
 	else:
 		return 0
