@@ -113,7 +113,7 @@ def loadConfigs():
 			f.write(str(errors))
 			f.close()
 			shortErrors = [')</b></font>'+err.split(')</b></font>')[1] for err in errors]
-			emailError(str(shortErrors))
+			if not genDebug: emailError(str(shortErrors))
 
 		# Changes committed after all is successful, to avoid partial updates
 		utils.commit()
