@@ -150,6 +150,7 @@ if __name__ == "__main__":
 
 	# Running in schedconfig update mode.
 	if not runSW:
+		print "\n\n                    *** Running Schedconfig Update ***\n\n"
 		# Backup of all the volatile DB paramaters before the operation
 		volatileBackupCreate()
 		if not genDebug:
@@ -167,6 +168,7 @@ if __name__ == "__main__":
 
 	# Running in SW mode
 	if runSW:
+		print "\n\n                    *** Running Installed SW Update ***\n\n"
 		dbd, database_queue_keys = sqlDictUnpacker(loadSchedConfig())
 		if genDebug:
 			print 'Received debug info'			
