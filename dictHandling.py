@@ -85,7 +85,7 @@ def agisDictUnpacker(standard_keys):
 			if key in booleanStringFields:
 				out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = booleanStrings[out_d[c][d[queue][site]][d[queue][dbkey]][param][key]]
 		# Fixing the "cloud_for_panda" to "cloud" disparity
-		out_d[c][d[queue][site]][d[queue][dbkey]][param]['cloud'] = d[queue][cloud]
+		out_d[c][d[queue][site]][d[queue][dbkey]][param]['cloud'] = d[queue][pcloud]
 	
 	print 'Finishing agisDictUnpacker'
 	return out_d
