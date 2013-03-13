@@ -47,7 +47,7 @@ def agisDictUnpacker(standard_keys):
 
 	try:
 		d = json.load(urllib.urlopen(agis_queue_url))
-	except IOError:
+	Except IOError:
 		f=file('queueList.p')
 		d = cPickle.load(f)
 		f.close()
