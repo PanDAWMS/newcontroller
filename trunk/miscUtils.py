@@ -28,12 +28,13 @@ def emailError(errorstring):
 	return 0
 
 def emailDeletions(errorstring):
-	'''Emails error messages to the appropriate address'''
+	'''Emails deletion messages to the appropriate address'''
 	# Not using email.smtp.text and smtplib because of a python2.5 error. Please feel free to use the example code below for a working python version
 	f = file('msgtemp','w')
 	f.write('The following queues are slated to be deleted from schedconfig: %s ' % (errorstring))
 	f.close()
 	os.system('cat msgtemp|mail -s "** Queue Deletion Alert **" %s' % errorEmail)
+	os.system('cat msgtemp|mail -s "** Queue Deletion Alert **" %s' % deletionEmail)
 	return 0
 
 def unPickler(fname):
