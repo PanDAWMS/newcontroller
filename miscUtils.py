@@ -36,6 +36,16 @@ def emailDeletions(errorstring):
 	os.system('cat msgtemp|mail -s "** Queue Deletion Alert **" %s' % errorEmail)
 	return 0
 
+def emailDeletionWarning(errorstring):
+	'''Emails deletion warning (more deletions than threshold) messages to the appropriate address'''
+	# Not using email.smtp.text and smtplib because of a python2.5 error. Please feel free to use the example code below for a working python version
+	f = file('msgtemp','w')
+	f.write('The following queues are slated to be deleted from schedconfig, but have been blocked.\n There may be an AGIS problem:\n\n %s ' % (errorstring))
+	f.close()
+	os.system('cat msgtemp|mail -s "** Queue Deletion Alert **" %s' % errorEmail)
+	os.system('cat msgtemp|mail -s "** Queue Deletion Alert **" %s' % deletionEmail)
+	return 0
+
 def unPickler(fname):
 	os.chdir(base_path)
 	f=file(fname)

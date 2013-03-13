@@ -53,7 +53,7 @@ def loadConfigs():
 	if len(del_d): emailDeletions('%s' % ', '.join(del_d.keys()))
 	if float(len(del_d))/float(len(collapseDict(agisd))) >= float(maxDeletedQueuePercentage)/100:
 		msg = 'Deleting too many queues: %d percent is higher than the maximum allowed of %d percent' % (int(float(len(del_d))/float(len(collapseDict(agisd)))*100),maxDeletedQueuePercentage)
-		emailError(msg)
+		emailDeletionWarning(msg)
 		print msg
 		if genDebug:
 			return dbd, agisd, up_d, del_d, del_l, up_l, [], [], []
