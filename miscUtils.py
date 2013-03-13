@@ -34,7 +34,6 @@ def emailDeletions(errorstring):
 	f.write('The following queues are slated to be deleted from schedconfig: %s ' % (errorstring))
 	f.close()
 	os.system('cat msgtemp|mail -s "** Queue Deletion Alert **" %s' % errorEmail)
-	os.system('cat msgtemp|mail -s "** Queue Deletion Alert **" %s' % deletionEmail)
 	return 0
 
 def unPickler(fname):
