@@ -127,7 +127,7 @@ def loadConfigs():
 		# Make the necessary changes to the configuration files
 		makeConfigs(agisd)
 		# Check the changes just committed into Subversion
-		svnCheckin('')
+		#svnCheckin('')
 		# Create a backup pickle of the finalized DB as it stands.
 		backupCreate(newdb)
 
