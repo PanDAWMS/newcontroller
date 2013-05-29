@@ -52,7 +52,7 @@ def agisDictUnpacker(standard_keys):
 		d = cPickle.load(f)
 		f.close()
 
-	pcloud = 'cloud_for_panda'
+	vo_name = 'vo_name'
 	cloud = 'cloud'
 	# This allows AGIS consistency, putting OSG and such in a different cloud field.
 	site = 'site'
@@ -63,7 +63,7 @@ def agisDictUnpacker(standard_keys):
 		# If the present queue's cloud isn't in the out_d, create the cloud.
 		# Adapted to multi-cloud -- take the first as default.
 		# This is probably obsolete, but left in because it's harmless and who knows what people might try.
-		c=d[queue][pcloud].split(',')[0]
+		c=d[queue][cloud].split(',')[0]
 		if c not in out_d:
 			out_d[c] = {}
 		# If the present queue's site isn't in the out_d cloud, create the site in the cloud.
@@ -84,8 +84,10 @@ def agisDictUnpacker(standard_keys):
 				out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = '|'.join(out_d[c][d[queue][site]][d[queue][dbkey]][param][key])
 			if key in booleanStringFields:
 				out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = booleanStrings[out_d[c][d[queue][site]][d[queue][dbkey]][param][key]]
-		# Fixing the "cloud_for_panda" to "cloud" disparity
-		out_d[c][d[queue][site]][d[queue][dbkey]][param]['cloud'] = d[queue][pcloud]
+		# Fixing the "vo_name" to "cloud" disparity
+		if d[queue][vo_name] != 'atlas':
+			out_d[c][d[queue][site]][d[queue][dbkey]][param][cloud] = d[queue][vo_name].upper()
+		else: out_d[c][d[queue][site]][d[queue][dbkey]][param][cloud] = d[queue][cloud]
 	
 	print 'Finishing agisDictUnpacker'
 	return out_d
