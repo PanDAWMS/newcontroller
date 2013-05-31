@@ -52,7 +52,7 @@ def agisDictUnpacker(standard_keys):
 		d = cPickle.load(f)
 		f.close()
 
-	pcloud = 'cloud_for_panda'
+	vo_name = 'vo_name'
 	cloud = 'cloud'
 	# This allows AGIS consistency, putting OSG and such in a different cloud field.
 	site = 'site'
@@ -63,7 +63,7 @@ def agisDictUnpacker(standard_keys):
 		# If the present queue's cloud isn't in the out_d, create the cloud.
 		# Adapted to multi-cloud -- take the first as default.
 		# This is probably obsolete, but left in because it's harmless and who knows what people might try.
-		c=d[queue][pcloud].split(',')[0]
+		c=d[queue][cloud].split(',')[0]
 		if c not in out_d:
 			out_d[c] = {}
 		# If the present queue's site isn't in the out_d cloud, create the site in the cloud.
@@ -84,8 +84,10 @@ def agisDictUnpacker(standard_keys):
 				out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = '|'.join(out_d[c][d[queue][site]][d[queue][dbkey]][param][key])
 			if key in booleanStringFields:
 				out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = booleanStrings[out_d[c][d[queue][site]][d[queue][dbkey]][param][key]]
-		# Fixing the "cloud_for_panda" to "cloud" disparity
-		out_d[c][d[queue][site]][d[queue][dbkey]][param]['cloud'] = d[queue][cloud]
+		# Fixing the "vo_name" to "cloud" disparity
+		if d[queue][vo_name] != 'atlas':
+			out_d[c][d[queue][site]][d[queue][dbkey]][param][cloud] = d[queue][vo_name].upper()
+		else: out_d[c][d[queue][site]][d[queue][dbkey]][param][cloud] = d[queue][cloud]
 	
 	print 'Finishing agisDictUnpacker'
 	return out_d
@@ -335,47 +337,4 @@ def dd(d1, d2, ctx=""):
     print "Done with changes in " + ctx
     return
 
-# Working version
 
-dbd,standardkeys = sqlDictUnpacker(loadSchedConfig())
-standard_keys = list(keyCensus(collapseDict(dbd)))
-if 0:
-#if __name__ == "__main__":
-	print 'Starting agisDictUnpacker'
-
-	try:
-		d = json.load(urllib.urlopen(agis_queue_url))
-	except IOError:
-		f=file('queueList.p')
-		d = cPickle.load(f)
-		f.close()
-
-	pcloud = 'cloud_for_panda'
-	cloud = 'cloud'
-	# This allows AGIS consistency, putting OSG and such in a different cloud field.
-	site = 'site'
-	out_d={}
-	stdkeys = []
-	# Run over the DB queues
-	for queue in d:
-		# If the present queue's cloud isn't in the out_d, create the cloud.
-		# Adapted to multi-cloud -- take the first as default.
-		# This is probably obsolete, but left in because it's harmless and who knows what people might try.
-		c=d[queue][pcloud].split(',')[0]
-		if c not in out_d:
-			out_d[c] = {}
-		# If the present queue's site isn't in the out_d cloud, create the site in the cloud.
-		if d[queue][site] not in  out_d[c]:
-			out_d[c][d[queue][site]] = {}
-
-		# Once sure that we have all the cloud and site dictionaries created, we populate them with a parameter dictionary
-		# an empty (for now) override dictionary, and a source dict. The override dictionary will become useful when we are reading back from
-		# the config files we are creating. (UPDATE: the oevrride is now obsolete as we move to AGIS) Each key is associated with a source tag
-		##-- Config, DB, BDII, ToA, Override, Site, or Cloud (ALL NOW OBSOLETE. LEFT IN TO AVOID FRAGILE CODE)
-		# That list comprehension at the end of the previous line just creates an empty dictionary and fills it with the keys from the queue
-		# definition. The values are set to DB, and will be changed if another source modifies the value.
-		out_d[c][d[queue][site]][d[queue][dbkey]] = protoDict(queue,d,'AGIS',standard_keys)
-		# Fixing the "cloud_for_panda" to "cloud" disparity
-		out_d[c][d[queue][site]][d[queue][dbkey]][param]['cloud'] = d[queue][cloud]
-
-	print 'Finishing agisDictUnpacker'
