@@ -10,7 +10,7 @@ import os
 from dbAccess import utils
 from configFileHandling import *
 from controllerSettings import *
-from svnHandling import *
+#from svnHandling import *
 from miscUtils import *
 
 def loadJdl():

@@ -18,7 +18,7 @@ from miscUtils import *
 from dbAccess import *
 from dictHandling import *
 from configFileHandling import *
-from svnHandling import *
+#from svnHandling import *
 from backupHandling import *
 from swHandling import *
 
@@ -80,8 +80,8 @@ def loadConfigs():
 					print sys.exc_info()
 
 		# Remove any files from the SVN that were deleted	
-		for i in del_d:
-			svnRemoveFiles(del_d)
+## 		for i in del_d:
+## 			svnRemoveFiles(del_d)
 
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
