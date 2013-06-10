@@ -12,7 +12,7 @@ from miscUtils import *
 from controllerSettings import *
 from dbAccess import *
 from configFileHandling import *
-from svnHandling import *
+#from svnHandling import *
 
 import urllib
 
