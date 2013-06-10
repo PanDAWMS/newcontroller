@@ -93,6 +93,14 @@ def loadConfigs():
 		unicodeEncode(up_l)
 		
 		#### Here's the main update.
+		for up in up_l:
+			if not up.has_key('nqueue') or not up['nqueue']:
+				up['nqueue'] = '0'
+			if not up.has_key('space') or not up['space']:
+				up['space'] = '0'
+			if not up.has_key('tspace') or not up['tspace']:
+				up['tspace'] = '10-JUN-13'
+                
 		status=utils.replaceDB('schedconfig',up_l,key=dbkey)
 
 		# Error Reporting and recovery
