@@ -109,8 +109,8 @@ def loadConfigs():
 				if not up.has_key('space') or not up['space']:
 					up['space'] = '0'
 				if not up.has_key('tspace') or not up['tspace']:
-					up['tspace'] = '0'
-                # Going with each key.
+					up['tspace'] = '10-JUN-13'
+                    # Going with each key.
 				status.append(utils.replaceDB('schedconfig',[up],key=dbkey))
 				if 'Error' in status[-1]:
 					errors.append(status[-1] + str(up))
