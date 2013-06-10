@@ -104,8 +104,8 @@ def loadConfigs():
 			errors=[]
 			for up in up_l:
 				print up[dbkey]
-                if not up.has_key('nqueue') or not up['nqueue']:
-                    up['nqueue'] = '0'
+				if not up.has_key('nqueue') or not up['nqueue']:
+					up['nqueue'] = '0'
                 # Going with each key.
 				status.append(utils.replaceDB('schedconfig',[up],key=dbkey))
 				if 'Error' in status[-1]:
