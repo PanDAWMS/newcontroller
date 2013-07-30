@@ -73,7 +73,7 @@ volatileSQLName = 'schedConfigStatus.sql'
 volatileCSVName = 'schedConfigStatus.csv'
 lastVolatiles = 10
 hotBackups = 30
-keptBackups = 150
+keptBackups = 1500
 keptRunLogs = 1500
 maxDeletedQueuePercentage = 15
 # Paths for run logs (email notification)
