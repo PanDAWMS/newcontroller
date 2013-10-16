@@ -63,8 +63,8 @@ cfg_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconf/'
 cmp_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconfRef/'
 
 # Paths for backup files
-scratchPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/prod/'
-runLogPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/logs/'
+scratchPath = '/data/atlpan/panda/logs/schedconfig/prod/'
+runLogPath = '//data/atlpan/panda/logs/schedconfig/run/'
 hotBackupPath = base_path[:base_path.rfind(os.sep)] + os.sep + 'Backup' + os.sep
 longBackupPath = scratchPath + 'Backup' + os.sep
 backupSQLName = 'schedConfigBackup.sql'
@@ -77,7 +77,7 @@ keptBackups = 1500
 keptRunLogs = 1500
 maxDeletedQueuePercentage = 15
 # Paths for run logs (email notification)
-logPath = '/afs/cern.ch/user/a/atlpan/scratch0/schedconfig/logs/'
+logPath = '/data/atlpan/panda/logs/schedconfig/'
 errorFile = '/tmp/pandaUpdateErrors.log'
 errorFileJDL = '/tmp/pandaUpdateErrorsJDL.log'
 
