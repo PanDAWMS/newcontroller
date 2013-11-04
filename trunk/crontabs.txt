@@ -1,0 +1,10 @@
+05,09,5,50 * * * * /data/atlpan/panda/schedconfigProd/runProd.sh 141 &> /data/atlpan/panda/logs/schedconfig/run/${RANDOM}_schedconfigUpdate.txt
+### Update installedsw
+20 * * * * /data/atlpan/panda/schedconfigProd/runSW.sh &> /data/atlpan/panda/logs/schedconfig/run/${RANDOM}_swUpdate.txt
+### Testing dev branch
+22 * * * * /data/atlpan/panda/Dev_schedconfig/runDev.sh &> /data/atlpan/panda/logs/schedconfig/run/${RANDOM}_agisUpdate.txt
+### Clean up the schedconfig run logs
+#50 * * * * /usr/bin/python2.5 /data/atlpan/panda/schedconfigProd/newController/runLogsCleaner.py &> /dev/null
+### Schedconfig Trigger Checker
+#*/2 * * * * /data/atlpan/panda/schedconfigProd/triggerChecker.sh &> /dev/null
+
