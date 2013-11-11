@@ -21,6 +21,7 @@ from configFileHandling import *
 #from svnHandling import *
 from backupHandling import *
 from swHandling import *
+from networkHandling import *
 
 def loadConfigs():
 	'''Run the schedconfig table updates'''
@@ -160,6 +161,7 @@ if __name__ == "__main__":
 		safety = 'on'
 	if '--debug' in args: genDebug = True
 	if '--sw' in args: runSW = True
+	if '--network' in args: network = True
 	keydict={}
 
 	# Running in schedconfig update mode.
@@ -179,7 +181,7 @@ if __name__ == "__main__":
 			# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 			dbd, database_queue_keys = sqlDictUnpacker(loadSchedConfig())
 			dbd, agisd, up_d, del_d, del_l, up_l, newdb, checkUp, checkDel = loadConfigs()
-
+  
 	# Running in SW mode
 	if runSW:
 		print "\n\n                    *** Running Installed SW Update ***\n\n"
@@ -188,6 +190,9 @@ if __name__ == "__main__":
 			print 'Received debug info'			
 			sw_db, sw_agis, deleteList, addList, sw_union = updateInstalledSW(collapseDict(dbd))			
 		else: updateInstalledSW(collapseDict(dbd))
-
-
-
+	
+	# Running in network matrix update mode
+	if network:
+		print "\n\n                    *** Running Network Matrix Update ***\n\n"
+		nc = networkHandling()
+		nc.Proceed()
