@@ -153,7 +153,7 @@ if __name__ == "__main__":
 	keydict={}
 
 	# Running in schedconfig update mode.
-	if not runSW:
+	if not runSW and not network:
 		print "\n\n                    *** Running Schedconfig Update ***\n\n"
 		# Backup of all the volatile DB paramaters before the operation
 		volatileBackupCreate()
