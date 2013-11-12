@@ -18,7 +18,6 @@ from miscUtils import *
 from dbAccess import *
 from dictHandling import *
 from configFileHandling import *
-#from svnHandling import *
 from backupHandling import *
 from swHandling import *
 
@@ -32,7 +31,6 @@ def loadConfigs():
 	agisd = agisDictUnpacker(standard_keys)
 	# Compose the "All" queues for each site
 	status = allMaker(agisd, dbd)
-	#status = allMaker(configd, dbd)	
 	# Make sure all nicknames are kosher
 	nicknameChecker(agisd)
 	nicknameChecker(dbd)
@@ -79,10 +77,6 @@ def loadConfigs():
 					print status
 					print sys.exc_info()
 
-		# Remove any files from the SVN that were deleted	
-## 		for i in del_d:
-## 			svnRemoveFiles(del_d)
-
 		# Schedconfig table gets updated all at once
 		print 'Updating SchedConfig'
 
@@ -125,10 +119,6 @@ def loadConfigs():
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(agisd))
 	if len(del_d) or len(up_d):
 		# Make the necessary changes to the configuration files
-		makeConfigs(agisd)
-		# Check the changes just committed into Subversion
-		#svnCheckin('')
-		# Create a backup pickle of the finalized DB as it stands.
 		backupCreate(newdb)
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
