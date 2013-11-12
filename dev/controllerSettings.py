@@ -12,6 +12,7 @@ unidef='utf-8'
 
 # Debug Flags
 runSW = False
+network = False
 swDebug = False
 genDebug = False
 toaDebug = False
