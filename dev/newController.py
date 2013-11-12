@@ -88,8 +88,7 @@ def loadConfigs():
 		unicodeEncode(up_l)
 		
 		#### Here's the main update.
-        
-        for up in up_l:
+		for up in up_l:
 			if not up.has_key('nqueue') or not up['nqueue']:
 				up['nqueue'] = '0'
 			if not up.has_key('space') or not up['space']:
