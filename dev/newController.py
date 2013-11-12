@@ -96,7 +96,6 @@ def loadConfigs():
 				up['space'] = '0'
 			if not up.has_key('tspace') or not up['tspace']:
 				up['tspace'] = '10-JUN-13'
-                
 		status=utils.replaceDB('schedconfig',up_l,key=dbkey)
 
 		# Error Reporting and recovery
