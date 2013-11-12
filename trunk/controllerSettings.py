@@ -64,7 +64,7 @@ cmp_path = base_path[:base_path.rfind(os.sep)] + os.sep + 'pandaconfRef/'
 
 # Paths for backup files
 scratchPath = '/data/atlpan/panda/logs/schedconfig/prod/'
-runLogPath = '//data/atlpan/panda/logs/schedconfig/run/'
+runLogPath = '/data/atlpan/panda/logs/schedconfig/run/'
 hotBackupPath = base_path[:base_path.rfind(os.sep)] + os.sep + 'Backup' + os.sep
 longBackupPath = scratchPath + 'Backup' + os.sep
 backupSQLName = 'schedConfigBackup.sql'
@@ -73,8 +73,8 @@ volatileSQLName = 'schedConfigStatus.sql'
 volatileCSVName = 'schedConfigStatus.csv'
 lastVolatiles = 10
 hotBackups = 30
-keptBackups = 1500
-keptRunLogs = 1500
+keptBackups = 150
+keptRunLogs = 150
 maxDeletedQueuePercentage = 15
 # Paths for run logs (email notification)
 logPath = '/data/atlpan/panda/logs/schedconfig/'
