@@ -239,7 +239,7 @@ class networkHandling():
             i = data[key]
             
             sql = "MERGE INTO sites_matrix_data s_mat USING "
-            sql += "(SELECT '{0}' AS source, '{1}' AS dest, TO_DATE('{2}', 'yyyy-mm-dd hh24:mi:ss') AS meas_date, {3} AS sonarsmlval, {4} AS sonarsmldev, {5} AS sonarmedval, {6} AS sonarmeddev, {7} AS sonarlrgval, {8} AS sonarlrgdev, {9} AS perfsonaravgval, {10} AS xrdcpval FROM DUAL) m_vals ".format(i['src'], i['dst'], now, i['snrsmlval'], i['snrsmldev'], i['snrmedval'], i['snrmeddev'], i['snrlrgval'], i['snrlrgdev'], i['psnravgval'], i['xrdcpval'])
+            sql += "(SELECT '%s' AS source, '%s' AS dest, TO_DATE('%s', 'yyyy-mm-dd hh24:mi:ss') AS meas_date, %s AS sonarsmlval, %s AS sonarsmldev, %s AS sonarmedval, %s AS sonarmeddev, %s AS sonarlrgval, %s AS sonarlrgdev, %s AS perfsonaravgval, %s AS xrdcpval FROM DUAL) m_vals " % (i['src'], i['dst'], now, i['snrsmlval'], i['snrsmldev'], i['snrmedval'], i['snrmeddev'], i['snrlrgval'], i['snrlrgdev'], i['psnravgval'], i['xrdcpval'])
             sql += "ON "
             sql += "(s_mat.source=m_vals.source AND s_mat.destination=m_vals.dest) "
             sql += "WHEN NOT MATCHED THEN INSERT (source, destination, meas_date, sonarsmlval, sonarsmldev, sonarmedval, sonarmeddev, sonarlrgval, sonarlrgdev, perfsonaravgval, xrdcpval) "
