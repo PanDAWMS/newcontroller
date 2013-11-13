@@ -12,6 +12,7 @@ unidef='utf-8'
 
 # Debug Flags
 runSW = False
+network = False
 swDebug = False
 genDebug = False
 toaDebug = False
@@ -37,6 +38,12 @@ confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf/trunk'
 agis_sw_url = 'http://atlas-agis-api.cern.ch/jsoncache/list_presource_sw.schedconf.json'
 agis_site_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf'
 agis_queue_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf.all'
+
+# AGIS Network Matrix URL
+agis_sites_matrix_url = 'http://atlas-agis-api.cern.ch/request/site/query/list_links/?json&json_pretty=0'
+agis_pandaresource_url = 'http://atlas-agis-api.cern.ch/request/pandaresource/query/list/?json'
+max_mbs = 50
+w_norm = 0.5
 
 # If safety is on, nothing is written to the DB.
 safety = 'off'
