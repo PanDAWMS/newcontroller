@@ -20,6 +20,7 @@ from dictHandling import *
 from configFileHandling import *
 from backupHandling import *
 from swHandling import *
+from networkHandling import *
 
 def loadConfigs():
 	'''Run the schedconfig table updates'''
@@ -136,10 +137,11 @@ if __name__ == "__main__":
 		safety = 'on'
 	if '--debug' in args: genDebug = True
 	if '--sw' in args: runSW = True
+	if '--network' in args: network = True
 	keydict={}
 
 	# Running in schedconfig update mode.
-	if not runSW:
+	if not runSW and not network:
 		print "\n\n                    *** Running Schedconfig Update ***\n\n"
 		# Backup of all the volatile DB paramaters before the operation
 		volatileBackupCreate()
@@ -165,5 +167,10 @@ if __name__ == "__main__":
 			sw_db, sw_agis, deleteList, addList, sw_union = updateInstalledSW(collapseDict(dbd))			
 		else: updateInstalledSW(collapseDict(dbd))
 
+	# Running in network matrix update mode
+	if network:
+		print "\n\n                    *** Running Network Matrix Update ***\n\n"
+		nc = networkHandling()
+		nc.Proceed()
 
 
