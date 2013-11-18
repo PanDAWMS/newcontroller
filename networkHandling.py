@@ -43,37 +43,37 @@ class networkHandling():
         for i in data:
             if not 'snrsmlval' in i.keys():
                 i.update({u'snrsmlval': u'null'})
-            else:
-                i['snrsmlval'] = getNormalizedValue(i['snrsmlval'])
+#             else:
+#                 i['snrsmlval'] = getNormalizedValue(i['snrsmlval'])
             
             if not 'snrsmldev' in i.keys():
                 i.update({u'snrsmldev': u'null'})
             
             if not 'snrmedval' in i.keys():
                 i.update({u'snrmedval': u'null'})
-            else:
-                i['snrmedval'] = getNormalizedValue(i['snrmedval'])
+#             else:
+#                 i['snrmedval'] = getNormalizedValue(i['snrmedval'])
             
             if not 'snrmeddev' in i.keys():
                 i.update({u'snrmeddev': u'null'})
             
             if not 'snrlrgval' in i.keys():
                 i.update({u'snrlrgval': u'null'})
-            else:
-                i['snrlrgval'] = getNormalizedValue(i['snrlrgval'])
+#             else:
+#                 i['snrlrgval'] = getNormalizedValue(i['snrlrgval'])
             
             if not 'snrlrgdev' in i.keys():
                 i.update({u'snrlrgdev': u'null'})
             
             if not 'psnravgval' in i.keys():
                 i.update({u'psnravgval': u'null'})
-            else:
-                i['psnravgval'] = getNormalizedValue(i['psnravgval'])
+#             else:
+#                 i['psnravgval'] = getNormalizedValue(i['psnravgval'])
             
             if not 'xrdcpval' in i.keys():
                 i.update({u'xrdcpval': u'null'})
-            else:
-                i['xrdcpval'] = getNormalizedValue(i['xrdcpval'])
+#             else:
+#                 i['xrdcpval'] = getNormalizedValue(i['xrdcpval'])
             
             if i['snrsmlval'] == u'null' and i['snrmedval'] == u'null' and i['snrlrgval'] == u'null' and i['psnravgval'] == u'null' and i['xrdcpval'] == u'null':
                 continue  
