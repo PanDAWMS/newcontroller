@@ -98,19 +98,19 @@ class networkHandling():
         pandasites_matrix = {}
         for p1 in pandaresources:
             for p2 in pandaresources:
-                t1 = p1['panda_resource'][0:6]
-                t2 = p2['panda_resource'][0:6]
+                t1 = p1['panda_queue_name'][0:6]
+                t2 = p2['panda_queue_name'][0:6]
                 if (t1 == 'ANALY_' and t2 != 'ANALY_') or (t1 != 'ANALY_' and t2 == 'ANALY_'):
                     continue
-                if p1['panda_resource'] != p2['panda_resource']:
+                if p1['panda_queue_name'] != p2['panda_queue_name']:
                     k1 = p1['atlas_site'] + '_to_' + p2['atlas_site']
-                    k2 = p1['panda_resource']+ '_to_' + p2['panda_resource']
+                    k2 = p1['panda_queue_name']+ '_to_' + p2['panda_queue_name']
                     if k1 in sites_matrix.keys() and not k2 in pandasites_matrix.keys():
                         i = sites_matrix[k1]
                         pandasites_matrix.setdefault(k2, 
                                                     {
-                                                     'src': p1['panda_resource'],
-                                                     'dst': p2['panda_resource'],
+                                                     'src': p1['panda_queue_name'],
+                                                     'dst': p2['panda_queue_name'],
                                                      'src_atlassite': p1['atlas_site'],
                                                      'dst_atlassite': p2['atlas_site'],
                                                        
@@ -128,103 +128,6 @@ class networkHandling():
 #                         print "not found: %s" % k1
 #        print len(pandasites_matrix)
         return pandasites_matrix
-    
-    def loadSitesMatrix(self, db='pmeta'): 
-        '''Returns the values in the src-dst matrix db as a dictionary'''
-        
-        # Initialize DB
-        utils.dbname=db
-        if safety is 'on': utils.setTestDB()
-        if setINTR:
-            utils.setTestDB()
-            print 'Using INTR Database'
-        utils.initDB()
-        print "Init DB"
-        # Gets all rows from schedconfig table
-        query = "select * from sites_matrix"
-        nrows = utils.dictcursor().execute(query)
-        if nrows > 0:
-            # Fetch all the rows
-            rows = utils.dictcursor().fetchall()
-        # Close DB connection
-        utils.endDB()
-        d={}
-        for i in rows:
-#            print i
-            # Lower-casing all of the DB keys for consistency upon read
-            newd=dict([(key.lower(),i[key]) for key in i])
-            k = i['SOURCE'] + '_to_' + i['DESTINATION']
-#            print newd
-            # Populate the output dictionary with queue definitions, keyed by queue nickname
-            d[k]=newd
-    
-        unicodeConvert(d)
-#        print d
-        return d
-    
-    def insertNewSrcDst(self, SrcDstExt, SrcDstNew):
-        '''Finds and inserts new src-dst pairs into database'''
-        
-        # Check if such src-dst already exists
-        for key in SrcDstNew.keys():
-            if key in SrcDstExt:
-                i = SrcDstNew[key]
-                i.update({'matrix_id': SrcDstExt[key]['matrix_id']})
-        
-        test = list(set(SrcDstNew.keys()) - set(SrcDstExt.keys()))
-        if len(test) > 0:
-            if safety is 'on': utils.setTestDB()
-            if setINTR:
-                utils.setTestDB()
-                print 'Using INTR Database'
-            utils.initDB()
-            print "Init DB"
-            for key in SrcDstNew.keys():
-                i = SrcDstNew[key]
-                if not 'matrix_id' in i.keys():
-                    sql = "INSERT INTO sites_matrix (source, destination) VALUES ('%s', '%s')" % (i['src'], i['dst'])
-                    try:
-                        utils.dictcursor().execute(sql)
-                    except:
-                        print "SQL failed: %s" % sql 
-            utils.commit()
-        
-        return SrcDstNew
-    
-    def insertNewMetrics(self, SrcDstNewIds, now):
-        '''Insert metrics into db'''
-        
-        if safety is 'on': utils.setTestDB()
-        if setINTR:
-            utils.setTestDB()
-            print 'Using INTR Database'
-        utils.initDB()
-        print "Init DB"
-        for key in SrcDstNewIds.keys():
-            i = SrcDstNewIds[key]
-            sql = "INSERT INTO sites_metrics_data (meas_matrix_id, meas_date, sonarsmlval, sonarsmldev, sonarmedval, sonarmeddev, sonarlrgval, sonarlrgdev, perfsonaravgval, xrdcpval) VALUES (%s, TO_DATE('%s', 'yyyy-mm-dd hh24:mi:ss'), %s, %s, %s, %s, %s, %s, %s, %s)" % (i['matrix_id'], now, i['snrsmlval'], i['snrsmldev'], i['snrmedval'], i['snrmeddev'], i['snrlrgval'], i['snrlrgdev'], i['psnravgval'], i['xrdcpval'])
-            try:
-                utils.dictcursor().execute(sql)
-            except:
-                print "SQL failed: %s" % sql 
-        utils.commit()
-        return True
-    
-    def removeOldMetrics(self, now):
-        '''Remove old data'''
-        if safety is 'on': utils.setTestDB()
-        if setINTR:
-            utils.setTestDB()
-            print 'Using INTR Database'
-        utils.initDB()
-        print "Init DB"
-        sql = "DELETE FROM sites_metrics_data WHERE meas_date < TO_DATE('%s', 'yyyy-mm-dd hh24:mi:ss')" % (now)
-        try:
-            utils.dictcursor().execute(sql)
-        except:
-            print "SQL failed: %s" % sql 
-        utils.commit()
-        return True
     
     def updateSitesMetricsData(self, data, now):
         '''Insert/update metrics'''
@@ -267,27 +170,7 @@ class networkHandling():
         print 'Build pandasites src-dst matrix'
         pandasites_matrix = self.buildPandaQueueMatrix(sites_matrix, pandaresources)
         
-#         print datetime.now().replace(microsecond=0)
-#         print 'Load sites matrix from db into dictionary'
-#         sites_matrix_db = self.loadSitesMatrix()
-#         
-#         print datetime.now().replace(microsecond=0)
-#         print 'Find and insert new src-dst pairs into database'
-#         self.insertNewSrcDst(sites_matrix_db, pandasites_matrix)
-#         
-#         print datetime.now().replace(microsecond=0)
-#         print 'Repeat so that all new src-dst pairs have db id'
-#         sites_matrix_db = self.loadSitesMatrix()
-#         pandasites_matrix_with_ids = self.insertNewSrcDst(sites_matrix_db, pandasites_matrix)
-#         
         now = datetime.now().replace(microsecond=0)
-#         print datetime.now().replace(microsecond=0)
-#         print 'Insert metrics into db'
-#         self.insertNewMetrics(pandasites_matrix_with_ids, now)
-#         
-#         print datetime.now().replace(microsecond=0)
-#         print 'Remove old records'
-#         self.removeOldMetrics(now)
         
         print datetime.now().replace(microsecond=0)
         print 'Insert/Update data to sites_matrix_data'
