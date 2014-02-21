@@ -117,7 +117,7 @@ timestamps = ['lastmod','tspace'] # Fields that are explicitly timestamps, and a
 excl_nonTimestamp = [i for i in excl if i not in timestamps + nonexistent] # List of items to back up
 
 # These are fields expressed in AGIS as 0 and 1, which are in Schedconfig as True and False
-booleanStringFields = ['allowdirectaccess','allowfax','retry']
+booleanStringFields = ['allowdirectaccess','allowfax','allowjem','retry']
 booleanStrings = {0:str(False),1:str(True)}
 
 # These fields are to be consistent across siteids
