@@ -38,6 +38,7 @@ confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf/trunk'
 agis_sw_url = 'http://atlas-agis-api.cern.ch/jsoncache/list_presource_sw.schedconf.json'
 agis_site_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf'
 agis_queue_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf.all'
+agis_fax_sources_url='http://atlas-agis-api-0.cern.ch/request/service/query/get_se_services/?json&flavour=XROOTD'
 
 # AGIS Network Matrix URL
 agis_sites_matrix_url = 'http://atlas-agis-api.cern.ch/request/site/query/list_links/?json&json_pretty=0'
