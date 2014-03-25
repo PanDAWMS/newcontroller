@@ -113,7 +113,7 @@ nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0'
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
 excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','sysconfig','multicloud','statusoverride','celist'] # nqueues takes care of a typo
-remover=['nqueue','cmd','name','jdladd','jdl','cmtconfig','proxy','queue','sysconfig','datadir','version'] # disabling obsolete or nonexistent
+remover=['nqueue','cmd','name','jdladd','jdl','cmtconfig','proxy','queue','sysconfig','datadir','version','jdl'] # disabling obsolete or nonexistent
 excl.extend(remover)
 nonexistent = ['nqueues'] 
 timestamps = ['lastmod','tspace'] # Fields that are explicitly timestamps, and are as such harder to update in the DB
