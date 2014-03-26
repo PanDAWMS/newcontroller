@@ -88,13 +88,6 @@ def loadConfigs():
 		unicodeEncode(up_l)
 		
 		#### Here's the main update.
-		for up in up_l:
-			if not up.has_key('nqueue') or not up['nqueue']:
-				up['nqueue'] = '0'
-			if not up.has_key('space') or not up['space']:
-				up['space'] = '0'
-			if not up.has_key('tspace') or not up['tspace']:
-				up['tspace'] = '10-JUN-13'
 		status=utils.replaceDB('schedconfig',up_l,key=dbkey)
 
 		# Error Reporting and recovery
@@ -106,13 +99,7 @@ def loadConfigs():
 			errors=[]
 			for up in up_l:
 				print up[dbkey]
-				if not up.has_key('nqueue') or not up['nqueue']:
-					up['nqueue'] = '0'
-				if not up.has_key('space') or not up['space']:
-					up['space'] = '0'
-				if not up.has_key('tspace') or not up['tspace']:
-					up['tspace'] = '10-JUN-13'
-                    # Going with each key.
+				# Going with each key.
 				status.append(utils.replaceDB('schedconfig',[up],key=dbkey))
 				if 'Error' in status[-1]:
 					errors.append(status[-1] + str(up))
@@ -132,6 +119,7 @@ def loadConfigs():
 	# If the checks pass (no difference between the DB and the new configuration)
 	checkUp, checkDel = compareQueues(collapseDict(newdb), collapseDict(agisd))
 	if len(del_d) or len(up_d):
+		# Make the necessary changes to the configuration files
 		backupCreate(newdb)
 
 	# For development purposes, we can get all the important variables out of the function. Usually off.
@@ -169,7 +157,7 @@ if __name__ == "__main__":
 			# All of the passed dictionaries will be eliminated at the end of debugging. Necessary for now.
 			dbd, database_queue_keys = sqlDictUnpacker(loadSchedConfig())
 			dbd, agisd, up_d, del_d, del_l, up_l, newdb, checkUp, checkDel = loadConfigs()
-  
+
 	# Running in SW mode
 	if runSW:
 		print "\n\n                    *** Running Installed SW Update ***\n\n"
@@ -178,9 +166,11 @@ if __name__ == "__main__":
 			print 'Received debug info'			
 			sw_db, sw_agis, deleteList, addList, sw_union = updateInstalledSW(collapseDict(dbd))			
 		else: updateInstalledSW(collapseDict(dbd))
-	
+
 	# Running in network matrix update mode
 	if network:
 		print "\n\n                    *** Running Network Matrix Update ***\n\n"
 		nc = networkHandling()
 		nc.Proceed()
+
+

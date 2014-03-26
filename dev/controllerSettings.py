@@ -38,10 +38,11 @@ confrepo = 'svn+ssh://svn.cern.ch/reps/pandaconf/trunk'
 agis_sw_url = 'http://atlas-agis-api.cern.ch/jsoncache/list_presource_sw.schedconf.json'
 agis_site_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf'
 agis_queue_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf.all'
+agis_fax_sources_url='http://atlas-agis-api-0.cern.ch/request/service/query/get_se_services/?json&flavour=XROOTD'
 
 # AGIS Network Matrix URL
 agis_sites_matrix_url = 'http://atlas-agis-api.cern.ch/request/site/query/list_links/?json&json_pretty=0'
-agis_pandaresource_url = 'http://atlas-agis-api.cern.ch/request/pandaresource/query/list/?json'
+agis_pandaresource_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json'
 max_mbs = 50
 w_norm = 0.5
 
@@ -112,12 +113,14 @@ nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0'
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
 excl = ['status','lastmod','dn','tspace','comment_','space','nqueue','sysconfig','multicloud','statusoverride','celist'] # nqueues takes care of a typo
-nonexistent = ['nqueues']
+remover=['nqueue','cmd','name','jdladd','jdl','cmtconfig','proxy','queue','sysconfig','datadir','version','jdl'] # disabling obsolete or nonexistent
+excl.extend(remover)
+nonexistent = ['nqueues'] 
 timestamps = ['lastmod','tspace'] # Fields that are explicitly timestamps, and are as such harder to update in the DB
 excl_nonTimestamp = [i for i in excl if i not in timestamps + nonexistent] # List of items to back up
 
 # These are fields expressed in AGIS as 0 and 1, which are in Schedconfig as True and False
-booleanStringFields = ['allowdirectaccess','allowfax','retry']
+booleanStringFields = ['allowdirectaccess','allowfax','allowjem','retry']
 booleanStrings = {0:str(False),1:str(True)}
 
 # These fields are to be consistent across siteids
