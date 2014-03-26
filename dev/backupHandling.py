@@ -46,7 +46,8 @@ def volatileBackupCreate():
 	# For each of the queues, create a SQL restore command. The atlas_pandameta is unnecessary for restoration using the volatileRestore.py script, ans is stripped
 	# off there... but this format allows direct copy-paste into SQL Developer or another direct SQL tool as well. This can be handy for manual or custom restores.
 	# The Site and Cloud comments help filter the lines to allow manual restoration of specific sites and clouds using grep, avoiding a broad-brush approach.
-	for i in d:
+    print excl_nonTimestamp
+    for i in d:
 		f.write('UPDATE atlas_pandameta.schedconfig set %s WHERE nickname = \'%s\'; -- Site is %s, Cloud is %s\n' % (', '.join(['%s = \'%s\'' % (key, d[i][key]) for key in excl_nonTimestamp]), i, d[i]['site'],d[i]['cloud']))
 	f.close()
 	os.system('cp %s %s' % (bfile, bfilecopy))
