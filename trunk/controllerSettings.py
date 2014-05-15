@@ -46,6 +46,9 @@ agis_pandaresource_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query
 max_mbs = 50
 w_norm = 0.5
 
+multicloud_throughput_threshold_large = 10
+multicloud_number_of_sites_to_get = 5
+
 # If safety is on, nothing is written to the DB.
 safety = 'off'
 
