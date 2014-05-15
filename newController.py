@@ -21,6 +21,7 @@ from configFileHandling import *
 from backupHandling import *
 from swHandling import *
 from networkHandling import *
+from multicloudHandling import *
 
 def loadConfigs():
 	'''Run the schedconfig table updates'''
@@ -138,10 +139,11 @@ if __name__ == "__main__":
 	if '--debug' in args: genDebug = True
 	if '--sw' in args: runSW = True
 	if '--network' in args: network = True
+	if '--multicloud' in args: multicloud = True
 	keydict={}
 
 	# Running in schedconfig update mode.
-	if not runSW and not network:
+	if not runSW and not network and not multicloud:
 		print "\n\n                    *** Running Schedconfig Update ***\n\n"
 		# Backup of all the volatile DB paramaters before the operation
 		volatileBackupCreate()
@@ -173,4 +175,9 @@ if __name__ == "__main__":
 		nc = networkHandling()
 		nc.Proceed()
 
+	# Running in multicloud update mode
+	if multicloud:
+		print "\n\n                    *** Running Multicloud Update ***\n\n"
+		mc = multicloudHandling()
+		mc.Proceed()
 
