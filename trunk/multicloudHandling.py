@@ -61,7 +61,7 @@ class multicloudHandling:
                 multicloud = i['CLOUD_SOURCE']
                 continue
                  
-            if i['SITE_DESTINATION'] == dest and j < multicloud_number_of_sites_to_get:
+            if i['SITE_DESTINATION'] == dest and j < multicloud_number_of_sites_to_get and multicloud.find(i['CLOUD_SOURCE']) == -1:
                 multicloud += ',' + i['CLOUD_SOURCE']
                 j = j + 1
         
