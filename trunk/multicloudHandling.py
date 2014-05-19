@@ -49,6 +49,9 @@ class multicloudHandling:
         multicloud = ''
         
         for i in matrix:
+            if T2Ds_exclude_list.find(i['SITE_DESTINATION']) != -1:
+                continue
+            
             if i['SITE_DESTINATION'] != dest:
                 #save if any then start building a new one
 #                print 'site: ', dest
@@ -57,11 +60,14 @@ class multicloudHandling:
                     self.InsertAndUpdate(dest, multicloud)
                 
                 dest = i['SITE_DESTINATION']
-                j = 1
-                multicloud = i['CLOUD_SOURCE']
+                multicloud = ''
+                j = 0
+                if T1s_exclude_list.find(i['SITE_SOURCE']) == -1:
+                    multicloud = i['CLOUD_SOURCE']
+                    j = 1
                 continue
                  
-            if i['SITE_DESTINATION'] == dest and j < multicloud_number_of_sites_to_get and multicloud.find(i['CLOUD_SOURCE']) == -1:
+            if i['SITE_DESTINATION'] == dest and j < multicloud_number_of_sites_to_get and multicloud.find(i['CLOUD_SOURCE']) == -1 and T1s_exclude_list.find(i['SITE_SOURCE']) == -1:
                 multicloud += ',' + i['CLOUD_SOURCE']
                 j = j + 1
         
