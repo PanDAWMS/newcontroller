@@ -50,8 +50,6 @@ w_norm = 0.5
 # Multicloud management
 multicloud_throughput_threshold_large = 10
 multicloud_number_of_sites_to_get = 5
-T1s_exclude_list = 'RRC-KI-T1,'
-T2Ds_exclude_list = 'BostonU,'
 
 # If safety is on, nothing is written to the DB.
 safety = 'off'
