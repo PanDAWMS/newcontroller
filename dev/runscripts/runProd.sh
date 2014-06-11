@@ -1,7 +1,8 @@
 #! /bin/sh
-export PYTHONPATH=$PYTHONPATH:/data/atlpan/oracle/panda/monitor:/data/atlpan/panda/schedconfigProd:/data/atlpan/panda/schedconfigProd/autopilot:/data/atlpan/oracle/panda/monitor:/usr/lib/python2.5/site-packages
-export LOCKFILE=/data/atlpan/panda/.schedconfigLock
-export BASEPATH=/data/atlpan/panda/schedconfigProd
+export PYTHONPATH=$PYTHONPATH:/data/atlpan/oracle/panda/monitor:/data/atlpan/panda/prod:/data/atlpan/panda/prod/autopilot:/data/atlpan/oracle/panda/monitor:/usr/lib/python2.5/site-packages
+export LOCKPATH=/afs/cern.ch/user/a/atlpan/public
+export LOCKFILE=$LOCKPATH/.schedconfigLock
+export BASEPATH=/data/atlpan/panda/prod
 # Check the lock:
 echo ${LOCKFILE}.${1}
 if [ ! -e $LOCKFILE ]

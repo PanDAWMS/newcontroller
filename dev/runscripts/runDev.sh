@@ -1,8 +1,9 @@
 #! /bin/sh
 export DBINTR=10
+export LOCKPATH=/afs/cern.ch/user/a/atlpan/public
+export LOCKFILE=$LOCKPATH/.schedconfigLock
 export PYTHONPATH=/data/atlpan/oracle/panda/monitor:/usr/lib/python2.5/site-packages
-export LOCKFILE=/data/atlpan/panda/.schedconfigLock
-export BASEPATH=/data/atlpan/panda/Dev_schedconfig
+export BASEPATH=/data/atlpan/panda/dev
 # Check the lock:
 #if [ ! -e $LOCKFILE ]
 #  then
