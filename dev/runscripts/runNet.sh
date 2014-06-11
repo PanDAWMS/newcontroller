@@ -1,5 +1,5 @@
 #! /bin/sh
-export PYTHONPATH=$PYTHONPATH:/data/atlpan/oracle/panda/monitor:/data/atlpan/panda/prod:/data/atlpan/panda/prod/autopilot:/data/atlpan/oracle/panda/monitor:/usr/lib/python2.5/site-packages
+export PYTHONPATH=$PYTHONPATH:/data/atlpan/oracle/panda/monitor:/data/atlpan/panda/prod:/data/atlpan/panda/prod/autopilot:/data/atlpan/oracle/panda/monitor:/usr/lib/python2.6/site-packages
 export LOCKPATH=/afs/cern.ch/user/a/atlpan/public
 export LOCKFILE=$LOCKPATH/.netLock
 export BASEPATH=/data/atlpan/panda/prod
@@ -21,6 +21,6 @@ export PANDA_DBTYPE=oracle
 
 cd $BASEPATH/newController
 svn update
-python2.5 newController.py --network
+python2.6 newController.py --network
 
 rm -rf $LOCKFILE
