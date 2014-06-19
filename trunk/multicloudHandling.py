@@ -72,10 +72,19 @@ class multicloudHandling:
         multicloud = ''
         
         for i in matrix:
+            if i['NICKNAME_DESTINATION'].find('ANALY_') != -1:
+                continue
+            if i['NICKNAME_DESTINATION'].find('_MCORE') != -1:
+                continue
+            if i['NICKNAME_DESTINATION'].find('_TEST') != -1:
+                continue
+            if i['NICKNAME_DESTINATION'].find('_Install') != -1:
+                continue
+            
             if i['NICKNAME_DESTINATION'] != dest:
                 #save if any then start building a new one
-                print 'site: ', dest
-                print 'multicloud: ', multicloud
+#                print 'site: ', dest
+#                print 'multicloud: ', multicloud
                 if dest != '':
                     self.InsertAndUpdate(dest, multicloud)
                 
