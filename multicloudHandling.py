@@ -94,7 +94,10 @@ class multicloudHandling:
                 continue
                  
             if i['NICKNAME_DESTINATION'] == dest and j < multicloud_number_of_sites_to_get and multicloud.find(i['CLOUD_SOURCE']) == -1 and clouds.find(i['CLOUD_SOURCE']) != -1:
-                multicloud += ',' + i['CLOUD_SOURCE']
+                if len(multicloud) == 0:
+                    multicloud = i['CLOUD_SOURCE']
+                else:
+                    multicloud += ',' + i['CLOUD_SOURCE']
                 j = j + 1
         
 #        print 'site:', dest
