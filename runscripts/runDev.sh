@@ -1,6 +1,6 @@
 #! /bin/sh
 export DBINTR=10
-export LOCKPATH=/afs/cern.ch/user/a/atlpan/public
+export LOCKPATH=/afs/cern.ch/user/a/atlpan/public/schedconfig_dont_touch
 export LOCKFILE=$LOCKPATH/.schedconfigLock
 export PYTHONPATH=/data/atlpan/oracle/panda/monitor:/usr/lib/python2.6/site-packages
 export BASEPATH=/data/atlpan/panda/dev

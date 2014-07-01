@@ -1,6 +1,6 @@
 #! /bin/sh
 export PYTHONPATH=$PYTHONPATH:/data/atlpan/oracle/panda/monitor:/data/atlpan/panda/prod:/data/atlpan/panda/prod/autopilot:/data/atlpan/oracle/panda/monitor:/usr/lib/python2.6/site-packages
-export LOCKPATH=/afs/cern.ch/user/a/atlpan/public
+export LOCKPATH=/afs/cern.ch/user/a/atlpan/public/schedconfig_dont_touch
 export LOCKFILE=$LOCKPATH/.swLock
 export BASEPATH=/data/atlpan/panda/prod
 # Check the lock:
