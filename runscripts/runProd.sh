@@ -21,7 +21,7 @@ echo "Setting panda dbtype to Oracle...."
 export PANDA_DBTYPE=oracle
 
 cd $BASEPATH/newController
-#svn up
+svn up
 python2.6 newController.py
 
 rm -rf $LOCKFILE*
