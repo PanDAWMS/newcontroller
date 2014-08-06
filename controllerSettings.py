@@ -49,7 +49,7 @@ w_norm = 0.5
 
 # Multicloud management
 multicloud_throughput_threshold_large = 10
-multicloud_number_of_sites_to_get = 5
+multicloud_number_of_sites_to_get = 3
 
 # If safety is on, nothing is written to the DB.
 safety = 'off'
