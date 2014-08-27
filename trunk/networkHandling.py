@@ -98,19 +98,19 @@ class networkHandling():
         pandasites_matrix = {}
         for p1 in pandaresources:
             for p2 in pandaresources:
-                t1 = p1['panda_queue_name'][0:6]
-                t2 = p2['panda_queue_name'][0:6]
+                t1 = p1['panda_resource'][0:6]
+                t2 = p2['panda_resource'][0:6]
                 if (t1 == 'ANALY_' and t2 != 'ANALY_') or (t1 != 'ANALY_' and t2 == 'ANALY_'):
                     continue
-                if p1['panda_queue_name'] != p2['panda_queue_name']:
+                if p1['panda_resource'] != p2['panda_resource']:
                     k1 = p1['atlas_site'] + '_to_' + p2['atlas_site']
-                    k2 = p1['panda_queue_name']+ '_to_' + p2['panda_queue_name']
+                    k2 = p1['panda_resource']+ '_to_' + p2['panda_resource']
                     if k1 in sites_matrix.keys() and not k2 in pandasites_matrix.keys():
                         i = sites_matrix[k1]
                         pandasites_matrix.setdefault(k2, 
                                                     {
-                                                     'src': p1['panda_queue_name'],
-                                                     'dst': p2['panda_queue_name'],
+                                                     'src': p1['panda_resource'],
+                                                     'dst': p2['panda_resource'],
                                                      'src_atlassite': p1['atlas_site'],
                                                      'dst_atlassite': p2['atlas_site'],
                                                        
