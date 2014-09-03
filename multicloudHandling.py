@@ -90,7 +90,7 @@ class multicloudHandling:
 #                print 'site: ', dest
 #                print 'multicloud: ', multicloud
                 if multicloud_append is not None:
-                    print dest, ': ', multicloud, '+', multicloud_append
+#                    print dest, ': ', multicloud, '+', multicloud_append
                     if multicloud == '':
                         multicloud = multicloud_append
                     else:
@@ -100,11 +100,11 @@ class multicloudHandling:
                                 continue
                             if multicloud.find(k) == -1:
                                 multicloud += ',' + k
-                    print dest, ': ', multicloud
+#                    print dest, ': ', multicloud
                 
-                print dest, '!= "" and ', multicloud, '!= ""'
+#                print dest, '!= "" and ', multicloud, '!= ""'
                 if dest != '' and multicloud != '':
-                    print dest, ': ', multicloud
+#                    print dest, ': ', multicloud
                     self.InsertAndUpdate(dest, multicloud, multicloud_old)
                 
                 dest = i['NICKNAME_DESTINATION']
@@ -139,7 +139,6 @@ class multicloudHandling:
         return True
     
     def InsertAndUpdate(self, nickname, multicloud, multicloud_old):
-        print nickname, ': ', multicloud, '; ', multicloud_old
         if safety is 'on': utils.setTestDB()
         if setINTR:
             utils.setTestDB()
