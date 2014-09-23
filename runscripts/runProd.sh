@@ -4,14 +4,14 @@ export LOCKPATH=/afs/cern.ch/user/a/atlpan/public/schedconfig_dont_touch
 export LOCKFILE=$LOCKPATH/.schedconfigLock
 export BASEPATH=/data/atlpan/panda/prod
 # Check the lock:
-#echo ${LOCKFILE}.${1}
-#if [ ! -e $LOCKFILE ]
-#  then
-#    :> $LOCKFILE
-#    :> ${LOCKFILE}.${1} 
-#  else
-#    echo "Schedconfig update blocked by lockfile on host $HOSTNAME"|mail -s "** Schedconfig Update Blocked -- Lockfile **" schedconfig@gmail.com
-#    exit 10
+echo ${LOCKFILE}.${1}
+if [ ! -e $LOCKFILE ]
+  then
+    :> $LOCKFILE
+    :> ${LOCKFILE}.${1} 
+  else
+    echo "Schedconfig update blocked by lockfile on host $HOSTNAME"|mail -s "** Schedconfig Update Blocked -- Lockfile **" schedconfig@gmail.com
+    exit 10
 #fi
 
 # Need grid setup
