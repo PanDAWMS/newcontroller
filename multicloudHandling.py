@@ -82,8 +82,8 @@ class multicloudHandling:
                 continue
             if i['NICKNAME_DESTINATION'].find('_Install') != -1:
                 continue
-            if i['CLOUD_DESTINATION'].find('US') == -1:
-                continue
+#            if i['CLOUD_DESTINATION'].find('US') == -1:
+#                continue
             
             if i['NICKNAME_DESTINATION'] != dest:
                 #save if any then start building a new one
