@@ -4,13 +4,13 @@ export LOCKPATH=/afs/cern.ch/user/a/atlpan/public/schedconfig_dont_touch
 export LOCKFILE=$LOCKPATH/.netLock
 export BASEPATH=/data/atlpan/panda/prod
 # Check the lock:
-if [ ! -e $LOCKFILE ]
-  then
-    :> $LOCKFILE
-  else
-    echo "Net update blocked by lockfile on host $HOSTNAME"|mail -s "** Net Update Blocked -- Lockfile **" schedconfig@gmail.com
-    exit 10
-fi
+#if [ ! -e $LOCKFILE ]
+#  then
+#    :> $LOCKFILE
+#  else
+#    echo "Net update blocked by lockfile on host $HOSTNAME"|mail -s "** Net Update Blocked -- Lockfile **" schedconfig@gmail.com
+#    exit 10
+#fi
 
 
 # Need grid setup
