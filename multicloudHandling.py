@@ -164,12 +164,13 @@ class multicloudHandling:
                     if multicloud.find(k) == -1:
                         multicloud += ',' + k
         
-        j = 0
         if multicloud != '':
-            for z in matrix1:
-                if site_destination == z['SITE_DESTINATION'] and j < multicloud_number_of_sites_to_get and multicloud.find(z['CLOUD_SOURCE']) == -1 and clouds.find(z['CLOUD_SOURCE']) != -1:
-                    multicloud += ',' + z['CLOUD_SOURCE']
-                    j = j + 1
+            if multicloud.find(',') < 2:
+                j = 0
+                for z in matrix1:
+                    if site_destination == z['SITE_DESTINATION'] and j < multicloud_number_of_sites_to_get and multicloud.find(z['CLOUD_SOURCE']) == -1 and clouds.find(z['CLOUD_SOURCE']) != -1:
+                        multicloud += ',' + z['CLOUD_SOURCE']
+                        j = j + 1
             self.InsertAndUpdate(dest, multicloud, multicloud_old)
          
         return True
