@@ -44,7 +44,7 @@ class multicloudHandling:
         print "Init DB"
         
         # fix me please!!! atlas_pandameta.""schedconfig"" fails because of processing in PandaMonitorUtils.py
-        sql = "SELECT DISTINCT UPPER(s1.site) AS site_source, s2.site AS site_destination, s2.nickname AS nickname_destination, s1.cloud AS cloud_source, s2.cloud AS cloud_destination, sonarlrgval, s2.multicloud AS multicloud_destination, s2.multicloud_append AS multicloud_append_destination FROM sites_matrix_data LEFT JOIN atlas_pandameta.""schedconfig"" s1 ON source=s1.siteid LEFT JOIN atlas_pandameta.""schedconfig"" s2 ON destination=s2.siteid WHERE source IN (SELECT siteid AS src FROM atlas_pandameta.""schedconfig"" s3 WHERE (tier='%s' OR tier='%s') AND cloud<>'CMS' AND site<>'ARC-T2') AND destination IN (SELECT siteid AS dst FROM atlas_pandameta.""schedconfig"" s4 WHERE tier='%s' AND cloud<>'CMS' AND auto_mcu=1) AND s1.cloud<>s2.cloud AND sonarlrgval>=%d ORDER BY nickname_destination, sonarlrgval DESC" % ('T0', 'T1', 'T2D', multicloud_throughput_threshold_large)
+        sql = "SELECT DISTINCT UPPER(s1.site) AS site_source, s2.site AS site_destination, s2.nickname AS nickname_destination, s1.cloud AS cloud_source, s2.cloud AS cloud_destination, sonarlrgval, s2.multicloud AS multicloud_destination, s2.multicloud_append AS multicloud_append_destination, meas_date FROM sites_matrix_data LEFT JOIN atlas_pandameta.""schedconfig"" s1 ON source=s1.siteid LEFT JOIN atlas_pandameta.""schedconfig"" s2 ON destination=s2.siteid WHERE source IN (SELECT siteid AS src FROM atlas_pandameta.""schedconfig"" s3 WHERE (tier='%s' OR tier='%s') AND cloud<>'CMS' AND site<>'ARC-T2') AND destination IN (SELECT siteid AS dst FROM atlas_pandameta.""schedconfig"" s4 WHERE tier='%s' AND cloud<>'CMS' AND auto_mcu=1) AND s1.cloud<>s2.cloud AND sonarlrgval>=%d AND meas_date>=(SYSDATE-3/24) ORDER BY nickname_destination, sonarlrgval DESC" % ('T0', 'T1', 'T2D', multicloud_throughput_threshold_large)
         
         nrows = utils.dictcursor().execute(sql)
         if nrows > 0:
@@ -179,24 +179,32 @@ class multicloudHandling:
         utils.initDB()
         print "Init DB"
         
-        sql = "INSERT INTO multicloud_history (site, multicloud, last_update) VALUES ('%s', '%s', SYSDATE) " % (nickname, multicloud)
+#        sql = "INSERT INTO multicloud_history (site, multicloud, last_update) VALUES ('%s', '%s', SYSDATE) " % (nickname, multicloud)
         
-#        sql = "INSERT INTO multicloud_history (site, multicloud, last_update) VALUES ('%s', '%s', SYSDATE) " % (nickname, multicloud_old)
-#        sql1 = "UPDATE schedconfig SET multicloud='%s' WHERE nickname='%s'" % (multicloud, nickname)
+        sql = "INSERT INTO multicloud_history (site, multicloud, last_update) VALUES ('%s', '%s', SYSDATE) " % (nickname, multicloud_old)
         try:
             utils.dictcursor().execute(sql)
         except:
             print "SQL failed: %s" % sql
+            # Close DB connection
+            utils.endDB()
+            return False
         
-#         try:
-#             utils.dictcursor().execute(sql1)
-#         except:
-#             print "SQL failed: %s" % sql1
+        sql1 = "UPDATE schedconfig SET multicloud='%s' WHERE nickname='%s'" % (multicloud, nickname)
+        try:
+            utils.dictcursor().execute(sql1)
+        except:
+            print "SQL failed: %s" % sql1
+            # Close DB connection
+            utils.endDB()
+            return False
         
         utils.commit()
         
         # Close DB connection
         utils.endDB()
+        
+        return True
     
     def Proceed(self):
         print datetime.now().replace(microsecond=0)
