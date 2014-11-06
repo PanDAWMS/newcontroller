@@ -42,7 +42,7 @@ class networkHandling():
         data1 = {}
         for i in data:
             if not 'snrsmlval' in i.keys():
-                i.update({u'snrsmlval': u'null'})
+                i.update({u'snrsmlval': u'null', u'snrsmldatetime': u'null'})
 #             else:
 #                 i['snrsmlval'] = getNormalizedValue(i['snrsmlval'])
             
@@ -50,7 +50,7 @@ class networkHandling():
                 i.update({u'snrsmldev': u'null'})
             
             if not 'snrmedval' in i.keys():
-                i.update({u'snrmedval': u'null'})
+                i.update({u'snrmedval': u'null', u'snrmeddatetime': u'null'})
 #             else:
 #                 i['snrmedval'] = getNormalizedValue(i['snrmedval'])
             
@@ -58,7 +58,7 @@ class networkHandling():
                 i.update({u'snrmeddev': u'null'})
             
             if not 'snrlrgval' in i.keys():
-                i.update({u'snrlrgval': u'null'})
+                i.update({u'snrlrgval': u'null', u'snrlrgdatetime': u'null'})
 #             else:
 #                 i['snrlrgval'] = getNormalizedValue(i['snrlrgval'])
             
@@ -66,12 +66,12 @@ class networkHandling():
                 i.update({u'snrlrgdev': u'null'})
             
             if not 'psnravgval' in i.keys():
-                i.update({u'psnravgval': u'null'})
+                i.update({u'psnravgval': u'null', u'psnravgdatetime': u'null'})
 #             else:
 #                 i['psnravgval'] = getNormalizedValue(i['psnravgval'])
             
             if not 'xrdcpval' in i.keys():
-                i.update({u'xrdcpval': u'null'})
+                i.update({u'xrdcpval': u'null', u'xrdcpdatetime': u'null'})
 #             else:
 #                 i['xrdcpval'] = getNormalizedValue(i['xrdcpval'])
             
@@ -121,7 +121,13 @@ class networkHandling():
                                                      'snrmedval': i['snrmedval'],
                                                      'snrsmldev': i['snrsmldev'],
                                                      'snrsmlval': i['snrsmlval'],
-                                                     'xrdcpval': i['xrdcpval']
+                                                     'xrdcpval': i['xrdcpval'],
+                                                     
+                                                     'snrsmldatetime': i['snrsmldatetime'],
+                                                     'snrmeddatetime': i['snrmeddatetime'],
+                                                     'snrlrgdatetime': i['snrlrgdatetime'],
+                                                     'psnravgdatetime': i['psnravgdatetime'],
+                                                     'xrdcpdatetime': i['xrdcpdatetime']
                                                      })
 #                         print "found: %s %s" % (k1, k2)
 #                     if not k1 in sites_matrix.keys():
@@ -141,14 +147,45 @@ class networkHandling():
         for key in data.keys():
             i = data[key]
             
+            l1 = ""
+            l2 = ""
+            l3 = ""
+            l4 = ""
+            
+            if i['snrsmlval'] != u'null':
+                l1 += ", %s AS sonarsmlval, %s AS sonarsmldev, TO_DATE('%s', 'yyyy-mm-dd hh24:mi:ss') AS sonarsml_last_update" % (i['snrsmlval'], i['snrsmldev'], i['snrsmldatetime'].replace('T', ' '))
+                l2 += ", sonarsmlval, sonarsmldev, sonarsml_last_update"
+                l3 += ", m_vals.sonarsmlval, m_vals.sonarsmldev, m_vals.sonarsml_last_update"
+                l4 += ", sonarsmlval=m_vals.sonarsmlval, sonarsmldev=m_vals.sonarsmldev, sonarsml_last_update=m_vals.sonarsml_last_update"
+            if i['snrmedval'] != u'null':
+                l1 += ", %s AS sonarmedval, %s AS sonarmeddev, TO_DATE('%s', 'yyyy-mm-dd hh24:mi:ss') AS sonarmed_last_update" % (i['snrmedval'], i['snrmeddev'], i['snrmeddatetime'].replace('T', ' '))
+                l2 += ", sonarmedval, sonarmeddev, sonarmed_last_update"
+                l3 += ", m_vals.sonarmedval, m_vals.sonarmeddev, m_vals.sonarmed_last_update"
+                l4 += ", sonarmedval=m_vals.sonarmedval, sonarmeddev=m_vals.sonarmeddev, sonarmed_last_update=m_vals.sonarmed_last_update"
+            if i['snrlrgval'] != u'null':
+                l1 += ", %s AS sonarlrgval, %s AS sonarlrgdev, TO_DATE('%s', 'yyyy-mm-dd hh24:mi:ss') AS sonarlrg_last_update" % (i['snrlrgval'], i['snrlrgdev'], i['snrlrgdatetime'].replace('T', ' '))
+                l2 += ", sonarlrgval, sonarlrgdev, sonarlrg_last_update"
+                l3 += ", m_vals.sonarlrgval, m_vals.sonarlrgdev, m_vals.sonarlrg_last_update"
+                l4 += ", sonarlrgval=m_vals.sonarlrgval, sonarlrgdev=m_vals.sonarlrgdev, sonarlrg_last_update=m_vals.sonarlrg_last_update"
+            if i['psnravgval'] != u'null':
+                l1 += ", %s AS perfsonaravgval, TO_DATE('%s', 'yyyy-mm-dd hh24:mi:ss') AS perfsonaravg_last_update" % (i['psnravgval'], i['psnravgdatetime'].replace('T', ' '))
+                l2 += ", perfsonaravgval, perfsonaravg_last_update"
+                l3 += ", m_vals.perfsonaravgval, m_vals.perfsonaravg_last_update"
+                l4 += ", perfsonaravgval=m_vals.perfsonaravgval, perfsonaravg_last_update=m_vals.perfsonaravg_last_update"
+            if i['xrdcpval'] != u'null':
+                l1 += ", %s AS xrdcpval, TO_DATE('%s', 'yyyy-mm-dd hh24:mi:ss') AS xrdcp_last_update" % (i['xrdcpval'], i['xrdcpdatetime'].replace('T', ' '))
+                l2 += ", xrdcpval, xrdcp_last_update"
+                l3 += ", m_vals.xrdcpval, m_vals.xrdcp_last_update"
+                l4 += ", xrdcpval=m_vals.xrdcpval, xrdcp_last_update=m_vals.xrdcp_last_update"
+            
             sql = "MERGE INTO sites_matrix_data s_mat USING "
-            sql += "(SELECT '%s' AS source, '%s' AS dest, TO_DATE('%s', 'yyyy-mm-dd hh24:mi:ss') AS meas_date, %s AS sonarsmlval, %s AS sonarsmldev, %s AS sonarmedval, %s AS sonarmeddev, %s AS sonarlrgval, %s AS sonarlrgdev, %s AS perfsonaravgval, %s AS xrdcpval FROM DUAL) m_vals " % (i['src'], i['dst'], now, i['snrsmlval'], i['snrsmldev'], i['snrmedval'], i['snrmeddev'], i['snrlrgval'], i['snrlrgdev'], i['psnravgval'], i['xrdcpval'])
+            sql += "(SELECT '%s' AS source, '%s' AS dest, TO_DATE('%s', 'yyyy-mm-dd hh24:mi:ss') AS meas_date %s FROM DUAL) m_vals " % (i['src'], i['dst'], now, l1)
             sql += "ON "
             sql += "(s_mat.source=m_vals.source AND s_mat.destination=m_vals.dest) "
-            sql += "WHEN NOT MATCHED THEN INSERT (source, destination, meas_date, sonarsmlval, sonarsmldev, sonarmedval, sonarmeddev, sonarlrgval, sonarlrgdev, perfsonaravgval, xrdcpval) "
+            sql += "WHEN NOT MATCHED THEN INSERT (source, destination, meas_date %s) " % (l2)
             sql += "VALUES "
-            sql += "(m_vals.source, m_vals.dest, m_vals.meas_date, m_vals.sonarsmlval, m_vals.sonarsmldev, m_vals.sonarmedval, m_vals.sonarmeddev, m_vals.sonarlrgval, m_vals.sonarlrgdev, m_vals.perfsonaravgval, m_vals.xrdcpval) "
-            sql += "WHEN MATCHED THEN UPDATE SET meas_date=m_vals.meas_date, sonarsmlval=m_vals.sonarsmlval, sonarsmldev=m_vals.sonarsmldev, sonarmedval=m_vals.sonarmedval, sonarmeddev=m_vals.sonarmeddev, sonarlrgval=m_vals.sonarlrgval, sonarlrgdev=m_vals.sonarlrgdev, perfsonaravgval=m_vals.perfsonaravgval, xrdcpval=m_vals.xrdcpval"
+            sql += "(m_vals.source, m_vals.dest, m_vals.meas_date %s) " % (l3)
+            sql += "WHEN MATCHED THEN UPDATE SET meas_date=m_vals.meas_date %s" % (l4)
             
             try:
                 utils.dictcursor().execute(sql)
