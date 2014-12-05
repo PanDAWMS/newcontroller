@@ -127,10 +127,10 @@ class multicloudHandling:
 #                    print dest, ': ', multicloud
                 
 #                print dest, '!= "" and ', multicloud, '!= ""'
-                if dest != '':
+                if dest != '' and multicloud.find(',') < (multicloud_number_of_sites_to_get - 1):
 #                    print dest, ': ', multicloud
                     for z in matrix1:
-                        if site_destination == z['SITE_DESTINATION'] and multicloud.find(z['CLOUD_SOURCE']) == -1:
+                        if site_destination == z['SITE_DESTINATION'] and float(z['SONARLRGVAL']) >= multicloud_throughput_threshold_large and z < multicloud_number_of_sites_to_get and multicloud.find(z['CLOUD_SOURCE']) == -1 and clouds.find(z['CLOUD_SOURCE']) != -1:
                             multicloud += ',' + z['CLOUD_SOURCE']
                     if multicloud != multicloud_old:
                         self.InsertAndUpdate(dest, multicloud, multicloud_old)
@@ -163,7 +163,7 @@ class multicloudHandling:
                     if multicloud.find(k) == -1:
                         multicloud += ',' + k
         
-        if multicloud.find(',') < 2:
+        if multicloud.find(',') < (multicloud_number_of_sites_to_get - 1):
             j = 0
             for z in matrix1:
                 if site_destination == z['SITE_DESTINATION'] and j < multicloud_number_of_sites_to_get and multicloud.find(z['CLOUD_SOURCE']) == -1 and clouds.find(z['CLOUD_SOURCE']) != -1:
@@ -199,7 +199,7 @@ class multicloudHandling:
             # Close DB connection
             utils.endDB()
             return False
-         
+        
         utils.commit()
          
         # Close DB connection
