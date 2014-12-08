@@ -94,7 +94,6 @@ class multicloudHandling:
     def updateMulticloud(self, clouds, matrix, matrix1):
         dest = ''
         site_destination = ''
-        j = 1
         multicloud = ''
         multicloud_old = ''
         multicloud_append = ''
@@ -127,11 +126,13 @@ class multicloudHandling:
 #                    print dest, ': ', multicloud
                 
 #                print dest, '!= "" and ', multicloud, '!= ""'
-                if dest != '' and multicloud.find(',') < (multicloud_number_of_sites_to_get - 1):
+                if multicloud.count(',') < (multicloud_number_of_sites_to_get - 1):
 #                    print dest, ': ', multicloud
                     for z in matrix1:
-                        if site_destination == z['SITE_DESTINATION'] and float(z['SONARLRGVAL']) >= multicloud_throughput_threshold_large and z < multicloud_number_of_sites_to_get and multicloud.find(z['CLOUD_SOURCE']) == -1 and clouds.find(z['CLOUD_SOURCE']) != -1:
+                        if site_destination == z['SITE_DESTINATION'] and clouds.find(z['CLOUD_SOURCE']) == -1:
                             multicloud += ',' + z['CLOUD_SOURCE']
+                
+                if dest != '':
                     if multicloud != multicloud_old:
                         self.InsertAndUpdate(dest, multicloud, multicloud_old)
                 
@@ -140,15 +141,13 @@ class multicloudHandling:
                 multicloud = ''
                 multicloud_old = i['MULTICLOUD_DESTINATION']
                 multicloud_append = i['MULTICLOUD_APPEND_DESTINATION']
-                j = 0
                 continue
                  
-            if i['NICKNAME_DESTINATION'] == dest and float(i['SONARLRGVAL']) >= multicloud_throughput_threshold_large and j < multicloud_number_of_sites_to_get and multicloud.find(i['CLOUD_SOURCE']) == -1 and clouds.find(i['CLOUD_SOURCE']) != -1:
+            if i['NICKNAME_DESTINATION'] == dest and float(i['SONARLRGVAL']) >= multicloud_throughput_threshold_large and multicloud.count(',') < (multicloud_number_of_sites_to_get - 1) and multicloud.find(i['CLOUD_SOURCE']) == -1 and clouds.find(i['CLOUD_SOURCE']) != -1:
                 if len(multicloud) == 0:
                     multicloud = i['CLOUD_SOURCE']
                 else:
                     multicloud += ',' + i['CLOUD_SOURCE']
-                j = j + 1
         
 #        print 'site:', dest
 #        print 'multicloud: ', multicloud
@@ -163,12 +162,10 @@ class multicloudHandling:
                     if multicloud.find(k) == -1:
                         multicloud += ',' + k
         
-        if multicloud.find(',') < (multicloud_number_of_sites_to_get - 1):
-            j = 0
+        if multicloud.count(',') < (multicloud_number_of_sites_to_get - 1):
             for z in matrix1:
-                if site_destination == z['SITE_DESTINATION'] and j < multicloud_number_of_sites_to_get and multicloud.find(z['CLOUD_SOURCE']) == -1 and clouds.find(z['CLOUD_SOURCE']) != -1:
+                if site_destination == z['SITE_DESTINATION'] and multicloud.count(',') < (multicloud_number_of_sites_to_get - 1) and multicloud.find(z['CLOUD_SOURCE']) == -1 and clouds.find(z['CLOUD_SOURCE']) != -1:
                     multicloud += ',' + z['CLOUD_SOURCE']
-                    j = j + 1
         if multicloud != multicloud_old:
             self.InsertAndUpdate(dest, multicloud, multicloud_old)
          
@@ -199,9 +196,9 @@ class multicloudHandling:
             # Close DB connection
             utils.endDB()
             return False
-        
-        utils.commit()
          
+        utils.commit()
+        
         # Close DB connection
         utils.endDB()
         
