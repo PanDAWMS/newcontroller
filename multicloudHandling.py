@@ -133,7 +133,7 @@ class multicloudHandling:
                             multicloud += ',' + z['CLOUD_SOURCE']
                 
                 if dest != '':
-                    if multicloud != multicloud_old:
+                    if len(multicloud) > 0 and multicloud != multicloud_old:
                         self.InsertAndUpdate(dest, multicloud, multicloud_old)
                 
                 dest = i['NICKNAME_DESTINATION']
@@ -166,7 +166,7 @@ class multicloudHandling:
             for z in matrix1:
                 if site_destination == z['SITE_DESTINATION'] and multicloud.count(',') < (multicloud_number_of_sites_to_get - 1) and multicloud.find(z['CLOUD_SOURCE']) == -1 and clouds.find(z['CLOUD_SOURCE']) != -1:
                     multicloud += ',' + z['CLOUD_SOURCE']
-        if multicloud != multicloud_old:
+        if len(multicloud) > 0 and multicloud != multicloud_old:
             self.InsertAndUpdate(dest, multicloud, multicloud_old)
          
         return True
