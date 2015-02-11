@@ -13,8 +13,6 @@ export BASEPATH=/data/atlpan/panda/prod
 #fi
 
 
-# Need grid setup
-source /afs/cern.ch/project/gd/LCG-share/current_3.2/external/etc/profile.d/grid-env.sh
 
 echo "Setting panda dbtype to Oracle...."
 export PANDA_DBTYPE=oracle
