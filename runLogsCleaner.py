@@ -3,6 +3,7 @@
 import os, sys, time
 from controllerSettings import *
 
+
 fileStr = '_schedconfigUpdate.txt'
 
 # Check the files in the logging directory
