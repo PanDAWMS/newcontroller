@@ -126,7 +126,7 @@ excl_nonTimestamp = [i for i in excl if i not in timestamps + nonexistent] # Lis
 excl.extend(remover)
 
 # These are fields expressed in AGIS as 0 and 1, which are in Schedconfig as True and False
-booleanStringFields = ['allowdirectaccess','allowfax','allowjem','retry','direct_access_lan','direct_access_wan']
+booleanStringFields = ['allowdirectaccess','allowfax','allowjem','retry','direct_access_lan','direct_access_wan','use_newmover']
 booleanStrings = {0:str(False),1:str(True)}
 
 # These fields are to be consistent across siteids
