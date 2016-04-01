@@ -86,7 +86,7 @@ def agisDictUnpacker(standard_keys):
 			if type(out_d[c][d[queue][site]][d[queue][dbkey]][param][key]) == dict:
 				try:
 					out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = json.dumps(out_d[c][d[queue][site]][d[queue][dbkey]][param][key])
-        		except:
+				except:
             		out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = str(out_d[c][d[queue][site]][d[queue][dbkey]][param][key])
 					print 'Nonfatal -- Queue %s, site %s tried to translate parameter %s from its detected "dict" format, and hit an exception. It has been expressed as a string.\n' % (queue, site, key)
 					print 'Original: %s' % out_d[c][d[queue][site]][d[queue][dbkey]][param][key]
