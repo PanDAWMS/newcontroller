@@ -85,15 +85,15 @@ def agisDictUnpacker(standard_keys):
 				out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = '|'.join(out_d[c][d[queue][site]][d[queue][dbkey]][param][key])
 			if type(out_d[c][d[queue][site]][d[queue][dbkey]][param][key]) == dict:
 				try:
-                    out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = json.dumps(out_d[c][d[queue][site]][d[queue][dbkey]][param][key])
-                except:
-                    out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = str(out_d[c][d[queue][site]][d[queue][dbkey]][param][key])
-                    print 'Nonfatal -- Queue %s, site %s tried to translate parameter %s from its detected "dict" format, and hit an exception. It has been expressed as a string.\n' % (queue, site, key)
-                    print 'Original: %s' % out_d[c][d[queue][site]][d[queue][dbkey]][param][key]
-                # If the JSON converts but has no output (badly formatted), check for empties and warn.
-                if out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = ''
-                    print 'Nonfatal -- Queue %s, site %s tried to translate parameter %s from its detected "dict" format, and got an invalid JSON response (empty field).\n' % (queue, site, key)
-                    print 'Original: %s' % out_d[c][d[queue][site]][d[queue][dbkey]][param][key]                    
+					out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = json.dumps(out_d[c][d[queue][site]][d[queue][dbkey]][param][key])
+        		except:
+            		out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = str(out_d[c][d[queue][site]][d[queue][dbkey]][param][key])
+					print 'Nonfatal -- Queue %s, site %s tried to translate parameter %s from its detected "dict" format, and hit an exception. It has been expressed as a string.\n' % (queue, site, key)
+					print 'Original: %s' % out_d[c][d[queue][site]][d[queue][dbkey]][param][key]
+				# If the JSON converts but has no output (badly formatted), check for empties and warn.
+				if out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = ''
+					print 'Nonfatal -- Queue %s, site %s tried to translate parameter %s from its detected "dict" format, and got an invalid JSON response (empty field).\n' % (queue, site, key)
+					print 'Original: %s' % out_d[c][d[queue][site]][d[queue][dbkey]][param][key]                    
 			if key in booleanStringFields:
 				out_d[c][d[queue][site]][d[queue][dbkey]][param][key] = booleanStrings[out_d[c][d[queue][site]][d[queue][dbkey]][param][key]]
 		# Fixing the "vo_name" to "cloud" disparity
