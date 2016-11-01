@@ -28,6 +28,4 @@ https://twiki.cern.ch/twiki/bin/viewauth/AtlasComputing/SchedconfigParameterDefi
 ### Artem Controller Updates
 10 * * * * aipanda045 /data/atlpan/panda/prod/runNet.sh &> /data/atlpan/panda/logs/schedconfig/run/${RANDOM}_networkUpdate.txt
 50 0 * * 1 aipanda045 /data/atlpan/panda/prod/runMulticloud.sh &> /data/atlpan/panda/logs/schedconfig/run/${RANDOM}_multicloudUpdate.txt
-### PanDA RPM testing
-*/5 * * * * aipanda004 /data/atlpan/scripts/jenkins_twdev_acron.sh >>/data/atlpan/scripts/log.jenkins_twdev_acron 2>&1
 ```
