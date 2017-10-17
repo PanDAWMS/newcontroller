@@ -21,6 +21,6 @@ export PANDA_DBTYPE=oracle
 
 cd $BASEPATH/newController
 svn update --accept theirs-full
-python2.6 newController.py --sw
+python2.6 -i newController.py --sw
 
 rm -rf $LOCKFILE*

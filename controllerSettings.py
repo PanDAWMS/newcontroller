@@ -42,8 +42,8 @@ agis_queue_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?j
 agis_fax_sources_url='http://atlas-agis-api-0.cern.ch/request/service/query/get_se_services/?json&flavour=XROOTD'
 
 # AGIS Network Matrix URL
-agis_sites_matrix_url = 'http://atlas-agis-api.cern.ch/request/site/query/list_links/?json&json_pretty=0'
-agis_pandaresource_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json'
+agis_sites_matrix_url = 'http://atlas-agis-api.cern.ch/request/site/query/list_links/?json&json_pretty=0&vo_name=atlas'
+agis_pandaresource_url = 'http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&vo_name=atlas'
 max_mbs = 50
 w_norm = 0.5
 
@@ -89,7 +89,7 @@ lastVolatiles = 10
 hotBackups = 30
 keptBackups = 150
 keptRunLogs = 150
-maxDeletedQueuePercentage = 15
+maxDeletedQueuePercentage = 25
 # Paths for run logs (email notification)
 logPath = '/data/atlpan/panda/logs/schedconfig/'
 errorFile = '/tmp/pandaUpdateErrors.log'
@@ -100,7 +100,7 @@ maxMaxTime = 864000 # Corresponds to 10 days of run
 
 # Default email address for failure notifications
 
-errorEmail = 'schedconfig@gmail.com'
+errorEmail = 'danila.oleynik+schedconfig@gmail.com'
 deletionEmail = 'atlas-adc-agis@cern.ch'
 sourceEmail = 'atlpan@mail.cern.ch'
 
@@ -118,7 +118,8 @@ shared, unshared = 'shared','unshared'
 nonNull={'name':'default','system':'unknown','site':'?','nqueue':'0','nodes':'0','queuehours':'0','memory':'0', 'maxtime':'0', 'space':'0','statusoverride':'offline'}
 
 # These are the DB fields that should never be modified by the controller -- fixed by hand using curl commands.
-excl = ['status','lastmod','dn','tspace','comment_','space','multicloud','statusoverride','celist'] # nqueues takes care of a typo
+#excl = ['status','lastmod','dn','tspace','comment_','space','multicloud','statusoverride','celist'] # nqueues takes care of a typo
+excl = ['lastmod','dn','tspace','space','multicloud','statusoverride','celist'] # nqueues takes care of a typo
 remover=['nqueue','cmd','name','jdladd','jdl','cmtconfig','proxy','queue','sysconfig','datadir','version','jdl','jdltxt'] # disabling obsolete or nonexistent
 nonexistent = ['nqueues'] 
 timestamps = ['lastmod','tspace'] # Fields that are explicitly timestamps, and are as such harder to update in the DB
