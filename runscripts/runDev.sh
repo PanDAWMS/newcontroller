@@ -1,5 +1,5 @@
 #! /bin/sh
-export DBINTR=10
+#export DBINTR=10
 export LOCKPATH=/afs/cern.ch/user/a/atlpan/public/schedconfig_dont_touch
 export LOCKFILE=$LOCKPATH/.schedconfigLock
 export PYTHONPATH=/data/atlpan/oracle/panda/monitor:/usr/lib/python2.6/site-packages
@@ -22,6 +22,6 @@ export PANDA_DBTYPE=oracle
 
 cd $BASEPATH/newController
 svn update
-python2.6 -i newController.py #--debug
+python2.6 -i newController.py --debug
 
 #rm -rf $LOCKFILE
