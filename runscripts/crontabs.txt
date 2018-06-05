@@ -2,6 +2,7 @@
 03,18,33,48 * * * *  /data/atlpan/panda/prod/runProd.sh 161 &> /data/atlpan/panda/logs/schedconfig/run/${RANDOM}_schedconfigUpdate.txt
 12 * * * * /data/atlpan/panda/prod/runSW.sh &> /data/atlpan/panda/logs/schedconfig/run/${RANDOM}_swUpdate.txt
 22 * * * * /usr/bin/python2.6 /data/atlpan/panda/prod/newController/runLogsCleaner.py &> /dev/null
+0 12 * * * /data/atlpan/panda/prod/cleanup_pinklogs.sh &> /dev/null
 ### Artem Controller Updates
 30 * * * * /data/atlpan/panda/prod/runNet.sh &> /data/atlpan/panda/logs/schedconfig/run/${RANDOM}_networkUpdate.txt
 50 0 * * 1 /data/atlpan/panda/prod/runMulticloud.sh &> /data/atlpan/panda/logs/schedconfig/run/${RANDOM}_multicloudUpdate.txt
@@ -12,3 +13,4 @@
 08,23,38,53 * * * *  /data/atlpan/panda/prod/runProd.sh 161 &> /data/atlpan/panda/logs/schedconfig/run/${RANDOM}_schedconfigUpdate.txt
 32 * * * * /data/atlpan/panda/prod/runSW.sh &> /data/atlpan/panda/logs/schedconfig/run/${RANDOM}_swUpdate.txt
 22 * * * * /usr/bin/python2.6 /data/atlpan/panda/prod/newController/runLogsCleaner.py &> /dev/null
+0 12 * * * /data/atlpan/panda/prod/cleanup_pinklogs.sh &> /dev/null
