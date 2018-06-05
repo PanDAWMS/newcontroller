@@ -100,7 +100,7 @@ maxMaxTime = 864000 # Corresponds to 10 days of run
 
 # Default email address for failure notifications
 
-errorEmail = 'danila.oleynik+schedconfig@gmail.com'
+errorEmail = 'danila.oleynik@cern.ch'
 deletionEmail = 'atlas-adc-agis@cern.ch'
 sourceEmail = 'atlpan@mail.cern.ch'
 
