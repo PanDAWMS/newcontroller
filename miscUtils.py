@@ -235,7 +235,7 @@ def unicodeListEncode(l):
         elif type(i) == dict:
             unicodeDictEncode(i)
         elif type(i) == list:
-            unicodeListEndcode(i)
+            unicodeListEncode(i)
         elif type(i) == tuple:
             l[n] = unicodeTupleEncode(i)
         elif type(i) == unicode:

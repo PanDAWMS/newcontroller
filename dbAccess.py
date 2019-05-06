@@ -48,7 +48,7 @@ def loadSchedConfig(db='pmeta', test='0'):
     return d
 
 
-def loadInstalledSW():
+def loadInstalledSW(pr=None):
     '''Load the values from the installedsw table into a dictionary keyed by release_site_cache'''
     if safety is 'on': utils.setTestDB()
     if setINTR:
@@ -58,6 +58,8 @@ def loadInstalledSW():
     print "Init DB"
     # Gets all rows from installedsw table
     query = 'SELECT * from installedsw'
+    if pr:
+        query = "SELECT * from installedsw WHERE siteid = '%s'" % pr
     nrows = utils.dictcursor().execute(query)
     if nrows > 0:
         # Fetch all the rows
@@ -82,6 +84,7 @@ def updateInstalledSWdb(addList, delList):
         print 'Using INTR Database'
     utils.initDB()
     print "Init DB"
+    print("%s records should be added" % len(addList))
     for i in addList:
         sql = "INSERT INTO installedsw (SITEID,CLOUD,RELEASE,CACHE,CMTCONFIG,VALIDATION) VALUES ('%s','%s','%s','%s','%s','%s')" % (
         i['siteid'], i['cloud'], i['release'], i['cache'], i['cmtConfig'], i['validation'])
@@ -90,7 +93,7 @@ def updateInstalledSWdb(addList, delList):
         except:
             print "SQL failed: %s" % sql
     utils.commit()
-
+    print("%s records should be deleted" % len(delList))
     for i in delList:
         sql = "DELETE FROM installedsw WHERE siteid = '%s' and release = '%s' and cache = '%s' and cmtconfig = '%s'" % (
         i['siteid'], i['release'], i['cache'], i['cmtConfig'])

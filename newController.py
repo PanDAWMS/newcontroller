@@ -161,11 +161,11 @@ if __name__ == "__main__":
     if runSW:
         print "\n\n                    *** Running Installed SW Update ***\n\n"
         dbd, database_queue_keys = sqlDictUnpacker(loadSchedConfig())
-        if genDebug:
-            print 'Received debug info'
-            sw_db, sw_agis, deleteList, addList, sw_union = updateInstalledSW(collapseDict(dbd))
-        else:
-            updateInstalledSW(collapseDict(dbd))
+        #if genDebug:
+        #    print 'Received debug info'
+        #    sw_db, sw_agis, deleteList, addList, sw_union = updateInstalledSW(collapseDict(dbd))
+        #else:
+        updateInstalledSW(collapseDict(dbd))
 
     # Running in network matrix update mode
     if network:
